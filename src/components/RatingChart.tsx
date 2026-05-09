@@ -47,9 +47,11 @@ export default function RatingChart({ profileId }: Props) {
 
   const availableLadders = data ? (Object.keys(data.ladders) as LadderKey[]).filter(k => k in LADDER_CONFIG) : [];
 
-  const chartData = (() => {
+  type ChartPoint = { date: string } & Partial<Record<LadderKey, number>>;
+
+  const chartData: ChartPoint[] = (() => {
     if (!data) return [];
-    const dateMap: Record<string, Record<string, number>> = {};
+    const dateMap: Record<string, Partial<Record<LadderKey, number>>> = {};
 
     for (const ladder of availableLadders) {
       if (!activeLadders.has(ladder)) continue;
@@ -67,7 +69,7 @@ export default function RatingChart({ profileId }: Props) {
 
   const domain = (() => {
     const ratings = chartData.flatMap(d =>
-      availableLadders.filter(l => activeLadders.has(l)).map(l => d[l] as number).filter(Boolean)
+      availableLadders.filter(l => activeLadders.has(l)).map(l => d[l]).filter((v): v is number => v != null)
     );
     if (ratings.length === 0) return [0, 2000] as [number, number];
     const min = Math.min(...ratings);
@@ -149,11 +151,11 @@ export default function RatingChart({ profileId }: Props) {
                 borderRadius: '8px',
                 fontSize: '13px',
               }}
-              labelFormatter={(d: string) => {
-                const date = new Date(d + 'T12:00:00');
+              labelFormatter={(d) => {
+                const date = new Date(String(d) + 'T12:00:00');
                 return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
               }}
-              formatter={(value: number, name: string) => [
+              formatter={(value, name) => [
                 value,
                 LADDER_CONFIG[name as LadderKey]?.label || name,
               ]}
