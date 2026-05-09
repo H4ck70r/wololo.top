@@ -212,3 +212,181 @@ export interface RatingHistoryResponse {
   days: number;
   ladders: Record<string, RatingSnapshot[]>;
 }
+
+// WLT-2: Opponent Analysis
+export interface OpponentEntry {
+  profile_id: number;
+  alias: string | null;
+  avatar: string | null;
+  games: number;
+  wins: number;
+  losses: number;
+  win_rate: number;
+  last_played: string | null;
+}
+
+export interface OpponentAnalysisResponse {
+  status: string;
+  profile_id: number;
+  total_opponents: number;
+  highlights: {
+    most_played: OpponentEntry | null;
+    nemesis: OpponentEntry | null;
+    best_matchup: OpponentEntry | null;
+  };
+  opponents: OpponentEntry[];
+}
+
+// WLT-3: Rating Trends
+export interface LadderTrend {
+  current_rating: number | null;
+  delta_7d: number | null;
+  delta_30d: number | null;
+  peak_rating: number | null;
+  peak_date: string | null;
+  lowest_rating: number | null;
+  games_7d: number | null;
+}
+
+export interface RatingTrendsResponse {
+  status: string;
+  profile_id: number;
+  ladders: Record<string, LadderTrend>;
+  streaks: {
+    current_streak: number;
+    best_win_streak: number;
+    worst_loss_streak: number;
+  };
+}
+
+// WLT-4: Milestones
+export interface Milestone {
+  threshold: number;
+  reached_at: string;
+  ladder_type: string;
+}
+
+export interface MilestoneLadder {
+  peak_rating: number | null;
+  peak_date: string | null;
+  highest_rating: number | null;
+  milestones: Milestone[];
+}
+
+export interface MilestonesResponse {
+  status: string;
+  profile_id: number;
+  ladders: {
+    rm?: MilestoneLadder;
+    team_rm?: MilestoneLadder;
+  };
+}
+
+// WLT-6: Activity Patterns
+export interface HeatmapCell {
+  dow: number;
+  hour: number;
+  games: number;
+  wins: number;
+}
+
+export interface ActivityPatternsResponse {
+  status: string;
+  profile_id: number;
+  heatmap: HeatmapCell[];
+  peak_hour: number | null;
+  peak_day: number | null;
+  total_tracked: number;
+  most_active_period: string | null;
+}
+
+// WLT-1: Live Matches
+export interface LiveMatchPlayer {
+  profile_id: number;
+  alias: string | null;
+  rating: number | null;
+  rank: number | null;
+}
+
+export interface LiveMatch {
+  lobby_id: number;
+  status: string;
+  map_name: string | null;
+  map: string | null;
+  match_type_id: number | null;
+  match_type: string | null;
+  description: string | null;
+  server: string | null;
+  player_count: number;
+  duration_seconds: number | null;
+  started_at: string | null;
+  detected_at: string | null;
+  last_seen_at: string | null;
+  players: LiveMatchPlayer[];
+}
+
+export interface LiveMatchesResponse {
+  status: string;
+  total: number;
+  matches: LiveMatch[];
+}
+
+// WLT-5: Enhanced Leaderboard
+export interface EnhancedLeaderboardPlayer {
+  profile_id: number;
+  name: string;
+  country: string | null;
+  alias: string;
+  clanlist_name: string | null;
+  rank: number;
+  rating: number;
+  highestrating: number;
+  wins: number;
+  losses: number;
+  streak: number;
+  avatar: string | null;
+  lastmatchdate: number | null;
+  winrate: string;
+  last_updated?: string;
+}
+
+export interface EnhancedLeaderboardResponse {
+  status: string;
+  data: {
+    players: EnhancedLeaderboardPlayer[];
+    pagination: {
+      total: number;
+      page: number;
+      limit: number;
+      pages: number;
+    };
+    filters: {
+      type: string;
+      country: string | null;
+      clan: string | null;
+      min_rating: number | null;
+      max_rating: number | null;
+      search: string | null;
+    };
+    meta: {
+      last_updated: string | null;
+      available_countries: { country: string; player_count: number }[];
+    };
+  };
+}
+
+export interface CountryStatsEntry {
+  country: string;
+  player_count: number;
+  avg_rating: number;
+  top_rating: number;
+}
+
+export interface CountryStatsResponse {
+  status: string;
+  data: {
+    type: string;
+    countries: CountryStatsEntry[];
+    total_countries: number;
+  };
+}

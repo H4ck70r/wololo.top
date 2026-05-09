@@ -7,6 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const navLinks = [
     { path: '/', label: 'Search' },
     { path: '/leaderboard', label: 'Leaderboard' },
+    { path: '/live', label: 'Live' },
   ];
 
   return (

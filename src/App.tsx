@@ -3,7 +3,8 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import PlayerProfile from './pages/PlayerProfile';
 import HeadToHead from './pages/HeadToHead';
-import Leaderboard from './pages/Leaderboard';
+import LeaderboardEnhanced from './pages/LeaderboardEnhanced';
+import LiveMatches from './pages/LiveMatches';
 
 export default function App() {
   return (
@@ -12,7 +13,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/player/:profileId" element={<PlayerProfile />} />
         <Route path="/h2h/:profileId/:opponentId" element={<HeadToHead />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/leaderboard" element={<LeaderboardEnhanced />} />
+        <Route path="/live" element={<LiveMatches />} />
       </Routes>
     </Layout>
   );

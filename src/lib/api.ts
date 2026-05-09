@@ -33,6 +33,13 @@ import type {
   HeadToHeadData,
   LeaderboardResponse,
   RatingHistoryResponse,
+  OpponentAnalysisResponse,
+  RatingTrendsResponse,
+  MilestonesResponse,
+  ActivityPatternsResponse,
+  LiveMatchesResponse,
+  EnhancedLeaderboardResponse,
+  CountryStatsResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -73,4 +80,44 @@ export async function getLeaderboard(
   params?: { limit?: number; page?: number }
 ): Promise<LeaderboardResponse> {
   return apiFetch<LeaderboardResponse>(`/api/ladder/${type}`, params as Record<string, string | number>);
+}
+
+export async function getOpponentAnalysis(
+  profileId: number | string,
+  params?: { limit?: number; match_type?: string }
+): Promise<OpponentAnalysisResponse> {
+  return apiFetch<OpponentAnalysisResponse>(`/api/players/${profileId}/opponents`, params as Record<string, string | number>);
+}
+
+export async function getRatingTrends(profileId: number | string): Promise<RatingTrendsResponse> {
+  return apiFetch<RatingTrendsResponse>(`/api/players/${profileId}/rating-trends`);
+}
+
+export async function getPlayerMilestones(profileId: number | string): Promise<MilestonesResponse> {
+  return apiFetch<MilestonesResponse>(`/api/players/${profileId}/milestones`);
+}
+
+export async function getActivityPatterns(profileId: number | string): Promise<ActivityPatternsResponse> {
+  return apiFetch<ActivityPatternsResponse>(`/api/players/${profileId}/activity`);
+}
+
+export async function getLiveMatches(): Promise<LiveMatchesResponse> {
+  return apiFetch<LiveMatchesResponse>('/api/live');
+}
+
+export async function getEnhancedLeaderboard(params: {
+  type?: string;
+  page?: number;
+  limit?: number;
+  country?: string;
+  clan?: string;
+  min_rating?: number;
+  max_rating?: number;
+  search?: string;
+}): Promise<EnhancedLeaderboardResponse> {
+  return apiFetch<EnhancedLeaderboardResponse>('/api/ladder/enhanced', params as Record<string, string | number>);
+}
+
+export async function getEnhancedCountryStats(type: string = 'rm'): Promise<CountryStatsResponse> {
+  return apiFetch<CountryStatsResponse>('/api/ladder/enhanced/countries', { type });
 }

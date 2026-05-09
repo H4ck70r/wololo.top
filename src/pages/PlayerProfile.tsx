@@ -8,6 +8,10 @@ import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
 import CivStatsTable from '../components/CivStatsTable';
 import MapStatsTable from '../components/MapStatsTable';
+import RatingTrends from '../components/RatingTrends';
+import RivalsSection from '../components/RivalsSection';
+import MilestonesTimeline from '../components/MilestonesTimeline';
+import ActivityHeatmap from '../components/ActivityHeatmap';
 import MatchRow from '../components/MatchRow';
 import SearchBar from '../components/SearchBar';
 
@@ -163,6 +167,11 @@ export default function PlayerProfile() {
         </div>
       </div>
 
+      {/* Rating trends (deltas, streaks) */}
+      <div className="mb-6">
+        <RatingTrends profileId={profileId!} />
+      </div>
+
       {/* Rating history chart */}
       <div className="mb-6">
         <RatingChart profileId={profileId!} />
@@ -200,6 +209,21 @@ export default function PlayerProfile() {
             <MapStatsTable stats={stats?.map_stats || []} />
           )}
         </div>
+      </div>
+
+      {/* Rivals / Opponent Analysis */}
+      <div className="mb-6">
+        <RivalsSection profileId={profileId!} />
+      </div>
+
+      {/* Rating Milestones */}
+      <div className="mb-6">
+        <MilestonesTimeline profileId={profileId!} />
+      </div>
+
+      {/* Activity Heatmap */}
+      <div className="mb-6">
+        <ActivityHeatmap profileId={profileId!} />
       </div>
 
       {/* Recent matches */}
