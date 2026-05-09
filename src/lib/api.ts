@@ -40,6 +40,7 @@ import type {
   LiveMatchesResponse,
   EnhancedLeaderboardResponse,
   CountryStatsResponse,
+  EnrichmentStatusResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -120,4 +121,18 @@ export async function getEnhancedLeaderboard(params: {
 
 export async function getEnhancedCountryStats(type: string = 'rm'): Promise<CountryStatsResponse> {
   return apiFetch<CountryStatsResponse>('/api/ladder/enhanced/countries', { type });
+}
+
+export async function getEnrichmentStatus(profileId: number | string): Promise<EnrichmentStatusResponse> {
+  return apiFetch<EnrichmentStatusResponse>(`/api/players/${profileId}/enrich`);
+}
+
+export async function enrichPlayerMatches(profileId: number | string): Promise<{ status: string; message: string }> {
+  const fullUrl = BASE_URL ? `${BASE_URL}/api/players/${profileId}/enrich` : `/api/players/${profileId}/enrich`;
+  const res = await fetch(fullUrl, {
+    method: 'POST',
+    headers: { 'X-API-Key': API_KEY },
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json();
 }

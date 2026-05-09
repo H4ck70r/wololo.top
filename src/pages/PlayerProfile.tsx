@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { getPlayer, getPlayerStats, getPlayerMatches } from '../lib/api';
+import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches } from '../lib/api';
 import { countryFlag, MATCH_FILTERS } from '../lib/constants';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
@@ -18,6 +18,9 @@ import SearchBar from '../components/SearchBar';
 export default function PlayerProfile() {
   const { profileId } = useParams<{ profileId: string }>();
   const [matchFilter, setMatchFilter] = useState('');
+  const [enriching, setEnriching] = useState(false);
+  const enrichTriggered = useRef(false);
+  const queryClient = useQueryClient();
 
   const { data: playerData, isLoading: loadingPlayer, error: playerError } = useQuery({
     queryKey: ['player', profileId],
@@ -36,6 +39,31 @@ export default function PlayerProfile() {
     queryFn: () => getPlayerMatches(profileId!, { limit: 50, match_type: matchFilter || undefined }),
     enabled: !!profileId,
   });
+
+  // Auto-enrich: check if player needs more match data
+  useEffect(() => {
+    if (!profileId || enrichTriggered.current) return;
+    enrichTriggered.current = true;
+
+    getEnrichmentStatus(profileId).then((status) => {
+      if (status.needs_enrichment && status.can_enrich) {
+        setEnriching(true);
+        enrichPlayerMatches(profileId)
+          .then(() => {
+            // Wait a bit for background enrichment to insert rows, then refresh queries
+            setTimeout(() => {
+              queryClient.invalidateQueries({ queryKey: ['playerMatches', profileId] });
+              queryClient.invalidateQueries({ queryKey: ['playerStats', profileId] });
+              queryClient.invalidateQueries({ queryKey: ['opponentAnalysis', profileId] });
+              queryClient.invalidateQueries({ queryKey: ['activityPatterns', profileId] });
+              queryClient.invalidateQueries({ queryKey: ['ratingTrends', profileId] });
+              setEnriching(false);
+            }, 8000);
+          })
+          .catch(() => setEnriching(false));
+      }
+    }).catch(() => {});
+  }, [profileId, queryClient]);
 
   if (loadingPlayer) {
     return (
@@ -102,6 +130,12 @@ export default function PlayerProfile() {
             </div>
             <p className="text-sm text-gray-500 mt-1 m-0">Profile ID: {player.profile_id}</p>
           </div>
+          {enriching && (
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-lg">
+              <div className="w-3 h-3 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs text-gold-400">Enriching match history...</span>
+            </div>
+          )}
         </div>
       </div>
 

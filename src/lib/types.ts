@@ -390,3 +390,15 @@ export interface CountryStatsResponse {
     total_countries: number;
   };
 }
+
+// Match Enrichment
+export interface EnrichmentStatusResponse {
+  status: string;
+  profile_id: number;
+  match_count: number;
+  oldest_match: string | null;
+  newest_match: string | null;
+  last_enriched_at: string | null;
+  can_enrich: boolean;
+  needs_enrichment: boolean;
+}
