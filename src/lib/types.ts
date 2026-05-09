@@ -46,6 +46,7 @@ export interface PlayerProfileResponse {
 
 export interface CivStat {
   civ_id: number;
+  civilization: string | null;
   games: number;
   wins: string;
   win_rate: string;
@@ -53,6 +54,7 @@ export interface CivStat {
 
 export interface MapStat {
   map_name: string;
+  map: string | null;
   games: number;
   wins: string;
   win_rate: string;
@@ -70,18 +72,40 @@ export interface PlayerStats {
   last_computed_at: string;
 }
 
-export interface MatchRecord {
-  match_id: number;
+export interface MatchPlayer {
+  profile_id: number;
+  alias: string | null;
   civilization_id: number;
-  map_name: string | null;
+  civilization: string | null;
   result: number;
   team_id: number;
-  match_type_id: number;
   old_rating: number | null;
   new_rating: number | null;
+  rating_diff: number | null;
+}
+
+export interface MatchTeam {
+  team_id: number;
+  players: MatchPlayer[];
+}
+
+export interface MatchRecord {
+  match_id: number;
+  map_name: string | null;
+  map: string | null;
+  match_type_id: number;
+  match_type: string | null;
   duration_seconds: number | null;
   started_at: string | null;
   max_players: number;
+  player_count: number;
+  civilization_id: number;
+  civilization: string | null;
+  result: number;
+  old_rating: number | null;
+  new_rating: number | null;
+  team_id: number;
+  teams: MatchTeam[];
 }
 
 export interface MatchesResponse {
@@ -95,7 +119,9 @@ export interface MatchesResponse {
 
 export interface H2HCivMatchup {
   player_civ: number;
+  player_civ_name: string | null;
   opponent_civ: number;
+  opponent_civ_name: string | null;
   wins: number;
   losses: number;
   games: number;
@@ -103,6 +129,7 @@ export interface H2HCivMatchup {
 
 export interface H2HMapStat {
   map_name: string;
+  map: string | null;
   wins: number;
   losses: number;
   games: number;
@@ -111,15 +138,19 @@ export interface H2HMapStat {
 export interface H2HMatch {
   match_id: number;
   player_civ: number;
+  player_civ_name: string | null;
   player_result: number;
   player_old_rating: number | null;
   player_new_rating: number | null;
   opponent_civ: number;
+  opponent_civ_name: string | null;
   opponent_result: number;
   opponent_old_rating: number | null;
   opponent_new_rating: number | null;
   map_name: string | null;
+  map: string | null;
   match_type_id: number;
+  match_type: string | null;
   duration_seconds: number | null;
   started_at: string | null;
   max_players: number;

@@ -129,8 +129,8 @@ export default function HeadToHead() {
                 <tbody>
                   {civ_matchups.slice(0, 20).map((m, i) => (
                     <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                      <td className="py-2 px-2 text-gray-200">{getCivName(m.player_civ)}</td>
-                      <td className="py-2 px-2 text-gray-200">{getCivName(m.opponent_civ)}</td>
+                      <td className="py-2 px-2 text-gray-200">{m.player_civ_name || getCivName(m.player_civ)}</td>
+                      <td className="py-2 px-2 text-gray-200">{m.opponent_civ_name || getCivName(m.opponent_civ)}</td>
                       <td className="py-2 px-2 text-right text-gray-400">{m.games}</td>
                       <td className="py-2 px-2 text-right">
                         <span className="text-gold-400">{m.wins}</span>
@@ -162,7 +162,7 @@ export default function HeadToHead() {
                 <tbody>
                   {map_stats.map((m, i) => (
                     <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                      <td className="py-2 px-2 text-gray-200">{cleanMapName(m.map_name)}</td>
+                      <td className="py-2 px-2 text-gray-200">{m.map || cleanMapName(m.map_name)}</td>
                       <td className="py-2 px-2 text-right text-gray-400">{m.games}</td>
                       <td className="py-2 px-2 text-right">
                         <span className="text-gold-400">{m.wins}</span>
@@ -212,15 +212,15 @@ export default function HeadToHead() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 text-sm flex-wrap">
                       <span className="font-medium text-gold-400">
-                        {getCivName(match.player_civ)}
+                        {match.player_civ_name || getCivName(match.player_civ)}
                       </span>
                       <span className="text-gray-600">vs</span>
                       <span className="font-medium text-blue-accent">
-                        {getCivName(match.opponent_civ)}
+                        {match.opponent_civ_name || getCivName(match.opponent_civ)}
                       </span>
                     </div>
                     <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
-                      <span>{cleanMapName(match.map_name)}</span>
+                      <span>{match.map || cleanMapName(match.map_name)}</span>
                       {match.duration_seconds && <span>{formatDuration(match.duration_seconds)}</span>}
                       {startedAt && <span>{startedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>}
                     </div>

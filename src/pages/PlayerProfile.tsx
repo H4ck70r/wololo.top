@@ -194,7 +194,7 @@ export default function PlayerProfile() {
         ) : matches.length > 0 ? (
           <div className="flex flex-col gap-2">
             {matches.map((match) => (
-              <MatchRow key={match.match_id} match={match} />
+              <MatchRow key={match.match_id} match={match} profileId={profileId} />
             ))}
           </div>
         ) : (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getCivName } from '../lib/constants';
+import { getCivName, getCivIcon } from '../lib/constants';
 import type { CivStat } from '../lib/types';
 
 interface CivStatsTableProps {
@@ -92,7 +92,12 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
                 className="border-b border-dark-500/50 hover:bg-dark-600/50 transition-colors"
               >
                 <td className="py-2.5 px-3 font-medium text-gray-200">
-                  {getCivName(civ.civ_id)}
+                  <div className="flex items-center gap-2">
+                    {getCivIcon(civ.civ_id) && (
+                      <img src={getCivIcon(civ.civ_id)!} alt="" className="w-6 h-6 rounded object-cover" />
+                    )}
+                    {getCivName(civ.civ_id)}
+                  </div>
                 </td>
                 <td className="py-2.5 px-3 text-right text-gray-400">{civ.games}</td>
                 <td className="py-2.5 px-3 text-right text-win">{civ.wins}</td>
