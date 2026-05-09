@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { getPlayer, getPlayerStats, getPlayerMatches } from '../lib/api';
 import { countryFlag } from '../lib/constants';
 import RatingCard from '../components/RatingCard';
+import RatingChart from '../components/RatingChart';
 import CivStatsTable from '../components/CivStatsTable';
 import MapStatsTable from '../components/MapStatsTable';
 import MatchRow from '../components/MatchRow';
@@ -158,6 +159,11 @@ export default function PlayerProfile() {
             {totalWins}W / {totalLosses}L ({totalGames} games)
           </p>
         </div>
+      </div>
+
+      {/* Rating history chart */}
+      <div className="mb-6">
+        <RatingChart profileId={profileId!} />
       </div>
 
       {/* Civ & Map stats */}

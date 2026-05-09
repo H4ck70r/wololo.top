@@ -197,3 +197,18 @@ export interface LeaderboardResponse {
     };
   };
 }
+
+export interface RatingSnapshot {
+  date: string;
+  rating: number;
+  rank: number;
+  wins: number;
+  losses: number;
+}
+
+export interface RatingHistoryResponse {
+  status: string;
+  profile_id: number;
+  days: number;
+  ladders: Record<string, RatingSnapshot[]>;
+}

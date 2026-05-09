@@ -32,6 +32,7 @@ import type {
   MatchesResponse,
   HeadToHeadData,
   LeaderboardResponse,
+  RatingHistoryResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -58,6 +59,13 @@ export async function getHeadToHead(
   opponentId: number | string
 ): Promise<HeadToHeadData> {
   return apiFetch<HeadToHeadData>(`/api/players/${profileId}/head-to-head/${opponentId}`);
+}
+
+export async function getRatingHistory(
+  profileId: number | string,
+  params?: { days?: number; ladder?: string }
+): Promise<RatingHistoryResponse> {
+  return apiFetch<RatingHistoryResponse>(`/api/players/${profileId}/rating-history`, params as Record<string, string | number>);
 }
 
 export async function getLeaderboard(
