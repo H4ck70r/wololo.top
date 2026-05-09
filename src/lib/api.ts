@@ -1,8 +1,9 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://aoe2api.pr070c01.com';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 const API_KEY = import.meta.env.VITE_API_KEY || '';
 
 async function apiFetch<T>(path: string, params?: Record<string, string | number>): Promise<T> {
-  const url = new URL(`${BASE_URL}${path}`);
+  const fullUrl = BASE_URL ? `${BASE_URL}${path}` : path;
+  const url = new URL(fullUrl, window.location.origin);
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
@@ -14,7 +15,6 @@ async function apiFetch<T>(path: string, params?: Record<string, string | number
   const res = await fetch(url.toString(), {
     headers: {
       'X-API-Key': API_KEY,
-      'Content-Type': 'application/json',
     },
   });
 
@@ -26,20 +26,20 @@ async function apiFetch<T>(path: string, params?: Record<string, string | number
 }
 
 import type {
-  PlayerSearchResult,
-  PlayerProfile,
+  PlayerSearchResponse,
+  PlayerProfileResponse,
   PlayerStats,
-  Match,
+  MatchesResponse,
   HeadToHeadData,
   LeaderboardResponse,
 } from './types';
 
-export async function searchPlayers(query: string): Promise<PlayerSearchResult[]> {
-  return apiFetch<PlayerSearchResult[]>('/api/players/search', { q: query });
+export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
+  return apiFetch<PlayerSearchResponse>('/api/players/search', { q: query });
 }
 
-export async function getPlayer(profileId: number | string): Promise<PlayerProfile> {
-  return apiFetch<PlayerProfile>(`/api/players/${profileId}`);
+export async function getPlayer(profileId: number | string): Promise<PlayerProfileResponse> {
+  return apiFetch<PlayerProfileResponse>(`/api/players/${profileId}`);
 }
 
 export async function getPlayerStats(profileId: number | string): Promise<PlayerStats> {
@@ -48,9 +48,9 @@ export async function getPlayerStats(profileId: number | string): Promise<Player
 
 export async function getPlayerMatches(
   profileId: number | string,
-  params?: { start?: number; count?: number }
-): Promise<Match[]> {
-  return apiFetch<Match[]>(`/api/players/${profileId}/matches`, params as Record<string, string | number>);
+  params?: { limit?: number; offset?: number }
+): Promise<MatchesResponse> {
+  return apiFetch<MatchesResponse>(`/api/players/${profileId}/matches`, params as Record<string, string | number>);
 }
 
 export async function getHeadToHead(
@@ -60,10 +60,9 @@ export async function getHeadToHead(
   return apiFetch<HeadToHeadData>(`/api/players/${profileId}/head-to-head/${opponentId}`);
 }
 
-export async function getLeaderboard(params: {
-  leaderboard_id: number;
-  start?: number;
-  count?: number;
-}): Promise<LeaderboardResponse> {
-  return apiFetch<LeaderboardResponse>('/api/leaderboard', params as Record<string, string | number>);
+export async function getLeaderboard(
+  type: 'rm' | 'team-rm' = 'rm',
+  params?: { limit?: number; page?: number }
+): Promise<LeaderboardResponse> {
+  return apiFetch<LeaderboardResponse>(`/api/ladder/${type}`, params as Record<string, string | number>);
 }

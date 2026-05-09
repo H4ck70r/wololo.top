@@ -7,27 +7,22 @@ import { countryFlag } from '../lib/constants';
 const PAGE_SIZE = 50;
 
 const LEADERBOARD_TYPES = [
-  { id: 3, label: 'Solo RM' },
-  { id: 4, label: 'Team RM' },
-] as const;
+  { id: 'rm' as const, label: 'Solo RM' },
+  { id: 'team-rm' as const, label: 'Team RM' },
+];
 
 export default function Leaderboard() {
-  const [leaderboardId, setLeaderboardId] = useState(3);
-  const [page, setPage] = useState(0);
+  const [ladderType, setLadderType] = useState<'rm' | 'team-rm'>('rm');
+  const [page, setPage] = useState(1);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['leaderboard', leaderboardId, page],
-    queryFn: () =>
-      getLeaderboard({
-        leaderboard_id: leaderboardId,
-        start: page * PAGE_SIZE + 1,
-        count: PAGE_SIZE,
-      }),
+    queryKey: ['leaderboard', ladderType, page],
+    queryFn: () => getLeaderboard(ladderType, { limit: PAGE_SIZE, page }),
   });
 
-  const entries = data?.entries || [];
-  const total = data?.total || 0;
-  const totalPages = Math.ceil(total / PAGE_SIZE);
+  const players = data?.data?.players || [];
+  const pagination = data?.data?.pagination;
+  const totalPages = pagination?.pages || 1;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -35,22 +30,21 @@ export default function Leaderboard() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-100 m-0">Leaderboard</h1>
-          {total > 0 && (
-            <p className="text-sm text-gray-500 mt-1 m-0">{total.toLocaleString()} players ranked</p>
+          {pagination && (
+            <p className="text-sm text-gray-500 mt-1 m-0">{pagination.total.toLocaleString()} players ranked</p>
           )}
         </div>
 
-        {/* Toggle */}
         <div className="flex bg-dark-600 rounded-xl p-1 border border-dark-400">
           {LEADERBOARD_TYPES.map((lb) => (
             <button
               key={lb.id}
               onClick={() => {
-                setLeaderboardId(lb.id);
-                setPage(0);
+                setLadderType(lb.id);
+                setPage(1);
               }}
               className={`px-5 py-2 rounded-lg text-sm font-medium transition-all border-none cursor-pointer ${
-                leaderboardId === lb.id
+                ladderType === lb.id
                   ? 'bg-gold-500 text-dark-900 shadow-lg'
                   : 'text-gray-400 hover:text-gray-200 bg-transparent'
               }`}
@@ -85,9 +79,8 @@ export default function Leaderboard() {
                 </tr>
               </thead>
               <tbody>
-                {entries.map((entry, i) => {
-                  const rank = entry.rank || page * PAGE_SIZE + i + 1;
-                  const wr = entry.win_rate || (entry.wins + entry.losses > 0 ? (entry.wins / (entry.wins + entry.losses)) * 100 : 0);
+                {players.map((entry) => {
+                  const wr = parseFloat(entry.winrate) || 0;
                   return (
                     <tr
                       key={entry.profile_id}
@@ -96,10 +89,10 @@ export default function Leaderboard() {
                       <td className="py-3 px-4">
                         <span
                           className={`font-medium ${
-                            rank <= 3 ? 'text-gold-400' : rank <= 10 ? 'text-gray-300' : 'text-gray-500'
+                            entry.rank <= 3 ? 'text-gold-400' : entry.rank <= 10 ? 'text-gray-300' : 'text-gray-500'
                           }`}
                         >
-                          #{rank}
+                          #{entry.rank}
                         </span>
                       </td>
                       <td className="py-3 px-4">
@@ -107,9 +100,12 @@ export default function Leaderboard() {
                           to={`/player/${entry.profile_id}`}
                           className="flex items-center gap-2 no-underline group"
                         >
+                          {entry.avatar && (
+                            <img src={entry.avatar} alt="" className="w-7 h-7 rounded-md object-cover" />
+                          )}
                           <span className="text-base">{countryFlag(entry.country)}</span>
                           <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate">
-                            {entry.name}
+                            {entry.alias}
                           </span>
                         </Link>
                       </td>
@@ -131,15 +127,13 @@ export default function Leaderboard() {
                         </span>
                       </td>
                       <td className="py-3 px-4 text-right hidden md:table-cell">
-                        {entry.streak !== undefined && (
-                          <span
-                            className={`font-medium ${
-                              entry.streak > 0 ? 'text-win' : entry.streak < 0 ? 'text-loss' : 'text-gray-500'
-                            }`}
-                          >
-                            {entry.streak > 0 ? `+${entry.streak}` : entry.streak}
-                          </span>
-                        )}
+                        <span
+                          className={`font-medium ${
+                            entry.streak > 0 ? 'text-win' : entry.streak < 0 ? 'text-loss' : 'text-gray-500'
+                          }`}
+                        >
+                          {entry.streak > 0 ? `+${entry.streak}` : entry.streak}
+                        </span>
                       </td>
                     </tr>
                   );
@@ -149,22 +143,21 @@ export default function Leaderboard() {
           </div>
         )}
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-between px-4 py-3 border-t border-dark-400">
             <button
-              onClick={() => setPage((p) => Math.max(0, p - 1))}
-              disabled={page === 0}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page <= 1}
               className="px-4 py-2 rounded-lg text-sm font-medium bg-dark-500 text-gray-300 hover:bg-dark-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border-none cursor-pointer"
             >
               Previous
             </button>
             <span className="text-sm text-gray-500">
-              Page {page + 1} of {totalPages}
+              Page {page} of {totalPages}
             </span>
             <button
-              onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-              disabled={page >= totalPages - 1}
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page >= totalPages}
               className="px-4 py-2 rounded-lg text-sm font-medium bg-dark-500 text-gray-300 hover:bg-dark-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border-none cursor-pointer"
             >
               Next

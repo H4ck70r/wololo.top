@@ -6,7 +6,7 @@ interface CivStatsTableProps {
   stats: CivStat[];
 }
 
-type SortKey = 'civ' | 'games' | 'wins' | 'losses' | 'win_rate';
+type SortKey = 'civ' | 'games' | 'wins' | 'win_rate';
 type SortDir = 'asc' | 'desc';
 
 export default function CivStatsTable({ stats }: CivStatsTableProps) {
@@ -32,13 +32,10 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
         cmp = a.games - b.games;
         break;
       case 'wins':
-        cmp = a.wins - b.wins;
-        break;
-      case 'losses':
-        cmp = a.losses - b.losses;
+        cmp = Number(a.wins) - Number(b.wins);
         break;
       case 'win_rate':
-        cmp = a.win_rate - b.win_rate;
+        cmp = parseFloat(a.win_rate) - parseFloat(b.win_rate);
         break;
     }
     return sortDir === 'asc' ? cmp : -cmp;
@@ -78,12 +75,6 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
               Wins <SortIcon col="wins" />
             </th>
             <th
-              onClick={() => handleSort('losses')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
-            >
-              Losses <SortIcon col="losses" />
-            </th>
-            <th
               onClick={() => handleSort('win_rate')}
               className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
@@ -93,7 +84,7 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
         </thead>
         <tbody>
           {sorted.map((civ) => {
-            const wr = civ.win_rate;
+            const wr = parseFloat(civ.win_rate);
             const barColor = wr >= 55 ? 'bg-win' : wr >= 45 ? 'bg-gold-500' : 'bg-loss';
             return (
               <tr
@@ -101,11 +92,10 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
                 className="border-b border-dark-500/50 hover:bg-dark-600/50 transition-colors"
               >
                 <td className="py-2.5 px-3 font-medium text-gray-200">
-                  {civ.civ_name || getCivName(civ.civ_id)}
+                  {getCivName(civ.civ_id)}
                 </td>
                 <td className="py-2.5 px-3 text-right text-gray-400">{civ.games}</td>
                 <td className="py-2.5 px-3 text-right text-win">{civ.wins}</td>
-                <td className="py-2.5 px-3 text-right text-loss">{civ.losses}</td>
                 <td className="py-2.5 px-3 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <div className="w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">

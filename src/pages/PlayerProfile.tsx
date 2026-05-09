@@ -12,7 +12,7 @@ import SearchBar from '../components/SearchBar';
 export default function PlayerProfile() {
   const { profileId } = useParams<{ profileId: string }>();
 
-  const { data: player, isLoading: loadingPlayer, error: playerError } = useQuery({
+  const { data: playerData, isLoading: loadingPlayer, error: playerError } = useQuery({
     queryKey: ['player', profileId],
     queryFn: () => getPlayer(profileId!),
     enabled: !!profileId,
@@ -24,9 +24,9 @@ export default function PlayerProfile() {
     enabled: !!profileId,
   });
 
-  const { data: matches, isLoading: loadingMatches } = useQuery({
+  const { data: matchesData, isLoading: loadingMatches } = useQuery({
     queryKey: ['playerMatches', profileId],
-    queryFn: () => getPlayerMatches(profileId!, { count: 50 }),
+    queryFn: () => getPlayerMatches(profileId!, { limit: 50 }),
     enabled: !!profileId,
   });
 
@@ -40,6 +40,8 @@ export default function PlayerProfile() {
     );
   }
 
+  const player = playerData?.player;
+
   if (playerError || !player) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12 text-center">
@@ -50,17 +52,21 @@ export default function PlayerProfile() {
     );
   }
 
-  // Win rate donut chart data
-  const totalWins = (player.rm_wins || 0) + (player.team_rm_wins || 0);
-  const totalLosses = (player.rm_losses || 0) + (player.team_rm_losses || 0);
+  const soloLadder = player.ladders?.find((l) => l.type === 'solo');
+  const teamLadder = player.ladders?.find((l) => l.type === 'team');
+
+  const totalWins = player.wins || 0;
+  const totalLosses = player.losses || 0;
   const totalGames = totalWins + totalLosses;
-  const overallWinRate = totalGames > 0 ? ((totalWins / totalGames) * 100).toFixed(1) : '0.0';
+  const overallWinRate = player.winrate ? parseFloat(player.winrate) : 0;
 
   const donutData = [
     { name: 'Wins', value: totalWins },
     { name: 'Losses', value: totalLosses },
   ];
   const DONUT_COLORS = ['#22c55e', '#ef4444'];
+
+  const matches = matchesData?.matches || [];
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -70,17 +76,17 @@ export default function PlayerProfile() {
           {player.avatar ? (
             <img
               src={player.avatar}
-              alt={player.name}
+              alt={player.alias}
               className="w-16 h-16 rounded-xl object-cover border-2 border-dark-400"
             />
           ) : (
             <div className="w-16 h-16 rounded-xl bg-dark-500 flex items-center justify-center text-2xl font-bold text-gold-400">
-              {player.name.charAt(0).toUpperCase()}
+              {player.alias.charAt(0).toUpperCase()}
             </div>
           )}
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 m-0">{player.name}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 m-0">{player.alias}</h1>
               {player.country && (
                 <span className="text-2xl" title={player.country.toUpperCase()}>
                   {countryFlag(player.country)}
@@ -96,26 +102,25 @@ export default function PlayerProfile() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <RatingCard
           label="Solo Ranked"
-          rating={player.rm_rating}
-          rank={player.rm_rank}
-          wins={player.rm_wins}
-          losses={player.rm_losses}
-          streak={player.rm_streak}
-          highest={player.rm_highest_rating}
+          rating={soloLadder?.rating}
+          rank={soloLadder?.rank}
+          wins={soloLadder?.wins}
+          losses={soloLadder?.losses}
+          streak={player.streak}
+          highest={undefined}
           color="gold"
         />
         <RatingCard
           label="Team Ranked"
-          rating={player.team_rm_rating}
-          rank={player.team_rm_rank}
-          wins={player.team_rm_wins}
-          losses={player.team_rm_losses}
-          streak={player.team_rm_streak}
-          highest={player.team_rm_highest_rating}
+          rating={teamLadder?.rating}
+          rank={teamLadder?.rank}
+          wins={teamLadder?.wins}
+          losses={teamLadder?.losses}
+          streak={undefined}
+          highest={undefined}
           color="blue"
         />
 
-        {/* Win rate donut */}
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 flex flex-col items-center justify-center">
           <p className="text-sm text-gray-400 uppercase tracking-wider font-medium m-0 mb-3">Overall Win Rate</p>
           {totalGames > 0 ? (
@@ -186,10 +191,10 @@ export default function PlayerProfile() {
           <div className="flex justify-center py-8">
             <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
           </div>
-        ) : matches && matches.length > 0 ? (
+        ) : matches.length > 0 ? (
           <div className="flex flex-col gap-2">
             {matches.map((match) => (
-              <MatchRow key={match.match_id} match={match} currentProfileId={profileId} />
+              <MatchRow key={match.match_id} match={match} />
             ))}
           </div>
         ) : (
