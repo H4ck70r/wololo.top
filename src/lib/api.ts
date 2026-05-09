@@ -49,7 +49,7 @@ export async function getPlayerStats(profileId: number | string): Promise<Player
 
 export async function getPlayerMatches(
   profileId: number | string,
-  params?: { limit?: number; offset?: number }
+  params?: { limit?: number; offset?: number; match_type?: string }
 ): Promise<MatchesResponse> {
   return apiFetch<MatchesResponse>(`/api/players/${profileId}/matches`, params as Record<string, string | number>);
 }

@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { getPlayer, getPlayerStats, getPlayerMatches } from '../lib/api';
-import { countryFlag } from '../lib/constants';
+import { countryFlag, MATCH_FILTERS } from '../lib/constants';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
 import CivStatsTable from '../components/CivStatsTable';
@@ -12,6 +13,7 @@ import SearchBar from '../components/SearchBar';
 
 export default function PlayerProfile() {
   const { profileId } = useParams<{ profileId: string }>();
+  const [matchFilter, setMatchFilter] = useState('');
 
   const { data: playerData, isLoading: loadingPlayer, error: playerError } = useQuery({
     queryKey: ['player', profileId],
@@ -26,8 +28,8 @@ export default function PlayerProfile() {
   });
 
   const { data: matchesData, isLoading: loadingMatches } = useQuery({
-    queryKey: ['playerMatches', profileId],
-    queryFn: () => getPlayerMatches(profileId!, { limit: 50 }),
+    queryKey: ['playerMatches', profileId, matchFilter],
+    queryFn: () => getPlayerMatches(profileId!, { limit: 50, match_type: matchFilter || undefined }),
     enabled: !!profileId,
   });
 
@@ -169,7 +171,12 @@ export default function PlayerProfile() {
       {/* Civ & Map stats */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Civilization Stats</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-200 m-0">Civilization Stats</h2>
+            {stats && (
+              <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
+            )}
+          </div>
           {loadingStats ? (
             <div className="flex justify-center py-8">
               <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
@@ -179,7 +186,12 @@ export default function PlayerProfile() {
           )}
         </div>
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Map Stats</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-200 m-0">Map Stats</h2>
+            {stats && (
+              <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
+            )}
+          </div>
           {loadingStats ? (
             <div className="flex justify-center py-8">
               <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
@@ -192,7 +204,29 @@ export default function PlayerProfile() {
 
       {/* Recent matches */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Recent Matches</h2>
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+          <div className="flex items-center gap-3">
+            <h2 className="text-lg font-semibold text-gray-200 m-0">Recent Matches</h2>
+            {matchesData && (
+              <span className="text-xs text-gray-500">{matchesData.total} total</span>
+            )}
+          </div>
+          <div className="flex items-center gap-1 flex-wrap">
+            {MATCH_FILTERS.map((f) => (
+              <button
+                key={f.value}
+                onClick={() => setMatchFilter(f.value)}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                  matchFilter === f.value
+                    ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
+                    : 'text-gray-500 hover:text-gray-300 border border-transparent'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </div>
         {loadingMatches ? (
           <div className="flex justify-center py-8">
             <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />

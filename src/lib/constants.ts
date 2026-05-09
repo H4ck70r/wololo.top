@@ -113,6 +113,17 @@ export function formatDate(timestamp: number | undefined | null): string {
   });
 }
 
+export const MATCH_FILTERS = [
+  { label: 'All', value: '' },
+  { label: '1v1 RM', value: '6' },
+  { label: 'Team RM', value: '7,8,9' },
+  { label: '1v1 EW', value: '26' },
+  { label: 'Team EW', value: '27,28,29' },
+  { label: '1v1 DM', value: '2' },
+  { label: 'Team DM', value: '3,4,5' },
+  { label: 'Unranked', value: '0' },
+] as const;
+
 // Country code to flag emoji
 export function countryFlag(code: string | undefined | null): string {
   if (!code || code.length !== 2) return '';
