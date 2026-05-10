@@ -7,6 +7,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   const navLinks = [
     { path: '/', label: 'Search' },
     { path: '/leaderboard', label: 'Leaderboard' },
+    { path: '/stats', label: 'Stats' },
+    { path: '/compare', label: 'Compare' },
     { path: '/live', label: 'Live' },
   ];
 
@@ -23,12 +25,12 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="text-sm text-gray-400">.top</span>
             </Link>
 
-            <nav className="flex items-center gap-1">
+            <nav className="flex items-center gap-0.5 sm:gap-1 overflow-x-auto">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors no-underline ${
+                  className={`px-2.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors no-underline whitespace-nowrap shrink-0 ${
                     location.pathname === link.path
                       ? 'bg-dark-500 text-gold-400'
                       : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'

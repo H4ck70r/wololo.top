@@ -359,9 +359,13 @@ export default function LeaderboardEnhanced() {
                             {entry.alias}
                           </span>
                           {entry.clanlist_name && (
-                            <span className="text-xs text-gray-600 hidden lg:inline">
+                            <Link
+                              to={`/clan/${encodeURIComponent(entry.clanlist_name)}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-xs text-gray-600 hover:text-gold-400 no-underline hidden lg:inline transition-colors"
+                            >
                               [{entry.clanlist_name}]
-                            </span>
+                            </Link>
                           )}
                         </Link>
                       </td>

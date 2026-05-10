@@ -5,6 +5,10 @@ import PlayerProfile from './pages/PlayerProfile';
 import HeadToHead from './pages/HeadToHead';
 import LeaderboardEnhanced from './pages/LeaderboardEnhanced';
 import LiveMatches from './pages/LiveMatches';
+import Compare from './pages/Compare';
+import CivMeta from './pages/CivMeta';
+import ClanProfile from './pages/ClanProfile';
+import MatchDetailPage from './pages/MatchDetailPage';
 
 export default function App() {
   return (
@@ -15,6 +19,10 @@ export default function App() {
         <Route path="/h2h/:profileId/:opponentId" element={<HeadToHead />} />
         <Route path="/leaderboard" element={<LeaderboardEnhanced />} />
         <Route path="/live" element={<LiveMatches />} />
+        <Route path="/compare" element={<Compare />} />
+        <Route path="/stats" element={<CivMeta />} />
+        <Route path="/clan/:clanName" element={<ClanProfile />} />
+        <Route path="/match/:matchId" element={<MatchDetailPage />} />
       </Routes>
     </Layout>
   );

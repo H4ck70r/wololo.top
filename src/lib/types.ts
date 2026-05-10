@@ -392,6 +392,82 @@ export interface CountryStatsResponse {
   };
 }
 
+// Match Detail
+export interface MatchDetailPlayer {
+  profile_id: number;
+  alias: string | null;
+  country: string | null;
+  avatar: string | null;
+  civilization_id: number;
+  civilization: string | null;
+  result: number;
+  old_rating: number | null;
+  new_rating: number | null;
+  rating_diff: number | null;
+}
+
+export interface MatchDetailTeam {
+  team_id: number;
+  players: MatchDetailPlayer[];
+  result: number;
+}
+
+export interface MatchDetail {
+  match_id: number;
+  map_name: string | null;
+  map: string | null;
+  match_type_id: number;
+  match_type: string | null;
+  duration_seconds: number | null;
+  started_at: string | null;
+  max_players: number;
+  player_count: number;
+  teams: MatchDetailTeam[];
+}
+
+export interface MatchDetailResponse {
+  status: string;
+  match: MatchDetail;
+}
+
+// Civ Meta
+export interface CivMetaEntry {
+  civ_id: number;
+  games: number;
+  wins: number;
+  win_rate: number;
+  avg_rating: number | null;
+}
+
+export interface CivMatchupEntry {
+  civ1: number;
+  civ2: number;
+  games: number;
+  civ1_wins: number;
+  civ1_win_rate: number;
+}
+
+export interface CivMetaResponse {
+  status: string;
+  filters: { match_type: string; min_rating: number; max_rating: number; days: number };
+  total_matches: number;
+  civilizations: CivMetaEntry[];
+  matchups: CivMatchupEntry[];
+}
+
+export interface MapMetaEntry {
+  map_name: string;
+  games: number;
+  avg_duration: number | null;
+  unique_players: number;
+}
+
+export interface MapMetaResponse {
+  status: string;
+  filters: { match_type: string; days: number };
+  maps: MapMetaEntry[];
+}
+
 // Match Enrichment
 export interface EnrichmentStatusResponse {
   status: string;

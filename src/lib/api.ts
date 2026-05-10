@@ -41,6 +41,9 @@ import type {
   EnhancedLeaderboardResponse,
   CountryStatsResponse,
   EnrichmentStatusResponse,
+  CivMetaResponse,
+  MapMetaResponse,
+  MatchDetailResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -125,6 +128,26 @@ export async function getEnhancedCountryStats(type: string = 'rm'): Promise<Coun
 
 export async function getEnrichmentStatus(profileId: number | string): Promise<EnrichmentStatusResponse> {
   return apiFetch<EnrichmentStatusResponse>(`/api/players/${profileId}/enrich`);
+}
+
+export async function getMatchDetail(matchId: number | string): Promise<MatchDetailResponse> {
+  return apiFetch<MatchDetailResponse>(`/api/matches/${matchId}`);
+}
+
+export async function getCivMeta(params: {
+  match_type?: string;
+  min_rating?: number;
+  max_rating?: number;
+  days?: number;
+}): Promise<CivMetaResponse> {
+  return apiFetch<CivMetaResponse>('/api/meta/civilizations', params as Record<string, string | number>);
+}
+
+export async function getMapMeta(params: {
+  match_type?: string;
+  days?: number;
+}): Promise<MapMetaResponse> {
+  return apiFetch<MapMetaResponse>('/api/meta/maps', params as Record<string, string | number>);
 }
 
 export async function enrichPlayerMatches(profileId: number | string): Promise<{ status: string; message: string }> {
