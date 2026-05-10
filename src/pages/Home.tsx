@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import SearchBar from '../components/SearchBar';
+import FavoritesBar from '../components/FavoritesBar';
 
 export default function Home() {
   return (
@@ -27,6 +28,11 @@ export default function Home() {
 
           {/* Search */}
           <SearchBar large className="max-w-2xl mx-auto" />
+
+          {/* Favorites */}
+          <div className="max-w-2xl mx-auto mt-6">
+            <FavoritesBar />
+          </div>
 
           {/* Quick stats */}
           <div className="flex items-center justify-center gap-8 sm:gap-12 mt-12">

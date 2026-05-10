@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches } from '../lib/api';
 import { countryFlag, MATCH_FILTERS } from '../lib/constants';
+import { isFavorite, addFavorite, removeFavorite } from '../lib/favorites';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
 import CivStatsTable from '../components/CivStatsTable';
@@ -23,6 +24,7 @@ export default function PlayerProfile() {
   const [matchFilter, setMatchFilter] = useState('');
   const [matchPage, setMatchPage] = useState(1);
   const [enriching, setEnriching] = useState(false);
+  const [starred, setStarred] = useState(false);
   const enrichTriggered = useRef(false);
   const matchesSectionRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -73,6 +75,32 @@ export default function PlayerProfile() {
       }
     }).catch(() => {});
   }, [profileId, queryClient]);
+
+  // Sync favorite state
+  useEffect(() => {
+    if (profileId) {
+      setStarred(isFavorite(Number(profileId)));
+    }
+  }, [profileId]);
+
+  const toggleFavorite = () => {
+    if (!player || !profileId) return;
+    const pid = Number(profileId);
+    if (starred) {
+      removeFavorite(pid);
+      setStarred(false);
+    } else {
+      const soloRating = player.ladders?.find((l) => l.type === 'solo')?.rating ?? null;
+      const added = addFavorite({
+        profileId: pid,
+        alias: player.alias,
+        country: player.country,
+        rating: soloRating,
+        avatar: player.avatar,
+      });
+      if (added) setStarred(true);
+    }
+  };
 
   if (loadingPlayer) {
     return (
@@ -183,6 +211,21 @@ export default function PlayerProfile() {
                   {countryFlag(player.country)}
                 </span>
               )}
+              <button
+                onClick={toggleFavorite}
+                title={starred ? 'Remove from favorites' : 'Add to favorites'}
+                className="p-1 transition-colors"
+              >
+                {starred ? (
+                  <svg className="w-6 h-6 text-gold-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 text-gray-500 hover:text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                )}
+              </button>
             </div>
             <p className="text-sm text-gray-500 mt-1 m-0">Profile ID: {player.profile_id}</p>
           </div>

@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { getPlayer, getPlayerStats, getHeadToHead } from '../lib/api';
+import {
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend,
+} from 'recharts';
+import { getPlayer, getPlayerStats, getHeadToHead, getRatingHistory } from '../lib/api';
 import { getCivName, countryFlag, cleanMapName, formatDuration } from '../lib/constants';
 import PlayerSearchInput from '../components/PlayerSearchInput';
 import type { PlayerSearchResult } from '../lib/types';
@@ -40,6 +43,16 @@ export default function Compare() {
     queryFn: () => getHeadToHead(p1Id!, p2Id!),
     enabled: !!p1Id && !!p2Id,
   });
+  const { data: p1History } = useQuery({
+    queryKey: ['ratingHistory', p1Id],
+    queryFn: () => getRatingHistory(p1Id!, { days: 90 }),
+    enabled: !!p1Id && !!p2Id,
+  });
+  const { data: p2History } = useQuery({
+    queryKey: ['ratingHistory', p2Id],
+    queryFn: () => getRatingHistory(p2Id!, { days: 90 }),
+    enabled: !!p1Id && !!p2Id,
+  });
 
   const p1 = p1Data?.player;
   const p2 = p2Data?.player;
@@ -74,6 +87,26 @@ export default function Compare() {
 
   const p1Name = p1?.alias || selectedP1?.alias || 'Player 1';
   const p2Name = p2?.alias || selectedP2?.alias || 'Player 2';
+
+  const ratingChartData = useMemo(() => {
+    const p1Rm = p1History?.ladders?.rm || [];
+    const p2Rm = p2History?.ladders?.rm || [];
+    if (!p1Rm.length && !p2Rm.length) return [];
+
+    const dateMap = new Map<string, { date: string; p1Rating?: number; p2Rating?: number }>();
+    for (const snap of p1Rm) {
+      dateMap.set(snap.date, { date: snap.date, p1Rating: snap.rating });
+    }
+    for (const snap of p2Rm) {
+      const existing = dateMap.get(snap.date);
+      if (existing) {
+        existing.p2Rating = snap.rating;
+      } else {
+        dateMap.set(snap.date, { date: snap.date, p2Rating: snap.rating });
+      }
+    }
+    return Array.from(dateMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+  }, [p1History, p2History]);
 
   const pageTitle = hasBoth
     ? `${p1Name} vs ${p2Name} - Compare - wololo.top`
@@ -180,6 +213,59 @@ export default function Compare() {
               />
             </div>
           </div>
+
+          {/* Rating History Chart */}
+          {ratingChartData.length > 0 && (
+            <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
+              <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Rating History (90 days)</h2>
+              <ResponsiveContainer width="100%" height={280}>
+                <LineChart data={ratingChartData} margin={{ top: 5, right: 20, bottom: 5, left: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2a2a3a" />
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: '#9ca3af', fontSize: 11 }}
+                    tickFormatter={(v: string) => {
+                      const d = new Date(v);
+                      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    }}
+                    stroke="#4a4a5a"
+                  />
+                  <YAxis
+                    tick={{ fill: '#9ca3af', fontSize: 11 }}
+                    stroke="#4a4a5a"
+                    domain={['dataMin - 50', 'dataMax + 50']}
+                  />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#1e1e2e', border: '1px solid #3a3a4a', borderRadius: '8px' }}
+                    labelStyle={{ color: '#9ca3af' }}
+                    labelFormatter={(v) => {
+                      const d = new Date(String(v));
+                      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    }}
+                  />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="p1Rating"
+                    name={p1Name}
+                    stroke="#f0c040"
+                    strokeWidth={2}
+                    dot={false}
+                    connectNulls
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="p2Rating"
+                    name={p2Name}
+                    stroke="#4a7cff"
+                    strokeWidth={2}
+                    dot={false}
+                    connectNulls
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
 
           {/* Head-to-Head */}
           {h2h && h2h.total_games > 0 && (
