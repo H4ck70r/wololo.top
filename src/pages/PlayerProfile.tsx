@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches } from '../lib/api';
 import { countryFlag, MATCH_FILTERS } from '../lib/constants';
@@ -15,11 +16,15 @@ import ActivityHeatmap from '../components/ActivityHeatmap';
 import MatchRow from '../components/MatchRow';
 import SearchBar from '../components/SearchBar';
 
+const MATCHES_PER_PAGE = 50;
+
 export default function PlayerProfile() {
   const { profileId } = useParams<{ profileId: string }>();
   const [matchFilter, setMatchFilter] = useState('');
+  const [matchPage, setMatchPage] = useState(1);
   const [enriching, setEnriching] = useState(false);
   const enrichTriggered = useRef(false);
+  const matchesSectionRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
   const { data: playerData, isLoading: loadingPlayer, error: playerError } = useQuery({
@@ -35,8 +40,12 @@ export default function PlayerProfile() {
   });
 
   const { data: matchesData, isLoading: loadingMatches } = useQuery({
-    queryKey: ['playerMatches', profileId, matchFilter],
-    queryFn: () => getPlayerMatches(profileId!, { limit: 50, match_type: matchFilter || undefined }),
+    queryKey: ['playerMatches', profileId, matchFilter, matchPage],
+    queryFn: () => getPlayerMatches(profileId!, {
+      limit: MATCHES_PER_PAGE,
+      offset: (matchPage - 1) * MATCHES_PER_PAGE,
+      match_type: matchFilter || undefined,
+    }),
     enabled: !!profileId,
   });
 
@@ -102,9 +111,56 @@ export default function PlayerProfile() {
   const DONUT_COLORS = ['#22c55e', '#ef4444'];
 
   const matches = matchesData?.matches || [];
+  const totalMatches = matchesData?.total || 0;
+  const totalPages = Math.max(1, Math.ceil(totalMatches / MATCHES_PER_PAGE));
+
+  const handleFilterChange = (value: string) => {
+    setMatchFilter(value);
+    setMatchPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setMatchPage(page);
+    matchesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const getPageNumbers = (): (number | 'ellipsis')[] => {
+    const pages: (number | 'ellipsis')[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+      return pages;
+    }
+    pages.push(1);
+    if (matchPage > 4) pages.push('ellipsis');
+    const start = Math.max(2, matchPage - 2);
+    const end = Math.min(totalPages - 1, matchPage + 2);
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (matchPage < totalPages - 3) pages.push('ellipsis');
+    if (totalPages > 1) pages.push(totalPages);
+    return pages;
+  };
+
+  const pageTitle = player ? `${player.alias} - wololo.top` : 'Player Profile - wololo.top';
+  const pageDesc = player && soloLadder
+    ? `${player.alias} — Rating ${soloLadder.rating} (Rank #${soloLadder.rank}), ${overallWinRate}% win rate, ${totalGames} games played.`
+    : player
+    ? `${player.alias} — ${overallWinRate}% win rate, ${totalGames} games played on AOE2 DE.`
+    : 'AOE2 DE player profile and match history.';
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDesc} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDesc} />
+        <meta property="og:url" content={`https://wololo.top/player/${profileId}`} />
+        {player?.avatar && <meta property="og:image" content={player.avatar} />}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDesc} />
+        <link rel="canonical" href={`https://wololo.top/player/${profileId}`} />
+      </Helmet>
       {/* Player header */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-6 mb-6">
         <div className="flex items-center gap-4 flex-wrap">
@@ -261,7 +317,7 @@ export default function PlayerProfile() {
       </div>
 
       {/* Recent matches */}
-      <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
+      <div ref={matchesSectionRef} className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <div className="flex items-center gap-3">
             <h2 className="text-lg font-semibold text-gray-200 m-0">Recent Matches</h2>
@@ -273,7 +329,7 @@ export default function PlayerProfile() {
             {MATCH_FILTERS.map((f) => (
               <button
                 key={f.value}
-                onClick={() => setMatchFilter(f.value)}
+                onClick={() => handleFilterChange(f.value)}
                 className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
                   matchFilter === f.value
                     ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
@@ -297,6 +353,58 @@ export default function PlayerProfile() {
           </div>
         ) : (
           <p className="text-gray-500 text-sm text-center py-8">No recent matches found.</p>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-dark-400 flex-wrap gap-3">
+            <span className="text-xs text-gray-500">
+              Page {matchPage} of {totalPages}
+            </span>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => handlePageChange(matchPage - 1)}
+                disabled={matchPage === 1}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
+                  matchPage === 1
+                    ? 'text-gray-600 border-transparent cursor-not-allowed'
+                    : 'text-gray-400 border-dark-400 hover:text-gray-200 hover:border-gray-500'
+                }`}
+              >
+                Previous
+              </button>
+              {getPageNumbers().map((page, idx) =>
+                page === 'ellipsis' ? (
+                  <span key={`ellipsis-${idx}`} className="px-1.5 text-xs text-gray-600">
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
+                      matchPage === page
+                        ? 'bg-gold-400/20 text-gold-400 border-gold-400/30'
+                        : 'text-gray-400 border-transparent hover:text-gray-200 hover:border-gray-500'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+              <button
+                onClick={() => handlePageChange(matchPage + 1)}
+                disabled={matchPage === totalPages}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
+                  matchPage === totalPages
+                    ? 'text-gray-600 border-transparent cursor-not-allowed'
+                    : 'text-gray-400 border-dark-400 hover:text-gray-200 hover:border-gray-500'
+                }`}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -88,10 +88,10 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
 
   return (
     <div
-      className={`rounded-lg border transition-colors ${
+      className={`rounded-lg border border-l-4 transition-colors ${
         isWin
-          ? 'bg-win/5 border-win/20 hover:border-win/40'
-          : 'bg-loss/5 border-loss/20 hover:border-loss/40'
+          ? 'bg-win/5 border-win/20 hover:border-win/40 border-l-green-500'
+          : 'bg-loss/5 border-loss/20 hover:border-loss/40 border-l-red-500'
       }`}
     >
       <div

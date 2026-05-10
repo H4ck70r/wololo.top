@@ -118,7 +118,14 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
   const rm = data.ladders.rm;
   const teamRm = data.ladders.team_rm;
 
-  if (!rm && !teamRm) return null;
+  if (!rm && !teamRm) {
+    return (
+      <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
+        <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">Rating Milestones</h3>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">Rating milestones will appear as you climb the ladder</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">

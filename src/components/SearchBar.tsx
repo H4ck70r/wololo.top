@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { searchPlayers } from '../lib/api';
+import { countryFlag } from '../lib/constants';
 import type { PlayerSearchResult } from '../lib/types';
 
 interface SearchBarProps {
@@ -140,7 +141,10 @@ export default function SearchBar({ large = false, className = '' }: SearchBarPr
               }`}
             >
               <div className="flex-1 min-w-0">
-                <p className="font-medium truncate m-0">{player.alias}</p>
+                <p className="font-medium truncate m-0">
+                  {player.country && <span className="mr-1.5">{countryFlag(player.country)}</span>}
+                  {player.alias}
+                </p>
                 <p className="text-xs text-gray-500 m-0">ID: {player.profile_id}</p>
               </div>
               <div className="text-right shrink-0">

@@ -136,7 +136,12 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   }
 
   if (!data || data.total_opponents === 0) {
-    return null;
+    return (
+      <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
+        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">Rivals</h2>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">Play more matches to discover your rivals</p>
+      </div>
+    );
   }
 
   const { highlights, opponents } = data;

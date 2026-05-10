@@ -53,7 +53,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">Activity Patterns</h2>
-        <p className="text-gray-500 text-sm text-center py-8">No activity data available.</p>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">Activity data will appear after playing some matches</p>
       </div>
     );
   }

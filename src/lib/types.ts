@@ -6,6 +6,7 @@ export interface PlayerSearchResult {
   rank: number;
   lastmatchdate: number | null;
   ladder_type: string;
+  country?: string | null;
 }
 
 export interface PlayerSearchResponse {

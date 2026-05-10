@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { getHeadToHead, getPlayer } from '../lib/api';
 import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
 import SearchBar from '../components/SearchBar';
@@ -55,6 +56,11 @@ export default function HeadToHead() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
+      <Helmet>
+        <title>{playerName} vs {opponentName} - wololo.top</title>
+        <meta name="description" content={`Head-to-head: ${playerName} vs ${opponentName}. ${total_games} games, ${wins}-${losses} record (${win_rate}% win rate).`} />
+        <link rel="canonical" href={`https://wololo.top/h2h/${profileId}/${opponentId}`} />
+      </Helmet>
       {/* Players header */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-6 mb-6">
         <div className="flex items-center justify-between flex-wrap gap-4">

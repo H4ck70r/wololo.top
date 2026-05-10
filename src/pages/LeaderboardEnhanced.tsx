@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { getEnhancedLeaderboard, getEnhancedCountryStats } from '../lib/api';
 import { countryFlag } from '../lib/constants';
 import type { EnhancedLeaderboardResponse, CountryStatsResponse } from '../lib/types';
@@ -110,6 +111,11 @@ export default function LeaderboardEnhanced() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <Helmet>
+        <title>Leaderboard - wololo.top</title>
+        <meta name="description" content="Age of Empires II DE ranked leaderboard. Browse top players by rating, filter by country, clan, or rating range." />
+        <link rel="canonical" href="https://wololo.top/leaderboard" />
+      </Helmet>
       {/* Header */}
       <div className="flex flex-col gap-4 mb-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

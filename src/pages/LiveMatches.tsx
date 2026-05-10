@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { getLiveMatches } from '../lib/api';
 import LiveMatchCard from '../components/LiveMatchCard';
 
@@ -15,6 +16,11 @@ export default function LiveMatches() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
+      <Helmet>
+        <title>Live Matches - wololo.top</title>
+        <meta name="description" content={`${total} Age of Empires II matches happening right now. Watch live games and see who's playing.`} />
+        <link rel="canonical" href="https://wololo.top/live" />
+      </Helmet>
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <div>

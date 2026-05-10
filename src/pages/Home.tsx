@@ -1,8 +1,14 @@
+import { Helmet } from 'react-helmet-async';
 import SearchBar from '../components/SearchBar';
 
 export default function Home() {
   return (
     <div className="min-h-[calc(100vh-8rem)]">
+      <Helmet>
+        <title>wololo.top - Age of Empires II Player Stats & Analytics</title>
+        <meta name="description" content="Search any AOE2 DE player by name, Steam ID, or profile ID. Track ratings, match history, civilization stats, rivals, and activity patterns." />
+        <link rel="canonical" href="https://wololo.top" />
+      </Helmet>
       {/* Hero section */}
       <div className="relative overflow-hidden">
         {/* Decorative background */}
