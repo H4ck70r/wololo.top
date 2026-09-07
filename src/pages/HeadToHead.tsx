@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getHeadToHead, getPlayer } from '../lib/api';
 import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
+import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
 import SearchBar from '../components/SearchBar';
 
 export default function HeadToHead() {
@@ -192,7 +193,7 @@ export default function HeadToHead() {
         {recent_matches && recent_matches.length > 0 ? (
           <div className="flex flex-col gap-2">
             {recent_matches.map((match) => {
-              const isPlayerWin = match.player_result === 1;
+              const outcome = outcomeOf(match.player_result);
               const ratingChange =
                 match.player_old_rating != null && match.player_new_rating != null
                   ? match.player_new_rating - match.player_old_rating
@@ -203,17 +204,18 @@ export default function HeadToHead() {
                 <div
                   key={match.match_id}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg border ${
-                    isPlayerWin
+                    outcome === 'win'
                       ? 'bg-win/5 border-win/20'
-                      : 'bg-loss/5 border-loss/20'
+                      : outcome === 'loss'
+                        ? 'bg-loss/5 border-loss/20'
+                        : 'bg-pending/5 border-pending/20'
                   }`}
                 >
                   <div
-                    className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${
-                      isPlayerWin ? 'bg-win/20 text-win' : 'bg-loss/20 text-loss'
-                    }`}
+                    className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
+                    title={OUTCOME_LABEL[outcome]}
                   >
-                    {isPlayerWin ? 'W' : 'L'}
+                    {OUTCOME_BADGE[outcome]}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 text-sm flex-wrap">

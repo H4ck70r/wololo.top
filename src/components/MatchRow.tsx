@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
+import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP, OUTCOME_CARD } from '../lib/matchResult';
 import type { MatchRecord, MatchPlayer } from '../lib/types';
 
 interface MatchRowProps {
@@ -68,7 +69,8 @@ function PlayerLine({ player, isCurrentPlayer }: { player: MatchPlayer; isCurren
 
 export default function MatchRow({ match, profileId }: MatchRowProps) {
   const [expanded, setExpanded] = useState(false);
-  const isWin = match.result === 1;
+  const outcome = outcomeOf(match.result);
+  const isWin = outcome === 'win';
   const ratingChange =
     match.old_rating != null && match.new_rating != null
       ? match.new_rating - match.old_rating
@@ -88,11 +90,7 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
 
   return (
     <div
-      className={`rounded-lg border border-l-4 transition-colors ${
-        isWin
-          ? 'bg-win/5 border-win/20 hover:border-win/40 border-l-green-500'
-          : 'bg-loss/5 border-loss/20 hover:border-loss/40 border-l-red-500'
-      }`}
+      className={`rounded-lg border border-l-4 transition-colors ${OUTCOME_CARD[outcome]}`}
     >
       <div
         className={`flex items-center gap-3 px-4 py-3 select-none ${isTeamGame ? 'cursor-pointer' : ''}`}
@@ -100,11 +98,10 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
       >
         {/* W/L badge */}
         <div
-          className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${
-            isWin ? 'bg-win/20 text-win' : 'bg-loss/20 text-loss'
-          }`}
+          className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
+          title={OUTCOME_LABEL[outcome]}
         >
-          {isWin ? 'W' : 'L'}
+          {OUTCOME_BADGE[outcome]}
         </div>
 
         {/* Player civ */}
@@ -193,8 +190,10 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
             {/* My team */}
             {myTeam && (
               <div>
-                <p className={`text-[10px] uppercase tracking-wider mb-1 m-0 ${isWin ? 'text-win/70' : 'text-loss/70'}`}>
-                  {isWin ? 'Winners' : 'Losers'} &middot; Team {myTeam.team_id}
+                <p className={`text-[10px] uppercase tracking-wider mb-1 m-0 ${
+                  outcome === 'win' ? 'text-win/70' : outcome === 'loss' ? 'text-loss/70' : 'text-pending/70'
+                }`}>
+                  {outcome === 'pending' ? 'Undecided' : isWin ? 'Winners' : 'Losers'} &middot; Team {myTeam.team_id}
                 </p>
                 {myTeam.players.map((p) => (
                   <PlayerLine key={p.profile_id} player={p} isCurrentPlayer={p.profile_id === pid} />
@@ -205,8 +204,10 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
             {/* Enemy teams */}
             {enemyTeams.map((team) => (
               <div key={team.team_id}>
-                <p className={`text-[10px] uppercase tracking-wider mb-1 m-0 ${!isWin ? 'text-win/70' : 'text-loss/70'}`}>
-                  {!isWin ? 'Winners' : 'Losers'} &middot; Team {team.team_id}
+                <p className={`text-[10px] uppercase tracking-wider mb-1 m-0 ${
+                  outcome === 'pending' ? 'text-pending/70' : !isWin ? 'text-win/70' : 'text-loss/70'
+                }`}>
+                  {outcome === 'pending' ? 'Undecided' : !isWin ? 'Winners' : 'Losers'} &middot; Team {team.team_id}
                 </p>
                 {team.players.map((p) => (
                   <PlayerLine key={p.profile_id} player={p} isCurrentPlayer={false} />

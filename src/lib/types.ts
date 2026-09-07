@@ -1,3 +1,7 @@
+// Match outcome encoding used by every `result` field below:
+//   1 = win, 0 = loss, -1 = unknown (not decided upstream yet).
+// Never render "not 1" as a loss -- use outcomeOf() from ./matchResult.
+
 export interface PlayerSearchResult {
   profile_id: number;
   steamid: string | null;

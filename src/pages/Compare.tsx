@@ -6,7 +6,8 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend,
 } from 'recharts';
 import { getPlayer, getPlayerStats, getHeadToHead, getRatingHistory } from '../lib/api';
-import { getCivName, countryFlag, cleanMapName, formatDuration } from '../lib/constants';
+import { getCivName, getCivIcon, countryFlag, cleanMapName, formatDuration } from '../lib/constants';
+import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
 import PlayerSearchInput from '../components/PlayerSearchInput';
 import type { PlayerSearchResult } from '../lib/types';
 
@@ -310,18 +311,25 @@ export default function Compare() {
                   <p className="text-xs text-gray-500 mb-2 m-0">Last {Math.min(5, h2h.recent_matches.length)} matches</p>
                   <div className="flex flex-col gap-1.5">
                     {h2h.recent_matches.slice(0, 5).map((m) => {
-                      const isP1Win = m.player_result === 1;
+                      const outcome = outcomeOf(m.player_result);
                       const startedAt = m.started_at ? new Date(m.started_at) : null;
                       return (
                         <div key={m.match_id} className="flex items-center gap-2 text-xs">
-                          <span className={`w-5 h-5 rounded flex items-center justify-center font-bold text-[10px] ${
-                            isP1Win ? 'bg-win/20 text-win' : 'bg-loss/20 text-loss'
-                          }`}>
-                            {isP1Win ? 'W' : 'L'}
+                          <span
+                            className={`w-5 h-5 rounded flex items-center justify-center font-bold text-[10px] ${OUTCOME_CHIP[outcome]}`}
+                            title={OUTCOME_LABEL[outcome]}
+                          >
+                            {OUTCOME_BADGE[outcome]}
                           </span>
-                          <span className="text-gold-400">{m.player_civ_name || getCivName(m.player_civ)}</span>
+                          <span className="text-gold-400 flex items-center gap-1">
+                            {getCivIcon(m.player_civ) && <img src={getCivIcon(m.player_civ)!} alt="" className="w-3.5 h-3.5 rounded" />}
+                            {m.player_civ_name || getCivName(m.player_civ)}
+                          </span>
                           <span className="text-gray-600">vs</span>
-                          <span className="text-blue-accent">{m.opponent_civ_name || getCivName(m.opponent_civ)}</span>
+                          <span className="text-blue-accent flex items-center gap-1">
+                            {getCivIcon(m.opponent_civ) && <img src={getCivIcon(m.opponent_civ)!} alt="" className="w-3.5 h-3.5 rounded" />}
+                            {m.opponent_civ_name || getCivName(m.opponent_civ)}
+                          </span>
                           <span className="text-gray-600 ml-auto">{m.map || cleanMapName(m.map_name)}</span>
                           {m.duration_seconds && <span className="text-gray-600">{formatDuration(m.duration_seconds)}</span>}
                           {startedAt && <span className="text-gray-600">{startedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>}
@@ -479,7 +487,12 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
           <tbody>
             {stats.slice(0, 10).map((c, i) => (
               <tr key={i} className="border-b border-dark-500/50">
-                <td className="py-1.5 px-1 text-gray-200">{c.civilization || getCivName(c.civ_id)}</td>
+                <td className="py-1.5 px-1 text-gray-200">
+                  <div className="flex items-center gap-1.5">
+                    {getCivIcon(c.civ_id) && <img src={getCivIcon(c.civ_id)!} alt="" className="w-4 h-4 rounded object-cover" />}
+                    {c.civilization || getCivName(c.civ_id)}
+                  </div>
+                </td>
                 <td className="py-1.5 px-1 text-right text-gray-400">{c.games}</td>
                 <td className="py-1.5 px-1 text-right text-gray-300">{c.win_rate}%</td>
               </tr>

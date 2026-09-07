@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getMatchDetail } from '../lib/api';
 import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/constants';
+import { outcomeOf } from '../lib/matchResult';
 
 export default function MatchDetailPage() {
   const { matchId } = useParams<{ matchId: string }>();
@@ -72,22 +73,23 @@ export default function MatchDetailPage() {
       {/* Teams */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {match.teams.map((team) => {
-          const isWinner = team.result === 1;
+          const teamOutcome = outcomeOf(team.result);
+          const isWinner = teamOutcome === 'win';
           return (
             <div
               key={team.team_id}
               className={`bg-dark-700 border rounded-xl overflow-hidden ${
-                isWinner ? 'border-win/30' : team.result === 0 ? 'border-loss/30' : 'border-dark-400'
+                isWinner ? 'border-win/30' : teamOutcome === 'loss' ? 'border-loss/30' : 'border-pending/30'
               }`}
             >
               <div className={`px-5 py-3 border-b ${
-                isWinner ? 'bg-win/10 border-win/20' : team.result === 0 ? 'bg-loss/10 border-loss/20' : 'bg-dark-600 border-dark-400'
+                isWinner ? 'bg-win/10 border-win/20' : teamOutcome === 'loss' ? 'bg-loss/10 border-loss/20' : 'bg-pending/10 border-pending/20'
               }`}>
                 <div className="flex items-center justify-between">
                   <span className={`text-sm font-bold ${
-                    isWinner ? 'text-win' : team.result === 0 ? 'text-loss' : 'text-gray-400'
+                    isWinner ? 'text-win' : teamOutcome === 'loss' ? 'text-loss' : 'text-pending'
                   }`}>
-                    {isWinner ? 'VICTORY' : team.result === 0 ? 'DEFEAT' : 'IN PROGRESS'}
+                    {isWinner ? 'VICTORY' : teamOutcome === 'loss' ? 'DEFEAT' : 'UNDECIDED'}
                   </span>
                   <span className="text-xs text-gray-500">Team {team.team_id}</span>
                 </div>
