@@ -72,9 +72,16 @@ export function getCivIcon(civId: number | undefined | null): string | null {
   return `/icons/civs/${name.toLowerCase()}.png`;
 }
 
+// Keep in sync with cleanMapName in the API (src/utils/aoe2Normalize.js):
+// map_name is stored canonically (lowercase, "_"-separated), so the display
+// name has to be title-cased here too or maps render as "arabia".
 export function cleanMapName(mapName: string | undefined | null): string {
   if (!mapName) return 'Unknown';
-  return mapName.replace(/\.(rms2?|scx)$/i, '').replace(/_/g, ' ');
+  if (mapName === 'my map' || mapName === 'my_map') return 'Custom Map';
+  return mapName
+    .replace(/\.(rms2?|scx)$/i, '')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export function formatDuration(seconds: number | undefined | null): string {
