@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getCivMeta, getMapMeta } from '../lib/api';
-import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
+import { getCivName, getCivIcon, cleanMapName, formatDuration } from '../lib/constants';
 
 const MATCH_TYPE_OPTIONS = [
   { label: '1v1 RM', value: '6' },
@@ -177,7 +177,12 @@ export default function CivMeta() {
                     return (
                       <tr key={civ.civ_id} className="border-b border-dark-500/50 hover:bg-dark-600/50">
                         <td className="py-2.5 px-4 text-gray-500 text-xs">{i + 1}</td>
-                        <td className="py-2.5 px-3 text-gray-200 font-medium">{getCivName(civ.civ_id)}</td>
+                        <td className="py-2.5 px-3 text-gray-200 font-medium">
+                          <div className="flex items-center gap-2">
+                            {getCivIcon(civ.civ_id) && <img src={getCivIcon(civ.civ_id)!} alt="" className="w-5 h-5 rounded object-cover" />}
+                            {getCivName(civ.civ_id)}
+                          </div>
+                        </td>
                         <td className="py-2.5 px-3 text-right text-gray-400">{civ.games.toLocaleString()}</td>
                         <td className={`py-2.5 px-3 text-right font-medium ${
                           civ.win_rate >= 52 ? 'text-win' : civ.win_rate <= 48 ? 'text-loss' : 'text-gray-300'
@@ -230,8 +235,18 @@ export default function CivMeta() {
                   <tbody>
                     {civData.matchups.slice(0, 50).map((m, i) => (
                       <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                        <td className="py-2 px-4 text-gray-200">{getCivName(m.civ1)}</td>
-                        <td className="py-2 px-3 text-gray-200">{getCivName(m.civ2)}</td>
+                        <td className="py-2 px-4 text-gray-200">
+                          <div className="flex items-center gap-1.5">
+                            {getCivIcon(m.civ1) && <img src={getCivIcon(m.civ1)!} alt="" className="w-4 h-4 rounded object-cover" />}
+                            {getCivName(m.civ1)}
+                          </div>
+                        </td>
+                        <td className="py-2 px-3 text-gray-200">
+                          <div className="flex items-center gap-1.5">
+                            {getCivIcon(m.civ2) && <img src={getCivIcon(m.civ2)!} alt="" className="w-4 h-4 rounded object-cover" />}
+                            {getCivName(m.civ2)}
+                          </div>
+                        </td>
                         <td className="py-2 px-3 text-right text-gray-400">{m.games.toLocaleString()}</td>
                         <td className={`py-2 px-3 text-right font-medium ${
                           m.civ1_win_rate >= 52 ? 'text-win' : m.civ1_win_rate <= 48 ? 'text-loss' : 'text-gray-300'
