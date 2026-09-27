@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TablePagination from './TablePagination';
 import { getCivName, getCivIcon } from '../lib/constants';
 import type { CivStat } from '../lib/types';
 
@@ -12,8 +13,11 @@ type SortDir = 'asc' | 'desc';
 export default function CivStatsTable({ stats }: CivStatsTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>('games');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 12;
 
   const handleSort = (key: SortKey) => {
+    setPage(1); // a new ordering makes the current page meaningless
     if (sortKey === key) {
       setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
     } else {
@@ -42,6 +46,10 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
     }
     return sortDir === 'asc' ? cmp : -cmp;
   });
+
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const visible = sorted.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   const SortIcon = ({ col }: { col: SortKey }) => (
     <span className="ml-1 text-gray-600">
@@ -85,7 +93,7 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
           </tr>
         </thead>
         <tbody>
-          {sorted.map((civ) => {
+          {visible.map((civ) => {
             // win_rate is null when no game against this entry has a decided
             // result yet; parseFloat(null) used to render as "NaN%".
             const wrRaw = civ.win_rate == null ? NaN : parseFloat(civ.win_rate);
@@ -129,6 +137,13 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
           })}
         </tbody>
       </table>
+      <TablePagination
+        page={safePage}
+        pageSize={PAGE_SIZE}
+        total={sorted.length}
+        onPageChange={setPage}
+        noun="civilizations"
+      />
     </div>
   );
 }
