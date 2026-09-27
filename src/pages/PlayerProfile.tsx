@@ -403,7 +403,7 @@ export default function PlayerProfile() {
           <button
             key={t.id}
             onClick={() => setActiveTab(t.id)}
-            className={`px-3 sm:px-4 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
+            className={`px-2 sm:px-4 py-2.5 text-[13px] sm:text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
               activeTab === t.id
                 ? 'border-gold-400 text-gold-400'
                 : 'border-transparent text-gray-400 hover:text-gray-200'
