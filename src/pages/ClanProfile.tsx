@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
@@ -24,6 +25,7 @@ async function getClanPlayers(clanName: string): Promise<ClanResponse> {
 }
 
 export default function ClanProfile() {
+  const { t } = useT();
   const { clanName } = useParams<{ clanName: string }>();
 
   const { data, isLoading, error } = useQuery({
@@ -55,8 +57,8 @@ export default function ClanProfile() {
   if (error || !data || players.length === 0) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12 text-center">
-        <h2 className="text-2xl font-bold text-gray-300 mb-4">Clan Not Found</h2>
-        <p className="text-gray-500 mb-6">No players found with clan tag "{clanName}".</p>
+        <h2 className="text-2xl font-bold text-gray-300 mb-4">{t('clan.notFound')}</h2>
+        <p className="text-gray-500 mb-6">{t('clan.noPlayers', { tag: clanName ?? '' })}</p>
         <Link to="/leaderboard" className="text-gold-400 hover:text-gold-300 no-underline">
           Back to Leaderboard
         </Link>
@@ -81,36 +83,36 @@ export default function ClanProfile() {
           <div className="flex-1">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 m-0">[{clanName}]</h1>
             <p className="text-sm text-gray-500 mt-1 m-0">
-              {totalMembers} member{totalMembers !== 1 ? 's' : ''}
-              {countries.length > 0 && ` · ${countries.length} countr${countries.length !== 1 ? 'ies' : 'y'}`}
+              {t('clan.membersCount', { n: totalMembers })}
+              {countries.length > 0 && ` · ${t('clan.countriesCount', { n: countries.length })}`}
             </p>
           </div>
         </div>
 
         {/* Quick stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-          <StatBox label="Members" value={totalMembers.toString()} />
-          <StatBox label="Avg Rating" value={avgRating > 0 ? avgRating.toString() : '-'} />
-          <StatBox label="Total Wins" value={totalWins.toLocaleString()} />
-          <StatBox label="Total Losses" value={totalLosses.toLocaleString()} />
+          <StatBox label={t('clan.members')} value={totalMembers.toString()} />
+          <StatBox label={t('clan.avgRating')} value={avgRating > 0 ? avgRating.toString() : '-'} />
+          <StatBox label={t('clan.totalWins')} value={totalWins.toLocaleString()} />
+          <StatBox label={t('clan.totalLosses')} value={totalLosses.toLocaleString()} />
         </div>
       </div>
 
       {/* Members list */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-dark-400">
-          <h2 className="text-lg font-semibold text-gray-200 m-0">Members</h2>
+          <h2 className="text-lg font-semibold text-gray-200 m-0">{t('clan.members')}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-dark-400 bg-dark-800/50">
                 <th className="text-left py-3 px-4 text-gray-400 font-medium w-8">#</th>
-                <th className="text-left py-3 px-3 text-gray-400 font-medium">Player</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium">Rating</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium hidden sm:table-cell">Rank</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium hidden sm:table-cell">W/L</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium">Win %</th>
+                <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('common.player')}</th>
+                <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.rating')}</th>
+                <th className="text-right py-3 px-3 text-gray-400 font-medium hidden sm:table-cell">{t('common.rank')}</th>
+                <th className="text-right py-3 px-3 text-gray-400 font-medium hidden sm:table-cell">{t('lb.wl')}</th>
+                <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('compare.winPct')}</th>
               </tr>
             </thead>
             <tbody>

@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -12,6 +13,7 @@ const LEADERBOARD_TYPES = [
 ];
 
 export default function Leaderboard() {
+  const { t } = useT();
   const [ladderType, setLadderType] = useState<'rm' | 'team-rm'>('rm');
   const [page, setPage] = useState(1);
 
@@ -29,7 +31,7 @@ export default function Leaderboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-100 m-0">Leaderboard</h1>
+          <h1 className="text-3xl font-bold text-gray-100 m-0">{t('lb.title')}</h1>
           {pagination && (
             <p className="text-sm text-gray-500 mt-1 m-0">{pagination.total.toLocaleString()} players ranked</p>
           )}
@@ -63,19 +65,19 @@ export default function Leaderboard() {
           </div>
         ) : error ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">Failed to load leaderboard data.</p>
+            <p className="text-gray-500">{t('lb.failed')}</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-dark-400 bg-dark-600/50">
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium w-16">Rank</th>
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium">Player</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium">Rating</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium hidden sm:table-cell">W / L</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium">Win Rate</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium hidden md:table-cell">Streak</th>
+                  <th className="text-left py-3 px-4 text-gray-400 font-medium w-16">{t('common.rank')}</th>
+                  <th className="text-left py-3 px-4 text-gray-400 font-medium">{t('common.player')}</th>
+                  <th className="text-right py-3 px-4 text-gray-400 font-medium">{t('common.rating')}</th>
+                  <th className="text-right py-3 px-4 text-gray-400 font-medium hidden sm:table-cell">{t('lb.wl')}</th>
+                  <th className="text-right py-3 px-4 text-gray-400 font-medium">{t('common.winRate')}</th>
+                  <th className="text-right py-3 px-4 text-gray-400 font-medium hidden md:table-cell">{t('common.streak')}</th>
                 </tr>
               </thead>
               <tbody>

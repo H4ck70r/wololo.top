@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useState, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +13,7 @@ import PlayerSearchInput from '../components/PlayerSearchInput';
 import type { PlayerSearchResult } from '../lib/types';
 
 export default function Compare() {
+  const { t } = useT();
   const [searchParams, setSearchParams] = useSearchParams();
   const p1Id = searchParams.get('p1');
   const p2Id = searchParams.get('p2');
@@ -121,14 +123,14 @@ export default function Compare() {
         <link rel="canonical" href={hasBoth ? `https://wololo.top/compare?p1=${p1Id}&p2=${p2Id}` : 'https://wololo.top/compare'} />
       </Helmet>
 
-      <h1 className="text-3xl font-bold text-gray-100 mb-6 m-0">Compare Players</h1>
+      <h1 className="text-3xl font-bold text-gray-100 mb-6 m-0">{t('compare.title')}</h1>
 
       {/* Player selectors */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <PlayerSelector
           player={p1}
           searchResult={selectedP1}
-          label="Player 1"
+          label={t('compare.player1')}
           color="gold"
           onSelect={handleSelectP1}
           onClear={() => clearPlayer('p1')}
@@ -137,7 +139,7 @@ export default function Compare() {
         <PlayerSelector
           player={p2}
           searchResult={selectedP2}
-          label="Player 2"
+          label={t('compare.player2')}
           color="blue"
           onSelect={handleSelectP2}
           onClear={() => clearPlayer('p2')}
@@ -150,8 +152,8 @@ export default function Compare() {
           <svg className="w-16 h-16 text-dark-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
-          <p className="text-gray-400 font-medium m-0">Select two players to compare</p>
-          <p className="text-sm text-gray-500 mt-1 m-0">Search by player name, profile ID, or Steam ID.</p>
+          <p className="text-gray-400 font-medium m-0">{t('compare.selectTwo')}</p>
+          <p className="text-sm text-gray-500 mt-1 m-0">{t('compare.searchHint')}</p>
         </div>
       )}
 
@@ -159,54 +161,54 @@ export default function Compare() {
         <>
           {/* Ratings comparison */}
           <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
-            <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Ratings</h2>
+            <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('compare.ratings')}</h2>
             <div className="space-y-3">
               <CompareRow
-                label="Solo RM Rating"
+                label={t('compare.soloRating')}
                 v1={p1Solo?.rating}
                 v2={p2Solo?.rating}
                 format="number"
               />
               <CompareRow
-                label="Solo RM Rank"
+                label={t('compare.soloRank')}
                 v1={p1Solo?.rank}
                 v2={p2Solo?.rank}
                 format="rank"
                 lowerIsBetter
               />
               <CompareRow
-                label="Team RM Rating"
+                label={t('compare.teamRating')}
                 v1={p1Team?.rating}
                 v2={p2Team?.rating}
                 format="number"
               />
               <CompareRow
-                label="Team RM Rank"
+                label={t('compare.teamRank')}
                 v1={p1Team?.rank}
                 v2={p2Team?.rank}
                 format="rank"
                 lowerIsBetter
               />
               <CompareRow
-                label="Overall Win Rate"
+                label={t('compare.overallWinRate')}
                 v1={p1 ? parseFloat(p1.winrate || '0') : undefined}
                 v2={p2 ? parseFloat(p2.winrate || '0') : undefined}
                 format="percent"
               />
               <CompareRow
-                label="Total Games"
+                label={t('compare.totalGames')}
                 v1={p1 ? (p1.wins + p1.losses) : undefined}
                 v2={p2 ? (p2.wins + p2.losses) : undefined}
                 format="number"
               />
               <CompareRow
-                label="Wins"
+                label={t('common.wins')}
                 v1={p1?.wins}
                 v2={p2?.wins}
                 format="number"
               />
               <CompareRow
-                label="Losses"
+                label={t('common.losses')}
                 v1={p1?.losses}
                 v2={p2?.losses}
                 format="number"
@@ -272,7 +274,7 @@ export default function Compare() {
           {h2h && h2h.total_games > 0 && (
             <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-200 m-0">Head to Head</h2>
+                <h2 className="text-lg font-semibold text-gray-200 m-0">{t('compare.headToHead')}</h2>
                 <Link
                   to={`/h2h/${p1Id}/${p2Id}`}
                   className="text-xs text-gold-400 hover:text-gold-300 no-underline"
@@ -375,6 +377,7 @@ function PlayerSelector({
   onClear: () => void;
   excludeProfileId?: number;
 }) {
+  const { t } = useT();
   const borderColor = color === 'gold' ? 'border-gold-500/30' : 'border-blue-accent/30';
   const textColor = color === 'gold' ? 'text-gold-400' : 'text-blue-accent';
 
@@ -401,7 +404,7 @@ function PlayerSelector({
               {player.wins + player.losses} games
             </p>
           </div>
-          <button onClick={onClear} className="text-gray-500 hover:text-gray-300 p-1 bg-transparent border-none cursor-pointer" title="Remove">
+          <button onClick={onClear} className="text-gray-500 hover:text-gray-300 p-1 bg-transparent border-none cursor-pointer" title={t('compare.remove')}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -469,6 +472,7 @@ function CompareRow({
 }
 
 function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 'gold' | 'blue' }) {
+  const { t } = useT();
   const textColor = color === 'gold' ? 'text-gold-400' : 'text-blue-accent';
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
@@ -479,9 +483,9 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-dark-400">
-              <th className="text-left py-2 px-1 text-gray-400 font-medium">Civilization</th>
-              <th className="text-right py-2 px-1 text-gray-400 font-medium">Games</th>
-              <th className="text-right py-2 px-1 text-gray-400 font-medium">Win %</th>
+              <th className="text-left py-2 px-1 text-gray-400 font-medium">{t('common.civilization')}</th>
+              <th className="text-right py-2 px-1 text-gray-400 font-medium">{t('common.games')}</th>
+              <th className="text-right py-2 px-1 text-gray-400 font-medium">{t('compare.winPct')}</th>
             </tr>
           </thead>
           <tbody>
@@ -500,13 +504,14 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
           </tbody>
         </table>
       ) : (
-        <p className="text-gray-500 text-sm">No civ data available.</p>
+        <p className="text-gray-500 text-sm">{t('compare.noCivData')}</p>
       )}
     </div>
   );
 }
 
 function MapColumn({ name, stats, color }: { name: string; stats: any[]; color: 'gold' | 'blue' }) {
+  const { t } = useT();
   const textColor = color === 'gold' ? 'text-gold-400' : 'text-blue-accent';
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
@@ -517,9 +522,9 @@ function MapColumn({ name, stats, color }: { name: string; stats: any[]; color: 
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-dark-400">
-              <th className="text-left py-2 px-1 text-gray-400 font-medium">Map</th>
-              <th className="text-right py-2 px-1 text-gray-400 font-medium">Games</th>
-              <th className="text-right py-2 px-1 text-gray-400 font-medium">Win %</th>
+              <th className="text-left py-2 px-1 text-gray-400 font-medium">{t('common.map')}</th>
+              <th className="text-right py-2 px-1 text-gray-400 font-medium">{t('common.games')}</th>
+              <th className="text-right py-2 px-1 text-gray-400 font-medium">{t('compare.winPct')}</th>
             </tr>
           </thead>
           <tbody>
@@ -533,7 +538,7 @@ function MapColumn({ name, stats, color }: { name: string; stats: any[]; color: 
           </tbody>
         </table>
       ) : (
-        <p className="text-gray-500 text-sm">No map data available.</p>
+        <p className="text-gray-500 text-sm">{t('compare.noMapData')}</p>
       )}
     </div>
   );

@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
@@ -28,6 +29,7 @@ const DAYS_OPTIONS = [
 ];
 
 export default function CivMeta() {
+  const { t } = useT();
   const [matchType, setMatchType] = useState('6');
   const [eloBracket, setEloBracket] = useState(0);
   const [days, setDays] = useState(90);
@@ -59,9 +61,9 @@ export default function CivMeta() {
         <link rel="canonical" href="https://wololo.top/stats" />
       </Helmet>
 
-      <h1 className="text-3xl font-bold text-gray-100 mb-2 m-0">Civilization Meta</h1>
+      <h1 className="text-3xl font-bold text-gray-100 mb-2 m-0">{t('meta.title')}</h1>
       <p className="text-sm text-gray-500 mb-6 m-0">
-        Win rates across {civData ? civData.total_matches.toLocaleString() : '...'} matches
+        {t('meta.winRatesAcross', { n: civData ? civData.total_matches.toLocaleString() : '...' })}
       </p>
 
       {/* Filters */}
@@ -69,7 +71,7 @@ export default function CivMeta() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Match type */}
           <div>
-            <p className="text-xs text-gray-500 mb-1.5 m-0">Match Type</p>
+            <p className="text-xs text-gray-500 mb-1.5 m-0">{t('meta.matchType')}</p>
             <div className="flex items-center gap-1 flex-wrap">
               {MATCH_TYPE_OPTIONS.map(opt => (
                 <button
@@ -88,7 +90,7 @@ export default function CivMeta() {
           </div>
           {/* ELO bracket */}
           <div>
-            <p className="text-xs text-gray-500 mb-1.5 m-0">ELO Bracket</p>
+            <p className="text-xs text-gray-500 mb-1.5 m-0">{t('meta.eloBracket')}</p>
             <div className="flex items-center gap-1 flex-wrap">
               {ELO_BRACKETS.map((b, i) => (
                 <button
@@ -107,7 +109,7 @@ export default function CivMeta() {
           </div>
           {/* Time range */}
           <div>
-            <p className="text-xs text-gray-500 mb-1.5 m-0">Time Range</p>
+            <p className="text-xs text-gray-500 mb-1.5 m-0">{t('meta.timeRange')}</p>
             <div className="flex items-center gap-1 flex-wrap">
               {DAYS_OPTIONS.map(opt => (
                 <button
@@ -155,7 +157,7 @@ export default function CivMeta() {
             </div>
           ) : civs.length === 0 ? (
             <div className="bg-dark-700 border border-dark-400 rounded-xl p-12 text-center">
-              <p className="text-gray-400 m-0">No data available for these filters.</p>
+              <p className="text-gray-400 m-0">{t('meta.noData')}</p>
             </div>
           ) : (
             <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-x-auto">
@@ -163,9 +165,9 @@ export default function CivMeta() {
                 <thead>
                   <tr className="border-b border-dark-400 bg-dark-800/50">
                     <th className="text-left py-3 px-4 text-gray-400 font-medium w-8">#</th>
-                    <th className="text-left py-3 px-3 text-gray-400 font-medium">Civilization</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">Games</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">Win Rate</th>
+                    <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('common.civilization')}</th>
+                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
+                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.winRate')}</th>
                     <th className="text-left py-3 px-3 text-gray-400 font-medium hidden sm:table-cell" style={{ width: '40%' }}></th>
                   </tr>
                 </thead>
@@ -221,15 +223,15 @@ export default function CivMeta() {
           {/* Matchups grid */}
           {civData?.matchups && civData.matchups.length > 0 && (
             <div className="mt-6">
-              <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Top Matchups</h2>
+              <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('meta.topMatchups')}</h2>
               <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-dark-400 bg-dark-800/50">
-                      <th className="text-left py-3 px-4 text-gray-400 font-medium">Civ A</th>
-                      <th className="text-left py-3 px-3 text-gray-400 font-medium">Civ B</th>
-                      <th className="text-right py-3 px-3 text-gray-400 font-medium">Games</th>
-                      <th className="text-right py-3 px-3 text-gray-400 font-medium">A Win %</th>
+                      <th className="text-left py-3 px-4 text-gray-400 font-medium">{t('meta.civA')}</th>
+                      <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('meta.civB')}</th>
+                      <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
+                      <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('meta.aWinPct')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -271,7 +273,7 @@ export default function CivMeta() {
             </div>
           ) : !mapData?.maps?.length ? (
             <div className="bg-dark-700 border border-dark-400 rounded-xl p-12 text-center">
-              <p className="text-gray-400 m-0">No map data available for these filters.</p>
+              <p className="text-gray-400 m-0">{t('meta.noMapData')}</p>
             </div>
           ) : (
             <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
@@ -279,10 +281,10 @@ export default function CivMeta() {
                 <thead>
                   <tr className="border-b border-dark-400 bg-dark-800/50">
                     <th className="text-left py-3 px-4 text-gray-400 font-medium w-8">#</th>
-                    <th className="text-left py-3 px-3 text-gray-400 font-medium">Map</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">Games</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">Avg Duration</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">Players</th>
+                    <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('common.map')}</th>
+                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
+                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('meta.avgDuration')}</th>
+                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.players')}</th>
                   </tr>
                 </thead>
                 <tbody>

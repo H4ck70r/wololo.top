@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
@@ -7,6 +8,7 @@ import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/ma
 import SearchBar from '../components/SearchBar';
 
 export default function HeadToHead() {
+  const { t } = useT();
   const { profileId, opponentId } = useParams<{ profileId: string; opponentId: string }>();
 
   const { data, isLoading, error } = useQuery({
@@ -40,8 +42,8 @@ export default function HeadToHead() {
   if (error || !data) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12 text-center">
-        <h2 className="text-2xl font-bold text-gray-300 mb-4">Head to Head Not Found</h2>
-        <p className="text-gray-500 mb-6">No matches found between these players.</p>
+        <h2 className="text-2xl font-bold text-gray-300 mb-4">{t('h2h.notFound')}</h2>
+        <p className="text-gray-500 mb-6">{t('h2h.noMatches')}</p>
         <SearchBar className="max-w-lg mx-auto" />
       </div>
     );
@@ -75,13 +77,13 @@ export default function HeadToHead() {
             )}
             <div>
               <p className="font-bold text-xl text-gold-400 m-0">{playerName}</p>
-              <p className="text-sm text-gray-500 m-0">{win_rate}% win rate</p>
+              <p className="text-sm text-gray-500 m-0">{t('h2h.winRateOf', { pct: win_rate })}</p>
             </div>
           </div>
 
           <div className="text-center">
             <p className="text-3xl font-black text-gray-400 m-0">VS</p>
-            <p className="text-xs text-gray-500 mt-1 m-0">{total_games} games</p>
+            <p className="text-xs text-gray-500 mt-1 m-0">{t('h2h.gamesCount', { n: total_games })}</p>
           </div>
 
           <div className="flex items-center gap-3 flex-row-reverse">
@@ -94,7 +96,7 @@ export default function HeadToHead() {
             )}
             <div className="text-right">
               <p className="font-bold text-xl text-blue-accent m-0">{opponentName}</p>
-              <p className="text-sm text-gray-500 m-0">{(100 - win_rate).toFixed(1)}% win rate</p>
+              <p className="text-sm text-gray-500 m-0">{t('h2h.winRateOf', { pct: (100 - win_rate).toFixed(1) })}</p>
             </div>
           </div>
         </div>
@@ -102,8 +104,8 @@ export default function HeadToHead() {
         {/* Win bar */}
         <div className="mt-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-bold text-gold-400">{wins} wins</span>
-            <span className="text-sm font-bold text-blue-accent">{losses} wins</span>
+            <span className="text-sm font-bold text-gold-400">{t('h2h.winsCount', { n: wins })}</span>
+            <span className="text-sm font-bold text-blue-accent">{t('h2h.winsCount', { n: losses })}</span>
           </div>
           <div className="w-full h-4 bg-dark-400 rounded-full overflow-hidden flex">
             <div
@@ -121,7 +123,7 @@ export default function HeadToHead() {
       {/* Civ matchups & Map stats */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Civilization Matchups</h2>
+          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('h2h.civMatchups')}</h2>
           {civ_matchups && civ_matchups.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-xs sm:text-sm">
@@ -133,8 +135,8 @@ export default function HeadToHead() {
                     <th className="text-left py-2 px-2 text-gray-400 font-medium">
                       <div className="max-w-[5rem] sm:max-w-none truncate">{opponentName}</div>
                     </th>
-                    <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">Games</span></th>
-                    <th className="text-right py-2 px-2 text-gray-400 font-medium">Score</th>
+                    <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">{t('common.games')}</span></th>
+                    <th className="text-right py-2 px-2 text-gray-400 font-medium">{t('h2h.score')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -158,20 +160,20 @@ export default function HeadToHead() {
               </table>
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">No civ matchup data available.</p>
+            <p className="text-gray-500 text-sm">{t('h2h.noCivData')}</p>
           )}
         </div>
 
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Map Stats</h2>
+          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('h2h.mapStats')}</h2>
           {map_stats && map_stats.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-dark-400">
-                    <th className="text-left py-2 px-2 text-gray-400 font-medium">Map</th>
-                    <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">Games</span></th>
-                    <th className="text-right py-2 px-2 text-gray-400 font-medium">Score</th>
+                    <th className="text-left py-2 px-2 text-gray-400 font-medium">{t('common.map')}</th>
+                    <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">{t('common.games')}</span></th>
+                    <th className="text-right py-2 px-2 text-gray-400 font-medium">{t('h2h.score')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -192,14 +194,14 @@ export default function HeadToHead() {
               </table>
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">No map data available.</p>
+            <p className="text-gray-500 text-sm">{t('h2h.noMapData')}</p>
           )}
         </div>
       </div>
 
       {/* Recent matches */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Recent Matches</h2>
+        <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('profile.recentMatches')}</h2>
         {recent_matches && recent_matches.length > 0 ? (
           <div className="flex flex-col gap-2">
             {recent_matches.map((match) => {
@@ -257,7 +259,7 @@ export default function HeadToHead() {
             })}
           </div>
         ) : (
-          <p className="text-gray-500 text-sm text-center py-8">No matches between these players found.</p>
+          <p className="text-gray-500 text-sm text-center py-8">{t('h2h.noMatches')}</p>
         )}
       </div>
     </div>

@@ -475,7 +475,7 @@ export default function PlayerProfile() {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-sm text-center py-8">No recent matches found.</p>
+            <p className="text-gray-500 text-sm text-center py-8">{t('profile.noMatches')}</p>
           )}
 
           {/* Pagination */}

@@ -1,9 +1,11 @@
+import { useT } from '../lib/i18n';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getLiveMatches } from '../lib/api';
 import LiveMatchCard from '../components/LiveMatchCard';
 
 export default function LiveMatches() {
+  const { t } = useT();
   const { data, isLoading, error } = useQuery({
     queryKey: ['liveMatches'],
     queryFn: getLiveMatches,
@@ -25,14 +27,14 @@ export default function LiveMatches() {
       <div className="flex items-center gap-3 mb-6">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold text-gray-100 m-0">Live Matches</h1>
+            <h1 className="text-3xl font-bold text-gray-100 m-0">{t('live.title')}</h1>
             <span className="relative flex h-3 w-3 mt-1">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
             </span>
           </div>
           <p className="text-sm text-gray-500 mt-1 m-0">
-            {isLoading ? 'Loading...' : `${total} match${total !== 1 ? 'es' : ''} in progress`}
+            {isLoading ? `${t('common.loading')}...` : t('live.inProgress', { n: total })}
           </p>
         </div>
       </div>
@@ -40,8 +42,8 @@ export default function LiveMatches() {
       {/* Error state */}
       {error && (
         <div className="bg-loss/10 border border-loss/20 rounded-xl p-6 text-center">
-          <p className="text-loss font-medium m-0">Failed to load live matches</p>
-          <p className="text-sm text-gray-500 mt-1 m-0">The data will refresh automatically.</p>
+          <p className="text-loss font-medium m-0">{t('live.failed')}</p>
+          <p className="text-sm text-gray-500 mt-1 m-0">{t('live.autoRefresh')}</p>
         </div>
       )}
 
@@ -79,7 +81,7 @@ export default function LiveMatches() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
           </svg>
-          <p className="text-gray-400 font-medium m-0">No live matches detected</p>
+          <p className="text-gray-400 font-medium m-0">{t('live.none')}</p>
           <p className="text-sm text-gray-500 mt-1 m-0">
             This page refreshes automatically every 30 seconds.
           </p>

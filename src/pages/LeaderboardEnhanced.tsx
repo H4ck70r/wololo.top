@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -20,6 +21,7 @@ const LADDER_TYPES = [
 type LadderType = (typeof LADDER_TYPES)[number]['id'];
 
 export default function LeaderboardEnhanced() {
+  const { t } = useT();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Read initial state from URL params
@@ -120,10 +122,10 @@ export default function LeaderboardEnhanced() {
       <div className="flex flex-col gap-4 mb-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-100 m-0">Leaderboard</h1>
+            <h1 className="text-3xl font-bold text-gray-100 m-0">{t('lb.title')}</h1>
             {pagination && (
               <p className="text-sm text-gray-500 mt-1 m-0">
-                {pagination.total.toLocaleString()} players found
+                {t('lb.playersFound', { n: pagination.total.toLocaleString() })}
               </p>
             )}
           </div>
@@ -152,10 +154,10 @@ export default function LeaderboardEnhanced() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Search */}
           <div>
-            <label className="block text-xs text-gray-500 mb-1 font-medium">Search Player</label>
+            <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.searchPlayer')}</label>
             <input
               type="text"
-              placeholder="Alias or name..."
+              placeholder={t('lb.aliasPlaceholder')}
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -167,7 +169,7 @@ export default function LeaderboardEnhanced() {
 
           {/* Country */}
           <div>
-            <label className="block text-xs text-gray-500 mb-1 font-medium">Country</label>
+            <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.country')}</label>
             <select
               value={country}
               onChange={(e) => {
@@ -176,7 +178,7 @@ export default function LeaderboardEnhanced() {
               }}
               className="w-full px-3 py-2 rounded-lg bg-dark-600 border border-dark-400 text-gray-200 text-sm focus:outline-none focus:border-gold-500/50 transition-colors cursor-pointer"
             >
-              <option value="">All Countries</option>
+              <option value="">{t('lb.allCountries')}</option>
               {countries.map((c) => (
                 <option key={c.country} value={c.country}>
                   {countryFlag(c.country)} {c.country.toUpperCase()} ({c.player_count.toLocaleString()})
@@ -187,10 +189,10 @@ export default function LeaderboardEnhanced() {
 
           {/* Clan */}
           <div>
-            <label className="block text-xs text-gray-500 mb-1 font-medium">Clan</label>
+            <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.clan')}</label>
             <input
               type="text"
-              placeholder="Clan name..."
+              placeholder={t('lb.clanPlaceholder')}
               value={clan}
               onChange={(e) => {
                 setClan(e.target.value);
@@ -202,7 +204,7 @@ export default function LeaderboardEnhanced() {
 
           {/* Min Rating */}
           <div>
-            <label className="block text-xs text-gray-500 mb-1 font-medium">Min Rating</label>
+            <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.minRating')}</label>
             <input
               type="number"
               placeholder="e.g. 1000"
@@ -217,7 +219,7 @@ export default function LeaderboardEnhanced() {
 
           {/* Max Rating */}
           <div>
-            <label className="block text-xs text-gray-500 mb-1 font-medium">Max Rating</label>
+            <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.maxRating')}</label>
             <input
               type="number"
               placeholder="e.g. 2500"
@@ -285,11 +287,11 @@ export default function LeaderboardEnhanced() {
           </div>
         ) : error ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">Failed to load leaderboard data.</p>
+            <p className="text-gray-500">{t('lb.failed')}</p>
           </div>
         ) : players.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">No players match your filters.</p>
+            <p className="text-gray-500">{t('lb.noMatch')}</p>
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
@@ -304,18 +306,18 @@ export default function LeaderboardEnhanced() {
             <table className="w-full text-xs sm:text-sm">
               <thead>
                 <tr className="border-b border-dark-400 bg-dark-600/50">
-                  <th className="text-left py-3 px-1.5 sm:px-4 text-gray-400 font-medium w-12 sm:w-16">Rank</th>
-                  <th className="text-left py-3 px-1.5 sm:px-4 text-gray-400 font-medium">Player</th>
-                  <th className="text-right py-3 px-1.5 sm:px-4 text-gray-400 font-medium">Rating</th>
+                  <th className="text-left py-3 px-1.5 sm:px-4 text-gray-400 font-medium w-12 sm:w-16">{t('common.rank')}</th>
+                  <th className="text-left py-3 px-1.5 sm:px-4 text-gray-400 font-medium">{t('common.player')}</th>
+                  <th className="text-right py-3 px-1.5 sm:px-4 text-gray-400 font-medium">{t('common.rating')}</th>
                   <th className="text-right py-3 px-4 text-gray-400 font-medium hidden sm:table-cell">
-                    Peak
+                    {t('lb.peak')}
                   </th>
                   <th className="text-right py-3 px-4 text-gray-400 font-medium hidden sm:table-cell">
-                    W / L
+                    {t('lb.wl')}
                   </th>
-                  <th className="text-right py-3 px-1.5 sm:px-4 text-gray-400 font-medium"><span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span></th>
+                  <th className="text-right py-3 px-1.5 sm:px-4 text-gray-400 font-medium"><span className="sm:hidden">{t('common.winRateShort')}</span><span className="hidden sm:inline">{t('common.winRate')}</span></th>
                   <th className="text-right py-3 px-4 text-gray-400 font-medium hidden md:table-cell">
-                    Streak
+                    {t('common.streak')}
                   </th>
                 </tr>
               </thead>

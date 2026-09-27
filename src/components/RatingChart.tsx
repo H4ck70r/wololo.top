@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default function RatingChart({ profileId }: Props) {
+  const { t } = useT();
   const [days, setDays] = useState(60);
   const [activeLadders, setActiveLadders] = useState<Set<LadderKey>>(new Set(['rm', 'team_rm']));
 
@@ -83,7 +85,7 @@ export default function RatingChart({ profileId }: Props) {
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">Rating History</h2>
+        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('chart.title')}</h2>
         <div className="flex items-center gap-2">
           {availableLadders.map((key) => (
             <button
@@ -121,7 +123,7 @@ export default function RatingChart({ profileId }: Props) {
           <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : !hasData ? (
-        <p className="text-gray-500 text-sm text-center py-12">No rating history available yet.</p>
+        <p className="text-gray-500 text-sm text-center py-12">{t('chart.empty')}</p>
       ) : (
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>

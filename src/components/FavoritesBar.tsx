@@ -1,9 +1,11 @@
+import { useT } from '../lib/i18n';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getFavorites, removeFavorite, type FavoritePlayer } from '../lib/favorites';
 import { countryFlag } from '../lib/constants';
 
 export default function FavoritesBar() {
+  const { t } = useT();
   const [favorites, setFavorites] = useState<FavoritePlayer[]>([]);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function FavoritesBar() {
 
   return (
     <div className="w-full">
-      <p className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">Favorites</p>
+      <p className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">{t('favorites.title')}</p>
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
         {favorites.map((player) => (
           <Link
@@ -41,7 +43,7 @@ export default function FavoritesBar() {
             <button
               onClick={(e) => handleRemove(e, player.profileId)}
               className="ml-1 text-gray-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
-              title="Remove from favorites"
+              title={t('favorites.remove')}
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

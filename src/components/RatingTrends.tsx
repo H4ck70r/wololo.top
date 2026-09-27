@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useQuery } from '@tanstack/react-query';
 import { getRatingTrends } from '../lib/api';
 import type { RatingTrendsResponse, LadderTrend } from '../lib/types';
@@ -81,6 +82,7 @@ interface Props {
 }
 
 export default function RatingTrends({ profileId }: Props) {
+  const { t } = useT();
   const { data, isLoading } = useQuery<RatingTrendsResponse>({
     queryKey: ['ratingTrends', profileId],
     queryFn: () => getRatingTrends(profileId),
@@ -99,8 +101,8 @@ export default function RatingTrends({ profileId }: Props) {
   if (!data || (Object.keys(data.ladders).length === 0 && data.streaks.current_streak === 0)) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-4">
-        <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider m-0 mb-3">Trends</h3>
-        <p className="text-gray-500 text-sm text-center py-8 m-0">Play some ranked matches to see rating trends</p>
+        <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider m-0 mb-3">{t('trends.title')}</h3>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">{t('trends.empty')}</p>
       </div>
     );
   }
@@ -111,7 +113,7 @@ export default function RatingTrends({ profileId }: Props) {
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-4">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider m-0">Trends</h3>
+        <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider m-0">{t('trends.title')}</h3>
         <div className="flex items-center gap-2">
           {current_streak !== 0 && <StreakBadge streak={current_streak} />}
         </div>
