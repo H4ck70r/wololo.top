@@ -55,32 +55,32 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="w-full text-xs sm:text-sm">
         <thead>
           <tr className="border-b border-dark-400">
             <th
               onClick={() => handleSort('civ')}
-              className="text-left py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              Civilization <SortIcon col="civ" />
+              <span className="sm:hidden">Civ</span><span className="hidden sm:inline">Civilization</span> <SortIcon col="civ" />
             </th>
             <th
               onClick={() => handleSort('games')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
               Games <SortIcon col="games" />
             </th>
             <th
               onClick={() => handleSort('wins')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="hidden sm:table-cell text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
               Wins <SortIcon col="wins" />
             </th>
             <th
               onClick={() => handleSort('win_rate')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              Win Rate <SortIcon col="win_rate" />
+              <span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span> <SortIcon col="win_rate" />
             </th>
           </tr>
         </thead>
@@ -97,20 +97,20 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
                 key={civ.civ_id}
                 className="border-b border-dark-500/50 hover:bg-dark-600/50 transition-colors"
               >
-                <td className="py-2.5 px-3 font-medium text-gray-200">
-                  <div className="flex items-center gap-2">
+                <td className="py-2.5 px-2 sm:px-3 font-medium text-gray-200">
+                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                     {getCivIcon(civ.civ_id) && (
-                      <img src={getCivIcon(civ.civ_id)!} alt="" className="w-6 h-6 rounded object-cover" />
+                      <img src={getCivIcon(civ.civ_id)!} alt="" className="w-5 h-5 sm:w-6 sm:h-6 rounded object-cover shrink-0" />
                     )}
                     {getCivName(civ.civ_id)}
                   </div>
                 </td>
-                <td className="py-2.5 px-3 text-right text-gray-400">{civ.games}</td>
-                <td className="py-2.5 px-3 text-right text-win">{civ.wins}</td>
-                <td className="py-2.5 px-3 text-right">
+                <td className="py-2.5 px-2 sm:px-3 text-right text-gray-400">{civ.games}</td>
+                <td className="hidden sm:table-cell py-2.5 px-2 sm:px-3 text-right text-win">{civ.wins}</td>
+                <td className="py-2.5 px-2 sm:px-3 text-right">
                   {hasWr ? (
                     <div className="flex items-center justify-end gap-2">
-                      <div className="w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
+                      <div className="hidden sm:block w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
                         <div
                           className={`h-full ${barColor} rounded-full`}
                           style={{ width: `${Math.min(wr, 100)}%` }}

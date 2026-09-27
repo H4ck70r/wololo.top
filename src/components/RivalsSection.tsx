@@ -189,15 +189,15 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
           <span className="text-xs text-gray-500">{data.total_opponents} unique opponents</span>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-xs sm:text-sm">
             <thead>
               <tr className="border-b border-dark-400">
-                <th className="text-left py-3 px-3 text-gray-400 font-medium">Player</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium">Games</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium">W/L</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium">Win Rate</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium">Last Played</th>
-                <th className="text-right py-3 px-3 text-gray-400 font-medium"></th>
+                <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">Player</th>
+                <th className="hidden sm:table-cell text-right py-3 px-3 text-gray-400 font-medium">Games</th>
+                <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">W/L</th>
+                <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium"><span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span></th>
+                <th className="hidden md:table-cell text-right py-3 px-3 text-gray-400 font-medium">Last Played</th>
+                <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium"></th>
               </tr>
             </thead>
             <tbody>
@@ -209,7 +209,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
                     key={opp.profile_id}
                     className="border-b border-dark-500/50 hover:bg-dark-600/50 transition-colors"
                   >
-                    <td className="py-2.5 px-3">
+                    <td className="py-2.5 px-2 sm:px-3 max-w-[9rem] sm:max-w-none truncate">
                       <Link
                         to={`/player/${opp.profile_id}`}
                         className="font-medium text-blue-accent hover:text-blue-400 transition-colors no-underline"
@@ -217,15 +217,15 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
                         {opp.alias || `Player ${opp.profile_id}`}
                       </Link>
                     </td>
-                    <td className="py-2.5 px-3 text-right text-gray-300 font-medium">{opp.games}</td>
-                    <td className="py-2.5 px-3 text-right">
+                    <td className="hidden sm:table-cell py-2.5 px-3 text-right text-gray-300 font-medium">{opp.games}</td>
+                    <td className="py-2.5 px-2 sm:px-3 text-right whitespace-nowrap">
                       <span className="text-win">{opp.wins}</span>
                       <span className="text-gray-600"> / </span>
                       <span className="text-loss">{opp.losses}</span>
                     </td>
-                    <td className="py-2.5 px-3 text-right">
+                    <td className="py-2.5 px-2 sm:px-3 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <div className="w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
+                        <div className="hidden sm:block w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
                           <div
                             className={`h-full ${barColor} rounded-full`}
                             style={{ width: `${Math.min(wr, 100)}%` }}
@@ -236,10 +236,10 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
                         </span>
                       </div>
                     </td>
-                    <td className="py-2.5 px-3 text-right text-gray-500 text-xs">
+                    <td className="hidden md:table-cell py-2.5 px-3 text-right text-gray-500 text-xs">
                       {formatTimeAgo(opp.last_played)}
                     </td>
-                    <td className="py-2.5 px-3 text-right">
+                    <td className="py-2.5 px-2 sm:px-3 text-right">
                       <Link
                         to={`/h2h/${profileId}/${opp.profile_id}`}
                         className="text-xs text-gray-500 hover:text-blue-accent transition-colors no-underline"

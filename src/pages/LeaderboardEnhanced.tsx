@@ -301,19 +301,19 @@ export default function LeaderboardEnhanced() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-xs sm:text-sm">
               <thead>
                 <tr className="border-b border-dark-400 bg-dark-600/50">
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium w-16">Rank</th>
-                  <th className="text-left py-3 px-4 text-gray-400 font-medium">Player</th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium">Rating</th>
+                  <th className="text-left py-3 px-1.5 sm:px-4 text-gray-400 font-medium w-12 sm:w-16">Rank</th>
+                  <th className="text-left py-3 px-1.5 sm:px-4 text-gray-400 font-medium">Player</th>
+                  <th className="text-right py-3 px-1.5 sm:px-4 text-gray-400 font-medium">Rating</th>
                   <th className="text-right py-3 px-4 text-gray-400 font-medium hidden sm:table-cell">
                     Peak
                   </th>
                   <th className="text-right py-3 px-4 text-gray-400 font-medium hidden sm:table-cell">
                     W / L
                   </th>
-                  <th className="text-right py-3 px-4 text-gray-400 font-medium">Win Rate</th>
+                  <th className="text-right py-3 px-1.5 sm:px-4 text-gray-400 font-medium"><span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span></th>
                   <th className="text-right py-3 px-4 text-gray-400 font-medium hidden md:table-cell">
                     Streak
                   </th>
@@ -327,7 +327,7 @@ export default function LeaderboardEnhanced() {
                       key={entry.profile_id}
                       className="border-b border-dark-500/50 hover:bg-dark-600/60 transition-colors"
                     >
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-1.5 sm:px-4">
                         <span
                           className={`font-medium ${
                             entry.rank <= 3
@@ -340,22 +340,22 @@ export default function LeaderboardEnhanced() {
                           #{entry.rank}
                         </span>
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-1.5 sm:px-4">
                         <Link
                           to={`/player/${entry.profile_id}`}
-                          className="flex items-center gap-2 no-underline group"
+                          className="flex items-center gap-1.5 sm:gap-2 no-underline group min-w-0"
                         >
                           {entry.avatar && (
                             <img
                               src={entry.avatar}
                               alt=""
-                              className="w-7 h-7 rounded-md object-cover flex-shrink-0"
+                              className="hidden sm:block w-7 h-7 rounded-md object-cover flex-shrink-0"
                             />
                           )}
                           <span className="text-base flex-shrink-0">
                             {countryFlag(entry.country)}
                           </span>
-                          <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate">
+                          <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate min-w-0">
                             {entry.alias}
                           </span>
                           {entry.clanlist_name && (
@@ -369,18 +369,18 @@ export default function LeaderboardEnhanced() {
                           )}
                         </Link>
                       </td>
-                      <td className="py-3 px-4 text-right">
+                      <td className="py-3 px-1.5 sm:px-4 text-right">
                         <span className="font-bold text-gold-400">{entry.rating}</span>
                       </td>
-                      <td className="py-3 px-4 text-right hidden sm:table-cell">
+                      <td className="py-3 px-1.5 sm:px-4 text-right hidden sm:table-cell">
                         <span className="text-gray-400">{entry.highestrating}</span>
                       </td>
-                      <td className="py-3 px-4 text-right hidden sm:table-cell">
+                      <td className="py-3 px-1.5 sm:px-4 text-right hidden sm:table-cell">
                         <span className="text-win">{entry.wins}</span>
                         <span className="text-gray-600 mx-1">/</span>
                         <span className="text-loss">{entry.losses}</span>
                       </td>
-                      <td className="py-3 px-4 text-right">
+                      <td className="py-3 px-1.5 sm:px-4 text-right">
                         <span
                           className={`font-medium ${
                             wr >= 55 ? 'text-win' : wr >= 45 ? 'text-gray-300' : 'text-loss'
@@ -389,7 +389,7 @@ export default function LeaderboardEnhanced() {
                           {wr.toFixed(1)}%
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-right hidden md:table-cell">
+                      <td className="py-3 px-1.5 sm:px-4 text-right hidden md:table-cell">
                         <span
                           className={`font-medium ${
                             entry.streak > 0

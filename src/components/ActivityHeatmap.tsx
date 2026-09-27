@@ -81,9 +81,9 @@ export default function ActivityHeatmap({ profileId }: Props) {
 
       {/* Heatmap grid */}
       <div className="overflow-x-auto">
-        <div className="min-w-[540px]">
+        <div className="min-w-0 sm:min-w-[540px]">
           {/* Hour labels */}
-          <div className="flex ml-10 mb-1">
+          <div className="flex ml-8 sm:ml-10 mb-1">
             {Array.from({ length: 24 }, (_, h) => (
               <div key={h} className="flex-1 text-center">
                 {HOUR_LABELS.includes(h) ? (
@@ -96,7 +96,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
           {/* Rows */}
           {grid.map((row, rowIdx) => (
             <div key={rowIdx} className="flex items-center gap-0 mb-[2px]">
-              <span className="w-10 text-xs text-gray-500 text-right pr-2 shrink-0">
+              <span className="w-8 sm:w-10 text-[10px] sm:text-xs text-gray-500 text-right pr-1.5 sm:pr-2 shrink-0">
                 {DAY_LABELS[rowIdx]}
               </span>
               {row.map((cell, hour) => {

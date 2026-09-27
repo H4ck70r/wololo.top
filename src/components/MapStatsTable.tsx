@@ -55,32 +55,32 @@ export default function MapStatsTable({ stats }: MapStatsTableProps) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="w-full text-xs sm:text-sm">
         <thead>
           <tr className="border-b border-dark-400">
             <th
               onClick={() => handleSort('map')}
-              className="text-left py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
               Map <SortIcon col="map" />
             </th>
             <th
               onClick={() => handleSort('games')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
               Games <SortIcon col="games" />
             </th>
             <th
               onClick={() => handleSort('wins')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="hidden sm:table-cell text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
               Wins <SortIcon col="wins" />
             </th>
             <th
               onClick={() => handleSort('win_rate')}
-              className="text-right py-3 px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
+              className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              Win Rate <SortIcon col="win_rate" />
+              <span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span> <SortIcon col="win_rate" />
             </th>
           </tr>
         </thead>
@@ -97,15 +97,15 @@ export default function MapStatsTable({ stats }: MapStatsTableProps) {
                 key={map.map_name}
                 className="border-b border-dark-500/50 hover:bg-dark-600/50 transition-colors"
               >
-                <td className="py-2.5 px-3 font-medium text-gray-200">
+                <td className="py-2.5 px-2 sm:px-3 font-medium text-gray-200 max-w-[8rem] sm:max-w-none">
                   {cleanMapName(map.map_name)}
                 </td>
-                <td className="py-2.5 px-3 text-right text-gray-400">{map.games}</td>
-                <td className="py-2.5 px-3 text-right text-win">{map.wins}</td>
-                <td className="py-2.5 px-3 text-right">
+                <td className="py-2.5 px-2 sm:px-3 text-right text-gray-400">{map.games}</td>
+                <td className="hidden sm:table-cell py-2.5 px-2 sm:px-3 text-right text-win">{map.wins}</td>
+                <td className="py-2.5 px-2 sm:px-3 text-right">
                   {hasWr ? (
                     <div className="flex items-center justify-end gap-2">
-                      <div className="w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
+                      <div className="hidden sm:block w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
                         <div
                           className={`h-full ${barColor} rounded-full`}
                           style={{ width: `${Math.min(wr, 100)}%` }}

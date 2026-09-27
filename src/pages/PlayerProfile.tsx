@@ -206,7 +206,7 @@ export default function PlayerProfile() {
             </div>
           )}
           <div className="flex-1">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 m-0">{player.alias}</h1>
               {player.country && (
                 <span className="text-2xl" title={player.country.toUpperCase()}>
@@ -442,7 +442,7 @@ export default function PlayerProfile() {
       {/* Recent matches */}
       <div ref={matchesSectionRef} className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <h2 className="text-lg font-semibold text-gray-200 m-0">Recent Matches</h2>
             {matchesData && (
               <span className="text-xs text-gray-500">{matchesData.total} total</span>

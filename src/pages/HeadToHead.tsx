@@ -124,20 +124,28 @@ export default function HeadToHead() {
           <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Civilization Matchups</h2>
           {civ_matchups && civ_matchups.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-dark-400">
-                    <th className="text-left py-2 px-2 text-gray-400 font-medium">{playerName}</th>
-                    <th className="text-left py-2 px-2 text-gray-400 font-medium">{opponentName}</th>
-                    <th className="text-right py-2 px-2 text-gray-400 font-medium">Games</th>
+                    <th className="text-left py-2 px-2 text-gray-400 font-medium">
+                      <div className="max-w-[5rem] sm:max-w-none truncate">{playerName}</div>
+                    </th>
+                    <th className="text-left py-2 px-2 text-gray-400 font-medium">
+                      <div className="max-w-[5rem] sm:max-w-none truncate">{opponentName}</div>
+                    </th>
+                    <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">Games</span></th>
                     <th className="text-right py-2 px-2 text-gray-400 font-medium">Score</th>
                   </tr>
                 </thead>
                 <tbody>
                   {civ_matchups.slice(0, 20).map((m, i) => (
                     <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                      <td className="py-2 px-2 text-gray-200">{m.player_civ_name || getCivName(m.player_civ)}</td>
-                      <td className="py-2 px-2 text-gray-200">{m.opponent_civ_name || getCivName(m.opponent_civ)}</td>
+                      <td className="py-2 px-2 text-gray-200">
+                        <div className="max-w-[5.5rem] sm:max-w-none truncate">{m.player_civ_name || getCivName(m.player_civ)}</div>
+                      </td>
+                      <td className="py-2 px-2 text-gray-200">
+                        <div className="max-w-[5.5rem] sm:max-w-none truncate">{m.opponent_civ_name || getCivName(m.opponent_civ)}</div>
+                      </td>
                       <td className="py-2 px-2 text-right text-gray-400">{m.games}</td>
                       <td className="py-2 px-2 text-right">
                         <span className="text-gold-400">{m.wins}</span>
@@ -158,18 +166,20 @@ export default function HeadToHead() {
           <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Map Stats</h2>
           {map_stats && map_stats.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-dark-400">
                     <th className="text-left py-2 px-2 text-gray-400 font-medium">Map</th>
-                    <th className="text-right py-2 px-2 text-gray-400 font-medium">Games</th>
+                    <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">Games</span></th>
                     <th className="text-right py-2 px-2 text-gray-400 font-medium">Score</th>
                   </tr>
                 </thead>
                 <tbody>
                   {map_stats.map((m, i) => (
                     <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                      <td className="py-2 px-2 text-gray-200">{m.map || cleanMapName(m.map_name)}</td>
+                      <td className="py-2 px-2 text-gray-200">
+                        <div className="max-w-[5.5rem] sm:max-w-none truncate">{m.map || cleanMapName(m.map_name)}</div>
+                      </td>
                       <td className="py-2 px-2 text-right text-gray-400">{m.games}</td>
                       <td className="py-2 px-2 text-right">
                         <span className="text-gold-400">{m.wins}</span>
