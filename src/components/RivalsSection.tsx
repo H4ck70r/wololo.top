@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getOpponentAnalysis } from '../lib/api';
+import LadderBadge from './LadderBadge';
 import type { OpponentAnalysisResponse, OpponentEntry } from '../lib/types';
 
 interface RivalsSectionProps {
@@ -148,6 +149,11 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
 
   return (
     <div>
+      <div className="flex items-center gap-2 mb-3">
+        <h2 className="text-lg font-semibold text-gray-200 m-0">Rivals</h2>
+        <LadderBadge label={data.filters?.label} />
+      </div>
+
       {/* Highlight cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <HighlightCard
@@ -176,7 +182,10 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
       {/* Opponents table */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-200 m-0">Top Opponents</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-gray-200 m-0">Top Opponents</h2>
+            <LadderBadge label={data.filters?.label} />
+          </div>
           <span className="text-xs text-gray-500">{data.total_opponents} unique opponents</span>
         </div>
         <div className="overflow-x-auto">

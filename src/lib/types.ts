@@ -54,7 +54,8 @@ export interface CivStat {
   civilization: string | null;
   games: number;
   wins: string;
-  win_rate: string;
+  /** null when no game has a decided outcome yet */
+  win_rate: string | null;
 }
 
 export interface MapStat {
@@ -62,7 +63,8 @@ export interface MapStat {
   map: string | null;
   games: number;
   wins: string;
-  win_rate: string;
+  /** null when no game has a decided outcome yet */
+  win_rate: string | null;
 }
 
 export interface PlayerStats {
@@ -226,6 +228,8 @@ export interface OpponentEntry {
   games: number;
   wins: number;
   losses: number;
+  /** games with a decided outcome; win_rate is over this, not over `games` */
+  decided: number;
   win_rate: number;
   last_played: string | null;
 }
@@ -234,6 +238,11 @@ export interface OpponentAnalysisResponse {
   status: string;
   profile_id: number;
   total_opponents: number;
+  /** which ladder the numbers cover; null label means "every match type" */
+  filters: {
+    match_type: string | null;
+    label: string | null;
+  };
   highlights: {
     most_played: OpponentEntry | null;
     nemesis: OpponentEntry | null;

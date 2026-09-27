@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPlayerMilestones } from '../lib/api';
+import LadderBadge from './LadderBadge';
 import type { MilestonesResponse, Milestone } from '../lib/types';
 
 interface MilestonesTimelineProps {
@@ -14,8 +15,15 @@ function getBracket(threshold: number): { label: string; color: string; bg: stri
   return { label: 'Legend', color: 'text-purple-400', bg: 'bg-purple-400/20', border: 'border-purple-400/40' };
 }
 
-function formatDate(dateStr: string): string {
-  const d = new Date(dateStr + 'T00:00:00');
+// The API serialises these dates as a full ISO timestamp
+// ("2026-03-01T06:00:00.000Z"), so appending 'T00:00:00' produced
+// "...000ZT00:00:00" and every date rendered as "Invalid Date". Take the
+// YYYY-MM-DD head instead, which also accepts a plain date string, and read it
+// as local midnight so the day never slides with the timezone.
+function formatDate(dateStr: string | null | undefined): string | null {
+  if (!dateStr) return null;
+  const d = new Date(`${String(dateStr).slice(0, 10)}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return null;
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
@@ -27,7 +35,7 @@ function LadderMilestones({
   milestones,
   accentColor,
 }: {
-  label: string;
+  label?: string | null;
   peakRating: number | null;
   peakDate: string | null;
   highestRating: number | null;
@@ -41,16 +49,18 @@ function LadderMilestones({
 
   return (
     <div className="flex-1 min-w-0">
-      <h4 className={`text-sm font-semibold uppercase tracking-wider ${accentColor} mb-4`}>
-        {label}
-      </h4>
+      {label && (
+        <h4 className={`text-sm font-semibold uppercase tracking-wider ${accentColor} mb-4`}>
+          {label}
+        </h4>
+      )}
 
       {/* Peak rating */}
       {displayPeak && (
         <div className="mb-5 flex items-baseline gap-2">
           <span className="text-xs text-gray-500 uppercase tracking-wider">Peak</span>
           <span className={`text-2xl font-bold ${accentColor}`}>{displayPeak}</span>
-          {peakDate && !peakIsFromLadder && (
+          {!peakIsFromLadder && formatDate(peakDate) && (
             <span className="text-xs text-gray-500">on {formatDate(peakDate)}</span>
           )}
           {peakIsFromLadder && (
@@ -80,7 +90,9 @@ function LadderMilestones({
                   {/* Content */}
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`text-sm font-bold ${bracket.color}`}>{m.threshold}</span>
-                    <span className="text-xs text-gray-500">{formatDate(m.reached_at)}</span>
+                    {formatDate(m.reached_at) && (
+                      <span className="text-xs text-gray-500">{formatDate(m.reached_at)}</span>
+                    )}
                   </div>
                 </div>
               );
@@ -115,44 +127,36 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
 
   if (error || !data) return null;
 
+  // Milestones are a 1v1 Ranked RM achievement: data.ladders.team_rm is
+  // deliberately ignored so a team-ladder peak cannot pose as a solo one.
   const rm = data.ladders.rm;
-  const teamRm = data.ladders.team_rm;
 
-  if (!rm && !teamRm) {
+  if (!rm) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">Rating Milestones</h3>
-        <p className="text-gray-500 text-sm text-center py-8 m-0">Rating milestones will appear as you climb the ladder</p>
+        <div className="flex items-center gap-2 mb-5">
+          <h3 className="text-lg font-semibold text-gray-200 m-0">Rating Milestones</h3>
+          <LadderBadge />
+        </div>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">Rating milestones will appear as you climb the 1v1 RM ladder</p>
       </div>
     );
   }
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-      <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">Rating Milestones</h3>
-
-      <div className="flex flex-col sm:flex-row gap-6">
-        {rm && (
-          <LadderMilestones
-            label="Solo RM"
-            peakRating={rm.peak_rating}
-            peakDate={rm.peak_date}
-            highestRating={rm.highest_rating}
-            milestones={rm.milestones}
-            accentColor="text-gold-400"
-          />
-        )}
-        {teamRm && (
-          <LadderMilestones
-            label="Team RM"
-            peakRating={teamRm.peak_rating}
-            peakDate={teamRm.peak_date}
-            highestRating={teamRm.highest_rating}
-            milestones={teamRm.milestones}
-            accentColor="text-blue-accent"
-          />
-        )}
+      <div className="flex items-center gap-2 mb-5">
+        <h3 className="text-lg font-semibold text-gray-200 m-0">Rating Milestones</h3>
+        <LadderBadge />
       </div>
+
+      <LadderMilestones
+        peakRating={rm.peak_rating}
+        peakDate={rm.peak_date}
+        highestRating={rm.highest_rating}
+        milestones={rm.milestones}
+        accentColor="text-gold-400"
+      />
     </div>
   );
 }
