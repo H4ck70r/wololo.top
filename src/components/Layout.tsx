@@ -100,7 +100,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                   <button
                     key={l.id}
                     type="button"
-                    onClick={() => setLang(l.id)}
+                    onClick={() => { setLang(l.id); setMenuOpen(false); }}
                     aria-pressed={lang === l.id}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       lang === l.id ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200'
