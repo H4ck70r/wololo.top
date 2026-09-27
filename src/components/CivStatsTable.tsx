@@ -35,7 +35,9 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
         cmp = Number(a.wins) - Number(b.wins);
         break;
       case 'win_rate':
-        cmp = parseFloat(a.win_rate) - parseFloat(b.win_rate);
+        // null win_rate (every game still unresolved) sorts last instead of
+        // poisoning the comparison with NaN.
+        cmp = (parseFloat(a.win_rate ?? '') || -1) - (parseFloat(b.win_rate ?? '') || -1);
         break;
     }
     return sortDir === 'asc' ? cmp : -cmp;
@@ -84,7 +86,11 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
         </thead>
         <tbody>
           {sorted.map((civ) => {
-            const wr = parseFloat(civ.win_rate);
+            // win_rate is null when no game against this entry has a decided
+            // result yet; parseFloat(null) used to render as "NaN%".
+            const wrRaw = civ.win_rate == null ? NaN : parseFloat(civ.win_rate);
+            const hasWr = Number.isFinite(wrRaw);
+            const wr = hasWr ? wrRaw : 0;
             const barColor = wr >= 55 ? 'bg-win' : wr >= 45 ? 'bg-gold-500' : 'bg-loss';
             return (
               <tr
@@ -102,17 +108,21 @@ export default function CivStatsTable({ stats }: CivStatsTableProps) {
                 <td className="py-2.5 px-3 text-right text-gray-400">{civ.games}</td>
                 <td className="py-2.5 px-3 text-right text-win">{civ.wins}</td>
                 <td className="py-2.5 px-3 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <div className="w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full ${barColor} rounded-full`}
-                        style={{ width: `${Math.min(wr, 100)}%` }}
-                      />
+                  {hasWr ? (
+                    <div className="flex items-center justify-end gap-2">
+                      <div className="w-16 h-1.5 bg-dark-400 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full ${barColor} rounded-full`}
+                          style={{ width: `${Math.min(wr, 100)}%` }}
+                        />
+                      </div>
+                      <span className={`font-medium ${wr >= 55 ? 'text-win' : wr >= 45 ? 'text-gold-400' : 'text-loss'}`}>
+                        {wr.toFixed(1)}%
+                      </span>
                     </div>
-                    <span className={`font-medium ${wr >= 55 ? 'text-win' : wr >= 45 ? 'text-gold-400' : 'text-loss'}`}>
-                      {wr.toFixed(1)}%
-                    </span>
-                  </div>
+                  ) : (
+                    <span className="text-gray-600" title="No decided matches yet">&mdash;</span>
+                  )}
                 </td>
               </tr>
             );
