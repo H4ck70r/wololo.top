@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 import { useQuery } from '@tanstack/react-query';
 import { getActivityPatterns } from '../lib/api';
 import type { ActivityPatternsResponse } from '../lib/types';
@@ -32,6 +33,7 @@ function getColor(games: number, maxGames: number): string {
 }
 
 export default function ActivityHeatmap({ profileId }: Props) {
+  const { t } = useT();
   const { data, isLoading } = useQuery<ActivityPatternsResponse>({
     queryKey: ['activityPatterns', profileId],
     queryFn: () => getActivityPatterns(profileId),
@@ -41,7 +43,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
   if (isLoading) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">Activity Patterns</h2>
+        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('activity.title')}</h2>
         <div className="flex justify-center py-8">
           <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
         </div>
@@ -52,7 +54,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
   if (!data || data.heatmap.length === 0) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">Activity Patterns</h2>
+        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('activity.title')}</h2>
         <p className="text-gray-500 text-sm text-center py-8 m-0">Activity data will appear after playing some matches</p>
       </div>
     );
@@ -75,8 +77,8 @@ export default function ActivityHeatmap({ profileId }: Props) {
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">Activity Patterns</h2>
-        <span className="text-xs text-gray-500">{data.total_tracked.toLocaleString()} tracked matches</span>
+        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('activity.title')}</h2>
+        <span className="text-xs text-gray-500">{t('activity.tracked', { n: data.total_tracked.toLocaleString() })}</span>
       </div>
 
       {/* Heatmap grid */}
@@ -123,30 +125,30 @@ export default function ActivityHeatmap({ profileId }: Props) {
       {/* Legend + summary */}
       <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-500">Less</span>
+          <span className="text-xs text-gray-500">{t('activity.less')}</span>
           <div className="w-3 h-3 rounded-sm bg-dark-600" />
           <div className="w-3 h-3 rounded-sm bg-emerald-900/60" />
           <div className="w-3 h-3 rounded-sm bg-emerald-700/70" />
           <div className="w-3 h-3 rounded-sm bg-emerald-600/80" />
           <div className="w-3 h-3 rounded-sm bg-emerald-500" />
           <div className="w-3 h-3 rounded-sm bg-emerald-400" />
-          <span className="text-xs text-gray-500">More</span>
+          <span className="text-xs text-gray-500">{t('activity.more')}</span>
         </div>
 
         <div className="flex items-center gap-4 text-xs text-gray-400">
           {data.most_active_period && (
             <span>
-              Most active: <span className="text-gray-200 font-medium">{data.most_active_period}</span>
+              {t('activity.mostActive')}: <span className="text-gray-200 font-medium">{data.most_active_period}</span>
             </span>
           )}
           {data.peak_hour !== null && (
             <span>
-              Peak hour: <span className="text-gray-200 font-medium">{formatHour(data.peak_hour)}</span>
+              {t('activity.peakHour')}: <span className="text-gray-200 font-medium">{formatHour(data.peak_hour)}</span>
             </span>
           )}
           {data.peak_day !== null && (
             <span>
-              Peak day: <span className="text-gray-200 font-medium">{DAY_NAMES_FULL[data.peak_day]}</span>
+              {t('activity.peakDay')}: <span className="text-gray-200 font-medium">{DAY_NAMES_FULL[data.peak_day]}</span>
             </span>
           )}
         </div>

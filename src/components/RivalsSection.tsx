@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getOpponentAnalysis } from '../lib/api';
 import LadderBadge from './LadderBadge';
+import { useT } from '../lib/i18n';
 import type { OpponentAnalysisResponse, OpponentEntry } from '../lib/types';
 
 interface RivalsSectionProps {
@@ -21,6 +22,7 @@ function HighlightCard({
   color: 'gold' | 'red' | 'green';
   icon: string;
 }) {
+  const { t } = useT();
   if (!opponent) return null;
 
   const colorClasses = {
@@ -72,13 +74,13 @@ function HighlightCard({
           >
             {opponent.alias || `Player ${opponent.profile_id}`}
           </Link>
-          <p className="text-xs text-gray-500 m-0">{opponent.games} games played</p>
+          <p className="text-xs text-gray-500 m-0">{t('rivals.gamesPlayed', { n: opponent.games })}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-2">
         <div>
-          <p className="text-xs text-gray-500 m-0">Record</p>
+          <p className="text-xs text-gray-500 m-0">{t('common.record')}</p>
           <p className="text-sm font-medium m-0">
             <span className="text-win">{opponent.wins}W</span>
             {' / '}
@@ -86,7 +88,7 @@ function HighlightCard({
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 m-0">Win Rate</p>
+          <p className="text-xs text-gray-500 m-0">{t('common.winRate')}</p>
           <p className={`text-sm font-bold m-0 ${opponent.win_rate >= 50 ? 'text-win' : 'text-loss'}`}>
             {opponent.win_rate}%
           </p>
@@ -119,6 +121,7 @@ function formatTimeAgo(dateStr: string | null): string {
 }
 
 export default function RivalsSection({ profileId }: RivalsSectionProps) {
+  const { t } = useT();
   const { data, isLoading } = useQuery<OpponentAnalysisResponse>({
     queryKey: ['opponentAnalysis', profileId],
     queryFn: () => getOpponentAnalysis(profileId),
@@ -128,7 +131,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   if (isLoading) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">Rivals</h2>
+        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('rivals.title')}</h2>
         <div className="flex justify-center py-8">
           <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
         </div>
@@ -139,8 +142,8 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   if (!data || data.total_opponents === 0) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">Rivals</h2>
-        <p className="text-gray-500 text-sm text-center py-8 m-0">Play more matches to discover your rivals</p>
+        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('rivals.title')}</h2>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">{t('rivals.empty')}</p>
       </div>
     );
   }
@@ -150,28 +153,28 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-3">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">Rivals</h2>
+        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('rivals.title')}</h2>
         <LadderBadge label={data.filters?.label} />
       </div>
 
       {/* Highlight cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <HighlightCard
-          label="Most Played"
+          label={t('rivals.mostPlayed')}
           opponent={highlights.most_played}
           profileId={profileId}
           color="gold"
           icon="&#9876;"
         />
         <HighlightCard
-          label="Nemesis"
+          label={t('rivals.nemesis')}
           opponent={highlights.nemesis}
           profileId={profileId}
           color="red"
           icon="&#128128;"
         />
         <HighlightCard
-          label="Best Matchup"
+          label={t('rivals.bestMatchup')}
           opponent={highlights.best_matchup}
           profileId={profileId}
           color="green"
@@ -183,20 +186,20 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-gray-200 m-0">Top Opponents</h2>
+            <h2 className="text-lg font-semibold text-gray-200 m-0">{t('rivals.topOpponents')}</h2>
             <LadderBadge label={data.filters?.label} />
           </div>
-          <span className="text-xs text-gray-500">{data.total_opponents} unique opponents</span>
+          <span className="text-xs text-gray-500">{t('rivals.uniqueOpponents', { n: data.total_opponents })}</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs sm:text-sm">
             <thead>
               <tr className="border-b border-dark-400">
-                <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">Player</th>
-                <th className="hidden sm:table-cell text-right py-3 px-3 text-gray-400 font-medium">Games</th>
+                <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.player')}</th>
+                <th className="hidden sm:table-cell text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
                 <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">W/L</th>
-                <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium"><span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span></th>
-                <th className="hidden md:table-cell text-right py-3 px-3 text-gray-400 font-medium">Last Played</th>
+                <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium"><span className="sm:hidden">{t('common.winRateShort')}</span><span className="hidden sm:inline">{t('common.winRate')}</span></th>
+                <th className="hidden md:table-cell text-right py-3 px-3 text-gray-400 font-medium">{t('common.lastPlayed')}</th>
                 <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium"></th>
               </tr>
             </thead>

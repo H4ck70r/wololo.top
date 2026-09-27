@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPlayerMilestones } from '../lib/api';
 import LadderBadge from './LadderBadge';
+import { useT } from '../lib/i18n';
 import type { MilestonesResponse, Milestone } from '../lib/types';
 
 interface MilestonesTimelineProps {
@@ -42,6 +43,7 @@ function LadderMilestones({
   milestones: Milestone[];
   accentColor: string;
 }) {
+  const { t } = useT();
   const displayPeak = Math.max(peakRating || 0, highestRating || 0) || null;
   const peakIsFromLadder = highestRating && (!peakRating || highestRating > peakRating);
 
@@ -58,13 +60,13 @@ function LadderMilestones({
       {/* Peak rating */}
       {displayPeak && (
         <div className="mb-5 flex items-baseline gap-2">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Peak</span>
+          <span className="text-xs text-gray-500 uppercase tracking-wider">{t('milestones.peak')}</span>
           <span className={`text-2xl font-bold ${accentColor}`}>{displayPeak}</span>
           {!peakIsFromLadder && formatDate(peakDate) && (
             <span className="text-xs text-gray-500">on {formatDate(peakDate)}</span>
           )}
           {peakIsFromLadder && (
-            <span className="text-xs text-gray-500">all-time</span>
+            <span className="text-xs text-gray-500">{t('milestones.allTime')}</span>
           )}
         </div>
       )}
@@ -102,13 +104,14 @@ function LadderMilestones({
       )}
 
       {milestones.length === 0 && displayPeak && (
-        <p className="text-xs text-gray-500 italic">No milestone crossings in tracked history.</p>
+        <p className="text-xs text-gray-500 italic">{t('milestones.none')}</p>
       )}
     </div>
   );
 }
 
 export default function MilestonesTimeline({ profileId }: MilestonesTimelineProps) {
+  const { t } = useT();
   const { data, isLoading, error } = useQuery<MilestonesResponse>({
     queryKey: ['playerMilestones', profileId],
     queryFn: () => getPlayerMilestones(profileId),
@@ -135,10 +138,10 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-5">
-          <h3 className="text-lg font-semibold text-gray-200 m-0">Rating Milestones</h3>
+          <h3 className="text-lg font-semibold text-gray-200 m-0">{t('milestones.title')}</h3>
           <LadderBadge />
         </div>
-        <p className="text-gray-500 text-sm text-center py-8 m-0">Rating milestones will appear as you climb the 1v1 RM ladder</p>
+        <p className="text-gray-500 text-sm text-center py-8 m-0">{t('milestones.empty')}</p>
       </div>
     );
   }
@@ -146,7 +149,7 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-center gap-2 mb-5">
-        <h3 className="text-lg font-semibold text-gray-200 m-0">Rating Milestones</h3>
+        <h3 className="text-lg font-semibold text-gray-200 m-0">{t('milestones.title')}</h3>
         <LadderBadge />
       </div>
 

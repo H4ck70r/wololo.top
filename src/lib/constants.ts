@@ -65,14 +65,24 @@ export const CIVILIZATIONS: Record<number, string> = {
   63: 'Danes',
 };
 
+// World's Edge reassigned civilization ids: until May 2025 Jurchens and
+// Khitans were 53 and 54, today they are 51 and 52. Old matches still carry
+// the retired ids, so they are resolved here too (the API does the same in
+// aoe2Normalize.js).
+const HISTORIC_CIV_IDS: Record<number, number> = { 53: 51, 54: 52 };
+
+export function normalizeCivId(civId: number): number {
+  return HISTORIC_CIV_IDS[civId] ?? civId;
+}
+
 export function getCivName(civId: number | undefined | null): string {
   if (civId == null) return 'Unknown';
-  return CIVILIZATIONS[civId] ?? `Civ ${civId}`;
+  return CIVILIZATIONS[normalizeCivId(civId)] ?? `Civ ${civId}`;
 }
 
 export function getCivIcon(civId: number | undefined | null): string | null {
   if (civId == null || civId < 0) return null;
-  const name = CIVILIZATIONS[civId];
+  const name = CIVILIZATIONS[normalizeCivId(civId)];
   if (!name) return null;
   return `/icons/civs/${name.toLowerCase()}.png`;
 }

@@ -8,6 +8,8 @@ import { countryFlag, MATCH_FILTERS } from '../lib/constants';
 import { isFavorite, addFavorite, removeFavorite } from '../lib/favorites';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
 import PreviousAliases from '../components/PreviousAliases';
+import { useT } from '../lib/i18n';
+import type { TKey } from '../lib/i18n';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
 import CivStatsTable from '../components/CivStatsTable';
@@ -22,16 +24,17 @@ import SearchBar from '../components/SearchBar';
 const MATCHES_PER_PAGE = 50;
 
 const PROFILE_TABS = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'matches', label: 'Matches' },
-  { id: 'stats', label: 'Civs & Maps' },
-  { id: 'rivals', label: 'Rivals' },
-] as const;
+  { id: 'overview', key: 'profile.tab.overview' },
+  { id: 'matches', key: 'profile.tab.matches' },
+  { id: 'stats', key: 'profile.tab.stats' },
+  { id: 'rivals', key: 'profile.tab.rivals' },
+] as const satisfies readonly { id: string; key: TKey }[];
 
 type ProfileTab = (typeof PROFILE_TABS)[number]['id'];
 
 export default function PlayerProfile() {
   const [activeTab, setActiveTab] = useState<ProfileTab>('overview');
+  const { t } = useT();
   const { profileId } = useParams<{ profileId: string }>();
   const [matchFilter, setMatchFilter] = useState('');
   const [matchPage, setMatchPage] = useState(1);
@@ -247,10 +250,10 @@ export default function PlayerProfile() {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
                 </svg>
-                Compare
+                {t('nav.compare')}
               </Link>
             </div>
-            <p className="text-sm text-gray-500 mt-1 m-0">Profile ID: {player.profile_id}</p>
+            <p className="text-sm text-gray-500 mt-1 m-0">{t('profile.profileId')}: {player.profile_id}</p>
             <PreviousAliases aliases={player.previous_aliases} />
           </div>
           <div className="flex items-center gap-2 shrink-0">
@@ -310,7 +313,7 @@ export default function PlayerProfile() {
       {/* Recent form */}
       {matches.length > 0 && (
         <div className="bg-dark-700 border border-dark-400 rounded-xl px-5 py-3 mb-6 flex items-center gap-3 flex-wrap">
-          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">Recent Form</span>
+          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">{t('profile.recentForm')}</span>
           <div className="flex items-center gap-1">
             {matches.slice(0, 10).map((m, i) => (
               <span
@@ -333,7 +336,7 @@ export default function PlayerProfile() {
       {/* Rating cards + win rate donut */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <RatingCard
-          label="Solo Ranked"
+          label={t('profile.soloRanked')}
           rating={soloLadder?.rating}
           rank={soloLadder?.rank}
           topPercent={soloLadder?.top_percent}
@@ -345,7 +348,7 @@ export default function PlayerProfile() {
           color="gold"
         />
         <RatingCard
-          label="Team Ranked"
+          label={t('profile.teamRanked')}
           rating={teamLadder?.rating}
           rank={teamLadder?.rank}
           topPercent={teamLadder?.top_percent}
@@ -399,17 +402,17 @@ export default function PlayerProfile() {
       {/* The profile was one 18-screen scroll on mobile. Tabs also mean each
           section only fetches its data when you actually open it. */}
       <div className="flex items-center gap-1 mb-6 border-b border-dark-400 overflow-x-auto">
-        {PROFILE_TABS.map((t) => (
+        {PROFILE_TABS.map((tab) => (
           <button
-            key={t.id}
-            onClick={() => setActiveTab(t.id)}
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
             className={`px-2 sm:px-4 py-2.5 text-[13px] sm:text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
-              activeTab === t.id
+              activeTab === tab.id
                 ? 'border-gold-400 text-gold-400'
                 : 'border-transparent text-gray-400 hover:text-gray-200'
             }`}
           >
-            {t.label}
+            {t(tab.key)}
           </button>
         ))}
       </div>
@@ -440,7 +443,7 @@ export default function PlayerProfile() {
         <div ref={matchesSectionRef} className="bg-dark-700 border border-dark-400 rounded-xl p-5">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <h2 className="text-lg font-semibold text-gray-200 m-0">Recent Matches</h2>
+              <h2 className="text-lg font-semibold text-gray-200 m-0">{t('profile.recentMatches')}</h2>
               {matchesData && (
                 <span className="text-xs text-gray-500">{matchesData.total} total</span>
               )}
@@ -536,9 +539,9 @@ export default function PlayerProfile() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-200 m-0">Civilization Stats</h2>
+              <h2 className="text-lg font-semibold text-gray-200 m-0">{t('civStats.title')}</h2>
               {stats && (
-                <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
+                <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.total_matches })}</span>
               )}
             </div>
             {loadingStats ? (
@@ -551,9 +554,9 @@ export default function PlayerProfile() {
           </div>
           <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-200 m-0">Map Stats</h2>
+              <h2 className="text-lg font-semibold text-gray-200 m-0">{t('mapStats.title')}</h2>
               {stats && (
-                <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
+                <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.total_matches })}</span>
               )}
             </div>
             {loadingStats ? (

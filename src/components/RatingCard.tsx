@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 interface RatingCardProps {
   label: string;
   rating: number | undefined;
@@ -23,6 +24,7 @@ export default function RatingCard({
   highest,
   color,
 }: RatingCardProps) {
+  const { t } = useT();
   if (!rating && !rank) return null;
 
   const winRate = wins && losses ? ((wins / (wins + losses)) * 100).toFixed(1) : '0.0';
@@ -45,14 +47,14 @@ export default function RatingCard({
             className="text-[11px] font-medium text-gray-400 bg-dark-500/70 border border-dark-400 rounded px-1.5 py-0.5"
             title={ladderSize ? `Rank ${rank?.toLocaleString()} of ${ladderSize.toLocaleString()} ranked players` : undefined}
           >
-            top {topPercent}%
+            {t('common.topPercent')} {topPercent}%
           </span>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-3 mt-4">
         <div>
-          <p className="text-xs text-gray-500 m-0">Record</p>
+          <p className="text-xs text-gray-500 m-0">{t('common.record')}</p>
           <p className="text-sm font-medium m-0">
             <span className="text-win">{wins || 0}W</span>
             {' / '}
@@ -60,15 +62,15 @@ export default function RatingCard({
           </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 m-0">Win Rate</p>
+          <p className="text-xs text-gray-500 m-0">{t('common.winRate')}</p>
           <p className="text-sm font-medium m-0">{winRate}%</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 m-0">Games</p>
+          <p className="text-xs text-gray-500 m-0">{t('common.games')}</p>
           <p className="text-sm font-medium m-0">{totalGames.toLocaleString()}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 m-0">Streak</p>
+          <p className="text-xs text-gray-500 m-0">{t('common.streak')}</p>
           <p className={`text-sm font-medium m-0 ${streak && streak > 0 ? 'text-win' : streak && streak < 0 ? 'text-loss' : ''}`}>
             {streak && streak > 0 ? `+${streak}` : streak || '0'}
           </p>

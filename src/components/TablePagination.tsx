@@ -1,3 +1,4 @@
+import { useT } from '../lib/i18n';
 interface TablePaginationProps {
   page: number;
   pageSize: number;
@@ -13,6 +14,7 @@ interface TablePaginationProps {
  * a hundred rows to reach the next section.
  */
 export default function TablePagination({ page, pageSize, total, onPageChange, noun }: TablePaginationProps) {
+  const { t } = useT();
   const pages = Math.ceil(total / pageSize);
   if (pages <= 1) return null;
 
@@ -29,7 +31,7 @@ export default function TablePagination({ page, pageSize, total, onPageChange, n
   return (
     <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-dark-500/60 flex-wrap">
       <span className="text-xs text-gray-500">
-        {from}–{to} of {total} {noun}
+        {from}–{to} {t('common.of')} {total} {noun}
       </span>
       <div className="flex items-center gap-1">
         <button
@@ -39,7 +41,7 @@ export default function TablePagination({ page, pageSize, total, onPageChange, n
           className={btn(page !== 1)}
           aria-label={`Previous page of ${noun}`}
         >
-          Prev
+          {t('common.previous')}
         </button>
         <span className="px-2 text-xs text-gray-500 tabular-nums">
           {page} / {pages}
@@ -51,7 +53,7 @@ export default function TablePagination({ page, pageSize, total, onPageChange, n
           className={btn(page !== pages)}
           aria-label={`Next page of ${noun}`}
         >
-          Next
+          {t('common.next')}
         </button>
       </div>
     </div>

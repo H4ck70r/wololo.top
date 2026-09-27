@@ -4,8 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import { getMatchDetail } from '../lib/api';
 import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/constants';
 import { outcomeOf } from '../lib/matchResult';
+import { useT } from '../lib/i18n';
 
 export default function MatchDetailPage() {
+  const { t } = useT();
   const { matchId } = useParams<{ matchId: string }>();
 
   const { data, isLoading, error } = useQuery({
@@ -89,7 +91,7 @@ export default function MatchDetailPage() {
                   <span className={`text-sm font-bold ${
                     isWinner ? 'text-win' : teamOutcome === 'loss' ? 'text-loss' : 'text-pending'
                   }`}>
-                    {isWinner ? 'VICTORY' : teamOutcome === 'loss' ? 'DEFEAT' : 'UNDECIDED'}
+                    {isWinner ? t('match.victory') : teamOutcome === 'loss' ? t('match.defeat') : t('match.undecided')}
                   </span>
                   <span className="text-xs text-gray-500">Team {team.team_id}</span>
                 </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TablePagination from './TablePagination';
+import { useT } from '../lib/i18n';
 import { cleanMapName } from '../lib/constants';
 import type { MapStat } from '../lib/types';
 
@@ -11,6 +12,7 @@ type SortKey = 'map' | 'games' | 'wins' | 'win_rate';
 type SortDir = 'asc' | 'desc';
 
 export default function MapStatsTable({ stats }: MapStatsTableProps) {
+  const { t } = useT();
   const [sortKey, setSortKey] = useState<SortKey>('games');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [page, setPage] = useState(1);
@@ -58,7 +60,7 @@ export default function MapStatsTable({ stats }: MapStatsTableProps) {
   );
 
   if (stats.length === 0) {
-    return <p className="text-gray-500 text-sm">No map data available.</p>;
+    return <p className="text-gray-500 text-sm">{t('common.noData')}</p>;
   }
 
   return (
@@ -70,25 +72,25 @@ export default function MapStatsTable({ stats }: MapStatsTableProps) {
               onClick={() => handleSort('map')}
               className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              Map <SortIcon col="map" />
+              {t('common.map')} <SortIcon col="map" />
             </th>
             <th
               onClick={() => handleSort('games')}
               className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              Games <SortIcon col="games" />
+              {t('common.games')} <SortIcon col="games" />
             </th>
             <th
               onClick={() => handleSort('wins')}
               className="hidden sm:table-cell text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              Wins <SortIcon col="wins" />
+              {t('common.wins')} <SortIcon col="wins" />
             </th>
             <th
               onClick={() => handleSort('win_rate')}
               className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium cursor-pointer hover:text-gray-200 transition-colors"
             >
-              <span className="sm:hidden">WR</span><span className="hidden sm:inline">Win Rate</span> <SortIcon col="win_rate" />
+              <span className="sm:hidden">{t('common.winRateShort')}</span><span className="hidden sm:inline">{t('common.winRate')}</span> <SortIcon col="win_rate" />
             </th>
           </tr>
         </thead>
@@ -137,7 +139,7 @@ export default function MapStatsTable({ stats }: MapStatsTableProps) {
         pageSize={PAGE_SIZE}
         total={sorted.length}
         onPageChange={setPage}
-        noun="maps"
+        noun={t('common.maps')}
       />
     </div>
   );
