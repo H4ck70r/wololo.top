@@ -2,6 +2,8 @@ interface RatingCardProps {
   label: string;
   rating: number | undefined;
   rank: number | undefined;
+  topPercent?: number | null;
+  ladderSize?: number | null;
   wins: number | undefined;
   losses: number | undefined;
   streak: number | undefined;
@@ -13,6 +15,8 @@ export default function RatingCard({
   label,
   rating,
   rank,
+  topPercent,
+  ladderSize,
   wins,
   losses,
   streak,
@@ -35,6 +39,14 @@ export default function RatingCard({
         <span className={`text-4xl font-bold ${accentColor}`}>{rating || '-'}</span>
         {rank && (
           <span className="text-sm text-gray-500">#{rank.toLocaleString()}</span>
+        )}
+        {topPercent != null && (
+          <span
+            className="text-[11px] font-medium text-gray-400 bg-dark-500/70 border border-dark-400 rounded px-1.5 py-0.5"
+            title={ladderSize ? `Rank ${rank?.toLocaleString()} of ${ladderSize.toLocaleString()} ranked players` : undefined}
+          >
+            top {topPercent}%
+          </span>
         )}
       </div>
 

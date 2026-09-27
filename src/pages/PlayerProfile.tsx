@@ -7,6 +7,7 @@ import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enric
 import { countryFlag, MATCH_FILTERS } from '../lib/constants';
 import { isFavorite, addFavorite, removeFavorite } from '../lib/favorites';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
+import PreviousAliases from '../components/PreviousAliases';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
 import CivStatsTable from '../components/CivStatsTable';
@@ -20,7 +21,17 @@ import SearchBar from '../components/SearchBar';
 
 const MATCHES_PER_PAGE = 50;
 
+const PROFILE_TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'matches', label: 'Matches' },
+  { id: 'stats', label: 'Civs & Maps' },
+  { id: 'rivals', label: 'Rivals' },
+] as const;
+
+type ProfileTab = (typeof PROFILE_TABS)[number]['id'];
+
 export default function PlayerProfile() {
+  const [activeTab, setActiveTab] = useState<ProfileTab>('overview');
   const { profileId } = useParams<{ profileId: string }>();
   const [matchFilter, setMatchFilter] = useState('');
   const [matchPage, setMatchPage] = useState(1);
@@ -240,6 +251,7 @@ export default function PlayerProfile() {
               </Link>
             </div>
             <p className="text-sm text-gray-500 mt-1 m-0">Profile ID: {player.profile_id}</p>
+            <PreviousAliases aliases={player.previous_aliases} />
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {enriching && (
@@ -324,6 +336,8 @@ export default function PlayerProfile() {
           label="Solo Ranked"
           rating={soloLadder?.rating}
           rank={soloLadder?.rank}
+          topPercent={soloLadder?.top_percent}
+          ladderSize={soloLadder?.ladder_size}
           wins={soloLadder?.wins}
           losses={soloLadder?.losses}
           streak={player.streak}
@@ -334,6 +348,8 @@ export default function PlayerProfile() {
           label="Team Ranked"
           rating={teamLadder?.rating}
           rank={teamLadder?.rank}
+          topPercent={teamLadder?.top_percent}
+          ladderSize={teamLadder?.ladder_size}
           wins={teamLadder?.wins}
           losses={teamLadder?.losses}
           streak={undefined}
@@ -380,156 +396,194 @@ export default function PlayerProfile() {
         </div>
       </div>
 
-      {/* Rating trends (deltas, streaks) */}
-      <div className="mb-6">
-        <RatingTrends profileId={profileId!} />
+      {/* The profile was one 18-screen scroll on mobile. Tabs also mean each
+          section only fetches its data when you actually open it. */}
+      <div className="flex items-center gap-1 mb-6 border-b border-dark-400 overflow-x-auto">
+        {PROFILE_TABS.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setActiveTab(t.id)}
+            className={`px-3 sm:px-4 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
+              activeTab === t.id
+                ? 'border-gold-400 text-gold-400'
+                : 'border-transparent text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
-      {/* Rating history chart */}
-      <div className="mb-6">
-        <RatingChart profileId={profileId!} />
-      </div>
-
-      {/* Civ & Map stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-200 m-0">Civilization Stats</h2>
-            {stats && (
-              <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
-            )}
-          </div>
-          {loadingStats ? (
-            <div className="flex justify-center py-8">
-              <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
-            <CivStatsTable stats={stats?.civ_stats || []} />
-          )}
+      {activeTab === 'overview' && (
+        <>
+        {/* Rating trends (deltas, streaks) */}
+        <div className="mb-6">
+          <RatingTrends profileId={profileId!} />
         </div>
-        <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-200 m-0">Map Stats</h2>
-            {stats && (
-              <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
-            )}
-          </div>
-          {loadingStats ? (
-            <div className="flex justify-center py-8">
-              <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
-            <MapStatsTable stats={stats?.map_stats || []} />
-          )}
+
+        {/* Rating history chart */}
+        <div className="mb-6">
+          <RatingChart profileId={profileId!} />
         </div>
-      </div>
 
-      {/* Rivals / Opponent Analysis */}
-      <div className="mb-6">
-        <RivalsSection profileId={profileId!} />
-      </div>
-
-      {/* Rating Milestones */}
-      <div className="mb-6">
-        <MilestonesTimeline profileId={profileId!} />
-      </div>
-
-      {/* Activity Heatmap */}
-      <div className="mb-6">
-        <ActivityHeatmap profileId={profileId!} />
-      </div>
-
-      {/* Recent matches */}
-      <div ref={matchesSectionRef} className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <h2 className="text-lg font-semibold text-gray-200 m-0">Recent Matches</h2>
-            {matchesData && (
-              <span className="text-xs text-gray-500">{matchesData.total} total</span>
-            )}
-          </div>
-          <div className="flex items-center gap-1 flex-wrap">
-            {MATCH_FILTERS.map((f) => (
-              <button
-                key={f.value}
-                onClick={() => handleFilterChange(f.value)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
-                  matchFilter === f.value
-                    ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
-                    : 'text-gray-500 hover:text-gray-300 border border-transparent'
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
+        {/* Rating Milestones */}
+        <div className="mb-6">
+          <MilestonesTimeline profileId={profileId!} />
         </div>
-        {loadingMatches ? (
-          <div className="flex justify-center py-8">
-            <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : matches.length > 0 ? (
-          <div className="flex flex-col gap-2">
-            {matches.map((match) => (
-              <MatchRow key={match.match_id} match={match} profileId={profileId} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500 text-sm text-center py-8">No recent matches found.</p>
-        )}
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-dark-400 flex-wrap gap-3">
-            <span className="text-xs text-gray-500">
-              Page {matchPage} of {totalPages}
-            </span>
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => handlePageChange(matchPage - 1)}
-                disabled={matchPage === 1}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
-                  matchPage === 1
-                    ? 'text-gray-600 border-transparent cursor-not-allowed'
-                    : 'text-gray-400 border-dark-400 hover:text-gray-200 hover:border-gray-500'
-                }`}
-              >
-                Previous
-              </button>
-              {getPageNumbers().map((page, idx) =>
-                page === 'ellipsis' ? (
-                  <span key={`ellipsis-${idx}`} className="px-1.5 text-xs text-gray-600">
-                    ...
-                  </span>
-                ) : (
-                  <button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
-                      matchPage === page
-                        ? 'bg-gold-400/20 text-gold-400 border-gold-400/30'
-                        : 'text-gray-400 border-transparent hover:text-gray-200 hover:border-gray-500'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                )
+        </>
+      )}
+
+      {activeTab === 'matches' && (
+        <>
+        {/* Recent matches */}
+        <div ref={matchesSectionRef} className="bg-dark-700 border border-dark-400 rounded-xl p-5">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+              <h2 className="text-lg font-semibold text-gray-200 m-0">Recent Matches</h2>
+              {matchesData && (
+                <span className="text-xs text-gray-500">{matchesData.total} total</span>
               )}
-              <button
-                onClick={() => handlePageChange(matchPage + 1)}
-                disabled={matchPage === totalPages}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
-                  matchPage === totalPages
-                    ? 'text-gray-600 border-transparent cursor-not-allowed'
-                    : 'text-gray-400 border-dark-400 hover:text-gray-200 hover:border-gray-500'
-                }`}
-              >
-                Next
-              </button>
+            </div>
+            <div className="flex items-center gap-1 flex-wrap">
+              {MATCH_FILTERS.map((f) => (
+                <button
+                  key={f.value}
+                  onClick={() => handleFilterChange(f.value)}
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                    matchFilter === f.value
+                      ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
+                      : 'text-gray-500 hover:text-gray-300 border border-transparent'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
             </div>
           </div>
-        )}
-      </div>
+          {loadingMatches ? (
+            <div className="flex justify-center py-8">
+              <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : matches.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {matches.map((match) => (
+                <MatchRow key={match.match_id} match={match} profileId={profileId} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm text-center py-8">No recent matches found.</p>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-dark-400 flex-wrap gap-3">
+              <span className="text-xs text-gray-500">
+                Page {matchPage} of {totalPages}
+              </span>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => handlePageChange(matchPage - 1)}
+                  disabled={matchPage === 1}
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
+                    matchPage === 1
+                      ? 'text-gray-600 border-transparent cursor-not-allowed'
+                      : 'text-gray-400 border-dark-400 hover:text-gray-200 hover:border-gray-500'
+                  }`}
+                >
+                  Previous
+                </button>
+                {getPageNumbers().map((page, idx) =>
+                  page === 'ellipsis' ? (
+                    <span key={`ellipsis-${idx}`} className="px-1.5 text-xs text-gray-600">
+                      ...
+                    </span>
+                  ) : (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
+                        matchPage === page
+                          ? 'bg-gold-400/20 text-gold-400 border-gold-400/30'
+                          : 'text-gray-400 border-transparent hover:text-gray-200 hover:border-gray-500'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  )
+                )}
+                <button
+                  onClick={() => handlePageChange(matchPage + 1)}
+                  disabled={matchPage === totalPages}
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
+                    matchPage === totalPages
+                      ? 'text-gray-600 border-transparent cursor-not-allowed'
+                      : 'text-gray-400 border-dark-400 hover:text-gray-200 hover:border-gray-500'
+                  }`}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        </>
+      )}
+
+      {activeTab === 'stats' && (
+        <>
+        {/* Civ & Map stats */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-200 m-0">Civilization Stats</h2>
+              {stats && (
+                <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
+              )}
+            </div>
+            {loadingStats ? (
+              <div className="flex justify-center py-8">
+                <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <CivStatsTable stats={stats?.civ_stats || []} />
+            )}
+          </div>
+          <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-200 m-0">Map Stats</h2>
+              {stats && (
+                <span className="text-xs text-gray-500">Based on {stats.total_matches} matches</span>
+              )}
+            </div>
+            {loadingStats ? (
+              <div className="flex justify-center py-8">
+                <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <MapStatsTable stats={stats?.map_stats || []} />
+            )}
+          </div>
+        </div>
+
+        {/* Activity Heatmap */}
+        <div className="mb-6">
+          <ActivityHeatmap profileId={profileId!} />
+        </div>
+
+        </>
+      )}
+
+      {activeTab === 'rivals' && (
+        <>
+        {/* Rivals / Opponent Analysis */}
+        <div className="mb-6">
+          <RivalsSection profileId={profileId!} />
+        </div>
+
+        </>
+      )}
+
     </div>
   );
 }

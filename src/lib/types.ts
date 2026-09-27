@@ -25,15 +25,27 @@ export interface LadderEntry {
   type: string;
   rating: number;
   rank: number;
+  /** how many players are on this ladder, for the percentile */
+  ladder_size?: number | null;
+  /** rank expressed as "top N%"; null when the rank is unusable */
+  top_percent?: number | null;
   wins: number;
   losses: number;
   winrate: string;
+}
+
+export interface PreviousAlias {
+  alias: string;
+  first_seen_at: string | null;
+  last_seen_at: string | null;
 }
 
 export interface PlayerProfile {
   profile_id: number;
   steamid: string | null;
   alias: string;
+  /** other names this same account has been seen under */
+  previous_aliases?: PreviousAlias[];
   country: string | null;
   avatar: string | null;
   wins: number;
