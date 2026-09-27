@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://wololo.top/sitemap.xml
+Sitemap: https://wololo.top/sitemap-players.xml
