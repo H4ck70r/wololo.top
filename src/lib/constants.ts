@@ -58,6 +58,11 @@ export const CIVILIZATIONS: Record<number, string> = {
   58: 'Muisca',
   59: 'Mapuche',
   60: 'Tupi',
+  // Verified against aoe2companion's civName for the same match+profile that
+  // World's Edge tagged with these ids (see the API's aoe2Normalize.js).
+  61: 'Saxons',
+  62: 'Varangians',
+  63: 'Danes',
 };
 
 export function getCivName(civId: number | undefined | null): string {
