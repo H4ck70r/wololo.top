@@ -6,7 +6,8 @@ import { Helmet } from 'react-helmet-async';
 import { getEnhancedLeaderboard, getEnhancedCountryStats, getPlayer } from '../lib/api';
 import LadderDistributionChart from '../components/LadderDistributionChart';
 import { useSession } from '../lib/session';
-import { countryFlag } from '../lib/constants';
+import CountryFilter from '../components/CountryFilter';
+import { countryFlag, countryName } from '../lib/constants';
 import type { EnhancedLeaderboardResponse, CountryStatsResponse } from '../lib/types';
 
 const PAGE_SIZE = 50;
@@ -23,7 +24,7 @@ const LADDER_TYPES = [
 type LadderType = (typeof LADDER_TYPES)[number]['id'];
 
 export default function LeaderboardEnhanced() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Read initial state from URL params
@@ -216,21 +217,11 @@ export default function LeaderboardEnhanced() {
           {/* Country */}
           <div>
             <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.country')}</label>
-            <select
+            <CountryFilter
               value={country}
-              onChange={(e) => {
-                setCountry(e.target.value);
-                resetPage();
-              }}
-              className="w-full px-3 py-2 rounded-lg bg-dark-600 border border-dark-400 text-gray-200 text-sm focus:outline-none focus:border-gold-500/50 transition-colors cursor-pointer"
-            >
-              <option value="">{t('lb.allCountries')}</option>
-              {countries.map((c) => (
-                <option key={c.country} value={c.country}>
-                  {countryFlag(c.country)} {c.country.toUpperCase()} ({c.player_count.toLocaleString()})
-                </option>
-              ))}
-            </select>
+              countries={countries}
+              onChange={(code) => { setCountry(code); resetPage(); }}
+            />
           </div>
 
           {/* Clan */}
@@ -290,7 +281,7 @@ export default function LeaderboardEnhanced() {
             </button>
             {country && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-dark-500 text-xs text-gray-300">
-                {countryFlag(country)} {country.toUpperCase()}
+                {countryFlag(country)} {countryName(country, lang) || country.toUpperCase()}
                 <button
                   onClick={() => { setCountry(''); resetPage(); }}
                   className="ml-1 text-gray-500 hover:text-gray-200 bg-transparent border-none cursor-pointer text-xs"

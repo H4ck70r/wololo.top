@@ -147,6 +147,36 @@ export const MATCH_FILTERS = [
 ] as const;
 
 // Country code to flag emoji
+const regionNames = new Map<string, Intl.DisplayNames>();
+
+/**
+ * The country name in the reader's language, from the browser itself, so no
+ * 250-row table has to be shipped or translated. Unknown or malformed codes
+ * fall back to the code, which is still better than nothing.
+ */
+export function countryName(code: string | undefined | null, lang = 'en'): string {
+  if (!code || code.length !== 2) return '';
+  const upper = code.toUpperCase();
+  try {
+    let names = regionNames.get(lang);
+    if (!names) {
+      names = new Intl.DisplayNames([lang], { type: 'region' });
+      regionNames.set(lang, names);
+    }
+    return names.of(upper) ?? upper;
+  } catch {
+    return upper;
+  }
+}
+
+/** Lowercased and stripped of accents, so "mexico" finds "México". */
+export function foldText(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
 export function countryFlag(code: string | undefined | null): string {
   if (!code || code.length !== 2) return '';
   return code
