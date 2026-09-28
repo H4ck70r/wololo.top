@@ -438,6 +438,7 @@ export default function PlayerProfile() {
             playersAbove={soloLadder?.players_above}
             ladder="solo"
             profileId={profileId}
+            playerName={player?.alias}
           />
         </div>
 

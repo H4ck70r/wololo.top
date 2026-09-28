@@ -21,6 +21,10 @@ interface Props {
   ladder?: 'solo' | 'team';
   /** only used to highlight this player's own row in the listings */
   profileId?: number | string;
+  /** whose profile this is; the card names them instead of saying "you" */
+  playerName?: string;
+  /** true once a signed-in visitor is looking at the account they claimed */
+  isSelf?: boolean;
 }
 
 /** how many players a range page lists; the top 10 is never paged */
@@ -51,6 +55,8 @@ export default function LadderDistributionChart({
   playersAbove,
   ladder = 'solo',
   profileId,
+  playerName,
+  isSelf = false,
 }: Props) {
   const { t } = useT();
   const [range, setRange] = useState<{ from: number; to: number } | null>(null);
@@ -104,6 +110,14 @@ export default function LadderDistributionChart({
   if (isLoading || !data || !rating) return null;
 
   const marks = data.landmarks;
+
+  // Nothing here knows who is reading, so the card only says "you" when a
+  // signed-in visitor is on the account they claimed. Otherwise it addresses
+  // the player it is describing by name -- reading "you" on a rival's profile
+  // was plainly wrong.
+  const who = isSelf ? null : playerName?.trim() || null;
+  // The label sits inside the plot, where a long nick would run off the edge.
+  const whoShort = who && who.length > 14 ? `${who.slice(0, 13)}…` : who;
 
   let seen = 0;
   const allPoints = data.buckets.map((b) => {
@@ -208,14 +222,25 @@ export default function LadderDistributionChart({
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-baseline gap-2 mb-1 flex-wrap">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('dist.title')}</h2>
+        <h2 className="text-lg font-semibold text-gray-200 m-0">
+          {who ? t('dist.titleOther', { who }) : t('dist.title')}
+        </h2>
         {topPercent != null && (
           <span className="text-sm font-medium text-gold-400">{t('common.topPercent')} {topPercent}%</span>
         )}
       </div>
       {playersAbove != null && (
         <p className="text-xs text-gray-500 m-0">
-          {t('dist.subtitle', { above: playersAbove.toLocaleString(), total: data.total_players.toLocaleString() })}
+          {who
+            ? t('dist.subtitleOther', {
+                who,
+                above: playersAbove.toLocaleString(),
+                total: data.total_players.toLocaleString(),
+              })
+            : t('dist.subtitle', {
+                above: playersAbove.toLocaleString(),
+                total: data.total_players.toLocaleString(),
+              })}
         </p>
       )}
 
@@ -342,7 +367,7 @@ export default function LadderDistributionChart({
                 x={rating}
                 stroke="#f0c040"
                 strokeWidth={2}
-                label={{ value: t('dist.you'), position: 'top', fill: '#f0c040', fontSize: 10 }}
+                label={{ value: whoShort ?? t('dist.you'), position: 'top', fill: '#f0c040', fontSize: 10 }}
               />
             )}
           </AreaChart>
@@ -378,7 +403,8 @@ export default function LadderDistributionChart({
           </div>
           {scope.your_position != null && (
             <p className="text-xs text-gold-400/90 mt-2 m-0">
-              {t('dist.yourPlace', {
+              {t(who ? 'dist.theirPlace' : 'dist.yourPlace', {
+                who: who ?? '',
                 position: scope.your_position.toLocaleString(),
                 total: scope.players.toLocaleString(),
               })}
@@ -411,7 +437,7 @@ export default function LadderDistributionChart({
                 onClick={() => setPage(myPage)}
                 className="text-xs text-gold-400 hover:text-gold-300 bg-transparent border-0 p-0 cursor-pointer underline"
               >
-                {t('dist.jumpToMe')}
+                {who ? t('dist.jumpToOther') : t('dist.jumpToMe')}
               </button>
             )}
             {range && (
