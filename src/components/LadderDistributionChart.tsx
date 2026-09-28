@@ -15,7 +15,8 @@ import type {
 import TablePagination from './TablePagination';
 
 interface Props {
-  rating: number | undefined;
+  /** undefined on pages with no single player: the curve renders unmarked */
+  rating?: number;
   topPercent?: number | null;
   playersAbove?: number | null;
   ladder?: 'solo' | 'team';
@@ -25,7 +26,20 @@ interface Props {
   playerName?: string;
   /** true once a signed-in visitor is looking at the account they claimed */
   isSelf?: boolean;
+  /**
+   * Pass these to drive the selection from outside. On the leaderboard the
+   * bands act as a filter for the table below, so the page owns the choice.
+   */
+  range?: Band | null;
+  onRangeChange?: (range: Band | null) => void;
+  /**
+   * The leaderboard IS a player listing, so the built-in one would just be a
+   * second copy of it.
+   */
+  showPlayers?: boolean;
 }
+
+type Band = { from: number; to: number; top?: number };
 
 /** how many players a range page lists; the top 10 is never paged */
 const PAGE_SIZE = 16;
@@ -57,9 +71,18 @@ export default function LadderDistributionChart({
   profileId,
   playerName,
   isSelf = false,
+  range: controlledRange,
+  onRangeChange,
+  showPlayers = true,
 }: Props) {
   const { t } = useT();
-  const [range, setRange] = useState<{ from: number; to: number; top?: number } | null>(null);
+  const [ownRange, setOwnRange] = useState<Band | null>(null);
+  const controlled = onRangeChange != null;
+  const range = controlled ? controlledRange ?? null : ownRange;
+  const setRange = (next: Band | null) => {
+    if (!controlled) setOwnRange(next);
+    onRangeChange?.(next);
+  };
   const [page, setPage] = useState(1);
 
   // Page 7 of the previous range means nothing in the next one.
@@ -74,6 +97,7 @@ export default function LadderDistributionChart({
   const { data: top } = useQuery<LeaderboardResponse>({
     queryKey: ['ladderTop10', ladder],
     queryFn: () => getLeaderboard(ladder === 'team' ? 'team-rm' : 'rm', { limit: 10 }),
+    enabled: showPlayers,
     staleTime: 30 * 60 * 1000,
   });
 
@@ -89,7 +113,7 @@ export default function LadderDistributionChart({
         rating,
         profile_id: profileId,
       }),
-    enabled: rating != null,
+    enabled: rating != null || range != null,
     staleTime: 30 * 60 * 1000,
   });
 
@@ -103,11 +127,11 @@ export default function LadderDistributionChart({
         page,
         limit: PAGE_SIZE,
       }),
-    enabled: !!range,
+    enabled: showPlayers && !!range,
     staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading || !data || !rating) return null;
+  if (isLoading || !data) return null;
 
   const marks = data.landmarks;
 
@@ -152,6 +176,14 @@ export default function LadderDistributionChart({
 
   // The average band is drawn behind the percentile ones, so it is kept apart.
   const [bulk, ...bands] = ranges;
+
+  // A caller driving the selection (the leaderboard, from its rating filter)
+  // only knows from/to, so the count that defines a band is recovered here
+  // rather than being something every caller has to carry.
+  const activeBand = range
+    ? ranges.find((r) => r.from === range.from && r.to === range.to)
+    : undefined;
+  const effectiveTop = range?.top ?? activeBand?.top;
   const visibleBands = bands.filter((b) => b.to > from);
 
   const players = top?.data?.players ?? [];
@@ -183,7 +215,7 @@ export default function LadderDistributionChart({
 
   // A count band lists exactly that many players: the rating filter alone
   // would let anyone tied on the boundary rating slip in as a 17th.
-  const cap = range?.top;
+  const cap = effectiveTop;
   const listed = rangeList?.data?.players ?? [];
   const rangeRows = cap
     ? listed.slice(0, Math.max(0, cap - (page - 1) * PAGE_SIZE))
@@ -233,7 +265,7 @@ export default function LadderDistributionChart({
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-baseline gap-2 mb-1 flex-wrap">
         <h2 className="text-lg font-semibold text-gray-200 m-0">
-          {who ? t('dist.titleOther', { who }) : t('dist.title')}
+          {rating == null ? t('dist.titleLadder') : who ? t('dist.titleOther', { who }) : t('dist.title')}
         </h2>
         {topPercent != null && (
           <span className="text-sm font-medium text-gold-400">{t('common.topPercent')} {topPercent}%</span>
@@ -300,11 +332,8 @@ export default function LadderDistributionChart({
               if (!Number.isFinite(at)) return;
               const hit = ranges.find((r) => at >= r.from && at <= r.to);
               if (!hit) return;
-              setRange((cur) =>
-                cur && cur.from === hit.from && cur.to === hit.to
-                  ? null
-                  : { from: hit.from, to: hit.to, top: hit.top }
-              );
+              const same = range && range.from === hit.from && range.to === hit.to;
+              setRange(same ? null : { from: hit.from, to: hit.to, top: hit.top });
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -424,7 +453,7 @@ export default function LadderDistributionChart({
                 <span className="text-gray-500">
                   {' · '}
                   {t(scope.tied_with === 1 ? 'dist.tiedWithOne' : 'dist.tiedWith', {
-                    rating,
+                    rating: rating ?? '',
                     count: scope.tied_with.toLocaleString(),
                   })}
                 </span>
@@ -437,6 +466,7 @@ export default function LadderDistributionChart({
       {/* One column, always: two columns of five read out of order on a phone
           and the ranking is the whole point of the list. With a range picked
           this becomes that range, best first, paged. */}
+      {showPlayers && (
       <div className="mt-4 pt-4 border-t border-dark-500/60">
         <div className="flex items-baseline justify-between gap-2 flex-wrap mb-2">
           <h3 className="text-sm font-semibold text-gray-300 m-0">
@@ -489,6 +519,7 @@ export default function LadderDistributionChart({
           <ol className="m-0 p-0 list-none">{players.slice(0, 10).map((p, i) => row(p, i + 1))}</ol>
         )}
       </div>
+      )}
     </div>
   );
 }

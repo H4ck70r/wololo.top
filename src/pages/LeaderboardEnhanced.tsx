@@ -3,7 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { getEnhancedLeaderboard, getEnhancedCountryStats } from '../lib/api';
+import { getEnhancedLeaderboard, getEnhancedCountryStats, getPlayer } from '../lib/api';
+import LadderDistributionChart from '../components/LadderDistributionChart';
+import { useSession } from '../lib/session';
 import { countryFlag } from '../lib/constants';
 import type { EnhancedLeaderboardResponse, CountryStatsResponse } from '../lib/types';
 
@@ -64,6 +66,35 @@ export default function LeaderboardEnhanced() {
 
   // Reset page when filters change
   const resetPage = useCallback(() => setPage(1), []);
+
+  // The curve only exists for the two RM ladders.
+  const distLadder = ladderType === 'rm' ? 'solo' : ladderType === 'team-rm' ? 'team' : null;
+
+  // The selection is not separate state: it IS the rating filter, so typing a
+  // range highlights its band and clearing the filters clears the curve.
+  const chartRange =
+    minRating && maxRating ? { from: Number(minRating), to: Number(maxRating) } : null;
+
+  const applyBand = useCallback(
+    (band: { from: number; to: number } | null) => {
+      setMinRating(band ? String(band.from) : '');
+      setMaxRating(band ? String(band.to) : '');
+      resetPage();
+    },
+    [resetPage]
+  );
+
+  // Signed in, the curve marks where you are on the ladder you are browsing.
+  const { user } = useSession();
+  const { data: me } = useQuery({
+    queryKey: ['player', user?.profile_id],
+    queryFn: () => getPlayer(String(user!.profile_id)),
+    enabled: !!user?.profile_id,
+    staleTime: 10 * 60 * 1000,
+  });
+  const myRating = distLadder
+    ? me?.player?.ladders?.find((l) => l.type === distLadder)?.rating
+    : undefined;
 
   // Fetch leaderboard data
   const { data, isLoading, error } = useQuery<EnhancedLeaderboardResponse>({
@@ -148,6 +179,21 @@ export default function LeaderboardEnhanced() {
           ))}
         </div>
       </div>
+
+      {/* The curve doubles as a filter: picking a band narrows the table below,
+          which is why its own player listing is switched off here. */}
+      {distLadder && (
+        <div className="mb-4">
+          <LadderDistributionChart
+            ladder={distLadder}
+            rating={myRating}
+            isSelf
+            range={chartRange}
+            onRangeChange={applyBand}
+            showPlayers={false}
+          />
+        </div>
+      )}
 
       {/* Filters */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-4 mb-4">
@@ -240,7 +286,7 @@ export default function LeaderboardEnhanced() {
               onClick={clearFilters}
               className="px-3 py-1.5 rounded-lg text-xs font-medium bg-dark-500 text-gray-400 hover:text-gray-200 hover:bg-dark-400 transition-colors border-none cursor-pointer"
             >
-              Clear all filters
+              {t('lb.clearFilters')}
             </button>
             {country && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-dark-500 text-xs text-gray-300">
