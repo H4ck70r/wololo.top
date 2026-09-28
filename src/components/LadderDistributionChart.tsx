@@ -1,19 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Area, AreaChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { getLadderDistribution, getLeaderboard } from '../lib/api';
+import { getEnhancedLeaderboard, getLadderDistribution, getLadderRangeStats, getLeaderboard } from '../lib/api';
 import { countryFlag } from '../lib/constants';
 import { useT } from '../lib/i18n';
 import type { TKey } from '../lib/i18n';
-import type { LadderDistribution, LeaderboardResponse } from '../lib/types';
+import type {
+  EnhancedLeaderboardResponse,
+  LadderDistribution,
+  LadderRangeStats,
+  LeaderboardResponse,
+} from '../lib/types';
+import TablePagination from './TablePagination';
 
 interface Props {
   rating: number | undefined;
   topPercent?: number | null;
   playersAbove?: number | null;
   ladder?: 'solo' | 'team';
+  /** only used to highlight this player's own row in the listings */
+  profileId?: number | string;
 }
+
+/** how many players a range page lists; the top 10 is never paged */
+const PAGE_SIZE = 16;
+
+/** What the stat strip needs, whether it describes a range or the whole ladder. */
+type Scope = {
+  players: number;
+  mean?: number;
+  median?: number;
+  min?: number;
+  max?: number;
+  stddev?: number;
+  share?: number;
+  your_position?: number;
+  tied_with?: number;
+};
 
 // The detail lives in the thin upper tail, invisible at full scale: past 2000
 // every bucket holds a couple of hundred players against a peak of ~28,000, so
@@ -21,9 +45,19 @@ interface Props {
 // it, which also replaces the in-chart labels: on a phone those overlapped
 // into an unreadable "top 50%25%top 10%".
 
-export default function LadderDistributionChart({ rating, topPercent, playersAbove, ladder = 'solo' }: Props) {
+export default function LadderDistributionChart({
+  rating,
+  topPercent,
+  playersAbove,
+  ladder = 'solo',
+  profileId,
+}: Props) {
   const { t } = useT();
   const [range, setRange] = useState<{ from: number; to: number } | null>(null);
+  const [page, setPage] = useState(1);
+
+  // Page 7 of the previous range means nothing in the next one.
+  useEffect(() => { setPage(1); }, [range?.from, range?.to]);
 
   const { data, isLoading } = useQuery<LadderDistribution>({
     queryKey: ['ladderDistribution', ladder],
@@ -35,6 +69,36 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
     queryKey: ['ladderTop10', ladder],
     queryFn: () => getLeaderboard(ladder === 'team' ? 'team-rm' : 'rm', { limit: 10 }),
     staleTime: 30 * 60 * 1000,
+  });
+
+  // Without a range this measures the whole ladder, which also turns the
+  // position into an exact place instead of the start of the tie group.
+  const { data: rangeStats } = useQuery<LadderRangeStats>({
+    queryKey: ['ladderRangeStats', ladder, range?.from, range?.to, rating, profileId],
+    queryFn: () =>
+      getLadderRangeStats({
+        type: ladder,
+        from: range?.from,
+        to: range?.to,
+        rating,
+        profile_id: profileId,
+      }),
+    enabled: rating != null,
+    staleTime: 30 * 60 * 1000,
+  });
+
+  const { data: rangeList, isFetching: rangeLoading } = useQuery<EnhancedLeaderboardResponse>({
+    queryKey: ['ladderRangeList', ladder, range?.from, range?.to, page],
+    queryFn: () =>
+      getEnhancedLeaderboard({
+        type: ladder === 'team' ? 'team-rm' : 'rm',
+        min_rating: range!.from,
+        max_rating: range!.to,
+        page,
+        limit: PAGE_SIZE,
+      }),
+    enabled: !!range,
+    staleTime: 5 * 60 * 1000,
   });
 
   if (isLoading || !data || !rating) return null;
@@ -58,7 +122,7 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
   // recharts clamps it to the edge and it reads as a wrong threshold.
   const within = (v: number | null | undefined): v is number => v != null && v >= from;
 
-  const max = data.max_rating ?? 3000;
+  const max = data.stats?.max ?? data.max_rating ?? 3000;
   const ranges = [
     { from: marks.bulk_from, to: marks.bulk_to, key: 'dist.bulk' as TKey, fill: '#9ca3af' },
     { from: marks.median, to: marks.top_25, key: 'dist.band50' as TKey, fill: '#4a7cff' },
@@ -75,6 +139,71 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
   const visibleBands = bands.filter((b) => b.to > from);
 
   const players = top?.data?.players ?? [];
+
+  // With no range selected the strip describes the whole ladder, and the
+  // position comes from the profile's own exact count rather than from the
+  // buckets; with a range it is whatever the range endpoint measured.
+  const whole = data.stats;
+  const scope: Scope | undefined = rangeStats
+    ? rangeStats
+    : !range && whole
+      ? {
+          players: whole.total_players,
+          mean: whole.mean,
+          median: whole.median,
+          min: whole.min,
+          max: whole.max,
+          stddev: whole.stddev,
+          your_position: playersAbove != null ? playersAbove + 1 : undefined,
+        }
+      : undefined;
+
+  const tiles: { key: TKey; value: number }[] = [];
+  if (scope?.mean != null) tiles.push({ key: 'dist.statAvg', value: scope.mean });
+  if (scope?.median != null) tiles.push({ key: 'dist.statMedian', value: scope.median });
+  if (scope?.min != null) tiles.push({ key: 'dist.statBottom', value: scope.min });
+  if (scope?.max != null) tiles.push({ key: 'dist.statTop', value: scope.max });
+  if (scope?.stddev != null) tiles.push({ key: 'dist.statSpread', value: scope.stddev });
+
+  const rangeRows = rangeList?.data?.players ?? [];
+  const rangeTotal = rangeList?.data?.pagination?.total ?? scope?.players ?? 0;
+  // Landing on page 1 of a range holding 100,000 players buries you; this is
+  // the page your own rating falls on.
+  const myPage =
+    range && rangeStats?.your_position ? Math.ceil(rangeStats.your_position / PAGE_SIZE) : null;
+
+  const row = (
+    p: { profile_id: number; country: string | null; alias?: string | null; name: string; rating: number },
+    pos: number
+  ) => {
+    const mine = profileId != null && String(p.profile_id) === String(profileId);
+    return (
+      <li
+        key={p.profile_id}
+        className={`flex items-center gap-2 text-xs py-1 min-w-0 ${
+          mine ? 'bg-gold-500/10 rounded px-1.5 -mx-1.5' : ''
+        }`}
+      >
+        <span
+          className={`min-w-[1.75rem] shrink-0 tabular-nums text-right ${
+            pos === 1 ? 'text-gold-400 font-bold' : 'text-gray-600'
+          }`}
+        >
+          {pos}
+        </span>
+        <span className="shrink-0">{countryFlag(p.country)}</span>
+        <Link
+          to={`/player/${p.profile_id}`}
+          className={`no-underline truncate min-w-0 ${
+            mine ? 'text-gold-400 font-semibold' : 'text-blue-accent hover:text-blue-400'
+          }`}
+        >
+          {p.alias || p.name}
+        </Link>
+        <span className="ml-auto shrink-0 tabular-nums text-gray-400 font-medium">{p.rating}</span>
+      </li>
+    );
+  };
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
@@ -222,31 +351,104 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
 
       <p className="text-[11px] text-gray-600 mt-3 m-0">{t('dist.footnote')}</p>
 
-      {/* grid-flow-col over five rows keeps 1-5 in the left column and 6-10 in
-          the right one. With the default row flow the columns read 1,3,5,7,9
-          and 2,4,6,8,10, which looks out of order. */}
+      {/* The fixed numbers behind whatever is selected. They follow the
+          selection, so the heading states which universe they describe. */}
+      {scope && tiles.length > 0 && (
+        <div className="mt-4 pt-4 border-t border-dark-500/60">
+          <div className="flex items-baseline gap-2 flex-wrap mb-2">
+            <h3 className="text-sm font-semibold text-gray-300 m-0">
+              {range ? t('dist.statsRange') : t('dist.statsWhole')}
+            </h3>
+            <span className="text-xs text-gray-500 tabular-nums">
+              {scope.players.toLocaleString()} {t('dist.statPlayers')}
+              {range && scope.share != null &&
+                ` · ${t('dist.statShare', { share: scope.share < 0.1 ? '<0.1' : scope.share })}`}
+            </span>
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+            {tiles.map((tile) => (
+              <div key={tile.key} className="bg-dark-600/60 border border-dark-500/60 rounded-lg px-2.5 py-1.5">
+                <div className="text-[10px] uppercase tracking-wide text-gray-600">{t(tile.key)}</div>
+                <div className="text-sm font-semibold text-gray-200 tabular-nums">
+                  {tile.value.toLocaleString()}
+                  <span className="text-[10px] font-normal text-gray-500 ml-1">ELO</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          {scope.your_position != null && (
+            <p className="text-xs text-gold-400/90 mt-2 m-0">
+              {t('dist.yourPlace', {
+                position: scope.your_position.toLocaleString(),
+                total: scope.players.toLocaleString(),
+              })}
+              {scope.tied_with != null && scope.tied_with > 0 && (
+                <span className="text-gray-500">
+                  {' · '}
+                  {t(scope.tied_with === 1 ? 'dist.tiedWithOne' : 'dist.tiedWith', {
+                    rating,
+                    count: scope.tied_with.toLocaleString(),
+                  })}
+                </span>
+              )}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* One column, always: two columns of five read out of order on a phone
+          and the ranking is the whole point of the list. With a range picked
+          this becomes that range, best first, paged. */}
       <div className="mt-4 pt-4 border-t border-dark-500/60">
-        <h3 className="text-sm font-semibold text-gray-300 m-0 mb-2">{t('dist.top10title')}</h3>
-        {players.length === 0 ? (
+        <div className="flex items-baseline justify-between gap-2 flex-wrap mb-2">
+          <h3 className="text-sm font-semibold text-gray-300 m-0">
+            {range ? t('dist.rangeListTitle', { from: range.from, to: range.to }) : t('dist.top10title')}
+          </h3>
+          <div className="flex items-center gap-2">
+            {myPage != null && myPage !== page && (
+              <button
+                type="button"
+                onClick={() => setPage(myPage)}
+                className="text-xs text-gold-400 hover:text-gold-300 bg-transparent border-0 p-0 cursor-pointer underline"
+              >
+                {t('dist.jumpToMe')}
+              </button>
+            )}
+            {range && (
+              <button
+                type="button"
+                onClick={() => setRange(null)}
+                className="text-xs text-gray-500 hover:text-gray-300 bg-transparent border-0 p-0 cursor-pointer underline"
+              >
+                {t('dist.backToTop10')}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {range ? (
+          rangeRows.length === 0 ? (
+            <p className="text-xs text-gray-600 m-0">
+              {rangeLoading ? `${t('common.loading')}…` : t('dist.rangeEmpty')}
+            </p>
+          ) : (
+            <>
+              <ol className="m-0 p-0 list-none">
+                {rangeRows.map((p, i) => row(p, (page - 1) * PAGE_SIZE + i + 1))}
+              </ol>
+              <TablePagination
+                page={page}
+                pageSize={PAGE_SIZE}
+                total={rangeTotal}
+                onPageChange={setPage}
+                noun={t('dist.playersNoun')}
+              />
+            </>
+          )
+        ) : players.length === 0 ? (
           <p className="text-xs text-gray-600 m-0">{t('dist.top10empty')}</p>
         ) : (
-          <ol className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-5 sm:grid-flow-col gap-x-6 gap-y-1 m-0 p-0 list-none">
-            {players.slice(0, 10).map((p, i) => (
-              <li key={p.profile_id} className="flex items-center gap-2 text-xs py-0.5 min-w-0">
-                <span className={`w-5 shrink-0 tabular-nums ${i === 0 ? 'text-gold-400 font-bold' : 'text-gray-600'}`}>
-                  {i + 1}
-                </span>
-                <span className="shrink-0">{countryFlag(p.country)}</span>
-                <Link
-                  to={`/player/${p.profile_id}`}
-                  className="text-blue-accent hover:text-blue-400 no-underline truncate min-w-0"
-                >
-                  {p.alias || p.name}
-                </Link>
-                <span className="ml-auto shrink-0 tabular-nums text-gray-400 font-medium">{p.rating}</span>
-              </li>
-            ))}
-          </ol>
+          <ol className="m-0 p-0 list-none">{players.slice(0, 10).map((p, i) => row(p, i + 1))}</ol>
         )}
       </div>
     </div>

@@ -437,6 +437,7 @@ export default function PlayerProfile() {
             topPercent={soloLadder?.top_percent}
             playersAbove={soloLadder?.players_above}
             ladder="solo"
+            profileId={profileId}
           />
         </div>
 

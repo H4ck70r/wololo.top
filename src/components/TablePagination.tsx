@@ -31,7 +31,7 @@ export default function TablePagination({ page, pageSize, total, onPageChange, n
   return (
     <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-dark-500/60 flex-wrap">
       <span className="text-xs text-gray-500">
-        {from}–{to} {t('common.of')} {total} {noun}
+        {from.toLocaleString()}–{to.toLocaleString()} {t('common.of')} {total.toLocaleString()} {noun}
       </span>
       <div className="flex items-center gap-1">
         <button

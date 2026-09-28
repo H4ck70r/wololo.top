@@ -219,11 +219,39 @@ export interface LeaderboardResponse {
   };
 }
 
+export interface LadderStats {
+  mean: number;
+  median: number;
+  min: number;
+  max: number;
+  stddev: number;
+  total_players: number;
+}
+
+export interface LadderRangeStats {
+  status: string;
+  ladder: string;
+  from: number | null;
+  to: number | null;
+  players: number;
+  mean?: number;
+  median?: number;
+  min?: number;
+  max?: number;
+  stddev?: number;
+  /** what slice of the whole ladder this range holds, in percent */
+  share?: number;
+  your_position?: number;
+  /** how many others share the exact same rating */
+  tied_with?: number;
+}
+
 export interface LadderDistribution {
   status: string;
   ladder: string;
   bucket_size: number;
   total_players: number;
+  stats: LadderStats | null;
   max_rating: number | null;
   buckets: { rating: number; players: number }[];
   landmarks: {

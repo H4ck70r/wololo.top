@@ -45,6 +45,7 @@ import type {
   MapMetaResponse,
   MatchDetailResponse,
   LadderDistribution,
+  LadderRangeStats,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -128,6 +129,16 @@ export async function getEnhancedLeaderboard(params: {
   search?: string;
 }): Promise<EnhancedLeaderboardResponse> {
   return apiFetch<EnhancedLeaderboardResponse>('/api/ladder/enhanced', params as Record<string, string | number>);
+}
+
+export async function getLadderRangeStats(params: {
+  type?: 'solo' | 'team';
+  from?: number;
+  to?: number;
+  rating?: number;
+  profile_id?: number | string;
+}): Promise<LadderRangeStats> {
+  return apiFetch<LadderRangeStats>('/api/ladder/range-stats', params as Record<string, string | number>);
 }
 
 export async function getEnhancedCountryStats(type: string = 'rm'): Promise<CountryStatsResponse> {
