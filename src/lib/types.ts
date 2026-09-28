@@ -27,8 +27,10 @@ export interface LadderEntry {
   rank: number;
   /** how many players are on this ladder, for the percentile */
   ladder_size?: number | null;
-  /** rank expressed as "top N%"; null when the rank is unusable */
+  /** rank expressed as "top N%", computed from the rating distribution */
   top_percent?: number | null;
+  /** how many players sit above this rating */
+  players_above?: number | null;
   wins: number;
   losses: number;
   winrate: string;
@@ -214,6 +216,22 @@ export interface LeaderboardResponse {
       limit: number;
       pages: number;
     };
+  };
+}
+
+export interface LadderDistribution {
+  status: string;
+  ladder: string;
+  bucket_size: number;
+  total_players: number;
+  buckets: { rating: number; players: number }[];
+  landmarks: {
+    median: number | null;
+    top_25: number | null;
+    top_10: number | null;
+    top_5: number | null;
+    top_1: number | null;
+    top_100_cutoff: number | null;
   };
 }
 

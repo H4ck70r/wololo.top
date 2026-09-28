@@ -12,6 +12,7 @@ import { useT } from '../lib/i18n';
 import type { TKey } from '../lib/i18n';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
+import LadderDistributionChart from '../components/LadderDistributionChart';
 import CivStatsTable from '../components/CivStatsTable';
 import MapStatsTable from '../components/MapStatsTable';
 import RatingTrends from '../components/RatingTrends';
@@ -427,6 +428,16 @@ export default function PlayerProfile() {
         {/* Rating history chart */}
         <div className="mb-6">
           <RatingChart profileId={profileId!} />
+        </div>
+
+        {/* Where this rating sits against the whole ladder */}
+        <div className="mb-6">
+          <LadderDistributionChart
+            rating={soloLadder?.rating}
+            topPercent={soloLadder?.top_percent}
+            playersAbove={soloLadder?.players_above}
+            ladder="solo"
+          />
         </div>
 
         {/* Rating Milestones */}

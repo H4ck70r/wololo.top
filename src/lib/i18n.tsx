@@ -189,6 +189,15 @@ const EN = {
   'h2h.winsCount': '{n} wins',
   'clan.membersCount': '{n} members',
   'clan.countriesCount': '{n} countries',
+  'dist.title': 'Where you stand',
+  'dist.subtitle': '{above} players above you, out of {total} on the ladder',
+  'dist.playersAtRating': 'players',
+  'dist.median': 'median',
+  'dist.top10': 'top 10%',
+  'dist.top1': 'top 1%',
+  'dist.top100': 'top 100',
+  'dist.you': 'you',
+  'dist.footnote': 'Real ladder distribution, not a bell curve: ratings are skewed, with a long tail at the top.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -369,6 +378,15 @@ const ES: Partial<Record<TKey, string>> = {
   'h2h.winsCount': '{n} victorias',
   'clan.membersCount': '{n} miembros',
   'clan.countriesCount': '{n} países',
+  'dist.title': 'Tu lugar en el ladder',
+  'dist.subtitle': '{above} jugadores por encima de ti, de {total} en el ladder',
+  'dist.playersAtRating': 'jugadores',
+  'dist.median': 'mediana',
+  'dist.top10': 'top 10%',
+  'dist.top1': 'top 1%',
+  'dist.top100': 'top 100',
+  'dist.you': 'tú',
+  'dist.footnote': 'Distribución real del ladder, no una campana: los ratings están sesgados, con una cola larga arriba.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

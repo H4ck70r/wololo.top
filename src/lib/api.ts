@@ -44,6 +44,7 @@ import type {
   CivMetaResponse,
   MapMetaResponse,
   MatchDetailResponse,
+  LadderDistribution,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -77,6 +78,13 @@ export async function getRatingHistory(
   params?: { days?: number; ladder?: string }
 ): Promise<RatingHistoryResponse> {
   return apiFetch<RatingHistoryResponse>(`/api/players/${profileId}/rating-history`, params as Record<string, string | number>);
+}
+
+export async function getLadderDistribution(
+  type: 'solo' | 'team' = 'solo',
+  bucket = 50
+): Promise<LadderDistribution> {
+  return apiFetch<LadderDistribution>('/api/ladder/distribution', { type, bucket });
 }
 
 export async function getLeaderboard(
