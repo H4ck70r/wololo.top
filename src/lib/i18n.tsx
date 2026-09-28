@@ -24,6 +24,8 @@ const EN = {
   'nav.language': 'Language',
 
   'footer.tagline': 'Age of Empires II player statistics and analytics. Not affiliated with Xbox Game Studios.',
+  'home.tagline': 'Age of Empires II player statistics, match history, and head-to-head analysis.',
+  'search.placeholder': 'Search player name, profile ID, or Steam ID...',
 
   'common.loading': 'Loading',
   'common.games': 'Games',
@@ -262,6 +264,8 @@ const ES: Partial<Record<TKey, string>> = {
   'nav.language': 'Idioma',
 
   'footer.tagline': 'Estadísticas y análisis de jugadores de Age of Empires II. Sin afiliación con Xbox Game Studios.',
+  'home.tagline': 'Estadísticas de jugadores de Age of Empires II, historial de partidas y análisis cara a cara.',
+  'search.placeholder': 'Busca por nombre, ID de perfil o ID de Steam...',
 
   'common.loading': 'Cargando',
   'common.games': 'Partidas',

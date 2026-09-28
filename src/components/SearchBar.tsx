@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { searchPlayers } from '../lib/api';
 import { countryFlag } from '../lib/constants';
+import { useT } from '../lib/i18n';
 import type { PlayerSearchResult } from '../lib/types';
 
 interface SearchBarProps {
@@ -11,6 +12,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ large = false, className = '' }: SearchBarProps) {
+  const { t } = useT();
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -116,7 +118,7 @@ export default function SearchBar({ large = false, className = '' }: SearchBarPr
           onFocus={() => {
             if (uniqueResults.length > 0 && query.length >= 2) setIsOpen(true);
           }}
-          placeholder="Search player name, profile ID, or Steam ID..."
+          placeholder={t('search.placeholder')}
           className={`w-full bg-dark-600 border border-dark-400 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30 transition-all ${
             large ? 'pl-14 pr-4 py-4 text-lg' : 'pl-12 pr-4 py-3 text-base'
           }`}

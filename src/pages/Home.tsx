@@ -1,8 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import SearchBar from '../components/SearchBar';
 import FavoritesBar from '../components/FavoritesBar';
+import { useT } from '../lib/i18n';
 
 export default function Home() {
+  const { t } = useT();
+
   return (
     <div className="min-h-[calc(100vh-8rem)]">
       <Helmet>
@@ -23,7 +26,7 @@ export default function Home() {
           </h1>
           <p className="text-xl text-gray-400 mb-2">.top</p>
           <p className="text-lg text-gray-400 max-w-xl mx-auto mb-10">
-            Age of Empires II player statistics, match history, and head-to-head analysis.
+            {t('home.tagline')}
           </p>
 
           {/* Search */}
