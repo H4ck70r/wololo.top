@@ -1,9 +1,12 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Area, AreaChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { getLadderDistribution } from '../lib/api';
+import { getLadderDistribution, getLeaderboard } from '../lib/api';
+import { countryFlag } from '../lib/constants';
 import { useT } from '../lib/i18n';
-import type { LadderDistribution } from '../lib/types';
 import type { TKey } from '../lib/i18n';
+import type { LadderDistribution, LeaderboardResponse } from '../lib/types';
 
 interface Props {
   rating: number | undefined;
@@ -12,54 +15,56 @@ interface Props {
   ladder?: 'solo' | 'team';
 }
 
-/**
- * Where a rating sits against the whole ladder.
- *
- * Plots the REAL histogram, not a fitted bell curve: AoE2 ratings are strongly
- * skewed (a hard floor near the starting rating, a peak around 900 and a long
- * thin tail past 2000), so a Gaussian would misplace precisely the two ends
- * people look for -- the crowded middle and the top.
- */
+// Zoom presets. The interesting detail lives in the thin upper tail, which is
+// invisible at full scale: past 2000 every bucket is a couple of hundred
+// players against a peak of ~28,000, so the curve is flat against the axis.
+const ZOOMS = [0, 1500, 2000, 2400];
+
 export default function LadderDistributionChart({ rating, topPercent, playersAbove, ladder = 'solo' }: Props) {
   const { t } = useT();
+  const [zoomFrom, setZoomFrom] = useState(0);
+
   const { data, isLoading } = useQuery<LadderDistribution>({
     queryKey: ['ladderDistribution', ladder],
     queryFn: () => getLadderDistribution(ladder, 50),
     staleTime: 30 * 60 * 1000,
   });
 
+  const { data: top } = useQuery<LeaderboardResponse>({
+    queryKey: ['ladderTop10', ladder],
+    queryFn: () => getLeaderboard(ladder === 'team' ? 'team-rm' : 'rm', { limit: 10 }),
+    staleTime: 30 * 60 * 1000,
+  });
+
   if (isLoading || !data || !rating) return null;
 
   const marks = data.landmarks;
-  const peak = Math.max(...data.buckets.map((b) => b.players));
 
-  // Each point carries how many players sit above its bucket. Without this the
-  // tooltip showed only the bucket ("25 players") right next to a line labelled
-  // "top 100", which reads as if the top 100 had 25 people in it.
   let seen = 0;
-  const points = data.buckets.map((b) => {
+  const allPoints = data.buckets.map((b) => {
     seen += b.players;
     return { ...b, above: data.total_players - seen };
   });
 
-  // Bands between landmarks, so the eye can place a rating without reading axes.
-  const bands = [
-    { from: marks.median, to: marks.top_25, key: 'dist.band50' },
-    { from: marks.top_25, to: marks.top_10, key: 'dist.band25' },
-    { from: marks.top_10, to: marks.top_1, key: 'dist.band10' },
-    { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' },
-    // The top 100 band had no upper bound, so it was the one stretch of the
-    // chart left unpainted; max_rating closes it.
-    { from: marks.top_100_cutoff, to: data.max_rating, key: 'dist.band100' },
-  ].filter((b) => b.from != null && b.to != null) as { from: number; to: number; key: TKey }[];
-  const bandFill = ['#4a7cff', '#22c55e', '#f0c040', '#a855f7', '#ec4899'];
+  const points = allPoints.filter((p) => p.rating >= zoomFrom);
+  if (points.length < 2) return null;
+  const peak = Math.max(...points.map((p) => p.players));
+  const from = points[0].rating;
 
-  const label = (value: string, colour: string) => ({
-    value,
-    position: 'top' as const,
-    fill: colour,
-    fontSize: 10,
-  });
+  // Only draw a landmark if it falls inside the zoomed window, otherwise
+  // recharts clamps it to the edge and it reads as a wrong threshold.
+  const within = (v: number | null | undefined): v is number => v != null && v >= from;
+
+  const bands = [
+    { from: marks.median, to: marks.top_25, key: 'dist.band50' as TKey, fill: '#4a7cff' },
+    { from: marks.top_25, to: marks.top_10, key: 'dist.band25' as TKey, fill: '#22c55e' },
+    { from: marks.top_10, to: marks.top_1, key: 'dist.band10' as TKey, fill: '#f0c040' },
+    { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' as TKey, fill: '#a855f7' },
+    { from: marks.top_100_cutoff, to: data.max_rating, key: 'dist.band100' as TKey, fill: '#ec4899' },
+  ].filter((b) => b.from != null && b.to != null && b.to > from) as
+    { from: number; to: number; key: TKey; fill: string }[];
+
+  const players = top?.data?.players ?? [];
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
@@ -70,13 +75,26 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
         )}
       </div>
       {playersAbove != null && (
-        <p className="text-xs text-gray-500 m-0 mb-4">
-          {t('dist.subtitle', {
-            above: playersAbove.toLocaleString(),
-            total: data.total_players.toLocaleString(),
-          })}
+        <p className="text-xs text-gray-500 m-0">
+          {t('dist.subtitle', { above: playersAbove.toLocaleString(), total: data.total_players.toLocaleString() })}
         </p>
       )}
+
+      <div className="flex items-center gap-1 mt-3 mb-1 flex-wrap">
+        <span className="text-[11px] uppercase tracking-wider text-gray-600 mr-1">{t('dist.zoomLabel')}</span>
+        {ZOOMS.map((z) => (
+          <button
+            key={z}
+            type="button"
+            onClick={() => setZoomFrom(z)}
+            className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+              zoomFrom === z ? 'bg-dark-500 text-gold-400' : 'text-gray-500 hover:text-gray-300'
+            }`}
+          >
+            {z === 0 ? t('dist.zoomAll') : `${z}+`}
+          </button>
+        ))}
+      </div>
 
       <div className="h-56 -ml-2">
         <ResponsiveContainer width="100%" height="100%">
@@ -87,9 +105,6 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
                 <stop offset="100%" stopColor="#4a7cff" stopOpacity={0.03} />
               </linearGradient>
             </defs>
-            {/* A numeric axis, not the default category one: the player's exact
-                rating (1195) is not one of the 50-point buckets, and a category
-                axis silently drops any ReferenceLine whose x is not a category. */}
             <XAxis
               dataKey="rating"
               type="number"
@@ -112,9 +127,8 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
               }}
               labelFormatter={(v) => `${v} - ${Number(v) + data.bucket_size - 1}`}
             />
-            {/* Drawn first so it sits behind the percentile bands, and
-                labelled along the bottom so the two sets never collide. */}
-            {marks.bulk_from != null && marks.bulk_to != null && (
+
+            {within(marks.bulk_from) && within(marks.bulk_to) && (
               <ReferenceArea
                 x1={marks.bulk_from}
                 x2={marks.bulk_to}
@@ -123,40 +137,75 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
                 stroke="#6b7280"
                 strokeOpacity={0.35}
                 strokeDasharray="2 2"
-                label={{ value: t('dist.bulk'), position: 'insideBottom', fill: '#9ca3af', fontSize: 10, offset: 8 }}
+                label={{
+                  value: t('dist.bulk', { from: marks.bulk_from, to: marks.bulk_to }),
+                  position: 'insideBottom',
+                  fill: '#9ca3af',
+                  fontSize: 10,
+                  offset: 8,
+                }}
               />
             )}
 
-            {bands.map((b, i) => (
+            {bands.map((b) => (
               <ReferenceArea
                 key={b.key}
-                x1={b.from}
+                x1={Math.max(b.from, from)}
                 x2={b.to}
-                fill={bandFill[i]}
+                fill={b.fill}
                 fillOpacity={0.06}
                 stroke="none"
-                label={{ value: t(b.key), position: 'insideTop', fill: bandFill[i], fontSize: 10, offset: 4 }}
+                label={{ value: t(b.key), position: 'insideTop', fill: b.fill, fontSize: 10, offset: 4 }}
               />
             ))}
 
             <Area type="monotone" dataKey="players" stroke="#4a7cff" strokeWidth={1.5} fill="url(#distFill)" />
 
-            {/* The band labels already name these thresholds, so the divider
-                lines stay unlabelled: with both, "top 10%" and "top 1%" were
-                printed twice, one above the other. */}
-            {marks.median != null && <ReferenceLine x={marks.median} stroke="#3d4358" strokeDasharray="3 3" />}
-            {marks.top_25 != null && <ReferenceLine x={marks.top_25} stroke="#3d4358" strokeDasharray="3 3" />}
-            {marks.top_10 != null && <ReferenceLine x={marks.top_10} stroke="#3d4358" strokeDasharray="3 3" />}
-            {marks.top_1 != null && <ReferenceLine x={marks.top_1} stroke="#3d4358" strokeDasharray="3 3" />}
-            {marks.top_100_cutoff != null && (
+            {within(marks.median) && <ReferenceLine x={marks.median} stroke="#3d4358" strokeDasharray="3 3" />}
+            {within(marks.top_25) && <ReferenceLine x={marks.top_25} stroke="#3d4358" strokeDasharray="3 3" />}
+            {within(marks.top_10) && <ReferenceLine x={marks.top_10} stroke="#3d4358" strokeDasharray="3 3" />}
+            {within(marks.top_1) && <ReferenceLine x={marks.top_1} stroke="#3d4358" strokeDasharray="3 3" />}
+            {within(marks.top_100_cutoff) && (
               <ReferenceLine x={marks.top_100_cutoff} stroke="#a855f7" strokeDasharray="3 3" />
             )}
-            <ReferenceLine x={rating} stroke="#f0c040" strokeWidth={2} label={label(t('dist.you'), '#f0c040')} />
+            {within(rating) && (
+              <ReferenceLine
+                x={rating}
+                stroke="#f0c040"
+                strokeWidth={2}
+                label={{ value: t('dist.you'), position: 'top', fill: '#f0c040', fontSize: 10 }}
+              />
+            )}
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <p className="text-[11px] text-gray-600 mt-3 m-0">{t('dist.footnote')}</p>
+
+      <div className="mt-4 pt-4 border-t border-dark-500/60">
+        <h3 className="text-sm font-semibold text-gray-300 m-0 mb-2">{t('dist.top10title')}</h3>
+        {players.length === 0 ? (
+          <p className="text-xs text-gray-600 m-0">{t('dist.top10empty')}</p>
+        ) : (
+          <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 m-0 p-0 list-none">
+            {players.slice(0, 10).map((p, i) => (
+              <li key={p.profile_id} className="flex items-center gap-2 text-xs py-0.5 min-w-0">
+                <span className={`w-5 shrink-0 tabular-nums ${i === 0 ? 'text-gold-400 font-bold' : 'text-gray-600'}`}>
+                  {i + 1}
+                </span>
+                <span className="shrink-0">{countryFlag(p.country)}</span>
+                <Link
+                  to={`/player/${p.profile_id}`}
+                  className="text-blue-accent hover:text-blue-400 no-underline truncate min-w-0"
+                >
+                  {p.alias || p.name}
+                </Link>
+                <span className="ml-auto shrink-0 tabular-nums text-gray-400 font-medium">{p.rating}</span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
     </div>
   );
 }

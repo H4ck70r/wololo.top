@@ -204,7 +204,11 @@ const EN = {
   'dist.band10': 'top 10%',
   'dist.band1': 'top 1%',
   'dist.band100': 'top 100',
-  'dist.bulk': 'half the ladder is in here',
+  'dist.bulk': 'average range ({from}-{to})',
+  'dist.zoomAll': 'All',
+  'dist.zoomLabel': 'Zoom',
+  'dist.top10title': 'Top 10 of the ladder',
+  'dist.top10empty': 'Leaderboard unavailable right now.',
   'dist.footnote': 'Real ladder distribution, not a bell curve: ratings are skewed, with a long tail at the top.',
 } as const;
 
@@ -401,7 +405,11 @@ const ES: Partial<Record<TKey, string>> = {
   'dist.band10': 'top 10%',
   'dist.band1': 'top 1%',
   'dist.band100': 'top 100',
-  'dist.bulk': 'aquí está la mitad del ladder',
+  'dist.bulk': 'zona promedio ({from}-{to})',
+  'dist.zoomAll': 'Todo',
+  'dist.zoomLabel': 'Zoom',
+  'dist.top10title': 'Top 10 del ladder',
+  'dist.top10empty': 'La clasificación no está disponible ahora mismo.',
   'dist.footnote': 'Distribución real del ladder, no una campana: los ratings están sesgados, con una cola larga arriba.',
 };
 
