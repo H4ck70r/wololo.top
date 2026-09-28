@@ -11,6 +11,8 @@ const Compare = lazy(() => import('./pages/Compare'));
 const CivMeta = lazy(() => import('./pages/CivMeta'));
 const ClanProfile = lazy(() => import('./pages/ClanProfile'));
 const MatchDetailPage = lazy(() => import('./pages/MatchDetailPage'));
+const AuthCallback = lazy(() => import('./pages/AuthCallback'));
+const ClaimProfile = lazy(() => import('./pages/ClaimProfile'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSpinner() {
@@ -35,6 +37,8 @@ export default function App() {
           <Route path="/stats" element={<CivMeta />} />
           <Route path="/clan/:clanName" element={<ClanProfile />} />
           <Route path="/match/:matchId" element={<MatchDetailPage />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/auth/claim" element={<ClaimProfile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

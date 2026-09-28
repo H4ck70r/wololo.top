@@ -13,6 +13,7 @@ import type { TKey } from '../lib/i18n';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
 import LadderDistributionChart from '../components/LadderDistributionChart';
+import { useSession } from '../lib/session';
 import CivStatsTable from '../components/CivStatsTable';
 import MapStatsTable from '../components/MapStatsTable';
 import RatingTrends from '../components/RatingTrends';
@@ -130,6 +131,8 @@ export default function PlayerProfile() {
   }
 
   const player = playerData?.player;
+  const { isSelf } = useSession();
+  const viewingOwnProfile = isSelf(profileId);
 
   if (playerError || !player) {
     return (
@@ -223,6 +226,11 @@ export default function PlayerProfile() {
           <div className="flex-1">
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 m-0">{player.alias}</h1>
+              {viewingOwnProfile && (
+                <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-gold-500/15 text-gold-400 border border-gold-500/40 whitespace-nowrap">
+                  {t('auth.thisIsYou')}
+                </span>
+              )}
               {player.country && (
                 <span className="text-2xl" title={player.country.toUpperCase()}>
                   {countryFlag(player.country)}
@@ -439,6 +447,7 @@ export default function PlayerProfile() {
             ladder="solo"
             profileId={profileId}
             playerName={player?.alias}
+            isSelf={viewingOwnProfile}
           />
         </div>
 

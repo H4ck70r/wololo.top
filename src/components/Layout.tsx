@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { useT, LANGS } from '../lib/i18n';
+import { useSession } from '../lib/session';
+import SteamButton from './SteamButton';
 import type { TKey } from '../lib/i18n';
 
 const NAV_LINKS: { path: string; key: TKey }[] = [
@@ -16,6 +18,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const { t, lang, setLang } = useT();
+  const { user, loading: sessionLoading, signIn, signOut } = useSession();
 
   // Close the drawer on navigation, otherwise it stays over the new page.
   useEffect(() => {
@@ -69,6 +72,15 @@ export default function Layout({ children }: { children: ReactNode }) {
               ))}
             </div>
 
+            <div className="hidden md:flex items-center ml-2 pl-2 border-l border-dark-400">
+              <SteamButton
+                user={user}
+                loading={sessionLoading}
+                onSignIn={signIn}
+                onSignOut={signOut}
+              />
+            </div>
+
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
@@ -94,6 +106,16 @@ export default function Layout({ children }: { children: ReactNode }) {
                   {t(link.key)}
                 </Link>
               ))}
+              <div className="pt-2 mt-1 border-t border-dark-400">
+                <SteamButton
+                  user={user}
+                  loading={sessionLoading}
+                  onSignIn={signIn}
+                  onSignOut={signOut}
+                  onNavigate={() => setMenuOpen(false)}
+                  block
+                />
+              </div>
               <div className="flex items-center gap-2 pt-2 mt-1 border-t border-dark-400">
                 <span className="px-3 text-xs uppercase tracking-wider text-gray-600">{t('nav.language')}</span>
                 {LANGS.map((l) => (
