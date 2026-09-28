@@ -15,14 +15,15 @@ interface Props {
   ladder?: 'solo' | 'team';
 }
 
-// Zoom presets. The interesting detail lives in the thin upper tail, which is
-// invisible at full scale: past 2000 every bucket is a couple of hundred
-// players against a peak of ~28,000, so the curve is flat against the axis.
-const ZOOMS = [0, 1500, 2000, 2400];
+// The detail lives in the thin upper tail, invisible at full scale: past 2000
+// every bucket holds a couple of hundred players against a peak of ~28,000, so
+// the curve sits flat on the axis. Each range below is clickable to zoom into
+// it, which also replaces the in-chart labels: on a phone those overlapped
+// into an unreadable "top 50%25%top 10%".
 
 export default function LadderDistributionChart({ rating, topPercent, playersAbove, ladder = 'solo' }: Props) {
   const { t } = useT();
-  const [zoomFrom, setZoomFrom] = useState(0);
+  const [range, setRange] = useState<{ from: number; to: number } | null>(null);
 
   const { data, isLoading } = useQuery<LadderDistribution>({
     queryKey: ['ladderDistribution', ladder],
@@ -46,7 +47,9 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
     return { ...b, above: data.total_players - seen };
   });
 
-  const points = allPoints.filter((p) => p.rating >= zoomFrom);
+  const points = allPoints.filter(
+    (p) => (!range || (p.rating >= range.from && p.rating <= range.to))
+  );
   if (points.length < 2) return null;
   const peak = Math.max(...points.map((p) => p.players));
   const from = points[0].rating;
@@ -55,14 +58,20 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
   // recharts clamps it to the edge and it reads as a wrong threshold.
   const within = (v: number | null | undefined): v is number => v != null && v >= from;
 
-  const bands = [
+  const max = data.max_rating ?? 3000;
+  const ranges = [
+    { from: marks.bulk_from, to: marks.bulk_to, key: 'dist.bulk' as TKey, fill: '#9ca3af' },
     { from: marks.median, to: marks.top_25, key: 'dist.band50' as TKey, fill: '#4a7cff' },
     { from: marks.top_25, to: marks.top_10, key: 'dist.band25' as TKey, fill: '#22c55e' },
     { from: marks.top_10, to: marks.top_1, key: 'dist.band10' as TKey, fill: '#f0c040' },
     { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' as TKey, fill: '#a855f7' },
-    { from: marks.top_100_cutoff, to: data.max_rating, key: 'dist.band100' as TKey, fill: '#ec4899' },
-  ].filter((b) => b.from != null && b.to != null && b.to > from) as
+    { from: marks.top_100_cutoff, to: max, key: 'dist.band100' as TKey, fill: '#ec4899' },
+  ].filter((r) => r.from != null && r.to != null) as
     { from: number; to: number; key: TKey; fill: string }[];
+
+  // The average band is drawn behind the percentile ones, so it is kept apart.
+  const [bulk, ...bands] = ranges;
+  const visibleBands = bands.filter((b) => b.to > from);
 
   const players = top?.data?.players ?? [];
 
@@ -80,21 +89,39 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
         </p>
       )}
 
-      <div className="flex items-center gap-1 mt-3 mb-1 flex-wrap">
-        <span className="text-[11px] uppercase tracking-wider text-gray-600 mr-1">{t('dist.zoomLabel')}</span>
-        {ZOOMS.map((z) => (
-          <button
-            key={z}
-            type="button"
-            onClick={() => setZoomFrom(z)}
-            className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
-              zoomFrom === z ? 'bg-dark-500 text-gold-400' : 'text-gray-500 hover:text-gray-300'
-            }`}
-          >
-            {z === 0 ? t('dist.zoomAll') : `${z}+`}
-          </button>
-        ))}
+      <div className="flex items-center gap-1.5 mt-3 mb-2 flex-wrap">
+        <button
+          type="button"
+          onClick={() => setRange(null)}
+          className={`px-2 py-1 rounded text-xs font-medium border transition-colors ${
+            range === null
+              ? 'bg-dark-500 text-gold-400 border-gold-500/40'
+              : 'text-gray-500 border-dark-400 hover:text-gray-300'
+          }`}
+        >
+          {t('dist.zoomAll')}
+        </button>
+        {ranges.map((r) => {
+          const active = range?.from === r.from && range?.to === r.to;
+          return (
+            <button
+              key={r.key}
+              type="button"
+              onClick={() => setRange(active ? null : { from: r.from, to: r.to })}
+              title={`${r.from} - ${r.to}`}
+              className="px-2 py-1 rounded text-xs font-medium border transition-colors"
+              style={{
+                color: r.fill,
+                borderColor: active ? r.fill : 'transparent',
+                background: active ? `${r.fill}1f` : `${r.fill}12`,
+              }}
+            >
+              {t(r.key)}
+            </button>
+          );
+        })}
       </div>
+      <p className="text-[11px] text-gray-600 m-0 mb-1">{t('dist.rangeHint')}</p>
 
       <div className="h-56 -ml-2">
         <ResponsiveContainer width="100%" height="100%">
@@ -128,26 +155,21 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
               labelFormatter={(v) => `${v} - ${Number(v) + data.bucket_size - 1}`}
             />
 
-            {within(marks.bulk_from) && within(marks.bulk_to) && (
+            {/* No text inside the plot: the bands are narrow on a phone and the
+                labels ran into each other. The chips above name them instead. */}
+            {bulk && within(bulk.from) && within(bulk.to) && (
               <ReferenceArea
-                x1={marks.bulk_from}
-                x2={marks.bulk_to}
-                fill="#6b7280"
-                fillOpacity={0.1}
-                stroke="#6b7280"
-                strokeOpacity={0.35}
+                x1={bulk.from}
+                x2={bulk.to}
+                fill="#9ca3af"
+                fillOpacity={0.12}
+                stroke="#9ca3af"
+                strokeOpacity={0.4}
                 strokeDasharray="2 2"
-                label={{
-                  value: t('dist.bulk', { from: marks.bulk_from, to: marks.bulk_to }),
-                  position: 'insideBottom',
-                  fill: '#9ca3af',
-                  fontSize: 10,
-                  offset: 8,
-                }}
               />
             )}
 
-            {bands.map((b) => (
+            {visibleBands.map((b) => (
               <ReferenceArea
                 key={b.key}
                 x1={Math.max(b.from, from)}
@@ -155,7 +177,6 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
                 fill={b.fill}
                 fillOpacity={0.06}
                 stroke="none"
-                label={{ value: t(b.key), position: 'insideTop', fill: b.fill, fontSize: 10, offset: 4 }}
               />
             ))}
 
