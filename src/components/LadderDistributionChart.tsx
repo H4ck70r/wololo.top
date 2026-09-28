@@ -161,30 +161,53 @@ export default function LadderDistributionChart({
   const within = (v: number | null | undefined): v is number => v != null && v >= from;
 
   const max = data.stats?.max ?? data.max_rating ?? 3000;
-  const ranges = [
-    { from: marks.bulk_from, to: marks.bulk_to, key: 'dist.bulk' as TKey, fill: '#9ca3af' },
-    { from: marks.median, to: marks.top_25, key: 'dist.band50' as TKey, fill: '#4a7cff' },
-    { from: marks.top_25, to: marks.top_10, key: 'dist.band25' as TKey, fill: '#22c55e' },
-    { from: marks.top_10, to: marks.top_1, key: 'dist.band10' as TKey, fill: '#f0c040' },
-    { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' as TKey, fill: '#a855f7' },
-    { from: marks.top_100_cutoff, to: marks.elite_cutoff ?? max, key: 'dist.band100' as TKey, fill: '#ec4899' },
-    // Defined by a count, not by a rating edge: a band called "top 16" has to
-    // hold 16 people even when the 16th and 17th share a number.
-    { from: marks.elite_cutoff, to: max, key: 'dist.bandElite' as TKey, fill: '#f43f5e', top: 16 },
-  ].filter((r) => r.from != null && r.to != null) as
-    { from: number; to: number; key: TKey; fill: string; top?: number }[];
 
-  // The average band is drawn behind the percentile ones, so it is kept apart.
-  const [bulk, ...bands] = ranges;
+  // Each tier means "everyone from here up", which is what the words say.
+  // They used to be adjacent slices, so "top 100" started where "elite" ended
+  // and a Spaniard ranked 7th in the world vanished from "top 100 + Spain".
+  const tiers = [
+    { key: 'dist.band50' as TKey, fill: '#4a7cff', cutoff: marks.median },
+    { key: 'dist.band25' as TKey, fill: '#22c55e', cutoff: marks.top_25 },
+    { key: 'dist.band10' as TKey, fill: '#f0c040', cutoff: marks.top_10 },
+    { key: 'dist.band1' as TKey, fill: '#a855f7', cutoff: marks.top_1 },
+    { key: 'dist.band100' as TKey, fill: '#ec4899', cutoff: marks.top_100_cutoff, top: 100 },
+    { key: 'dist.bandElite' as TKey, fill: '#f43f5e', cutoff: marks.elite_cutoff, top: 16 },
+  ].filter((tier) => tier.cutoff != null) as
+    { key: TKey; fill: string; cutoff: number; top?: number }[];
 
-  // A caller driving the selection (the leaderboard, from its rating filter)
-  // only knows from/to, so the count that defines a band is recovered here
-  // rather than being something every caller has to carry.
+  // The one band that is genuinely a middle: it says "average", not "top X".
+  const bulk =
+    marks.bulk_from != null && marks.bulk_to != null
+      ? { from: marks.bulk_from, to: marks.bulk_to, key: 'dist.bulk' as TKey, fill: '#9ca3af' }
+      : null;
+
+  // What a chip selects: nested, from its cutoff to the very top.
+  const ranges: { from: number; to: number; key: TKey; fill: string; top?: number }[] = [
+    ...(bulk ? [bulk] : []),
+    ...tiers.map((tier) => ({
+      from: tier.cutoff,
+      to: max,
+      key: tier.key,
+      fill: tier.fill,
+      top: tier.top,
+    })),
+  ];
+
+  // What the chart paints, and what a click on the plot resolves to: the strip
+  // between one cutoff and the next. Nested fills would just stack into mud,
+  // and a click has to land on one tier, not on five at once.
+  const segments = tiers.map((tier, i) => ({
+    ...tier,
+    from: tier.cutoff,
+    to: tiers[i + 1]?.cutoff ?? max,
+  }));
+
   const activeBand = range
     ? ranges.find((r) => r.from === range.from && r.to === range.to)
     : undefined;
   const effectiveTop = range?.top ?? activeBand?.top;
-  const visibleBands = bands.filter((b) => b.to > from);
+
+  const visibleSegments = segments.filter((seg) => seg.to > from);
 
   const players = top?.data?.players ?? [];
 
@@ -330,10 +353,16 @@ export default function LadderDistributionChart({
             onClick={(state) => {
               const at = Number((state as { activeLabel?: number | string } | null)?.activeLabel);
               if (!Number.isFinite(at)) return;
-              const hit = ranges.find((r) => at >= r.from && at <= r.to);
+              const seg = segments.find((sg) => at >= sg.from && at <= sg.to);
+              // Below the first cutoff there is no tier, only the average band.
+              const hit = seg
+                ? { from: seg.cutoff, to: max, top: seg.top }
+                : bulk && at >= bulk.from && at <= bulk.to
+                  ? { from: bulk.from, to: bulk.to, top: undefined }
+                  : null;
               if (!hit) return;
               const same = range && range.from === hit.from && range.to === hit.to;
-              setRange(same ? null : { from: hit.from, to: hit.to, top: hit.top });
+              setRange(same ? null : hit);
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -383,12 +412,12 @@ export default function LadderDistributionChart({
               />
             )}
 
-            {visibleBands.map((b) => (
+            {visibleSegments.map((seg) => (
               <ReferenceArea
-                key={b.key}
-                x1={Math.max(b.from, from)}
-                x2={b.to}
-                fill={b.fill}
+                key={seg.key}
+                x1={Math.max(seg.from, from)}
+                x2={seg.to}
+                fill={seg.fill}
                 fillOpacity={0.06}
                 stroke="none"
               />
