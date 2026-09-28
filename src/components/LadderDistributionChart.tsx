@@ -65,7 +65,8 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
     { from: marks.top_25, to: marks.top_10, key: 'dist.band25' as TKey, fill: '#22c55e' },
     { from: marks.top_10, to: marks.top_1, key: 'dist.band10' as TKey, fill: '#f0c040' },
     { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' as TKey, fill: '#a855f7' },
-    { from: marks.top_100_cutoff, to: max, key: 'dist.band100' as TKey, fill: '#ec4899' },
+    { from: marks.top_100_cutoff, to: marks.elite_cutoff ?? max, key: 'dist.band100' as TKey, fill: '#ec4899' },
+    { from: marks.elite_cutoff, to: max, key: 'dist.bandElite' as TKey, fill: '#f43f5e' },
   ].filter((r) => r.from != null && r.to != null) as
     { from: number; to: number; key: TKey; fill: string }[];
 
@@ -125,7 +126,22 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
 
       <div className="h-56 -ml-2">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={points} margin={{ top: 18, right: 8, bottom: 0, left: 0 }}>
+          <AreaChart
+            data={points}
+            margin={{ top: 18, right: 8, bottom: 0, left: 0 }}
+            // Clicking the plot selects whichever range holds that rating, so
+            // the bands themselves are the control, not just the chips.
+            onClick={(state) => {
+              const at = Number((state as { activeLabel?: number | string } | null)?.activeLabel);
+              if (!Number.isFinite(at)) return;
+              const hit = ranges.find((r) => at >= r.from && at <= r.to);
+              if (!hit) return;
+              setRange((cur) =>
+                cur && cur.from === hit.from && cur.to === hit.to ? null : { from: hit.from, to: hit.to }
+              );
+            }}
+            style={{ cursor: 'pointer' }}
+          >
             <defs>
               <linearGradient id="distFill" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#4a7cff" stopOpacity={0.45} />
@@ -145,6 +161,9 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
             <Tooltip
               contentStyle={{ background: '#151821', border: '1px solid #2e3345', borderRadius: 8, fontSize: 12 }}
               labelStyle={{ color: '#e2e8f0' }}
+              // The series has no meaningful name here, and recharts renders
+              // "name: value"; an empty separator avoids a stray leading ": ".
+              separator=""
               formatter={(value, _name, item) => {
                 const above = (item?.payload as { above?: number } | undefined)?.above ?? 0;
                 return [
@@ -203,12 +222,15 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
 
       <p className="text-[11px] text-gray-600 mt-3 m-0">{t('dist.footnote')}</p>
 
+      {/* grid-flow-col over five rows keeps 1-5 in the left column and 6-10 in
+          the right one. With the default row flow the columns read 1,3,5,7,9
+          and 2,4,6,8,10, which looks out of order. */}
       <div className="mt-4 pt-4 border-t border-dark-500/60">
         <h3 className="text-sm font-semibold text-gray-300 m-0 mb-2">{t('dist.top10title')}</h3>
         {players.length === 0 ? (
           <p className="text-xs text-gray-600 m-0">{t('dist.top10empty')}</p>
         ) : (
-          <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 m-0 p-0 list-none">
+          <ol className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-5 sm:grid-flow-col gap-x-6 gap-y-1 m-0 p-0 list-none">
             {players.slice(0, 10).map((p, i) => (
               <li key={p.profile_id} className="flex items-center gap-2 text-xs py-0.5 min-w-0">
                 <span className={`w-5 shrink-0 tabular-nums ${i === 0 ? 'text-gold-400 font-bold' : 'text-gray-600'}`}>

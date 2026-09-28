@@ -235,6 +235,8 @@ export interface LadderDistribution {
     top_10: number | null;
     top_5: number | null;
     top_1: number | null;
+    /** where the 16 best of the ladder start */
+    elite_cutoff: number | null;
     top_100_cutoff: number | null;
   };
 }
