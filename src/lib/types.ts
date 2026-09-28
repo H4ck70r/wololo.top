@@ -146,6 +146,9 @@ export interface H2HCivMatchup {
   wins: number;
   losses: number;
   games: number;
+  win_rate: number;
+  score: number;
+  thin: boolean;
 }
 
 export interface H2HMapStat {
@@ -154,6 +157,9 @@ export interface H2HMapStat {
   wins: number;
   losses: number;
   games: number;
+  win_rate: number;
+  score: number;
+  thin: boolean;
 }
 
 export interface H2HMatch {
@@ -177,14 +183,69 @@ export interface H2HMatch {
   max_players: number;
 }
 
+export interface H2HSummary {
+  first_meeting: string | null;
+  last_meeting: string | null;
+  streaks: {
+    current: { type: 'win' | 'loss'; count: number } | null;
+    longest_win: number;
+    longest_loss: number;
+  };
+  elo: {
+    /** net rating this rivalry has cost or given, over rated_games only */
+    net: number | null;
+    rated_games: number;
+  };
+  duration: {
+    h2h_seconds: number | null;
+    player_seconds: number | null;
+    /** positive means these games run longer than the player's usual one */
+    delta_seconds: number | null;
+  };
+  elo_expectation: {
+    games: number;
+    expected_wins: number;
+    actual_wins: number;
+    as_underdog: { wins: number; games: number };
+    as_favourite: { wins: number; games: number };
+  } | null;
+  record: { decided: number; wins: number; losses: number };
+  truncated: boolean;
+}
+
+export interface H2HMatchTypeRow {
+  match_type_id: number;
+  match_type: string;
+  games: number;
+  wins: number;
+  losses: number;
+}
+
+export interface H2HVersusCiv {
+  civ: number;
+  civ_name: string;
+  wins: number;
+  losses: number;
+  games: number;
+  win_rate: number;
+  score: number;
+  /** too few games for the percentage to mean anything */
+  thin: boolean;
+}
+
 export interface HeadToHeadData {
   status: string;
   player_id: number;
   opponent_id: number;
   total_games: number;
+  /** meetings whose result never resolved; excluded from every rate */
+  unresolved: number;
   wins: number;
   losses: number;
   win_rate: number;
+  summary: H2HSummary;
+  by_match_type: H2HMatchTypeRow[];
+  versus_civ: H2HVersusCiv[];
   civ_matchups: H2HCivMatchup[];
   map_stats: H2HMapStat[];
   recent_matches: H2HMatch[];

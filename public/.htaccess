@@ -2,11 +2,30 @@
 # on the server, and a deploy with --delete wiped it, turning every deep link
 # into a 404.
 
+Options -MultiViews
+RewriteEngine On
+
+# Social crawlers do not run JavaScript, so the SPA's <head> reaches them
+# empty and a shared link previews as the generic site card. They are sent to
+# the API, which renders the real title and description server-side.
+#
+# Only these crawlers: search engines do execute JavaScript, and serving them
+# different markup would be cloaking.
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|Twitterbot|WhatsApp|Discordbot|Slackbot|TelegramBot|LinkedInBot|Pinterest|redditbot|Embedly|SkypeUriPreview|vkShare|Iframely|Mastodon|Bluesky) [NC]
+RewriteRule ^player/([0-9]+)/?$ https://aoe2api.pr070c01.com/og/player/$1 [R=302,L]
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|Twitterbot|WhatsApp|Discordbot|Slackbot|TelegramBot|LinkedInBot|Pinterest|redditbot|Embedly|SkypeUriPreview|vkShare|Iframely|Mastodon|Bluesky) [NC]
+RewriteRule ^match/([0-9]+)/?$ https://aoe2api.pr070c01.com/og/match/$1 [R=302,L]
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|Twitterbot|WhatsApp|Discordbot|Slackbot|TelegramBot|LinkedInBot|Pinterest|redditbot|Embedly|SkypeUriPreview|vkShare|Iframely|Mastodon|Bluesky) [NC]
+RewriteRule ^h2h/([0-9]+)/([0-9]+)/?$ https://aoe2api.pr070c01.com/og/h2h/$1/$2 [R=302,L]
+
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|Twitterbot|WhatsApp|Discordbot|Slackbot|TelegramBot|LinkedInBot|Pinterest|redditbot|Embedly|SkypeUriPreview|vkShare|Iframely|Mastodon|Bluesky) [NC]
+RewriteRule ^clan/([^/]+)/?$ https://aoe2api.pr070c01.com/og/clan/$1 [R=302,L]
+
 # SPA routing: anything that is not a real file or directory is answered by
 # index.html, so /player/573964 survives a reload or a shared link. Real
 # subdirectories (smurfs/) still win, because of the !-d condition.
-Options -MultiViews
-RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [QSA,L]

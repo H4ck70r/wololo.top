@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useT } from '../lib/i18n';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -6,10 +7,14 @@ import { getHeadToHead, getPlayer } from '../lib/api';
 import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
 import SearchBar from '../components/SearchBar';
+import H2HStoryline from '../components/H2HStoryline';
 
 export default function HeadToHead() {
   const { t } = useT();
   const { profileId, opponentId } = useParams<{ profileId: string; opponentId: string }>();
+  // The pair matrix fragments into rows of "1-0"; grouping by what the rival
+  // picked is the readable default, with the exact pairs a click away.
+  const [civView, setCivView] = useState<'opponent' | 'pair'>('opponent');
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['h2h', profileId, opponentId],
@@ -54,8 +59,14 @@ export default function HeadToHead() {
   const playerName = player?.alias || `Player ${profileId}`;
   const opponentName = opponent?.alias || `Player ${opponentId}`;
 
-  const { total_games, wins, losses, win_rate, civ_matchups, map_stats, recent_matches } = data;
+  const {
+    total_games, wins, losses, win_rate, civ_matchups, versus_civ, map_stats, recent_matches,
+    summary, by_match_type, unresolved,
+  } = data;
   const playerPct = total_games > 0 ? (wins / total_games) * 100 : 50;
+  // Tagging every row "few games" is noise when they all are; the distinction
+  // only informs when some rows do rest on a real sample.
+  const someCivIsSolid = (versus_civ ?? []).some((c) => !c.thin);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -120,11 +131,76 @@ export default function HeadToHead() {
         </div>
       </div>
 
+      {summary && (
+        <H2HStoryline summary={summary} byMatchType={by_match_type ?? []} unresolved={unresolved ?? 0} />
+      )}
+
       {/* Civ matchups & Map stats */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('h2h.civMatchups')}</h2>
-          {civ_matchups && civ_matchups.length > 0 ? (
+          <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
+            <h2 className="text-lg font-semibold text-gray-200 m-0">{t('h2h.civMatchups')}</h2>
+            <div className="flex items-center gap-1">
+              {(['opponent', 'pair'] as const).map((view) => (
+                <button
+                  key={view}
+                  type="button"
+                  onClick={() => setCivView(view)}
+                  className={`px-2 py-1 rounded text-xs font-medium border transition-colors cursor-pointer ${
+                    civView === view
+                      ? 'bg-dark-500 text-gold-400 border-gold-500/40'
+                      : 'text-gray-500 border-dark-400 bg-transparent hover:text-gray-300'
+                  }`}
+                >
+                  {t(view === 'opponent' ? 'h2h.byOpponentCiv' : 'h2h.byPair')}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {civView === 'opponent' ? (
+            versus_civ && versus_civ.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs sm:text-sm">
+                  <thead>
+                    <tr className="border-b border-dark-400">
+                      <th className="text-left py-2 px-2 text-gray-400 font-medium">
+                        <div className="max-w-[7rem] sm:max-w-none truncate">{opponentName}</div>
+                      </th>
+                      <th className="text-right py-2 px-2 text-gray-400 font-medium"><span className="sm:hidden">G</span><span className="hidden sm:inline">{t('common.games')}</span></th>
+                      <th className="text-right py-2 px-2 text-gray-400 font-medium">{t('h2h.score')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {versus_civ.slice(0, 20).map((c) => (
+                      <tr key={c.civ} className="border-b border-dark-500/50 hover:bg-dark-600/50">
+                        <td className="py-2 px-2 text-gray-200">
+                          <div className="max-w-[8rem] sm:max-w-none truncate">
+                            {c.civ_name || getCivName(c.civ)}
+                            {/* A 0-1 and a 0-14 are not the same finding. */}
+                            {c.thin && someCivIsSolid && (
+                              <span className="ml-1.5 text-[10px] text-gray-600">{t('h2h.thinSample')}</span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="py-2 px-2 text-right text-gray-400">{c.games}</td>
+                        <td className="py-2 px-2 text-right">
+                          <span className="text-gold-400">{c.wins}</span>
+                          <span className="text-gray-600 mx-1">-</span>
+                          <span className="text-blue-accent">{c.losses}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!someCivIsSolid && (
+                  <p className="text-[11px] text-gray-600 mt-2 m-0">{t('h2h.allThin')}</p>
+                )}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">{t('h2h.noCivData')}</p>
+            )
+          ) : civ_matchups && civ_matchups.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-xs sm:text-sm">
                 <thead>
