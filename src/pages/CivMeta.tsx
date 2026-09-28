@@ -146,7 +146,7 @@ export default function CivMeta() {
             tab === 'civs' ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
           }`}
         >
-          Civilizations
+          {t('meta.tabCivs')}
         </button>
         <button
           onClick={() => setTab('maps')}
@@ -154,7 +154,7 @@ export default function CivMeta() {
             tab === 'maps' ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
           }`}
         >
-          Maps
+          {t('meta.tabMaps')}
         </button>
       </div>
 
