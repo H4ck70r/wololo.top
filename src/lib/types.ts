@@ -294,6 +294,8 @@ export interface LadderRangeStats {
   ladder: string;
   from: number | null;
   to: number | null;
+  /** set when the band was asked for by place; equals the number of players */
+  top?: number;
   players: number;
   mean?: number;
   median?: number;

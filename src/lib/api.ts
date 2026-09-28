@@ -135,6 +135,8 @@ export async function getLadderRangeStats(params: {
   type?: 'solo' | 'team';
   from?: number;
   to?: number;
+  /** ask by place instead of by rating: the N best players, exactly N */
+  top?: number;
   rating?: number;
   profile_id?: number | string;
 }): Promise<LadderRangeStats> {

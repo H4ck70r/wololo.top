@@ -59,7 +59,7 @@ export default function LadderDistributionChart({
   isSelf = false,
 }: Props) {
   const { t } = useT();
-  const [range, setRange] = useState<{ from: number; to: number } | null>(null);
+  const [range, setRange] = useState<{ from: number; to: number; top?: number } | null>(null);
   const [page, setPage] = useState(1);
 
   // Page 7 of the previous range means nothing in the next one.
@@ -80,12 +80,12 @@ export default function LadderDistributionChart({
   // Without a range this measures the whole ladder, which also turns the
   // position into an exact place instead of the start of the tie group.
   const { data: rangeStats } = useQuery<LadderRangeStats>({
-    queryKey: ['ladderRangeStats', ladder, range?.from, range?.to, rating, profileId],
+    queryKey: ['ladderRangeStats', ladder, range?.from, range?.to, range?.top, rating, profileId],
     queryFn: () =>
       getLadderRangeStats({
         type: ladder,
-        from: range?.from,
-        to: range?.to,
+        // `top` answers by place and makes from/to redundant.
+        ...(range?.top ? { top: range.top } : { from: range?.from, to: range?.to }),
         rating,
         profile_id: profileId,
       }),
@@ -144,9 +144,11 @@ export default function LadderDistributionChart({
     { from: marks.top_10, to: marks.top_1, key: 'dist.band10' as TKey, fill: '#f0c040' },
     { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' as TKey, fill: '#a855f7' },
     { from: marks.top_100_cutoff, to: marks.elite_cutoff ?? max, key: 'dist.band100' as TKey, fill: '#ec4899' },
-    { from: marks.elite_cutoff, to: max, key: 'dist.bandElite' as TKey, fill: '#f43f5e' },
+    // Defined by a count, not by a rating edge: a band called "top 16" has to
+    // hold 16 people even when the 16th and 17th share a number.
+    { from: marks.elite_cutoff, to: max, key: 'dist.bandElite' as TKey, fill: '#f43f5e', top: 16 },
   ].filter((r) => r.from != null && r.to != null) as
-    { from: number; to: number; key: TKey; fill: string }[];
+    { from: number; to: number; key: TKey; fill: string; top?: number }[];
 
   // The average band is drawn behind the percentile ones, so it is kept apart.
   const [bulk, ...bands] = ranges;
@@ -179,8 +181,16 @@ export default function LadderDistributionChart({
   if (scope?.max != null) tiles.push({ key: 'dist.statTop', value: scope.max });
   if (scope?.stddev != null) tiles.push({ key: 'dist.statSpread', value: scope.stddev });
 
-  const rangeRows = rangeList?.data?.players ?? [];
-  const rangeTotal = rangeList?.data?.pagination?.total ?? scope?.players ?? 0;
+  // A count band lists exactly that many players: the rating filter alone
+  // would let anyone tied on the boundary rating slip in as a 17th.
+  const cap = range?.top;
+  const listed = rangeList?.data?.players ?? [];
+  const rangeRows = cap
+    ? listed.slice(0, Math.max(0, cap - (page - 1) * PAGE_SIZE))
+    : listed;
+  const rangeTotal = cap
+    ? cap
+    : rangeList?.data?.pagination?.total ?? scope?.players ?? 0;
   // Landing on page 1 of a range holding 100,000 players buries you; this is
   // the page your own rating falls on.
   const myPage =
@@ -262,7 +272,7 @@ export default function LadderDistributionChart({
             <button
               key={r.key}
               type="button"
-              onClick={() => setRange(active ? null : { from: r.from, to: r.to })}
+              onClick={() => setRange(active ? null : { from: r.from, to: r.to, top: r.top })}
               title={`${r.from} - ${r.to}`}
               className="px-2 py-1 rounded text-xs font-medium border transition-colors"
               style={{
@@ -291,7 +301,9 @@ export default function LadderDistributionChart({
               const hit = ranges.find((r) => at >= r.from && at <= r.to);
               if (!hit) return;
               setRange((cur) =>
-                cur && cur.from === hit.from && cur.to === hit.to ? null : { from: hit.from, to: hit.to }
+                cur && cur.from === hit.from && cur.to === hit.to
+                  ? null
+                  : { from: hit.from, to: hit.to, top: hit.top }
               );
             }}
             style={{ cursor: 'pointer' }}
