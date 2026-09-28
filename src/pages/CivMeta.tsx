@@ -2,7 +2,7 @@ import { useT } from '../lib/i18n';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { getCivMeta, getMapMeta } from '../lib/api';
+import { getCivMeta, getCivMatchups, getMapMeta } from '../lib/api';
 import { getCivName, getCivIcon, cleanMapName, formatDuration } from '../lib/constants';
 
 const MATCH_TYPE_OPTIONS = [
@@ -40,6 +40,15 @@ export default function CivMeta() {
   const { data: civData, isLoading: loadingCivs } = useQuery({
     queryKey: ['civMeta', matchType, bracket.min, bracket.max, days],
     queryFn: () => getCivMeta({ match_type: matchType, min_rating: bracket.min, max_rating: bracket.max, days }),
+    staleTime: 60_000,
+  });
+
+  // Its own request: the matrix costs roughly ten times the list, and making
+  // the whole page wait for it left people staring at a spinner.
+  const { data: matchupData, isFetching: loadingMatchups } = useQuery({
+    queryKey: ['civMatchups', matchType, bracket.min, bracket.max, days],
+    queryFn: () => getCivMatchups({ match_type: matchType, min_rating: bracket.min, max_rating: bracket.max, days }),
+    enabled: tab === 'civs',
     staleTime: 60_000,
   });
 
@@ -221,7 +230,10 @@ export default function CivMeta() {
           )}
 
           {/* Matchups grid */}
-          {civData?.matchups && civData.matchups.length > 0 && (
+          {loadingMatchups && !matchupData && (
+            <p className="text-xs text-gray-600 mt-6 m-0">{t('meta.loadingMatchups')}</p>
+          )}
+          {matchupData?.matchups && matchupData.matchups.length > 0 && (
             <div className="mt-6">
               <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('meta.topMatchups')}</h2>
               <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
@@ -235,7 +247,7 @@ export default function CivMeta() {
                     </tr>
                   </thead>
                   <tbody>
-                    {civData.matchups.slice(0, 50).map((m, i) => (
+                    {matchupData.matchups.slice(0, 50).map((m, i) => (
                       <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
                         <td className="py-2 px-4 text-gray-200">
                           <div className="flex items-center gap-1.5">

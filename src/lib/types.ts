@@ -592,6 +592,11 @@ export interface CivMetaResponse {
   filters: { match_type: string; min_rating: number; max_rating: number; days: number };
   total_matches: number;
   civilizations: CivMetaEntry[];
+}
+
+export interface CivMatchupsResponse {
+  status: string;
+  filters: { match_type: string; min_rating: number; max_rating: number; days: number };
   matchups: CivMatchupEntry[];
 }
 

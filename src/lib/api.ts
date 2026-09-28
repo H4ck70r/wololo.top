@@ -42,6 +42,7 @@ import type {
   CountryStatsResponse,
   EnrichmentStatusResponse,
   CivMetaResponse,
+  CivMatchupsResponse,
   MapMetaResponse,
   MatchDetailResponse,
   LadderDistribution,
@@ -162,6 +163,15 @@ export async function getCivMeta(params: {
   days?: number;
 }): Promise<CivMetaResponse> {
   return apiFetch<CivMetaResponse>('/api/meta/civilizations', params as Record<string, string | number>);
+}
+
+export async function getCivMatchups(params: {
+  match_type?: string;
+  min_rating?: number;
+  max_rating?: number;
+  days?: number;
+}): Promise<CivMatchupsResponse> {
+  return apiFetch<CivMatchupsResponse>('/api/meta/civ-matchups', params as Record<string, string | number>);
 }
 
 export async function getMapMeta(params: {
