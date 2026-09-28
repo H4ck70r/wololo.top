@@ -197,6 +197,12 @@ const EN = {
   'dist.top1': 'top 1%',
   'dist.top100': 'top 100',
   'dist.you': 'you',
+  'dist.inThisRange': 'in this range',
+  'dist.aboveIt': 'above it',
+  'dist.band50': 'top 50%',
+  'dist.band25': 'top 25%',
+  'dist.band10': 'top 10%',
+  'dist.band1': 'top 1%',
   'dist.footnote': 'Real ladder distribution, not a bell curve: ratings are skewed, with a long tail at the top.',
 } as const;
 
@@ -386,6 +392,12 @@ const ES: Partial<Record<TKey, string>> = {
   'dist.top1': 'top 1%',
   'dist.top100': 'top 100',
   'dist.you': 'tú',
+  'dist.inThisRange': 'en este tramo',
+  'dist.aboveIt': 'por encima',
+  'dist.band50': 'top 50%',
+  'dist.band25': 'top 25%',
+  'dist.band10': 'top 10%',
+  'dist.band1': 'top 1%',
   'dist.footnote': 'Distribución real del ladder, no una campana: los ratings están sesgados, con una cola larga arriba.',
 };
 

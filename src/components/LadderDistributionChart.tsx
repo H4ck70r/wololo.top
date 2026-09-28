@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { Area, AreaChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { getLadderDistribution } from '../lib/api';
 import { useT } from '../lib/i18n';
 import type { LadderDistribution } from '../lib/types';
+import type { TKey } from '../lib/i18n';
 
 interface Props {
   rating: number | undefined;
@@ -32,6 +33,24 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
   const marks = data.landmarks;
   const peak = Math.max(...data.buckets.map((b) => b.players));
 
+  // Each point carries how many players sit above its bucket. Without this the
+  // tooltip showed only the bucket ("25 players") right next to a line labelled
+  // "top 100", which reads as if the top 100 had 25 people in it.
+  let seen = 0;
+  const points = data.buckets.map((b) => {
+    seen += b.players;
+    return { ...b, above: data.total_players - seen };
+  });
+
+  // Bands between landmarks, so the eye can place a rating without reading axes.
+  const bands = [
+    { from: marks.median, to: marks.top_25, key: 'dist.band50' },
+    { from: marks.top_25, to: marks.top_10, key: 'dist.band25' },
+    { from: marks.top_10, to: marks.top_1, key: 'dist.band10' },
+    { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' },
+  ].filter((b) => b.from != null && b.to != null) as { from: number; to: number; key: TKey }[];
+  const bandFill = ['#4a7cff', '#22c55e', '#f0c040', '#a855f7'];
+
   const label = (value: string, colour: string) => ({
     value,
     position: 'top' as const,
@@ -58,7 +77,7 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
 
       <div className="h-56 -ml-2">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data.buckets} margin={{ top: 18, right: 8, bottom: 0, left: 0 }}>
+          <AreaChart data={points} margin={{ top: 18, right: 8, bottom: 0, left: 0 }}>
             <defs>
               <linearGradient id="distFill" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#4a7cff" stopOpacity={0.45} />
@@ -81,20 +100,36 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
             <Tooltip
               contentStyle={{ background: '#151821', border: '1px solid #2e3345', borderRadius: 8, fontSize: 12 }}
               labelStyle={{ color: '#e2e8f0' }}
-              formatter={(value) => [Number(value).toLocaleString(), t('dist.playersAtRating')]}
+              formatter={(value, _name, item) => {
+                const above = (item?.payload as { above?: number } | undefined)?.above ?? 0;
+                return [
+                  `${Number(value).toLocaleString()} ${t('dist.inThisRange')} · ${above.toLocaleString()} ${t('dist.aboveIt')}`,
+                  '',
+                ];
+              }}
               labelFormatter={(v) => `${v} - ${Number(v) + data.bucket_size - 1}`}
             />
+            {bands.map((b, i) => (
+              <ReferenceArea
+                key={b.key}
+                x1={b.from}
+                x2={b.to}
+                fill={bandFill[i]}
+                fillOpacity={0.06}
+                stroke="none"
+                label={{ value: t(b.key), position: 'insideTop', fill: bandFill[i], fontSize: 10, offset: 4 }}
+              />
+            ))}
+
             <Area type="monotone" dataKey="players" stroke="#4a7cff" strokeWidth={1.5} fill="url(#distFill)" />
 
-            {marks.median != null && (
-              <ReferenceLine x={marks.median} stroke="#3d4358" strokeDasharray="3 3" label={label(t('dist.median'), '#6b7280')} />
-            )}
-            {marks.top_10 != null && (
-              <ReferenceLine x={marks.top_10} stroke="#3d4358" strokeDasharray="3 3" label={label(t('dist.top10'), '#6b7280')} />
-            )}
-            {marks.top_1 != null && (
-              <ReferenceLine x={marks.top_1} stroke="#3d4358" strokeDasharray="3 3" label={label(t('dist.top1'), '#6b7280')} />
-            )}
+            {/* The band labels already name these thresholds, so the divider
+                lines stay unlabelled: with both, "top 10%" and "top 1%" were
+                printed twice, one above the other. */}
+            {marks.median != null && <ReferenceLine x={marks.median} stroke="#3d4358" strokeDasharray="3 3" />}
+            {marks.top_25 != null && <ReferenceLine x={marks.top_25} stroke="#3d4358" strokeDasharray="3 3" />}
+            {marks.top_10 != null && <ReferenceLine x={marks.top_10} stroke="#3d4358" strokeDasharray="3 3" />}
+            {marks.top_1 != null && <ReferenceLine x={marks.top_1} stroke="#3d4358" strokeDasharray="3 3" />}
             {marks.top_100_cutoff != null && (
               <ReferenceLine x={marks.top_100_cutoff} stroke="#a855f7" strokeDasharray="3 3" label={label(t('dist.top100'), '#a855f7')} />
             )}
