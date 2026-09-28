@@ -203,6 +203,8 @@ const EN = {
   'dist.band25': 'top 25%',
   'dist.band10': 'top 10%',
   'dist.band1': 'top 1%',
+  'dist.band100': 'top 100',
+  'dist.bulk': 'half the ladder is in here',
   'dist.footnote': 'Real ladder distribution, not a bell curve: ratings are skewed, with a long tail at the top.',
 } as const;
 
@@ -398,6 +400,8 @@ const ES: Partial<Record<TKey, string>> = {
   'dist.band25': 'top 25%',
   'dist.band10': 'top 10%',
   'dist.band1': 'top 1%',
+  'dist.band100': 'top 100',
+  'dist.bulk': 'aquí está la mitad del ladder',
   'dist.footnote': 'Distribución real del ladder, no una campana: los ratings están sesgados, con una cola larga arriba.',
 };
 

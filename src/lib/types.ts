@@ -224,8 +224,12 @@ export interface LadderDistribution {
   ladder: string;
   bucket_size: number;
   total_players: number;
+  max_rating: number | null;
   buckets: { rating: number; players: number }[];
   landmarks: {
+    /** 25th and 75th percentile: where half the ladder sits */
+    bulk_from: number | null;
+    bulk_to: number | null;
     median: number | null;
     top_25: number | null;
     top_10: number | null;

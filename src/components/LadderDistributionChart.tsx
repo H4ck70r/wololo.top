@@ -48,8 +48,11 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
     { from: marks.top_25, to: marks.top_10, key: 'dist.band25' },
     { from: marks.top_10, to: marks.top_1, key: 'dist.band10' },
     { from: marks.top_1, to: marks.top_100_cutoff, key: 'dist.band1' },
+    // The top 100 band had no upper bound, so it was the one stretch of the
+    // chart left unpainted; max_rating closes it.
+    { from: marks.top_100_cutoff, to: data.max_rating, key: 'dist.band100' },
   ].filter((b) => b.from != null && b.to != null) as { from: number; to: number; key: TKey }[];
-  const bandFill = ['#4a7cff', '#22c55e', '#f0c040', '#a855f7'];
+  const bandFill = ['#4a7cff', '#22c55e', '#f0c040', '#a855f7', '#ec4899'];
 
   const label = (value: string, colour: string) => ({
     value,
@@ -109,6 +112,21 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
               }}
               labelFormatter={(v) => `${v} - ${Number(v) + data.bucket_size - 1}`}
             />
+            {/* Drawn first so it sits behind the percentile bands, and
+                labelled along the bottom so the two sets never collide. */}
+            {marks.bulk_from != null && marks.bulk_to != null && (
+              <ReferenceArea
+                x1={marks.bulk_from}
+                x2={marks.bulk_to}
+                fill="#6b7280"
+                fillOpacity={0.1}
+                stroke="#6b7280"
+                strokeOpacity={0.35}
+                strokeDasharray="2 2"
+                label={{ value: t('dist.bulk'), position: 'insideBottom', fill: '#9ca3af', fontSize: 10, offset: 8 }}
+              />
+            )}
+
             {bands.map((b, i) => (
               <ReferenceArea
                 key={b.key}
@@ -131,7 +149,7 @@ export default function LadderDistributionChart({ rating, topPercent, playersAbo
             {marks.top_10 != null && <ReferenceLine x={marks.top_10} stroke="#3d4358" strokeDasharray="3 3" />}
             {marks.top_1 != null && <ReferenceLine x={marks.top_1} stroke="#3d4358" strokeDasharray="3 3" />}
             {marks.top_100_cutoff != null && (
-              <ReferenceLine x={marks.top_100_cutoff} stroke="#a855f7" strokeDasharray="3 3" label={label(t('dist.top100'), '#a855f7')} />
+              <ReferenceLine x={marks.top_100_cutoff} stroke="#a855f7" strokeDasharray="3 3" />
             )}
             <ReferenceLine x={rating} stroke="#f0c040" strokeWidth={2} label={label(t('dist.you'), '#f0c040')} />
           </AreaChart>
