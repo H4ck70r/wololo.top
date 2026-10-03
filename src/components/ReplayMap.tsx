@@ -306,42 +306,42 @@ export default function ReplayMap({ timeline }: Props) {
     }
 
     //  La posición de salida va siempre visible, también en el segundo cero:
-    //  es la referencia que permite leer todo lo demás.
+    //  es la referencia que permite leer todo lo demás. Se dibuja con el
+    //  mismo símbolo que un centro urbano porque eso es lo que hay ahí; que
+    //  sea una estimación se dice en la leyenda, no ensuciando el mapa.
     for (const [j, p] of inicios) {
       const X = px(p.x, p.y);
       const Y = py(p.x, p.y);
-      const r = Math.max(esc * 7, 12);
-      ctx.strokeStyle = colorDe(j);
-      ctx.globalAlpha = 0.85;
-      ctx.lineWidth = 2;
-      ctx.setLineDash([4, 3]);
+      const r = Math.max(esc * 4.5, 9);
+      ctx.fillStyle = colorDe(j);
       ctx.beginPath();
       ctx.arc(X, Y, r, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.globalAlpha = 0.12;
-      ctx.fillStyle = colorDe(j);
       ctx.fill();
-      ctx.globalAlpha = 1;
+      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      const tam = Math.round(r * 1.35);
+      ctx.font = `${tam}px system-ui, "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+      ctx.lineWidth = 3;
+      ctx.lineJoin = 'round';
+      ctx.strokeText('⌂', X, Y + tam * 0.06);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('⌂', X, Y + tam * 0.06);
 
-      //  Con el nombre encima no hay que deducir quien esta donde, que es lo
-      //  que hizo falta para enderezar la orientacion del mapa.
+      //  Con el nombre encima no hay que deducir quién está dónde.
       const etiqueta = timeline.jugadores.find((x) => x.numero === j)?.nombre;
       if (etiqueta) {
         ctx.font = '600 11px system-ui, sans-serif';
-        ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
-        ctx.lineWidth = 3;
-        ctx.lineJoin = 'round';
-        //  Pegada al borde salia cortada, y un nombre a medias es peor que
-        //  ninguno: fue lo que hizo leer la base propia como la del rival.
         const ancho_txt = ctx.measureText(etiqueta).width;
         const Xe = Math.min(Math.max(X, ancho_txt / 2 + 4), ancho - ancho_txt / 2 - 4);
         const Ye = Math.max(Y - r - 3, 14);
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+        ctx.lineWidth = 3;
         ctx.strokeText(etiqueta, Xe, Ye);
-        //  Blanco y no el color del jugador: el gris sobre fondo oscuro no se
-        //  leia, y es justo el color que mas confusion causo.
         ctx.fillStyle = '#ffffff';
         ctx.fillText(etiqueta, Xe, Ye);
       }
@@ -546,7 +546,8 @@ export default function ReplayMap({ timeline }: Props) {
           {t('map.filler')}
         </span>
         <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.startHint')}>
-          <span className="w-3.5 h-3.5 rounded-full border-2 border-dashed border-gray-500" />
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
+                style={{ background: '#6b7280' }}>⌂</span>
           {t('map.start')}
         </span>
       </div>

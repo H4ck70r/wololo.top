@@ -472,7 +472,7 @@ const EN = {
   'up.ai': 'AI',
   'up.aiHint': 'A bot, not a person. Its slot has no profile and its name comes from the replay’s AI field. A bot does not research ages through commands, so it has no age times — and its games never enter the statistics.',
   'map.filler': 'houses, farms, camps',
-  'map.start': 'starting position (approx.)',
+  'map.start': 'starting Town Center (approx.)',
   'map.startHint': 'The starting Town Center is already placed when the game begins, so the replay has no build command for it. This ring is estimated from the first house, which in AoE2 goes right next to the Town Center and is built at 0:06 in every game measured.',
   'assess.imperial_ms': 'Imperial reached',
   'map.top': 'top',
