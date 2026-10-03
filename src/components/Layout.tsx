@@ -10,6 +10,9 @@ const NAV_LINKS: { path: string; key: TKey }[] = [
   { path: '/', key: 'nav.search' },
   { path: '/leaderboard', key: 'nav.leaderboard' },
   { path: '/stats', key: 'nav.stats' },
+  //  El analizador va en la barra y no escondido: es la puerta de entrada
+  //  para quien llega sin cuenta y sin saber que existimos.
+  { path: '/analyze', key: 'nav.analyze' },
   { path: '/compare', key: 'nav.compare' },
   { path: '/live', key: 'nav.live' },
 ];

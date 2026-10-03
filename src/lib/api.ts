@@ -54,6 +54,8 @@ import type {
   DistributionHistoryResponse,
   AssessmentResponse,
   PlayerBuildOrdersResponse,
+  MatchTimelineResponse,
+  ReplayUploadResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -233,6 +235,37 @@ export async function getPlayerBuildOrders(
     `/api/players/${profileId}/build-orders`,
     params as Record<string, string | number>
   );
+}
+
+/**
+ * Sube uno o varios .aoe2record y los analiza.
+ *
+ * No pasa por apiFetch porque va en multipart: el navegador tiene que poner el
+ * boundary en Content-Type, asi que aqui NO se toca esa cabecera a mano.
+ */
+export async function analyzeReplays(ficheros: File[]): Promise<ReplayUploadResponse> {
+  const cuerpo = new FormData();
+  for (const f of ficheros) cuerpo.append('replay', f);
+  const res = await fetch(`${BASE_URL}/api/replays/analyze`, {
+    method: 'POST',
+    headers: { 'X-API-Key': API_KEY },
+    body: cuerpo,
+  });
+  if (!res.ok) {
+    //  El 429 del limitador trae un mensaje util: conviene no tragarselo.
+    let detalle = '';
+    try {
+      detalle = (await res.json())?.message ?? '';
+    } catch { /* cuerpo no JSON */ }
+    throw new Error(detalle || `API error: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+/** La cronología de una partida para el mapa. Se baja de Relic y se parsea al
+ *  vuelo, así que tarda unos segundos la primera vez. */
+export async function getMatchTimeline(matchId: number | string): Promise<MatchTimelineResponse> {
+  return apiFetch<MatchTimelineResponse>(`/api/matches/${matchId}/timeline`);
 }
 
 export async function getMapMeta(params: {

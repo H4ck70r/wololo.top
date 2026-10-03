@@ -13,6 +13,7 @@ const ClanProfile = lazy(() => import('./pages/ClanProfile'));
 const MatchDetailPage = lazy(() => import('./pages/MatchDetailPage'));
 const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const ClaimProfile = lazy(() => import('./pages/ClaimProfile'));
+const AnalyzeReplay = lazy(() => import('./pages/AnalyzeReplay'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSpinner() {
@@ -35,6 +36,10 @@ export default function App() {
           <Route path="/live" element={<LiveMatches />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/stats" element={<CivMeta />} />
+          {/* El mapa es gratis y compartible a proposito: es lo que trae
+              gente. Lo que no se saca de un fichero -la comparacion contra
+              cuarenta mil partidas- vive en el perfil. */}
+          <Route path="/analyze" element={<AnalyzeReplay />} />
           <Route path="/clan/:clanName" element={<ClanProfile />} />
           <Route path="/match/:matchId" element={<MatchDetailPage />} />
           <Route path="/auth/callback" element={<AuthCallback />} />

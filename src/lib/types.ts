@@ -888,3 +888,71 @@ export interface PlayerBuildOrdersResponse {
   openings: PlayerOpeningBuild[];
   openings_without_build: { opening: string; games: number }[];
 }
+
+export interface TimelineEvent {
+  t: number;
+  j: number;
+  tipo: 'build' | 'wall' | 'tech' | 'queue' | 'resign' | 'delete';
+  id?: number;
+  x?: number;
+  y?: number;
+  x2?: number;
+  y2?: number;
+  n?: number;
+}
+
+export interface TimelineArmyOrder {
+  t: number;
+  j: number;
+  x: number;
+  y: number;
+  n: number;
+  obj?: number | null;
+}
+
+export interface TimelinePlayer {
+  numero: number;
+  perfil: number | null;
+  nombre: string;
+  civ: number | null;
+  color?: number;
+}
+
+export interface ReplayTimeline {
+  version: string;
+  duracion_ms: number;
+  jugadores: TimelinePlayer[];
+  eventos: TimelineEvent[];
+  ejercito: TimelineArmyOrder[];
+  limites: { x_max: number; y_max: number };
+}
+
+export interface MatchTimelineResponse {
+  status: string;
+  match_id: number;
+  info: { velocidad?: number; jugadores?: TimelinePlayer[] } | null;
+  players: Record<string, unknown>[];
+  timeline: ReplayTimeline | null;
+  timeline_error?: string | null;
+}
+
+export interface ReplayUploadResult {
+  file: string;
+  ok: boolean;
+  error?: string;
+  bytes?: number;
+  match_id: number | null;
+  matched: boolean;
+  already_analyzed: boolean;
+  stored: boolean;
+  info: { velocidad?: number; jugadores?: TimelinePlayer[] } | null;
+  players: Record<string, unknown>[];
+  timeline: ReplayTimeline | null;
+  timeline_error?: string | null;
+}
+
+export interface ReplayUploadResponse {
+  status: string;
+  analyzed: number;
+  results: ReplayUploadResult[];
+}
