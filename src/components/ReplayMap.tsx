@@ -95,6 +95,31 @@ export default function ReplayMap({ timeline }: Props) {
     Math.ceil(Math.max(timeline.limites.x_max, timeline.limites.y_max) / 8) * 8
   );
 
+  /**
+   * Dónde empezó cada jugador.
+   *
+   * El centro urbano inicial viene colocado al arrancar la partida, así que NO
+   * hay ninguna orden BUILD para él y el replay no dice dónde está. Lo que sí
+   * hay es la primera casa, que en AoE2 se planta pegada al centro urbano:
+   * medido en cuatro jugadores de dos partidas, siempre se construye en el
+   * minuto 0,1 y cae a entre 2 y 8 casillas del centro de la base.
+   *
+   * Por eso la marca es una estimación y se dice que lo es. Lo exacto saldría
+   * de la lista de objetos de la cabecera, que todavía no leemos.
+   */
+  const inicios = useMemo(() => {
+    const CASA = 70;
+    const out = new Map<number, { x: number; y: number }>();
+    for (const e of eventos) {
+      if (e.tipo !== 'build' || e.x == null || e.y == null) continue;
+      if (out.has(e.j)) continue;
+      //  Se prefiere la primera casa; si el jugador abrió con otra cosa, vale
+      //  su primer edificio.
+      if (e.id === CASA || e.t > 60_000) out.set(e.j, { x: e.x, y: e.y });
+    }
+    return out;
+  }, [eventos]);
+
   const colorDe = (numero: number) => {
     const j = timeline.jugadores.find((x) => x.numero === numero);
     //  El color del replay manda. Si falta -formatos viejos que lee mgz-, se
@@ -203,6 +228,26 @@ export default function ReplayMap({ timeline }: Props) {
     }
     ctx.globalAlpha = 1;
 
+    //  La posición de salida va siempre visible, también en el segundo cero:
+    //  es la referencia que permite leer todo lo demás.
+    for (const [j, p] of inicios) {
+      const X = px(p.x, p.y);
+      const Y = py(p.x, p.y);
+      const r = Math.max(esc * 7, 12);
+      ctx.strokeStyle = colorDe(j);
+      ctx.globalAlpha = 0.85;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.arc(X, Y, r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 0.12;
+      ctx.fillStyle = colorDe(j);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
     //  Murallas debajo de los edificios, y gruesas: antes no se veían.
     for (const e of eventos) {
       if (e.t > ahora) break;
@@ -272,7 +317,7 @@ export default function ReplayMap({ timeline }: Props) {
       }
     }
     ctx.restore();
-  }, [ahora, eventos, ejercito, lado, timeline]);
+  }, [ahora, eventos, ejercito, lado, inicios, timeline]);
 
   const reciente = useMemo(() => {
     const ventana = 45_000;
@@ -384,6 +429,10 @@ export default function ReplayMap({ timeline }: Props) {
         <span className="flex items-center gap-1.5 text-[11px] text-gray-500">
           <span className="w-2.5 h-2.5 rounded-sm bg-gray-500/60" />
           {t('map.filler')}
+        </span>
+        <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.startHint')}>
+          <span className="w-3.5 h-3.5 rounded-full border-2 border-dashed border-gray-500" />
+          {t('map.start')}
         </span>
       </div>
 

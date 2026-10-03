@@ -471,6 +471,8 @@ const EN = {
   'up.ai': 'AI',
   'up.aiHint': 'A bot, not a person. Its slot has no profile and its name comes from the replay’s AI field. A bot does not research ages through commands, so it has no age times — and its games never enter the statistics.',
   'map.filler': 'houses, farms, camps',
+  'map.start': 'starting position (approx.)',
+  'map.startHint': 'The starting Town Centre is already placed when the game begins, so the replay has no build command for it. This ring is estimated from the first house, which in AoE2 goes right next to the Town Centre and is built at 0:06 in every game measured.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -929,6 +931,8 @@ const ES: Partial<Record<TKey, string>> = {
   'up.ai': 'IA',
   'up.aiHint': 'Es un bot, no una persona. Su hueco no tiene perfil y su nombre sale del campo de IA del replay. Un bot no investiga las edades por comando, así que no tiene tiempos — y sus partidas no entran nunca en las estadísticas.',
   'map.filler': 'casas, granjas, campamentos',
+  'map.start': 'posición de salida (aprox.)',
+  'map.startHint': 'El centro urbano inicial ya está puesto cuando empieza la partida, así que el replay no trae ninguna orden de construcción para él. Este anillo se estima con la primera casa, que en AoE2 se planta pegada al centro urbano y se construye en el 0:06 en todas las partidas medidas.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
