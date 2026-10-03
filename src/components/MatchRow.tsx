@@ -53,7 +53,7 @@ function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
   if (replay.analyzed) {
     return (
       <span
-        className="inline-flex items-center gap-1 text-[10px] text-emerald-300/90 bg-emerald-500/10 border border-emerald-500/25 rounded px-1.5 py-0.5"
+        className="inline-flex items-center gap-1 whitespace-nowrap text-[10px] text-emerald-300/90 bg-emerald-500/10 border border-emerald-500/25 rounded px-1.5 py-0.5"
         title={t('replayBadge.analyzedHint')}
       >
         ▶ {replay.opening || t('replayBadge.analyzed')}
@@ -63,7 +63,7 @@ function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
   if (replay.unavailable) {
     return (
       <span
-        className="text-[10px] text-gray-600 border border-dark-400 rounded px-1.5 py-0.5"
+        className="text-[10px] text-gray-600 border border-dark-400 rounded px-1.5 py-0.5 whitespace-nowrap"
         title={t('replayBadge.goneHint')}
       >
         {t('replayBadge.gone')}
@@ -73,7 +73,7 @@ function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
   if (replay.queue_status === 'pending') {
     return (
       <span
-        className="text-[10px] text-gray-500 border border-dark-400 rounded px-1.5 py-0.5"
+        className="text-[10px] text-gray-500 border border-dark-400 rounded px-1.5 py-0.5 whitespace-nowrap"
         title={t('replayBadge.queuedHint')}
       >
         {t('replayBadge.queued')}
@@ -156,12 +156,12 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
       className={`rounded-lg border border-l-4 transition-colors ${OUTCOME_CARD[outcome]}`}
     >
       <div
-        className={`flex items-center gap-3 px-4 py-3 select-none ${isTeamGame ? 'cursor-pointer' : ''}`}
+        className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 select-none ${isTeamGame ? 'cursor-pointer' : ''}`}
         onClick={() => isTeamGame && setExpanded(!expanded)}
       >
         {/* W/L badge */}
         <div
-          className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
+          className={`shrink-0 w-7 h-7 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
           title={outcomeLabel[outcome]}
         >
           {OUTCOME_BADGE[outcome]}
@@ -172,19 +172,22 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
 
         {/* Main info */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium text-gold-400 text-sm">
+          {/* Sin flex-wrap: en movil partia la linea y dejaba el rival en un
+              renglon propio, estirando la tarjeta al doble. Lo que cede es el
+              nombre, que se recorta. */}
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <span className="font-medium text-gold-400 text-sm truncate">
               {match.civilization || getCivName(match.civilization_id)}
             </span>
 
             {!isTeamGame && enemyTeams.length > 0 && enemyTeams[0].players.length > 0 ? (
               <>
-                <span className="text-xs text-gray-600">vs</span>
-                <div className="flex items-center gap-1.5">
+                <span className="text-xs text-gray-600 shrink-0">vs</span>
+                <div className="flex items-center gap-1.5 min-w-0">
                   <CivBadge civId={enemyTeams[0].players[0].civilization_id} size="sm" />
                   <Link
                     to={`/player/${enemyTeams[0].players[0].profile_id}`}
-                    className="font-medium text-blue-400 text-sm hover:text-blue-300 transition-colors no-underline"
+                    className="font-medium text-blue-400 text-sm hover:text-blue-300 transition-colors no-underline truncate"
                   >
                     {enemyTeams[0].players[0].alias || 'Unknown'}
                   </Link>
@@ -198,13 +201,16 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
             ) : null}
           </div>
 
-          <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
-            <span>{match.map || match.map_name || 'Unknown'}</span>
+          {/* whitespace-nowrap en cada dato: sin esto "33m 05s" se parte en
+              dos renglones y "4h ago" tambien. Que envuelva la fila entera,
+              no las palabras. */}
+          <div className="flex items-center gap-x-2.5 gap-y-0.5 mt-1 text-xs text-gray-500 flex-wrap min-w-0">
+            <span className="truncate max-w-[9rem]">{match.map || match.map_name || 'Unknown'}</span>
             <ReplayBadge replay={match.replay} />
             {match.duration_seconds != null && match.duration_seconds > 0 && (
-              <span>{formatDuration(match.duration_seconds)}</span>
+              <span className="whitespace-nowrap">{formatDuration(match.duration_seconds)}</span>
             )}
-            {timeAgo && <span>{timeAgo}</span>}
+            {timeAgo && <span className="whitespace-nowrap">{timeAgo}</span>}
             <Link
               to={`/match/${match.match_id}`}
               onClick={(e) => e.stopPropagation()}

@@ -554,12 +554,16 @@ export default function PlayerProfile() {
                 <span className="text-xs text-gray-500">{matchesData.total} total</span>
               )}
             </div>
-            <div className="flex items-center gap-1 flex-wrap">
+            {/* Se desplaza en horizontal en vez de envolver: ocho filtros en
+                movil ocupaban tres renglones y empujaban la primera partida
+                fuera de pantalla. -mx y px para que el desplazamiento llegue
+                al borde de la tarjeta y no se vea cortado. */}
+            <div className="flex items-center gap-1 overflow-x-auto -mx-1 px-1 sm:flex-wrap sm:overflow-visible sm:mx-0 sm:px-0">
               {MATCH_FILTERS.map((f) => (
                 <button
                   key={f.value}
                   onClick={() => handleFilterChange(f.value)}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
                     matchFilter === f.value
                       ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
                       : 'text-gray-500 hover:text-gray-300 border border-transparent'

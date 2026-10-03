@@ -155,6 +155,35 @@ export default function Layout({ children }: { children: ReactNode }) {
               {t('footer.tagline')}
             </p>
           </div>
+
+          {/* Las otras dos herramientas, recomendadas por lo que HACEN y no por
+              de quién son: a nadie le sirve saber quién las escribió, le sirve
+              saber si resuelven su problema. En el pie y no en un banner: el
+              que llega aquí viene a mirar datos, no a que le interrumpan. */}
+          <div className="grid gap-4 sm:grid-cols-2 mt-6 pt-5 border-t border-dark-500/60">
+            <a
+              href="https://smurfs.wololo.top"
+              className="group no-underline"
+              target="_blank"
+              rel="noopener"
+            >
+              <span className="block text-sm font-medium text-gray-300 group-hover:text-gold-400 transition-colors">
+                {t('promo.smurfsTitle')} →
+              </span>
+              <span className="block text-xs text-gray-500 mt-0.5">{t('promo.smurfsWhat')}</span>
+            </a>
+            <a
+              href="https://kontra.gg"
+              className="group no-underline"
+              target="_blank"
+              rel="noopener"
+            >
+              <span className="block text-sm font-medium text-gray-300 group-hover:text-gold-400 transition-colors">
+                {t('promo.kontraTitle')} →
+              </span>
+              <span className="block text-xs text-gray-500 mt-0.5">{t('promo.kontraWhat')}</span>
+            </a>
+          </div>
         </div>
       </footer>
     </div>

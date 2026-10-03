@@ -543,6 +543,10 @@ const EN = {
   'coach.arregloConversion': '{quien}: took {v} after reaching Castle to put down a second town center. That window is where a Castle lead turns into an economy or evaporates.',
   'coach.arregloFeudalLargo': '{quien}: spent {v} inside Feudal. Arriving early is worth nothing if leaving takes that long.',
   'coach.fuente': 'Every line comes from a measured difference between the two players, in units that matter: villagers rather than seconds, minutes of lead rather than percentages. When a difference is small enough to be noise, it is not written. Bracket averages come from thousands of recorded games at that rating.',
+  'promo.smurfsTitle': 'Check if an account is a smurf',
+  'promo.smurfsWhat': 'Paste a profile and it looks for the signs of a second account: a rating that climbs far faster than the games played justify, a Steam account younger than the skill, shared ownership between profiles.',
+  'promo.kontraTitle': 'Running a tournament?',
+  'promo.kontraWhat': 'kontra.gg handles the part that eats your evening: sign-ups, single and double elimination brackets, winners advancing on their own, finals reset, and a chat per tournament so nobody has to chase anyone on Discord.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -1073,6 +1077,10 @@ const ES: Partial<Record<TKey, string>> = {
   'coach.arregloConversion': '{quien}: tardó {v} desde llegar a Castillos en poner un segundo centro urbano. Esa ventana es donde una ventaja de Castillos se convierte en economía o se evapora.',
   'coach.arregloFeudalLargo': '{quien}: se quedó {v} dentro de Feudal. Llegar pronto no vale nada si salir cuesta eso.',
   'coach.fuente': 'Cada frase sale de una diferencia medida entre los dos jugadores, en unidades que importan: aldeanos en vez de segundos, minutos de ventaja en vez de porcentajes. Cuando una diferencia es lo bastante pequeña para ser ruido, no se escribe. Las medias de franja salen de miles de partidas grabadas a ese nivel.',
+  'promo.smurfsTitle': 'Comprobar si una cuenta es un smurf',
+  'promo.smurfsWhat': 'Pegas un perfil y busca las señales de una segunda cuenta: un rating que sube mucho más rápido de lo que justifican las partidas jugadas, una cuenta de Steam más joven que su nivel de juego, propiedad compartida entre perfiles.',
+  'promo.kontraTitle': '¿Organizas un torneo?',
+  'promo.kontraWhat': 'kontra.gg se encarga de lo que te come la tarde: inscripciones, brackets de eliminación simple y doble, ganadores que avanzan solos, reset de finales y un chat por torneo para no andar persiguiendo a nadie por Discord.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
