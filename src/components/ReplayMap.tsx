@@ -301,9 +301,16 @@ export default function ReplayMap({ timeline }: Props) {
     //  urbano, y esa orden está en el fichero-, y se sabe CUÁNDO se fue a por
     //  cada cosa, porque la orden apunta al objeto por su identificador.
     //
-    //  Lo que no hay es la muerte: el replay no dice cuándo se acaba una oveja
-    //  ni cuándo se agota una mina. Así que no desaparecen; se apagan desde el
-    //  momento en que alguien fue a por ellas, que es el dato que sí existe.
+    //  Y se van del mapa cuando se acaban. La muerte NO está en el fichero,
+    //  pero sí quién recibe cada orden y a qué: si los aldeanos que trabajaban
+    //  un ciervo reciben orden sobre otra cosa, ese ciervo dejó de dar comida.
+    //  Medido en una partida, 24 animales trabajados y 24 con final detectado,
+    //  con duraciones que cuadran -oveja por debajo de dos minutos, jabalí
+    //  entre uno y tres-.
+    //
+    //  El límite, que la leyenda dice: un aldeano también cambia de tarea
+    //  porque lo matan o porque el jugador cambia de idea, así que algún final
+    //  sale antes de tiempo.
     for (const r of timeline.recursos ?? []) {
       let rx = r.x;
       let ry = r.y;
@@ -313,11 +320,21 @@ export default function ReplayMap({ timeline }: Props) {
           rx = mx; ry = my;
         }
       }
-      const usado = r.usado_ms != null && r.usado_ms <= ahora;
+      //  Se desvanece en los últimos quince segundos en vez de parpadear:
+      //  un recurso que desaparece de golpe se lee como un fallo de dibujo.
+      const DESVANECE_MS = 15_000;
+      let opacidad = 0.95;
+      if (r.agotado_ms != null && ahora >= r.agotado_ms) {
+        const pasado = ahora - r.agotado_ms;
+        if (pasado > DESVANECE_MS) continue;
+        opacidad = 0.5 * (1 - pasado / DESVANECE_MS);
+      } else if (r.usado_ms != null && r.usado_ms <= ahora) {
+        opacidad = 0.35;
+      }
       const X = px(rx, ry);
       const Y = py(rx, ry);
       ctx.fillStyle = COLOR_RECURSO[r.t] ?? '#999';
-      ctx.globalAlpha = usado ? 0.3 : 0.95;
+      ctx.globalAlpha = opacidad;
       const rad = Math.max(esc * (r.t === 'oro' || r.t === 'piedra' ? 1 : 0.85), 1.4);
       ctx.beginPath();
       ctx.arc(X, Y, rad, 0, Math.PI * 2);

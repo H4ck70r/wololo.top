@@ -946,6 +946,8 @@ export interface ReplayTimeline {
     y: number;
     /** cuándo se fue a por ello por primera vez */
     usado_ms?: number;
+    /** cuándo dejó de dar recurso: los aldeanos que lo trabajaban se fueron */
+    agotado_ms?: number;
     /** a dónde se le mandó andar, para el rebaño */
     pasos?: [number, number, number][];
   }[] | null;
