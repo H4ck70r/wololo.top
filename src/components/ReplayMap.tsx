@@ -65,8 +65,10 @@ const EN_LEYENDA = [621, 82, 12, 87, 101, 49, 79, 104];
 const COLOR_RECURSO: Record<string, string> = {
   oro: '#e0b33a',
   piedra: '#c9c9c9',
-  animal: '#d98b5a',
+  rebano: '#e8e2d0',   // ovejas: claras, como en el juego
+  caza: '#b5703c',     // ciervos y jabalies
   pesca: '#5ab0d9',
+  fauna: '#6a6a5a',    // lo que nadie toca, apagado
 };
 
 const VELOCIDADES = [15, 30, 60];
@@ -293,12 +295,30 @@ export default function ReplayMap({ timeline }: Props) {
 
     //  Los recursos, encima del terreno y debajo de todo lo demás: son el
     //  decorado que explica por qué las bases están donde están.
+    //
+    //  Dos cosas que el replay sí permite y que parecían imposibles: el rebaño
+    //  se MUEVE -a una oveja hay que darle orden para llevarla al centro
+    //  urbano, y esa orden está en el fichero-, y se sabe CUÁNDO se fue a por
+    //  cada cosa, porque la orden apunta al objeto por su identificador.
+    //
+    //  Lo que no hay es la muerte: el replay no dice cuándo se acaba una oveja
+    //  ni cuándo se agota una mina. Así que no desaparecen; se apagan desde el
+    //  momento en que alguien fue a por ellas, que es el dato que sí existe.
     for (const r of timeline.recursos ?? []) {
-      const X = px(r.x, r.y);
-      const Y = py(r.x, r.y);
+      let rx = r.x;
+      let ry = r.y;
+      if (r.pasos) {
+        for (const [tp, mx, my] of r.pasos) {
+          if (tp > ahora) break;
+          rx = mx; ry = my;
+        }
+      }
+      const usado = r.usado_ms != null && r.usado_ms <= ahora;
+      const X = px(rx, ry);
+      const Y = py(rx, ry);
       ctx.fillStyle = COLOR_RECURSO[r.t] ?? '#999';
-      ctx.globalAlpha = 0.95;
-      const rad = Math.max(esc * (r.t === 'animal' ? 0.8 : 1), 1.4);
+      ctx.globalAlpha = usado ? 0.3 : 0.95;
+      const rad = Math.max(esc * (r.t === 'oro' || r.t === 'piedra' ? 1 : 0.85), 1.4);
       ctx.beginPath();
       ctx.arc(X, Y, rad, 0, Math.PI * 2);
       ctx.fill();
@@ -554,7 +574,7 @@ export default function ReplayMap({ timeline }: Props) {
 
       {(timeline.recursos?.length ?? 0) > 0 && (
         <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
-          {(['oro', 'piedra', 'animal', 'pesca'] as const).map((k) => {
+          {(['rebano', 'caza', 'oro', 'piedra', 'pesca'] as const).map((k) => {
             const n = (timeline.recursos ?? []).filter((r) => r.t === k).length;
             if (!n) return null;
             return (

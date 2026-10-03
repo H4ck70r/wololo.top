@@ -22,7 +22,7 @@ const reloj = (ms: number | null | undefined) => {
 //  guías y los coaches es cuándo la edad CAE.
 const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
 
-type Pestana = 'mapa' | 'unidades' | 'tecnologias';
+type Pestana = 'unidades' | 'tecnologias';
 
 /**
  * El análisis de una partida, en pestañas.
@@ -37,11 +37,10 @@ type Pestana = 'mapa' | 'unidades' | 'tecnologias';
  */
 export default function ReplayAnalysis({ timeline, players = [], info }: Props) {
   const { t } = useT();
-  const [pestana, setPestana] = useState<Pestana>('mapa');
+  const [pestana, setPestana] = useState<Pestana>('unidades');
 
   const jugadores = info?.jugadores ?? timeline.jugadores;
   const PESTANAS: { id: Pestana; etiqueta: string }[] = [
-    { id: 'mapa', etiqueta: t('tabs.map') },
     { id: 'unidades', etiqueta: t('tabs.units') },
     { id: 'tecnologias', etiqueta: t('tabs.techs') },
   ];
@@ -103,27 +102,43 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
         </table>
       </div>
 
-      {/* La barra se desplaza en horizontal en pantallas estrechas en vez de
-          partirse en dos filas. */}
-      <div className="flex items-center gap-1 border-b border-dark-400 overflow-x-auto mb-4">
-        {PESTANAS.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => setPestana(p.id)}
-            className={`px-3 sm:px-4 py-2 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
-              pestana === p.id
-                ? 'border-gold-400 text-gold-400'
-                : 'border-transparent text-gray-400 hover:text-gray-200'
-            }`}
-          >
-            {p.etiqueta}
-          </button>
-        ))}
-      </div>
+      {/* El mapa manda y no se va nunca: es lo que la gente quiere mirar, y
+          cambiar de pestaña no deberia hacerlo desaparecer. En pantalla ancha
+          va a la izquierda con el detalle al lado; por debajo de lg se apilan,
+          con el mapa primero. */}
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_26rem]">
+        <div className="min-w-0">
+          <ReplayMap timeline={timeline} />
+        </div>
 
-      {pestana === 'mapa' && <ReplayMap timeline={timeline} />}
-      {pestana === 'unidades' && <ReplayUnits timeline={timeline} soloUnidades />}
-      {pestana === 'tecnologias' && <ReplayUnits timeline={timeline} soloTecnologias />}
+        <div className="min-w-0">
+          {/* La barra se desplaza en horizontal en pantallas estrechas en vez
+              de partirse en dos filas. */}
+          <div className="flex items-center gap-1 border-b border-dark-400 overflow-x-auto mb-3">
+            {PESTANAS.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setPestana(p.id)}
+                className={`px-3 py-2 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
+                  pestana === p.id
+                    ? 'border-gold-400 text-gold-400'
+                    : 'border-transparent text-gray-400 hover:text-gray-200'
+                }`}
+              >
+                {p.etiqueta}
+              </button>
+            ))}
+          </div>
+
+          {/* Altura acotada con desplazamiento propio: el panel no puede
+              estirar la pagina hasta dejar el mapa fuera de pantalla, que es
+              justo lo que se quiere evitar. */}
+          <div className="lg:max-h-[34rem] lg:overflow-y-auto pr-1">
+            {pestana === 'unidades' && <ReplayUnits timeline={timeline} soloUnidades />}
+            {pestana === 'tecnologias' && <ReplayUnits timeline={timeline} soloTecnologias />}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

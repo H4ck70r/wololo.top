@@ -938,8 +938,17 @@ export interface ReplayTimeline {
     terreno: [number, number][];
     elevacion: [number, number][];
   } | null;
-  /** oro, piedra, animales y pesca del mapa (sin árboles) */
-  recursos?: { t: 'oro' | 'piedra' | 'animal' | 'pesca'; id: number; x: number; y: number }[] | null;
+  /** oro, piedra, rebaño, caza, pesca y fauna del mapa (sin árboles) */
+  recursos?: {
+    t: 'oro' | 'piedra' | 'rebano' | 'caza' | 'pesca' | 'fauna';
+    id: number;
+    x: number;
+    y: number;
+    /** cuándo se fue a por ello por primera vez */
+    usado_ms?: number;
+    /** a dónde se le mandó andar, para el rebaño */
+    pasos?: [number, number, number][];
+  }[] | null;
 }
 
 export interface MatchTimelineResponse {
