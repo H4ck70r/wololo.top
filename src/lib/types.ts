@@ -623,6 +623,25 @@ export interface MatchDetailPlayer {
   old_rating: number | null;
   new_rating: number | null;
   rating_diff: number | null;
+  /** lo que salio del replay; null cuando no se alcanzo a rescatar */
+  replay: MatchReplayMetrics | null;
+}
+
+export interface MatchReplayMetrics {
+  opening: string | null;
+  /** milisegundos de reloj de JUEGO hasta que se PIDE la subida de edad */
+  feudal_ms: number | null;
+  castle_ms: number | null;
+  imperial_ms: number | null;
+  villagers_15m: number | null;
+  tc_idle_ms: number | null;
+  apm: number | null;
+  actions: number | null;
+  units: {
+    scouts: number | null; archers: number | null; skirmishers: number | null;
+    knights: number | null; militia: number | null;
+  };
+  buildings: { ranges: number | null; stables: number | null };
 }
 
 export interface MatchDetailTeam {

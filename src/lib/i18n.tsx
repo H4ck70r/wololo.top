@@ -354,6 +354,17 @@ const EN = {
   'infl.verdictDeflated': 'The whole ladder drifted down: the median lost {n} points, so the same rating is worth more than it was.',
   'infl.verdictStable': 'The ladder barely moved: the median shifted {n} points, so a rating means about what it did.',
   'infl.footnote': 'Share of the ladder, not head count: the ladder itself took in {n} accounts over this window, which would lift every bar without anyone inflating.',
+  'replay.title': 'From the replay',
+  'replay.subtitle': 'measured from the recorded game',
+  'replay.metric': 'Metric',
+  'replay.opening': 'Opening',
+  'replay.feudal': 'Feudal requested',
+  'replay.castle': 'Castle requested',
+  'replay.imperial': 'Imperial requested',
+  'replay.villagers': 'Villagers by 15:00',
+  'replay.tcIdle': 'Town centre idle',
+  'replay.apm': 'Actions per minute',
+  'replay.footnote': 'Times are on the in-game clock and mark when the age was REQUESTED, not when it completed. Idle time simulates the town centre queue: it is time the building sat empty, not time between clicks.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -695,6 +706,17 @@ const ES: Partial<Record<TKey, string>> = {
   'infl.verdictDeflated': 'El ladder entero se desplazó hacia abajo: la mediana perdió {n} puntos, así que la misma puntuación vale más que antes.',
   'infl.verdictStable': 'El ladder casi no se movió: la mediana se desplazó {n} puntos, así que una puntuación significa más o menos lo mismo.',
   'infl.footnote': 'Proporción del ladder, no número de cabezas: el ladder sumó {n} cuentas en esta ventana, y eso subiría todas las barras sin que nadie se infle.',
+  'replay.title': 'Lo que dice el replay',
+  'replay.subtitle': 'medido sobre la grabación de la partida',
+  'replay.metric': 'Dato',
+  'replay.opening': 'Apertura',
+  'replay.feudal': 'Feudal pedida',
+  'replay.castle': 'Castillos pedida',
+  'replay.imperial': 'Imperial pedida',
+  'replay.villagers': 'Aldeanos al 15:00',
+  'replay.tcIdle': 'Centro urbano parado',
+  'replay.apm': 'Acciones por minuto',
+  'replay.footnote': 'Los tiempos van en el reloj del juego y marcan cuándo se PIDIÓ la edad, no cuándo terminó. El tiempo parado simula la cola del centro urbano: es tiempo con el edificio vacío, no tiempo entre clics.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

@@ -5,6 +5,7 @@ import { getMatchDetail } from '../lib/api';
 import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/constants';
 import { outcomeOf } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
+import ReplayInsights from '../components/ReplayInsights';
 
 export default function MatchDetailPage() {
   const { t } = useT();
@@ -74,6 +75,8 @@ export default function MatchDetailPage() {
 
       {/* Teams */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ReplayInsights players={match.teams.flatMap((t) => t.players)} />
+
         {match.teams.map((team) => {
           const teamOutcome = outcomeOf(team.result);
           const isWinner = teamOutcome === 'win';
