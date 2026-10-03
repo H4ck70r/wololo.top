@@ -5,7 +5,6 @@ import { getMatchDetail } from '../lib/api';
 import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/constants';
 import { outcomeOf } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
-import ReplayInsights from '../components/ReplayInsights';
 import MatchReplayAnalysis from '../components/MatchReplayAnalysis';
 
 export default function MatchDetailPage() {
@@ -74,12 +73,10 @@ export default function MatchDetailPage() {
         </div>
       </div>
 
-      {/* Las cifras del replay, a ancho completo. Estaban metidas en la rejilla
-          de dos columnas junto a los equipos y la tabla quedaba aplastada en
-          media pantalla, que es justo donde peor se lee una comparacion. */}
-      <div className="mb-6">
-        <ReplayInsights players={match.teams.flatMap((t) => t.players)} />
-      </div>
+      {/* La tabla de cifras del replay se quito de aqui: el analisis completo
+          de mas abajo la trae igual, mejor etiquetada y con la comparacion
+          contra la franja. Dos tablas con los mismos numeros y etiquetas
+          distintas es peor que una. */}
 
       {/* Teams */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

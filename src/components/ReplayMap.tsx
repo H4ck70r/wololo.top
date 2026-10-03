@@ -145,8 +145,14 @@ export default function ReplayMap({ timeline }: Props) {
   const hitos = useMemo(() => {
     const TEC_EDAD: Record<number, string> = { 101: 'F', 102: 'C', 103: 'I' };
     const out: { t: number; etiqueta: string; j: number }[] = [];
+    //  Una por jugador y edad: un jugador puede pulsar dos veces -cancelar y
+    //  volver a pulsar- y salian tres marcas de Feudal en una partida de dos.
+    const puesta = new Set<string>();
     for (const e of eventos) {
       if (e.tipo === 'tech' && e.id != null && TEC_EDAD[e.id]) {
+        const clave = `${e.j}-${e.id}`;
+        if (puesta.has(clave)) continue;
+        puesta.add(clave);
         out.push({ t: e.t, etiqueta: TEC_EDAD[e.id], j: e.j });
       } else if (e.tipo === 'resign') {
         out.push({ t: e.t, etiqueta: '✕', j: e.j });

@@ -13,8 +13,6 @@ const INVESTIGACION: Record<number, number> = {
   [TEC_FEUDAL]: 130_000, [TEC_CASTILLOS]: 160_000, [TEC_IMPERIAL]: 190_000,
 };
 
-const reloj = (ms: number) =>
-  `${String(Math.floor(ms / 60000)).padStart(2, '0')}:${String(Math.round((ms % 60000) / 1000)).padStart(2, '0')}`;
 const mmss = (ms: number) => {
   const s = Math.round(Math.abs(ms) / 1000);
   return s >= 60 ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : `${s}s`;
@@ -122,7 +120,7 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
       <p className="text-[15px] leading-relaxed text-gray-200 m-0">
         {ganador && (
           <span className="font-medium" style={{ color: ganador.color }}>
-            {t('verd.won', { ganador: ganador.nombre, min: reloj(timeline.duracion_ms) })}{' '}
+            {t('verd.won', { ganador: ganador.nombre })}{' '}
           </span>
         )}
         {principal.texto}
