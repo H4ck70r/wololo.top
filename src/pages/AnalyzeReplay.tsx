@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { analyzeReplays } from '../lib/api';
 import { useT } from '../lib/i18n';
 import ReplayMap from '../components/ReplayMap';
+import ReplayUnits from '../components/ReplayUnits';
 import type { ReplayUploadResult } from '../lib/types';
 
 const reloj = (ms: number | null | undefined) => {
@@ -184,9 +185,12 @@ export default function AnalyzeReplay() {
               </div>
 
               {r.timeline && (
-                <div className="mt-5">
-                  <ReplayMap timeline={r.timeline} />
-                </div>
+                <>
+                  <div className="mt-5">
+                    <ReplayMap timeline={r.timeline} />
+                  </div>
+                  <ReplayUnits timeline={r.timeline} />
+                </>
               )}
               {r.timeline_error && (
                 <p className="text-[11px] text-gray-600 mt-2 m-0">{r.timeline_error}</p>

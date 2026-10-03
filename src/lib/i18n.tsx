@@ -458,6 +458,16 @@ const EN = {
   'assess.decidesHint': 'Out of every 100 games where one player had the better number here, this is how many that player won. 50% would be a coin flip.',
   'assess.flat': 'same',
   'assess.flatHint': 'This number is nearly identical whether you win or lose, so it is not what decides your games.',
+  'units.title': 'What each player ordered',
+  'units.note': 'This is what was QUEUED, not what ended up existing: if someone orders five scouts and loses the stable, the replay still says they ordered them. The file records commands, not state.',
+  'units.overTime': 'Production over time',
+  'units.vils': 'villagers',
+  'units.onlyVils': 'Only villagers — no military ordered.',
+  'units.class.inf': 'Infantry',
+  'units.class.tiro': 'Ranged',
+  'units.class.cab': 'Cavalry',
+  'units.class.asedio': 'Siege',
+  'units.class.otros': 'Other',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -903,6 +913,16 @@ const ES: Partial<Record<TKey, string>> = {
   'assess.decidesHint': 'De cada 100 partidas en las que un jugador tenía mejor número aquí, esas son las que ganó. El 50% sería una moneda al aire.',
   'assess.flat': 'igual',
   'assess.flatHint': 'Esta cifra es casi la misma ganes o pierdas, así que no es lo que decide tus partidas.',
+  'units.title': 'Lo que encargó cada jugador',
+  'units.note': 'Esto es lo que se ENCOLÓ, no lo que llegó a existir: si alguien pide cinco scouts y le tiran el establo, el replay dice igual que los pidió. El fichero registra órdenes, no estado.',
+  'units.overTime': 'Producción en el tiempo',
+  'units.vils': 'aldeanos',
+  'units.onlyVils': 'Solo aldeanos — no encargó militar.',
+  'units.class.inf': 'Infantería',
+  'units.class.tiro': 'Tiro',
+  'units.class.cab': 'Caballería',
+  'units.class.asedio': 'Asedio',
+  'units.class.otros': 'Otras',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
