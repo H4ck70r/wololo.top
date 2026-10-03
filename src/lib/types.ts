@@ -913,10 +913,14 @@ export interface TimelineArmyOrder {
 
 export interface TimelinePlayer {
   numero: number;
+  /** null cuando es una IA: un bot no tiene perfil */
   perfil: number | null;
   nombre: string;
   civ: number | null;
   color?: number;
+  /** true si es un bot; su nombre sale del campo de IA del replay */
+  es_ia?: boolean;
+  nombre_ia?: string;
 }
 
 export interface ReplayTimeline {

@@ -154,15 +154,29 @@ export default function AnalyzeReplay() {
                     </tr>
                   </thead>
                   <tbody>
-                    {(r.players as Record<string, number | string | null>[]).map((p, k) => {
-                      const nombre = r.info?.jugadores?.find(
-                        (j) => j.perfil === p.profile_id
-                      )?.nombre;
+                    {/* Se recorre la CABECERA y no las métricas: así un bot
+                        sale en la tabla con su nombre y un guion en cada
+                        cifra, en vez de desaparecer y dejar la partida con un
+                        solo jugador, que parecía un fallo. */}
+                    {(r.info?.jugadores ?? []).map((j, k) => {
+                      const p = ((r.players ?? []) as Record<string, number | string | null>[])
+                        .find((x) => x.profile_id === j.perfil) ?? {};
+                      const nombre = j.nombre;
                       const f = p.feudal_ms as number | null;
                       const c = p.castle_ms as number | null;
                       return (
                         <tr key={k} className="border-b border-dark-500/40">
-                          <td className="py-2 pr-3 text-gray-300">{nombre ?? p.profile_id}</td>
+                          <td className="py-2 pr-3 text-gray-300">
+                            {nombre}
+                            {j.es_ia && (
+                              <span
+                                className="ml-1.5 text-[10px] text-gray-500 border border-dark-400 rounded px-1"
+                                title={t('up.aiHint')}
+                              >
+                                {t('up.ai')}
+                              </span>
+                            )}
+                          </td>
                           <td className="py-2 px-2 text-gray-300">{(p.opening as string) ?? '—'}</td>
                           {/* En aterrizaje, no en el clic: es lo que dicen las guías. */}
                           <td className="py-2 px-2 text-right tabular-nums text-gray-300">
