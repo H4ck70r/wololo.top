@@ -263,9 +263,16 @@ export default function ReplayMap({ timeline }: Props) {
         ctx.strokeStyle = 'rgba(0,0,0,0.85)';
         ctx.lineWidth = 3;
         ctx.lineJoin = 'round';
-        ctx.strokeText(etiqueta, X, Y - r - 3);
-        ctx.fillStyle = colorDe(j);
-        ctx.fillText(etiqueta, X, Y - r - 3);
+        //  Pegada al borde salia cortada, y un nombre a medias es peor que
+        //  ninguno: fue lo que hizo leer la base propia como la del rival.
+        const ancho_txt = ctx.measureText(etiqueta).width;
+        const Xe = Math.min(Math.max(X, ancho_txt / 2 + 4), ancho - ancho_txt / 2 - 4);
+        const Ye = Math.max(Y - r - 3, 14);
+        ctx.strokeText(etiqueta, Xe, Ye);
+        //  Blanco y no el color del jugador: el gris sobre fondo oscuro no se
+        //  leia, y es justo el color que mas confusion causo.
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(etiqueta, Xe, Ye);
       }
     }
 
@@ -421,13 +428,29 @@ export default function ReplayMap({ timeline }: Props) {
         </div>
       </div>
 
+      {/* Quien esta donde, escrito. Mirando colores sobre un rombo es facil
+          leer la base propia como la del rival, sobre todo si a uno le toco el
+          gris; en palabras no hay forma de equivocarse. */}
       <div className="flex items-center gap-3 mt-2 flex-wrap">
-        {timeline.jugadores.map((j) => (
-          <span key={j.numero} className="flex items-center gap-1.5 text-xs text-gray-400">
-            <span className="w-2.5 h-2.5 rounded-sm" style={{ background: colorDe(j.numero) }} />
-            {j.nombre}
-          </span>
-        ))}
+        {timeline.jugadores.map((j) => {
+          const p = inicios.get(j.numero);
+          const centro = lado / 2;
+          let donde = '';
+          if (p) {
+            const ix = p.y - p.x;
+            const iy = (p.x + p.y) / 2 - centro;
+            const vert = iy < -lado * 0.08 ? t('map.top') : iy > lado * 0.08 ? t('map.bottom') : '';
+            const horiz = ix < -lado * 0.08 ? t('map.left') : ix > lado * 0.08 ? t('map.right') : '';
+            donde = [vert, horiz].filter(Boolean).join(' ') || t('map.centre');
+          }
+          return (
+            <span key={j.numero} className="flex items-center gap-1.5 text-xs text-gray-400">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: colorDe(j.numero) }} />
+              {j.nombre}
+              {donde && <span className="text-gray-600">· {donde}</span>}
+            </span>
+          );
+        })}
       </div>
 
       {/* Sin leyenda los iconos son un acertijo, y sueltos sobre el fondo no

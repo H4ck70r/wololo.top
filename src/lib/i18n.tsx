@@ -475,6 +475,11 @@ const EN = {
   'map.start': 'starting position (approx.)',
   'map.startHint': 'The starting Town Centre is already placed when the game begins, so the replay has no build command for it. This ring is estimated from the first house, which in AoE2 goes right next to the Town Centre and is built at 0:06 in every game measured.',
   'assess.imperial_ms': 'Imperial reached',
+  'map.top': 'top',
+  'map.bottom': 'bottom',
+  'map.left': 'left',
+  'map.right': 'right',
+  'map.centre': 'centre',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -937,6 +942,11 @@ const ES: Partial<Record<TKey, string>> = {
   'map.start': 'posición de salida (aprox.)',
   'map.startHint': 'El centro urbano inicial ya está puesto cuando empieza la partida, así que el replay no trae ninguna orden de construcción para él. Este anillo se estima con la primera casa, que en AoE2 se planta pegada al centro urbano y se construye en el 0:06 en todas las partidas medidas.',
   'assess.imperial_ms': 'Imperial (cae)',
+  'map.top': 'arriba',
+  'map.bottom': 'abajo',
+  'map.left': 'izquierda',
+  'map.right': 'derecha',
+  'map.centre': 'centro',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
