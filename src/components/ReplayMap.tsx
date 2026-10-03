@@ -565,8 +565,10 @@ export default function ReplayMap({ timeline }: Props) {
           lo que se quiere mirar. La línea de jugadores queda fuera porque sin
           ella no se sabe quién es quién, que es lo único imprescindible. */}
       <details className="mt-2 group">
-        <summary className="text-[11px] text-gray-500 cursor-pointer hover:text-gray-300 list-none select-none">
-          {t('map.legend')} ▾
+        {/* inline-block y sin marcador: como caja a todo lo ancho reservaba
+            una fila entera aunque estuviese plegada. */}
+        <summary className="inline-block text-[11px] text-gray-500 cursor-pointer hover:text-gray-300 list-none select-none marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none">
+          {t('map.legend')} <span className="group-open:hidden">▸</span><span className="hidden group-open:inline">▾</span>
         </summary>
         <div className="mt-2">
       {/* Sin leyenda los iconos son un acertijo, y sueltos sobre el fondo no

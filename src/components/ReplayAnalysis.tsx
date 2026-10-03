@@ -106,7 +106,7 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
           cambiar de pestaña no deberia hacerlo desaparecer. En pantalla ancha
           va a la izquierda con el detalle al lado; por debajo de lg se apilan,
           con el mapa primero. */}
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_26rem]">
+      <div className="grid gap-4 items-start lg:grid-cols-[minmax(0,1.3fr)_20rem] xl:grid-cols-[minmax(0,1.5fr)_24rem]">
         <div className="min-w-0">
           <ReplayMap timeline={timeline} />
         </div>
