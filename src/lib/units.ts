@@ -39,12 +39,21 @@ export const UNIDADES: Record<number, Unidad> = {
   125: { es: 'Monje', en: 'Monk', clase: 'otros' },
 };
 
+/**
+ * Un color por clase, elegidos para que no se confundan entre ellos.
+ *
+ * Infantería y asedio estaban en dos naranjas casi iguales (#d9843c y
+ * #b4603c) y en barras pequeñas no había forma de distinguirlos. El asedio
+ * pasa a gris acero -son máquinas- que no se parece a ninguno de los otros
+ * cuatro. El gris no choca con el de economía porque los aldeanos no entran
+ * en este gráfico.
+ */
 export const CLASE_COLOR: Record<Unidad['clase'], string> = {
-  eco: '#9aa4b2',
-  inf: '#d9843c',
+  eco: '#7f8794',
+  inf: '#e08a3c',
   tiro: '#5fb36a',
   cab: '#5b8dd6',
-  asedio: '#b4603c',
+  asedio: '#aeb4bd',
   otros: '#9a6fc4',
 };
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useT } from '../lib/i18n';
 import ReplayMap from './ReplayMap';
 import ReplayUnits from './ReplayUnits';
+import ReplayEconomy from './ReplayEconomy';
 import type { ReplayTimeline, TimelinePlayer } from '../lib/types';
 
 interface Props {
@@ -22,7 +23,7 @@ const reloj = (ms: number | null | undefined) => {
 //  guías y los coaches es cuándo la edad CAE.
 const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
 
-type Pestana = 'unidades' | 'tecnologias';
+type Pestana = 'unidades' | 'economia' | 'tecnologias';
 
 /**
  * El análisis de una partida, en pestañas.
@@ -42,6 +43,7 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
   const jugadores = info?.jugadores ?? timeline.jugadores;
   const PESTANAS: { id: Pestana; etiqueta: string }[] = [
     { id: 'unidades', etiqueta: t('tabs.units') },
+    { id: 'economia', etiqueta: t('tabs.economy') },
     { id: 'tecnologias', etiqueta: t('tabs.techs') },
   ];
 
@@ -135,6 +137,7 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
               justo lo que se quiere evitar. */}
           <div className="lg:max-h-[34rem] lg:overflow-y-auto pr-1">
             {pestana === 'unidades' && <ReplayUnits timeline={timeline} soloUnidades />}
+            {pestana === 'economia' && <ReplayEconomy timeline={timeline} />}
             {pestana === 'tecnologias' && <ReplayUnits timeline={timeline} soloTecnologias />}
           </div>
         </div>

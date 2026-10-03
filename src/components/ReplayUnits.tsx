@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useT } from '../lib/i18n';
+import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import { CLASE_COLOR } from '../lib/units';
 import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia } from '../lib/juego';
 import type { ReplayTimeline } from '../lib/types';
@@ -12,8 +13,6 @@ interface Props {
   soloTecnologias?: boolean;
 }
 
-const COLORES = ['#8b8b8b', '#4a7fd4', '#d44a4a', '#3fa64f', '#d9c13c',
-                 '#3fb8bd', '#9a56c4', '#9a9a9a', '#dd8b35'];
 
 //  Cubos de tres minutos y medio: suficientes para ver el ritmo sin que cada
 //  barra sea una sola unidad.
@@ -33,6 +32,8 @@ const reloj = (ms: number) =>
  */
 export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }: Props) {
   const { t, lang } = useT();
+  const colorJ = (numero: number) => colorDeJugador(timeline.jugadores, numero);
+  const nombreJ = (numero: number) => nombreDeJugador(timeline.jugadores, numero);
 
   const datos = useMemo(() => {
     const porJugador = new Map<number, {
@@ -110,12 +111,6 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
     return { porJugador, maxCubo, techo, tecnologias };
   }, [timeline]);
 
-  const colorJ = (numero: number) => {
-    const j = timeline.jugadores.find((x) => x.numero === numero);
-    return COLORES[(j?.color ?? numero) % COLORES.length];
-  };
-  const nombreJ = (numero: number) =>
-    timeline.jugadores.find((x) => x.numero === numero)?.nombre ?? `#${numero}`;
 
   const jugadores = [...datos.porJugador.keys()].sort((a, b) => a - b);
   if (!jugadores.length) return null;

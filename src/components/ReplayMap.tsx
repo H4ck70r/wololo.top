@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '../lib/i18n';
+import { colorDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline } from '../lib/types';
 import { nombreEdificio } from '../lib/juego';
 import { expandir, paletaDelMapa, resumenTerreno } from '../lib/terreno';
@@ -8,17 +9,6 @@ interface Props {
   timeline: ReplayTimeline;
 }
 
-/**
- * La paleta de jugador de AoE2, en el orden que usa el juego y empezando en 0.
- *
- * Verificado contra una partida: maestro_006 trae color=1 y en el chat del
- * juego su nombre sale en ROJO, que es el 1 de esta lista. Antes el mapa ni
- * siquiera llegaba a leer este campo -la cronología no lo pasaba- y pintaba a
- * cada jugador por su número de hueco, así que los colores no tenían nada que
- * ver con los que se vieron en la partida.
- */
-const COLORES = ['#4a7fd4', '#d44a4a', '#3fa64f', '#d9c13c',
-                 '#3fb8bd', '#9a56c4', '#9a9a9a', '#dd8b35'];
 
 /**
  * Qué es cada building_id, con su icono.
@@ -83,6 +73,7 @@ const reloj = (ms: number) => {
 
 export default function ReplayMap({ timeline }: Props) {
   const { t, lang } = useT();
+  const colorDe = (numero: number) => colorDeJugador(timeline.jugadores, numero);
   const lienzo = useRef<HTMLCanvasElement>(null);
   const [corriendo, setCorriendo] = useState(false);
   const [velocidad, setVelocidad] = useState(VELOCIDAD_POR_DEFECTO);
@@ -150,13 +141,6 @@ export default function ReplayMap({ timeline }: Props) {
     return { lado: s.lado, terreno, paleta, resumen: resumenTerreno(terreno, paleta) };
   }, [timeline]);
 
-  const colorDe = (numero: number) => {
-    const j = timeline.jugadores.find((x) => x.numero === numero);
-    //  El color del replay manda. Si falta -formatos viejos que lee mgz-, se
-    //  cae al número de hueco, que al menos distingue a los jugadores.
-    const idx = j?.color != null ? j.color : numero - 1;
-    return COLORES[((idx % COLORES.length) + COLORES.length) % COLORES.length];
-  };
 
   const hitos = useMemo(() => {
     const TEC_EDAD: Record<number, string> = { 101: 'F', 102: 'C', 103: 'I' };
