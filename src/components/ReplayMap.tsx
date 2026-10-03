@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '../lib/i18n';
 import type { ReplayTimeline } from '../lib/types';
 import { nombreEdificio } from '../lib/juego';
+import { claseTerreno, COLOR_TERRENO, expandir } from '../lib/terreno';
 
 interface Props {
   timeline: ReplayTimeline;
@@ -121,6 +122,14 @@ export default function ReplayMap({ timeline }: Props) {
     return out;
   }, [eventos]);
 
+  /** El terreno, descomprimido una sola vez por partida. */
+  const suelo = useMemo(() => {
+    const s = timeline.suelo;
+    if (!s) return null;
+    const total = s.lado * s.lado;
+    return { lado: s.lado, terreno: expandir(s.terreno, total) };
+  }, [timeline]);
+
   const colorDe = (numero: number) => {
     const j = timeline.jugadores.find((x) => x.numero === numero);
     //  El color del replay manda. Si falta -formatos viejos que lee mgz-, se
@@ -216,6 +225,32 @@ export default function ReplayMap({ timeline }: Props) {
 
     ctx.save();
     ctx.clip();
+
+    //  El terreno, casilla a casilla. Es lo que convierte el mapa en un sitio
+    //  reconocible en vez de puntos sobre un rombo vacío: los bosques y el agua
+    //  son lo que uno usa para orientarse.
+    if (suelo) {
+      const paso = Math.max(1, Math.floor(1 / Math.max(esc, 0.01)));
+      for (let y = 0; y < suelo.lado; y += paso) {
+        for (let x = 0; x < suelo.lado; x += paso) {
+          const clase = claseTerreno(suelo.terreno[y * suelo.lado + x]);
+          ctx.fillStyle = COLOR_TERRENO[clase];
+          //  Cada casilla es un rombo en isométrico; se pinta como tal para
+          //  que no queden costuras entre casillas vecinas.
+          const cx = px(x + 0.5, y + 0.5);
+          const cy = py(x + 0.5, y + 0.5);
+          const w = esc * 1.05;
+          const h = esc * 0.55;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy - h);
+          ctx.lineTo(cx + w, cy);
+          ctx.lineTo(cx, cy + h);
+          ctx.lineTo(cx - w, cy);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+    }
 
     ctx.strokeStyle = 'rgba(255,255,255,0.05)';
     for (let v = 0; v <= lado; v += 20) {
@@ -349,7 +384,7 @@ export default function ReplayMap({ timeline }: Props) {
       }
     }
     ctx.restore();
-  }, [ahora, eventos, ejercito, lado, inicios, timeline]);
+  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline]);
 
   const reciente = useMemo(() => {
     const ventana = 45_000;

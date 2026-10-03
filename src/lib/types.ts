@@ -932,6 +932,12 @@ export interface ReplayTimeline {
   limites: { x_max: number; y_max: number };
   /** lado del mapa en casillas, para dibujarlo entero y no solo donde hubo acción */
   lado_mapa?: number;
+  /** terreno y elevación por casilla, en tiras (valor, cuántas) */
+  suelo?: {
+    lado: number;
+    terreno: [number, number][];
+    elevacion: [number, number][];
+  } | null;
 }
 
 export interface MatchTimelineResponse {
