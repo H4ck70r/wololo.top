@@ -480,6 +480,13 @@ const EN = {
   'map.left': 'left',
   'map.right': 'right',
   'map.centre': 'centre',
+  'units.techTitle': 'Technologies researched',
+  'units.techNote': 'Counted from the research commands, and validated against the game’s own end screen: for one player it said 28 and we count 28. For a civilisation that gets free upgrades the count falls short, because a technology granted by a civ bonus issues no command and the replay cannot see it. Names are not shown: the id-to-name table lives inside the game’s data file.',
+  'units.techs': 'techs',
+  'units.age.dark': 'Dark',
+  'units.age.feudal': 'Feudal',
+  'units.age.castle': 'Castle',
+  'units.age.imperial': 'Imperial',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -947,6 +954,13 @@ const ES: Partial<Record<TKey, string>> = {
   'map.left': 'izquierda',
   'map.right': 'derecha',
   'map.centre': 'centro',
+  'units.techTitle': 'Tecnologías investigadas',
+  'units.techNote': 'Contadas desde las órdenes de investigación, y validadas contra la pantalla final del propio juego: para un jugador dijo 28 y contamos 28. Con una civilización que recibe mejoras gratis la cuenta se queda corta, porque una tecnología regalada por bonus no genera ninguna orden y el replay no puede verla. Los nombres no salen todavía: la tabla de id a nombre vive dentro del fichero de datos del juego.',
+  'units.techs': 'tecnologías',
+  'units.age.dark': 'Oscura',
+  'units.age.feudal': 'Feudal',
+  'units.age.castle': 'Castillos',
+  'units.age.imperial': 'Imperial',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
