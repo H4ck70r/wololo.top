@@ -9,260 +9,302 @@
 "age": "feudal",
 "building": 101,
 "en": "Stable",
-"es": "Establo"
+"es": "Establo",
+"icono": 23
 },
 "1021": {
 "age": "imperial",
 "building": 1021,
 "civ": "Portuguese",
 "en": "Feitoria",
-"es": "Factoría"
+"es": "Factoría",
+"icono": 53
 },
 "103": {
 "age": "feudal",
 "building": 103,
 "en": "Blacksmith",
-"es": "Herrería"
+"es": "Herrería",
+"icono": 4
 },
 "104": {
 "age": "castle",
 "building": 104,
 "en": "Monastery",
-"es": "Monasterio"
+"es": "Monasterio",
+"icono": 10
 },
 "109": {
 "age": "dark",
 "building": 109,
 "en": "Town Center",
-"es": "Centro urbano"
+"es": "Centro urbano",
+"icono": 28
 },
 "117": {
 "age": "feudal",
 "building": 117,
 "en": "Stone Wall",
-"es": "Muro de piedra"
+"es": "Muro de piedra",
+"icono": 31
 },
 "1189": {
 "age": "castle",
 "building": 45,
 "civ": "Malay",
 "en": "Harbor",
-"es": "Puerto"
+"es": "Puerto",
+"icono": 56
 },
 "12": {
 "age": "dark",
 "building": 12,
 "en": "Barracks",
-"es": "Cuarteles"
+"es": "Cuarteles",
+"icono": 2
 },
 "1251": {
 "age": "castle",
 "building": 1251,
 "civ": "Bulgarians",
 "en": "Krepost",
-"es": "Krepost"
+"es": "Krepost",
+"icono": 55
 },
 "155": {
 "age": "castle",
 "building": 155,
 "en": "Fortified Wall",
-"es": "Muralla fortificada"
+"es": "Muralla fortificada",
+"icono": 32
 },
 "1665": {
 "age": "dark",
 "building": 1665,
 "civ": "Sicilians",
 "en": "Donjon",
-"es": "Torre del homenaje"
+"es": "Torre del homenaje",
+"icono": 84
 },
 "1734": {
 "age": "dark",
 "building": 1734,
 "civ": "Poles",
 "en": "Folwark",
-"es": "Folwark"
+"es": "Folwark",
+"icono": 86
 },
 "1754": {
 "age": "imperial",
 "building": 1754,
 "en": "Caravanserai",
-"es": "Caravasar"
+"es": "Caravasar",
+"icono": 87
 },
 "1806": {
 "age": "castle",
 "building": 1806,
 "en": "Fortified Church",
-"es": "Iglesia fortificada"
+"es": "Iglesia fortificada",
+"icono": 88
 },
 "1808": {
 "age": "dark",
 "building": 1808,
 "en": "Mule Cart",
-"es": "Carro de mulas"
+"es": "Carro de mulas",
+"icono": 89
 },
 "1889": {
 "age": "dark",
 "building": 1889,
 "civ": "Khitans",
 "en": "Pasture",
-"es": "Pastura"
+"es": "Pastura",
+"icono": 96
 },
 "199": {
 "age": "feudal",
 "building": 13,
 "en": "Fish Trap",
-"es": "Trampa para peces"
+"es": "Trampa para peces",
+"icono": 41
 },
 "209": {
 "age": "castle",
 "building": 209,
 "en": "University",
-"es": "Universidad"
+"es": "Universidad",
+"icono": 33
 },
 "2119": {
 "age": "feudal",
 "building": 2119,
 "en": "Shipyard",
-"es": "Astillero"
+"es": "Astillero",
+"icono": 111
 },
 "2172": {
 "age": "dark",
 "building": 2172,
 "en": "Port",
-"es": "Puerto"
+"es": "Puerto",
+"icono": 110
 },
 "234": {
 "age": "castle",
 "building": 234,
 "en": "Guard Tower",
-"es": "Torre de vigilancia"
+"es": "Torre de vigilancia",
+"icono": 27
 },
 "235": {
 "age": "imperial",
 "building": 235,
 "en": "Keep",
-"es": "Fortaleza"
+"es": "Fortaleza",
+"icono": 26
 },
 "236": {
 "age": "imperial",
 "building": 236,
 "en": "Bombard Tower",
-"es": "Torre de bombardeo"
+"es": "Torre de bombardeo",
+"icono": 42
 },
 "2415": {
 "age": "dark",
 "building": 2415,
 "civ": "Macedonians",
 "en": "Fortified Outpost",
-"es": "Puesto de avanzada fortificado"
+"es": "Puesto de avanzada fortificado",
+"icono": 116
 },
 "2556": {
 "age": "dark",
 "building": 2556,
 "en": "Settlement",
-"es": "Asentamiento"
+"es": "Asentamiento",
+"icono": 98
 },
 "276": {
 "age": "imperial",
 "building": 276,
 "en": "Wonder",
-"es": "Maravilla"
+"es": "Maravilla",
+"icono": 37
 },
 "45": {
 "age": "dark",
 "building": 45,
 "en": "Dock",
-"es": "Muelle"
+"es": "Muelle",
+"icono": 13
 },
 "487": {
 "age": "feudal",
 "building": 487,
 "en": "Gate",
-"es": "Puerta"
+"es": "Puerta",
+"icono": 36
 },
 "49": {
 "age": "castle",
 "building": 49,
 "en": "Siege Workshop",
-"es": "Taller de asedio"
+"es": "Taller de asedio",
+"icono": 22
 },
 "50": {
 "age": "dark",
 "building": 68,
 "en": "Farm",
-"es": "Granja"
+"es": "Granja",
+"icono": 35
 },
 "562": {
 "age": "dark",
 "building": 562,
 "en": "Lumber Camp",
-"es": "Campamento maderero"
+"es": "Campamento maderero",
+"icono": 40
 },
 "584": {
 "age": "dark",
 "building": 584,
 "en": "Mining Camp",
-"es": "Campamento minero"
+"es": "Campamento minero",
+"icono": 39
 },
 "598": {
 "age": "dark",
 "building": 598,
 "en": "Outpost",
-"es": "Puesto de avanzada"
+"es": "Puesto de avanzada",
+"icono": 38
 },
 "621": {
 "age": "castle",
 "building": 621,
 "en": "Town Center",
-"es": "Centro urbano"
+"es": "Centro urbano",
+"icono": 28
 },
 "68": {
 "age": "dark",
 "building": 68,
 "en": "Mill",
-"es": "Molino"
+"es": "Molino",
+"icono": 19
 },
 "70": {
 "age": "dark",
 "building": 70,
 "en": "House",
-"es": "Casa"
+"es": "Casa",
+"icono": 34
 },
 "72": {
 "age": "dark",
 "building": 72,
 "en": "Palisade Wall",
-"es": "Empalizada"
+"es": "Empalizada",
+"icono": 30
 },
 "79": {
 "age": "feudal",
 "building": 79,
 "en": "Watch Tower",
-"es": "Torre de guardia"
+"es": "Torre de guardia",
+"icono": 25
 },
 "792": {
 "age": "dark",
 "building": 792,
 "en": "Palisade Gate",
-"es": "Portón de madera"
+"es": "Portón de madera",
+"icono": 44
 },
 "82": {
 "age": "castle",
 "building": 82,
 "en": "Castle",
-"es": "Castillo"
+"es": "Castillo",
+"icono": 7
 },
 "84": {
 "age": "feudal",
 "building": 84,
 "en": "Market",
-"es": "Mercado"
+"es": "Mercado",
+"icono": 16
 },
 "87": {
 "age": "feudal",
 "building": 87,
 "en": "Archery Range",
-"es": "Galería de tiro con arco"
+"es": "Galería de tiro con arco",
+"icono": 0
 }
 },
 "techs": {
@@ -272,12 +314,14 @@
 "civ": "Turks",
 "en": "Artillery",
 "es": "Artillería",
+"icono": 107,
 "unique": true
 },
 "100": {
 "age": "castle",
 "en": "Crossbowman",
 "es": "Ballestero",
+"icono": 18,
 "upgrades_to": 24
 },
 "1002": {
@@ -285,6 +329,7 @@
 "civ": "Khitans",
 "en": "Elite Liao Dao",
 "es": "Liao Dao de élite",
+"icono": 525,
 "upgrades_to": 1922
 },
 "1006": {
@@ -293,6 +338,7 @@
 "civ": "Khitans",
 "en": "Lamellar Armor",
 "es": "Armadura laminada",
+"icono": 33,
 "unique": true
 },
 "1007": {
@@ -301,19 +347,22 @@
 "civ": "Khitans",
 "en": "Ordo Cavalry",
 "es": "Caballería ordo",
+"icono": 107,
 "unique": true
 },
 "101": {
 "age": "dark",
 "building": 109,
 "en": "Feudal Age",
-"es": "Edad Feudal"
+"es": "Edad Feudal",
+"icono": 30
 },
 "1010": {
 "age": "imperial",
 "civ": "Chinese",
 "en": "Dragon Ship",
 "es": "Bote dragón",
+"icono": 178,
 "upgrades_to": 1302
 },
 "1012": {
@@ -321,38 +370,44 @@
 "building": 68,
 "civ": "Khitans",
 "en": "Transhumance",
-"es": "Trashumancia"
+"es": "Trashumancia",
+"icono": 136
 },
 "1013": {
 "age": "castle",
 "building": 68,
 "civ": "Khitans",
 "en": "Pastoralism",
-"es": "Pastoreo"
+"es": "Pastoreo",
+"icono": 137
 },
 "1014": {
 "age": "feudal",
 "building": 68,
 "civ": "Khitans",
 "en": "Domestication",
-"es": "Domesticación"
+"es": "Domesticación",
+"icono": 138
 },
 "102": {
 "age": "feudal",
 "building": 109,
 "en": "Castle Age",
-"es": "Edad de los Castillos"
+"es": "Edad de los Castillos",
+"icono": 31
 },
 "103": {
 "age": "castle",
 "building": 109,
 "en": "Imperial Age",
-"es": "Edad Imperial"
+"es": "Edad Imperial",
+"icono": 32
 },
 "1033": {
 "age": "imperial",
 "en": "Heavy Hei Guang Cavalry",
 "es": "Caballería pesada de Hei Guang",
+"icono": 430,
 "upgrades_to": 1946
 },
 "1036": {
@@ -360,6 +415,7 @@
 "civ": "Wei",
 "en": "Elite Tiger Cavalry",
 "es": "Caballería tigresa de élite",
+"icono": 526,
 "upgrades_to": 1951
 },
 "1061": {
@@ -368,6 +424,7 @@
 "civ": "Wei",
 "en": "Tuntian",
 "es": "Tuntian",
+"icono": 33,
 "unique": true
 },
 "1062": {
@@ -376,6 +433,7 @@
 "civ": "Wei",
 "en": "Ming Guang Armor",
 "es": "Armadura de Ming Guang",
+"icono": 107,
 "unique": true
 },
 "1064": {
@@ -383,6 +441,7 @@
 "civ": "Shu",
 "en": "Elite White Feather Guard",
 "es": "Guardia de la pluma blanca de élite",
+"icono": 527,
 "upgrades_to": 1961
 },
 "1069": {
@@ -391,6 +450,7 @@
 "civ": "Shu",
 "en": "Bolt Magazine",
 "es": "Cargador",
+"icono": 107,
 "unique": true
 },
 "1070": {
@@ -399,6 +459,7 @@
 "civ": "Shu",
 "en": "Coiled Serpent Array",
 "es": "Arsenal de la serpiente enroscada",
+"icono": 33,
 "unique": true
 },
 "1074": {
@@ -406,6 +467,7 @@
 "civ": "Wu",
 "en": "Elite Fire Archer",
 "es": "Carro de fuego de élite",
+"icono": 528,
 "upgrades_to": 1970
 },
 "1080": {
@@ -414,6 +476,7 @@
 "civ": "Wu",
 "en": "Red Cliffs Tactics",
 "es": "Tácticas de los Acantilados Rojos",
+"icono": 33,
 "unique": true
 },
 "1081": {
@@ -422,6 +485,7 @@
 "civ": "Wu",
 "en": "Sitting Tiger",
 "es": "Tigre sentado",
+"icono": 107,
 "unique": true
 },
 "11": {
@@ -430,6 +494,7 @@
 "civ": "Teutons",
 "en": "Crenellations",
 "es": "Almenas",
+"icono": 107,
 "unique": true
 },
 "1110": {
@@ -438,6 +503,7 @@
 "civ": "Achaemenids",
 "en": "Sparabaras",
 "es": "Sparabaras",
+"icono": 164,
 "unique": true
 },
 "1111": {
@@ -446,6 +512,7 @@
 "civ": "Achaemenids",
 "en": "Reed Arrows",
 "es": "Flechas de caña",
+"icono": 165,
 "unique": true
 },
 "1112": {
@@ -454,6 +521,7 @@
 "civ": "Achaemenids",
 "en": "Scythed Chariots",
 "es": "Carros con guadaña",
+"icono": 166,
 "unique": true
 },
 "1113": {
@@ -462,6 +530,7 @@
 "civ": "Achaemenids",
 "en": "Sagaris",
 "es": "Sagaris",
+"icono": 167,
 "unique": true
 },
 "1115": {
@@ -469,6 +538,7 @@
 "civ": "Achaemenids",
 "en": "Elite Immortal (Melee)",
 "es": "Inmortal de élite (cuerpo a cuerpo)",
+"icono": 621,
 "upgrades_to": 2102
 },
 "1120": {
@@ -477,6 +547,7 @@
 "civ": "Athenians",
 "en": "Taxiarchs",
 "es": "Taxiarcas",
+"icono": 164,
 "unique": true
 },
 "1121": {
@@ -485,6 +556,7 @@
 "civ": "Athenians",
 "en": "Trierarchies",
 "es": "Trierarquías",
+"icono": 165,
 "unique": true
 },
 "1122": {
@@ -493,6 +565,7 @@
 "civ": "Athenians",
 "en": "Eisphora",
 "es": "Eisphora",
+"icono": 166,
 "unique": true
 },
 "1123": {
@@ -501,6 +574,7 @@
 "civ": "Athenians",
 "en": "Delian League",
 "es": "Liga de Delos",
+"icono": 167,
 "unique": true
 },
 "1125": {
@@ -508,6 +582,7 @@
 "civ": "Athenians",
 "en": "Elite Strategos",
 "es": "Strategos de élite",
+"icono": 624,
 "upgrades_to": 2105
 },
 "1130": {
@@ -516,6 +591,7 @@
 "civ": "Spartans",
 "en": "Helot Levies",
 "es": "Levas ilotas",
+"icono": 164,
 "unique": true
 },
 "1131": {
@@ -524,6 +600,7 @@
 "civ": "Spartans",
 "en": "Agoge",
 "es": "Agogé",
+"icono": 166,
 "unique": true
 },
 "1132": {
@@ -532,6 +609,7 @@
 "civ": "Spartans",
 "en": "Xyphos",
 "es": "Xifos",
+"icono": 165,
 "unique": true
 },
 "1133": {
@@ -540,6 +618,7 @@
 "civ": "Spartans",
 "en": "Peloponnesian League",
 "es": "Liga del Peloponeso",
+"icono": 167,
 "unique": true
 },
 "1135": {
@@ -547,66 +626,77 @@
 "civ": "Spartans",
 "en": "Elite Hippeus",
 "es": "Hippeus de élite",
+"icono": 623,
 "upgrades_to": 2108
 },
 "1137": {
 "age": "imperial",
 "en": "Elite Hoplite",
 "es": "Hoplita de élite",
+"icono": 626,
 "upgrades_to": 2111
 },
 "1144": {
 "age": "feudal",
 "en": "War Lembos",
 "es": "Lembus de guerra",
+"icono": 657,
 "upgrades_to": 2124
 },
 "1145": {
 "age": "castle",
 "en": "Heavy Lembos",
 "es": "Lembus pesado",
+"icono": 658,
 "upgrades_to": 2125
 },
 "1146": {
 "age": "imperial",
 "en": "Elite Lembos",
 "es": "Lembus de élite",
+"icono": 659,
 "upgrades_to": 2126
 },
 "1148": {
 "age": "castle",
 "en": "Bireme",
 "es": "Birreme",
+"icono": 662,
 "upgrades_to": 2128
 },
 "1149": {
 "age": "imperial",
 "en": "Trireme",
 "es": "Trirreme",
+"icono": 663,
 "upgrades_to": 2129
 },
 "1151": {
 "age": "castle",
 "en": "War Galley",
 "es": "Galera de guerra",
+"icono": 666,
 "upgrades_to": 2131
 },
 "1152": {
 "age": "imperial",
 "en": "Elite Galley",
 "es": "Galera de élite",
+"icono": 665,
 "upgrades_to": 2132
 },
 "1154": {
 "age": "castle",
 "en": "Incendiary Ship",
 "es": "Barco flamígero",
+"icono": 668,
 "upgrades_to": 2134
 },
 "1155": {
 "age": "imperial",
 "en": "Heavy Incen. Ship",
 "es": "Barco incendiario pesado",
+"icono": 669,
 "upgrades_to": 2135
 },
 "1156": {
@@ -614,55 +704,64 @@
 "civ": "Wu",
 "en": "Jian Swordsman",
 "es": "Espadachín de Jian",
+"icono": 437,
 "upgrades_to": 1974
 },
 "1159": {
 "age": "imperial",
 "en": "Onager Ship",
 "es": "Barco onagro",
+"icono": 672,
 "upgrades_to": 2139
 },
 "1161": {
 "age": "castle",
 "building": 2172,
 "en": "Scoop Nets",
-"es": "Redes de arrastre"
+"es": "Redes de arrastre",
+"icono": 41
 },
 "1162": {
 "age": "castle",
 "building": 2172,
 "en": "Drums",
-"es": "Tambores"
+"es": "Tambores",
+"icono": 99
 },
 "1165": {
 "age": "castle",
 "building": 2119,
 "en": "Hypozomata",
-"es": "Hypozomata"
+"es": "Hypozomata",
+"icono": 169
 },
 "1167": {
 "age": "imperial",
 "building": 2172,
 "en": "Shipwright",
-"es": "Carpintero naval"
+"es": "Carpintero naval",
+"icono": 97
 },
 "1171": {
 "age": "imperial",
 "civ": "Achaemenids",
 "en": "Elite War Chariot",
 "es": "Carro de guerra de élite",
+"icono": 628,
 "upgrades_to": 2151
 },
 "1173": {
 "age": "imperial",
 "building": 12,
 "en": "Battle Drills",
-"es": "Simulacros de batalla"
+"es": "Simulacros de batalla",
+"icono": 168
 },
 "1174": {
 "age": "imperial",
 "en": "Paragon",
 "es": "Paragón",
+"icono": 603,
 "upgrades_to": 567
 },
 "1195": {
@@ -671,6 +770,7 @@
 "civ": "Achaemenids",
 "en": "Economic Town Center",
 "es": "Centro urbano de economía",
+"icono": 171,
 "unique": true
 },
 "1196": {
@@ -679,6 +779,7 @@
 "civ": "Achaemenids",
 "en": "Military Town Center",
 "es": "Centro urbano militar",
+"icono": 170,
 "unique": true
 },
 "1197": {
@@ -687,13 +788,15 @@
 "civ": "Achaemenids",
 "en": "Defensive Town Center",
 "es": "Centro urbano defensivo",
+"icono": 172,
 "unique": true
 },
 "12": {
 "age": "imperial",
 "building": 68,
 "en": "Crop Rotation",
-"es": "Rotación de cultivos"
+"es": "Rotación de cultivos",
+"icono": 0
 },
 "1202": {
 "age": "dark",
@@ -701,6 +804,7 @@
 "civ": "Athenians",
 "en": "Economic Policy",
 "es": "Política económica",
+"icono": 155,
 "unique": true
 },
 "1203": {
@@ -709,6 +813,7 @@
 "civ": "Athenians",
 "en": "Naval Policy",
 "es": "Política naval",
+"icono": 156,
 "unique": true
 },
 "1204": {
@@ -717,6 +822,7 @@
 "civ": "Athenians",
 "en": "Military Policy",
 "es": "Política militar",
+"icono": 154,
 "unique": true
 },
 "1223": {
@@ -725,6 +831,7 @@
 "civ": "Spartans",
 "en": "Ephorate",
 "es": "Eforato",
+"icono": 163,
 "unique": true
 },
 "1224": {
@@ -733,6 +840,7 @@
 "civ": "Spartans",
 "en": "Morai",
 "es": "Morai",
+"icono": 162,
 "unique": true
 },
 "1225": {
@@ -741,6 +849,7 @@
 "civ": "Spartans",
 "en": "Skeuophoroi",
 "es": "Skeuophoroi",
+"icono": 160,
 "unique": true
 },
 "1226": {
@@ -749,6 +858,7 @@
 "civ": "Spartans",
 "en": "Hippagretai",
 "es": "Hippagretai",
+"icono": 161,
 "unique": true
 },
 "1284": {
@@ -757,6 +867,7 @@
 "civ": "Macedonians",
 "en": "Veteran Chiliarchs",
 "es": "Quiliarcas veteranos",
+"icono": 164,
 "unique": true
 },
 "1285": {
@@ -765,6 +876,7 @@
 "civ": "Macedonians",
 "en": "Ends of the World",
 "es": "Fin del mundo",
+"icono": 165,
 "unique": true
 },
 "1286": {
@@ -773,6 +885,7 @@
 "civ": "Macedonians",
 "en": "Pezhetairoi",
 "es": "Pezhetairoi",
+"icono": 166,
 "unique": true
 },
 "1287": {
@@ -781,6 +894,7 @@
 "civ": "Macedonians",
 "en": "Sarissophoroi",
 "es": "Sarissophoroi",
+"icono": 167,
 "unique": true
 },
 "1289": {
@@ -788,6 +902,7 @@
 "civ": "Macedonians",
 "en": "Elite Companion Cavalry",
 "es": "Caballería de compañeros de élite",
+"icono": 709,
 "upgrades_to": 2383
 },
 "1291": {
@@ -795,6 +910,7 @@
 "civ": "Macedonians",
 "en": "Elite Phalangite",
 "es": "Falangita de élite",
+"icono": 704,
 "upgrades_to": 2385
 },
 "1296": {
@@ -803,6 +919,7 @@
 "civ": "Thracians",
 "en": "Odomantian Raiders",
 "es": "Invasores odomantos",
+"icono": 164,
 "unique": true
 },
 "1297": {
@@ -811,6 +928,7 @@
 "civ": "Thracians",
 "en": "Dii Plunderers",
 "es": "Saqueadores dii",
+"icono": 165,
 "unique": true
 },
 "1298": {
@@ -819,6 +937,7 @@
 "civ": "Thracians",
 "en": "Bessian Metalworking",
 "es": "Trabajo del metal beso",
+"icono": 166,
 "unique": true
 },
 "1299": {
@@ -827,19 +946,22 @@
 "civ": "Thracians",
 "en": "Peltasts",
 "es": "Peltastas",
+"icono": 167,
 "unique": true
 },
 "13": {
 "age": "castle",
 "building": 68,
 "en": "Heavy Plow",
-"es": "Arado pesado"
+"es": "Arado pesado",
+"icono": 1
 },
 "1301": {
 "age": "imperial",
 "civ": "Thracians",
 "en": "Elite Rhomphaia Warrior",
 "es": "Guerrero con romfaia de élite",
+"icono": 703,
 "upgrades_to": 2387
 },
 "1307": {
@@ -848,6 +970,7 @@
 "civ": "Puru",
 "en": "Vadhāvadha",
 "es": "Vadhāvadha",
+"icono": 164,
 "unique": true
 },
 "1308": {
@@ -856,6 +979,7 @@
 "civ": "Puru",
 "en": "Leaf-Headed Shafts",
 "es": "Flechas con punta de hoja",
+"icono": 165,
 "unique": true
 },
 "1309": {
@@ -864,6 +988,7 @@
 "civ": "Puru",
 "en": "Vedic Teachings",
 "es": "Enseñanzas de los vedas",
+"icono": 166,
 "unique": true
 },
 "1310": {
@@ -872,6 +997,7 @@
 "civ": "Puru",
 "en": "Skandhavaras",
 "es": "Skandhavaras",
+"icono": 167,
 "unique": true
 },
 "1326": {
@@ -879,6 +1005,7 @@
 "civ": "Puru",
 "en": "Elite Pattiyodha Longbowman",
 "es": "Arquero de tiro largo pattiyodha de élite",
+"icono": 702,
 "upgrades_to": 2389
 },
 "1328": {
@@ -886,24 +1013,28 @@
 "civ": "Puru",
 "en": "Elite Sannāhya",
 "es": "Sannāhya de élite",
+"icono": 710,
 "upgrades_to": 2391
 },
 "1350": {
 "age": "dark",
 "en": "Champi Scout",
 "es": "Explorador champi",
+"icono": 540,
 "upgrades_to": 2550
 },
 "1351": {
 "age": "castle",
 "en": "Champi Warrior",
 "es": "Guerrero champi",
+"icono": 541,
 "upgrades_to": 2552
 },
 "1352": {
 "age": "imperial",
 "en": "Elite Champi Warrior",
 "es": "Guerrero champi de élite",
+"icono": 542,
 "upgrades_to": 2554
 },
 "1364": {
@@ -911,6 +1042,7 @@
 "civ": "Muisca",
 "en": "Elite Guecha Warrior",
 "es": "Guerrero guecha de élite",
+"icono": 544,
 "upgrades_to": 2564
 },
 "1365": {
@@ -919,6 +1051,7 @@
 "civ": "Muisca",
 "en": "Herbalism",
 "es": "Herbología",
+"icono": 33,
 "unique": true
 },
 "1366": {
@@ -927,6 +1060,7 @@
 "civ": "Muisca",
 "en": "Huaracas",
 "es": "Huaracas",
+"icono": 107,
 "unique": true
 },
 "1376": {
@@ -934,6 +1068,7 @@
 "civ": "Mapuche",
 "en": "Elite Kona",
 "es": "Kona de élite",
+"icono": 546,
 "upgrades_to": 2568
 },
 "1378": {
@@ -941,6 +1076,7 @@
 "civ": "Mapuche",
 "en": "Elite Bolas Rider",
 "es": "Jinete con boleadoras de élite",
+"icono": 548,
 "upgrades_to": 2571
 },
 "1379": {
@@ -949,6 +1085,7 @@
 "civ": "Mapuche",
 "en": "Malon",
 "es": "Malón",
+"icono": 33,
 "unique": true
 },
 "1380": {
@@ -957,6 +1094,7 @@
 "civ": "Mapuche",
 "en": "Butalmapu",
 "es": "Butalmapu",
+"icono": 107,
 "unique": true
 },
 "1389": {
@@ -964,6 +1102,7 @@
 "civ": "Tupi",
 "en": "Elite Blackwood Archer",
 "es": "Arquero de los bosques de élite",
+"icono": 550,
 "upgrades_to": 2581
 },
 "1391": {
@@ -971,6 +1110,7 @@
 "civ": "Tupi",
 "en": "Elite Ibirapema Warrior",
 "es": "Guerrero ibirapema de élite",
+"icono": 552,
 "upgrades_to": 2584
 },
 "1392": {
@@ -979,6 +1119,7 @@
 "civ": "Tupi",
 "en": "Caciques",
 "es": "Caciques",
+"icono": 33,
 "unique": true
 },
 "1393": {
@@ -987,31 +1128,36 @@
 "civ": "Tupi",
 "en": "Curare",
 "es": "Curare",
+"icono": 107,
 "unique": true
 },
 "14": {
 "age": "feudal",
 "building": 68,
 "en": "Horse Collar",
-"es": "Collera"
+"es": "Collera",
+"icono": 2
 },
 "140": {
 "age": "castle",
 "building": 209,
 "en": "Guard Tower",
-"es": "Torre de vigilancia"
+"es": "Torre de vigilancia",
+"icono": 76
 },
 "1401": {
 "age": "imperial",
 "civ": "Muisca",
 "en": "Elite Temple Guard",
 "es": "Guardia del templo de élite",
+"icono": 554,
 "upgrades_to": 2587
 },
 "1402": {
 "age": "feudal",
 "en": "Champi Runner",
 "es": "Corredor champi",
+"icono": 555,
 "upgrades_to": 2588
 },
 "1404": {
@@ -1020,24 +1166,28 @@
 "civ": "Portuguese",
 "en": "Circum- navigation",
 "es": "Circun navegación",
+"icono": 33,
 "unique": true
 },
 "1451": {
 "age": "imperial",
 "en": "H. Mounted Crossbowman",
 "es": "Ballestero m. pesado",
+"icono": 901,
 "upgrades_to": 2701
 },
 "1452": {
 "age": "imperial",
 "building": 87,
 "en": "Cranequins",
-"es": "Molinetes"
+"es": "Molinetes",
+"icono": 56
 },
 "1454": {
 "age": "imperial",
 "en": "E. Varangian Guard",
 "es": "G. varego de élite",
+"icono": 903,
 "upgrades_to": 2704
 },
 "1462": {
@@ -1045,6 +1195,7 @@
 "civ": "Saxons",
 "en": "Elite Hearth Troop",
 "es": "Tropas del hogar de élite",
+"icono": 905,
 "upgrades_to": 2706
 },
 "1464": {
@@ -1053,6 +1204,7 @@
 "civ": "Saxons",
 "en": "Shield Wall",
 "es": "Muralla escudo",
+"icono": 107,
 "unique": true
 },
 "1472": {
@@ -1060,6 +1212,7 @@
 "civ": "Varangians",
 "en": "Elite Jarl",
 "es": "Jarl de élite",
+"icono": 907,
 "upgrades_to": 2709
 },
 "1473": {
@@ -1068,6 +1221,7 @@
 "civ": "Varangians",
 "en": "Vendel Legacy",
 "es": "Legado de Vendel",
+"icono": 33,
 "unique": true
 },
 "1474": {
@@ -1076,6 +1230,7 @@
 "civ": "Varangians",
 "en": "Gothikon",
 "es": "Gothikon",
+"icono": 107,
 "unique": true
 },
 "1482": {
@@ -1083,6 +1238,7 @@
 "civ": "Danes",
 "en": "Elite Jomsviking",
 "es": "Vikingo de Jomsborg de élite",
+"icono": 909,
 "upgrades_to": 2712
 },
 "1483": {
@@ -1091,6 +1247,7 @@
 "civ": "Danes",
 "en": "Northmen's Fury",
 "es": "Furia Nórdica",
+"icono": 107,
 "unique": true
 },
 "1484": {
@@ -1099,6 +1256,7 @@
 "civ": "Danes",
 "en": "Hamask",
 "es": "Hamask",
+"icono": 33,
 "unique": true
 },
 "1491": {
@@ -1107,6 +1265,7 @@
 "civ": "Saxons",
 "en": "Clerical Recruitment",
 "es": "Reclutamiento administrativo",
+"icono": 33,
 "unique": true
 },
 "1496": {
@@ -1115,13 +1274,15 @@
 "civ": "Franks",
 "en": "Ordonnance Companies",
 "es": "Compagnies d'ordonnance",
+"icono": 33,
 "unique": true
 },
 "15": {
 "age": "imperial",
 "building": 84,
 "en": "Guilds",
-"es": "Gremios"
+"es": "Gremios",
+"icono": 58
 },
 "16": {
 "age": "castle",
@@ -1129,79 +1290,92 @@
 "civ": "Goths",
 "en": "Anarchy",
 "es": "Anarquía",
+"icono": 33,
 "unique": true
 },
 "17": {
 "age": "imperial",
 "building": 84,
 "en": "Banking",
-"es": "Banca"
+"es": "Banca",
+"icono": 3
 },
 "182": {
 "age": "castle",
 "building": 584,
 "en": "Gold Shaft Mining",
-"es": "Pozo minero aurífero"
+"es": "Pozo minero aurífero",
+"icono": 62
 },
 "194": {
 "age": "castle",
 "building": 209,
 "en": "Fortified Wall",
-"es": "Muralla fortificada"
+"es": "Muralla fortificada",
+"icono": 46
 },
 "197": {
 "age": "castle",
 "en": "Pikeman",
 "es": "Piquero",
+"icono": 11,
 "upgrades_to": 358
 },
 "199": {
 "age": "feudal",
 "building": 103,
 "en": "Fletching",
-"es": "Emplumado de flechas"
+"es": "Emplumado de flechas",
+"icono": 34
 },
 "2": {
 "age": "imperial",
 "civ": "Huns",
 "en": "Elite Tarkan",
 "es": "Tarcano de élite",
+"icono": 487,
 "upgrades_to": 757
 },
 "200": {
 "age": "castle",
 "building": 103,
 "en": "Bodkin Arrow",
-"es": "Flecha de punzón"
+"es": "Flecha de punzón",
+"icono": 35
 },
 "201": {
 "age": "imperial",
 "building": 103,
 "en": "Bracer",
-"es": "Brazal"
+"es": "Brazal",
+"icono": 37
 },
 "202": {
 "age": "feudal",
 "building": 562,
 "en": "Double-Bit Axe",
-"es": "Hacha de doble filo"
+"es": "Hacha de doble filo",
+"icono": 70
 },
 "203": {
 "age": "castle",
 "building": 562,
 "en": "Bow Saw",
-"es": "Sierra de arco"
+"es": "Sierra de arco",
+"icono": 71
 },
 "207": {
 "age": "castle",
 "en": "Long Swordsman",
 "es": "Soldado con espada larga",
+"icono": 13,
 "upgrades_to": 77
 },
 "209": {
 "age": "imperial",
 "en": "Cavalier",
 "es": "Caballero",
+"icono": 49,
 "upgrades_to": 283
 },
 "21": {
@@ -1210,108 +1384,126 @@
 "civ": "Huns",
 "en": "Atheism",
 "es": "Ateísmo",
+"icono": 107,
 "unique": true
 },
 "211": {
 "age": "feudal",
 "building": 103,
 "en": "Padded Archer Armor",
-"es": "Arm. acolch. para arqueros"
+"es": "Arm. acolch. para arqueros",
+"icono": 49
 },
 "212": {
 "age": "castle",
 "building": 103,
 "en": "Leather Archer Armor",
-"es": "Arm. de cuero para arqueros"
+"es": "Arm. de cuero para arqueros",
+"icono": 50
 },
 "213": {
 "age": "feudal",
 "building": 109,
 "en": "Wheelbarrow",
-"es": "Carretilla"
+"es": "Carretilla",
+"icono": 79
 },
 "215": {
 "age": "castle",
 "building": 12,
 "en": "Squires",
-"es": "Escuderos"
+"es": "Escuderos",
+"icono": 80
 },
 "217": {
 "age": "imperial",
 "en": "Two-Handed Swordsman",
 "es": "Espadachín de mandoble",
+"icono": 12,
 "upgrades_to": 473
 },
 "218": {
 "age": "imperial",
 "en": "Heavy Cavalry Archer",
 "es": "Arquero de caballería pesada",
+"icono": 71,
 "upgrades_to": 474
 },
 "219": {
 "age": "imperial",
 "building": 103,
 "en": "Ring Archer Armor",
-"es": "Arm. anillos para arqueros"
+"es": "Arm. anillos para arqueros",
+"icono": 51
 },
 "22": {
 "age": "dark",
 "building": 109,
 "en": "Loom",
-"es": "Telar"
+"es": "Telar",
+"icono": 6
 },
 "221": {
 "age": "imperial",
 "building": 562,
 "en": "Two-Man Saw",
-"es": "Sierra a dos"
+"es": "Sierra a dos",
+"icono": 81
 },
 "222": {
 "age": "feudal",
 "en": "Man-at-Arms",
 "es": "Hombre de armas",
+"icono": 10,
 "upgrades_to": 75
 },
 "23": {
 "age": "castle",
 "building": 84,
 "en": "Coinage",
-"es": "Acuñación"
+"es": "Acuñación",
+"icono": 7
 },
 "230": {
 "age": "imperial",
 "building": 104,
 "en": "Block Printing",
-"es": "Letras de imprenta"
+"es": "Letras de imprenta",
+"icono": 82
 },
 "231": {
 "age": "castle",
 "building": 104,
 "en": "Sanctity",
-"es": "Santidad"
+"es": "Santidad",
+"icono": 83
 },
 "233": {
 "age": "imperial",
 "building": 104,
 "en": "Illumination",
-"es": "Iluminación"
+"es": "Iluminación",
+"icono": 84
 },
 "236": {
 "age": "imperial",
 "en": "Heavy Camel Rider",
 "es": "Jinete de camello pesado",
+"icono": 79,
 "upgrades_to": 330
 },
 "237": {
 "age": "imperial",
 "en": "Arbalester",
 "es": "Arbalestero",
+"icono": 90,
 "upgrades_to": 492
 },
 "239": {
 "age": "imperial",
 "en": "Heavy Scorpion",
 "es": "Escorpión pesado",
+"icono": 89,
 "upgrades_to": 542
 },
 "24": {
@@ -1320,60 +1512,70 @@
 "civ": "Aztecs",
 "en": "Garland Wars",
 "es": "Guerras Floridas",
+"icono": 107,
 "unique": true
 },
 "244": {
 "age": "imperial",
 "en": "Heavy Demo Ship",
 "es": "Buque de dem. pesado",
+"icono": 83,
 "upgrades_to": 528
 },
 "246": {
 "age": "imperial",
 "en": "Fast Fire Ship",
 "es": "Barco incendiario rápido",
+"icono": 85,
 "upgrades_to": 532
 },
 "249": {
 "age": "castle",
 "building": 109,
 "en": "Hand Cart",
-"es": "Carro de mano"
+"es": "Carro de mano",
+"icono": 42
 },
 "252": {
 "age": "castle",
 "building": 104,
 "en": "Fervor",
-"es": "Fervor"
+"es": "Fervor",
+"icono": 73
 },
 "254": {
 "age": "castle",
 "en": "Light Cavalry",
 "es": "Caballería ligera",
+"icono": 91,
 "upgrades_to": 546
 },
 "255": {
 "age": "imperial",
 "en": "Siege Ram",
 "es": "Ariete de asedio",
+"icono": 73,
 "upgrades_to": 548
 },
 "257": {
 "age": "imperial",
 "en": "Onager",
 "es": "Onagro",
+"icono": 101,
 "upgrades_to": 550
 },
 "264": {
 "age": "imperial",
 "en": "Champion",
 "es": "Campeón",
+"icono": 72,
 "upgrades_to": 567
 },
 "265": {
 "age": "imperial",
 "en": "Paladin",
 "es": "Paladín",
+"icono": 2,
 "upgrades_to": 569
 },
 "27": {
@@ -1381,19 +1583,22 @@
 "civ": "Mayans",
 "en": "Elite Plumed Archer",
 "es": "Arquero emplumado de élite",
+"icono": 488,
 "upgrades_to": 765
 },
 "278": {
 "age": "feudal",
 "building": 584,
 "en": "Stone Mining",
-"es": "Explotación de canteras"
+"es": "Explotación de canteras",
+"icono": 87
 },
 "279": {
 "age": "castle",
 "building": 584,
 "en": "Stone Shaft Mining",
-"es": "Pozo de cantera"
+"es": "Pozo de cantera",
+"icono": 88
 },
 "28": {
 "age": "castle",
@@ -1401,13 +1606,15 @@
 "civ": "Saracens",
 "en": "Bimaristan",
 "es": "Bimaristán",
+"icono": 33,
 "unique": true
 },
 "280": {
 "age": "castle",
 "building": 109,
 "en": "Town Patrol",
-"es": "Patrulla urbana"
+"es": "Patrulla urbana",
+"icono": 89
 },
 "3": {
 "age": "castle",
@@ -1415,49 +1622,57 @@
 "civ": "Britons",
 "en": "Yeomen",
 "es": "Yeomen",
+"icono": 33,
 "unique": true
 },
 "315": {
 "age": "imperial",
 "building": 82,
 "en": "Conscription",
-"es": "Leva"
+"es": "Leva",
+"icono": 91
 },
 "316": {
 "age": "castle",
 "building": 104,
 "en": "Redemption",
-"es": "Redención"
+"es": "Redención",
+"icono": 92
 },
 "319": {
 "age": "castle",
 "building": 104,
 "en": "Atonement",
-"es": "Expiación"
+"es": "Expiación",
+"icono": 93
 },
 "320": {
 "age": "imperial",
 "en": "Siege Onager",
 "es": "Onagro de asedio",
+"icono": 102,
 "upgrades_to": 588
 },
 "321": {
 "age": "imperial",
 "building": 82,
 "en": "Sappers",
-"es": "Zapadores"
+"es": "Zapadores",
+"icono": 5
 },
 "322": {
 "age": "castle",
 "building": 209,
 "en": "Murder Holes",
-"es": "Matacanes"
+"es": "Matacanes",
+"icono": 61
 },
 "34": {
 "age": "castle",
 "building": 45,
 "en": "Fire Ship",
 "es": "Barco incendiario",
+"icono": 86,
 "upgrades_to": 2627
 },
 "35": {
@@ -1465,6 +1680,7 @@
 "building": 45,
 "en": "Galleon",
 "es": "Galeón",
+"icono": 60,
 "upgrades_to": 442
 },
 "360": {
@@ -1472,6 +1688,7 @@
 "civ": "Britons",
 "en": "Elite Longbowman",
 "es": "Arquero con arco largo de élite",
+"icono": 472,
 "upgrades_to": 530
 },
 "361": {
@@ -1479,6 +1696,7 @@
 "civ": "Byzantines",
 "en": "Elite Cataphract",
 "es": "Catafracta de élite",
+"icono": 476,
 "upgrades_to": 553
 },
 "362": {
@@ -1486,6 +1704,7 @@
 "civ": "Chinese",
 "en": "Elite Chu Ko Nu",
 "es": "Chu ko nu de élite",
+"icono": 482,
 "upgrades_to": 559
 },
 "363": {
@@ -1493,6 +1712,7 @@
 "civ": "Franks",
 "en": "Elite Throwing Axeman",
 "es": "Lanzador de hachas de élite",
+"icono": 473,
 "upgrades_to": 531
 },
 "364": {
@@ -1500,6 +1720,7 @@
 "civ": "Teutons",
 "en": "Elite Teutonic Knight",
 "es": "Caballero teutónico de élite",
+"icono": 477,
 "upgrades_to": 554
 },
 "365": {
@@ -1507,6 +1728,7 @@
 "civ": "Goths",
 "en": "Elite Huskarl",
 "es": "Huscarle de élite",
+"icono": 478,
 "upgrades_to": 555
 },
 "366": {
@@ -1514,6 +1736,7 @@
 "civ": "Japanese",
 "en": "Elite Samurai",
 "es": "Samurai de élite",
+"icono": 483,
 "upgrades_to": 560
 },
 "367": {
@@ -1521,6 +1744,7 @@
 "civ": "Persians",
 "en": "Elite War Elephant",
 "es": "Elefante de guerra de élite",
+"icono": 481,
 "upgrades_to": 558
 },
 "368": {
@@ -1528,6 +1752,7 @@
 "civ": "Saracens",
 "en": "Elite Mameluke",
 "es": "Mameluco de élite",
+"icono": 479,
 "upgrades_to": 556
 },
 "369": {
@@ -1535,6 +1760,7 @@
 "civ": "Turks",
 "en": "Elite Janissary",
 "es": "Jenízaro de élite",
+"icono": 480,
 "upgrades_to": 557
 },
 "370": {
@@ -1542,6 +1768,7 @@
 "civ": "Celts",
 "en": "Elite Woad Raider",
 "es": "Incursor azul de élite",
+"icono": 475,
 "upgrades_to": 534
 },
 "371": {
@@ -1549,73 +1776,85 @@
 "civ": "Mongols",
 "en": "Elite Mangudai",
 "es": "Mangudai de élite",
+"icono": 484,
 "upgrades_to": 561
 },
 "372": {
 "age": "imperial",
 "en": "Elite Longship",
 "es": "Drakkar de élite",
+"icono": 474,
 "upgrades_to": 533
 },
 "373": {
 "age": "imperial",
 "building": 209,
 "en": "Shipwright",
-"es": "Carpintero naval"
+"es": "Carpintero naval",
+"icono": 97
 },
 "374": {
 "age": "castle",
 "building": 209,
 "en": "Careening",
-"es": "Carenado"
+"es": "Carenado",
+"icono": 98
 },
 "375": {
 "age": "imperial",
 "building": 209,
 "en": "Dry Dock",
-"es": "Dique seco"
+"es": "Dique seco",
+"icono": 99
 },
 "376": {
 "age": "imperial",
 "en": "Elite Cannon Galleon",
 "es": "Galeón artillado de élite",
+"icono": 298,
 "upgrades_to": 691
 },
 "377": {
 "age": "imperial",
 "building": 209,
 "en": "Siege Engineers",
-"es": "Ingenieros de asedio"
+"es": "Ingenieros de asedio",
+"icono": 101
 },
 "379": {
 "age": "imperial",
 "building": 82,
 "en": "Hoardings",
-"es": "Ladronera"
+"es": "Ladronera",
+"icono": 103
 },
 "380": {
 "age": "castle",
 "building": 209,
 "en": "Heated Shot",
-"es": "Bala roja"
+"es": "Bala roja",
+"icono": 104
 },
 "384": {
 "age": "castle",
 "en": "Eagle Warrior",
 "es": "Guerrero águila",
+"icono": 148,
 "upgrades_to": 753
 },
 "39": {
 "age": "castle",
 "building": 101,
 "en": "Husbandry",
-"es": "Ganadería"
+"es": "Ganadería",
+"icono": 10
 },
 "398": {
 "age": "imperial",
 "civ": "Vikings",
 "en": "Elite Berserk",
 "es": "Berserker de élite",
+"icono": 485,
 "upgrades_to": 694
 },
 "4": {
@@ -1624,24 +1863,28 @@
 "civ": "Mayans",
 "en": "Holcans",
 "es": "Holcanes",
+"icono": 107,
 "unique": true
 },
 "408": {
 "age": "imperial",
 "building": 82,
 "en": "Spies/Treason",
-"es": "Espionaje y traición"
+"es": "Espionaje y traición",
+"icono": 19
 },
 "428": {
 "age": "imperial",
 "en": "Hussar",
 "es": "Húsar",
+"icono": 103,
 "upgrades_to": 441
 },
 "429": {
 "age": "imperial",
 "en": "Halberdier",
 "es": "Alabardero",
+"icono": 104,
 "upgrades_to": 359
 },
 "432": {
@@ -1649,43 +1892,50 @@
 "civ": "Aztecs",
 "en": "Elite Jaguar Warrior",
 "es": "Guerrero jaguar de élite",
+"icono": 486,
 "upgrades_to": 726
 },
 "434": {
 "age": "imperial",
 "en": "Elite Eagle Warrior",
 "es": "Guerrero águila de élite",
+"icono": 149,
 "upgrades_to": 752
 },
 "435": {
 "age": "feudal",
 "building": 101,
 "en": "Bloodlines",
-"es": "Pureza de sangre"
+"es": "Pureza de sangre",
+"icono": 110
 },
 "436": {
 "age": "imperial",
 "building": 87,
 "en": "Parthian Tactics",
-"es": "Tácticas de los partias"
+"es": "Tácticas de los partias",
+"icono": 111
 },
 "437": {
 "age": "castle",
 "building": 87,
 "en": "Thumb Ring",
-"es": "Dactilera"
+"es": "Dactilera",
+"icono": 112
 },
 "438": {
 "age": "imperial",
 "building": 104,
 "en": "Theocracy",
-"es": "Teocracia"
+"es": "Teocracia",
+"icono": 109
 },
 "439": {
 "age": "castle",
 "building": 104,
 "en": "Heresy",
-"es": "Herejía"
+"es": "Herejía",
+"icono": 108
 },
 "440": {
 "age": "imperial",
@@ -1693,13 +1943,15 @@
 "civ": "Spanish",
 "en": "Supremacy",
 "es": "Supremacía",
+"icono": 107,
 "unique": true
 },
 "441": {
 "age": "castle",
 "building": 104,
 "en": "Herbal Medicine",
-"es": "Hierbas medicinales"
+"es": "Hierbas medicinales",
+"icono": 114
 },
 "445": {
 "age": "imperial",
@@ -1707,6 +1959,7 @@
 "civ": "Koreans",
 "en": "Shinkichon",
 "es": "Shinkichon",
+"icono": 107,
 "unique": true
 },
 "448": {
@@ -1714,19 +1967,22 @@
 "civ": "Koreans",
 "en": "Elite Turtle Ship",
 "es": "Barco tortuga de élite",
+"icono": 491,
 "upgrades_to": 832
 },
 "45": {
 "age": "imperial",
 "building": 104,
 "en": "Faith",
-"es": "Fe"
+"es": "Fe",
+"icono": 11
 },
 "450": {
 "age": "imperial",
 "civ": "Koreans",
 "en": "Elite War Wagon",
 "es": "Carreta de guerra de élite",
+"icono": 490,
 "upgrades_to": 829
 },
 "454": {
@@ -1735,6 +1991,7 @@
 "civ": "Saracens",
 "en": "Counter- weights",
 "es": "Contrapesos",
+"icono": 107,
 "unique": true
 },
 "455": {
@@ -1743,6 +2000,7 @@
 "civ": "Slavs",
 "en": "Detinets",
 "es": "Detinets",
+"icono": 33,
 "unique": true
 },
 "457": {
@@ -1751,13 +2009,15 @@
 "civ": "Goths",
 "en": "Perfusion",
 "es": "Movilización",
+"icono": 107,
 "unique": true
 },
 "46": {
 "age": "castle",
 "building": 1806,
 "en": "Devotion",
-"es": "Devoción"
+"es": "Devoción",
+"icono": 131
 },
 "460": {
 "age": "castle",
@@ -1765,6 +2025,7 @@
 "civ": "Aztecs",
 "en": "Atlatl",
 "es": "Átlatl",
+"icono": 33,
 "unique": true
 },
 "461": {
@@ -1773,6 +2034,7 @@
 "civ": "Britons",
 "en": "Warwolf",
 "es": "Warwolf",
+"icono": 107,
 "unique": true
 },
 "462": {
@@ -1781,6 +2043,7 @@
 "civ": "Chinese",
 "en": "Great Wall",
 "es": "Gran Muralla",
+"icono": 33,
 "unique": true
 },
 "463": {
@@ -1789,6 +2052,7 @@
 "civ": "Vikings",
 "en": "Chieftains",
 "es": "Hérsires",
+"icono": 33,
 "unique": true
 },
 "464": {
@@ -1797,6 +2061,7 @@
 "civ": "Byzantines",
 "en": "Greek Fire",
 "es": "Fuego griego",
+"icono": 33,
 "unique": true
 },
 "468": {
@@ -1804,31 +2069,36 @@
 "civ": "Italians",
 "en": "Elite Genoese Crossbowman",
 "es": "Genovés ballestero de élite",
+"icono": 492,
 "upgrades_to": 868
 },
 "47": {
 "age": "imperial",
 "building": 209,
 "en": "Chemistry",
-"es": "Química"
+"es": "Química",
+"icono": 12
 },
 "472": {
 "age": "imperial",
 "civ": "Magyar",
 "en": "Elite Magyar Huszar",
 "es": "Huszár magiar de élite",
+"icono": 493,
 "upgrades_to": 871
 },
 "48": {
 "age": "castle",
 "building": 84,
 "en": "Caravan",
-"es": "Caravana"
+"es": "Caravana",
+"icono": 113
 },
 "481": {
 "age": "imperial",
 "en": "Elite Elephant Archer",
 "es": "Arquero en elefante de élite",
+"icono": 93,
 "upgrades_to": 875
 },
 "482": {
@@ -1837,6 +2107,7 @@
 "civ": "Celts",
 "en": "Stronghold",
 "es": "Bastión",
+"icono": 33,
 "unique": true
 },
 "483": {
@@ -1845,6 +2116,7 @@
 "civ": "Huns",
 "en": "Marauders",
 "es": "Razias",
+"icono": 33,
 "unique": true
 },
 "484": {
@@ -1853,6 +2125,7 @@
 "civ": "Japanese",
 "en": "Yasama",
 "es": "Yasama",
+"icono": 33,
 "unique": true
 },
 "485": {
@@ -1861,6 +2134,7 @@
 "civ": "Mayans",
 "en": "Hul'che Javelineers",
 "es": "Lanzadores de hul'che",
+"icono": 33,
 "unique": true
 },
 "486": {
@@ -1869,6 +2143,7 @@
 "civ": "Koreans",
 "en": "Eupseong",
 "es": "Eupseong",
+"icono": 33,
 "unique": true
 },
 "487": {
@@ -1877,6 +2152,7 @@
 "civ": "Mongols",
 "en": "Nomads",
 "es": "Nómadas",
+"icono": 33,
 "unique": true
 },
 "488": {
@@ -1885,6 +2161,7 @@
 "civ": "Persians",
 "en": "Kamandaran",
 "es": "Kamandaran",
+"icono": 33,
 "unique": true
 },
 "489": {
@@ -1893,6 +2170,7 @@
 "civ": "Teutons",
 "en": "Ironclad",
 "es": "Blindaje",
+"icono": 33,
 "unique": true
 },
 "49": {
@@ -1901,6 +2179,7 @@
 "civ": "Vikings",
 "en": "Bogsveigar",
 "es": "Bogsveigar",
+"icono": 107,
 "unique": true
 },
 "491": {
@@ -1909,6 +2188,7 @@
 "civ": "Turks",
 "en": "Sipahi",
 "es": "Sipahi",
+"icono": 33,
 "unique": true
 },
 "492": {
@@ -1917,6 +2197,7 @@
 "civ": "Spanish",
 "en": "Inquisition",
 "es": "Inquisición",
+"icono": 33,
 "unique": true
 },
 "493": {
@@ -1925,6 +2206,7 @@
 "civ": "Franks",
 "en": "Chivalry",
 "es": "Código caballeresco",
+"icono": 107,
 "unique": true
 },
 "499": {
@@ -1933,6 +2215,7 @@
 "civ": "Italians",
 "en": "Silk Road",
 "es": "Ruta de la Seda",
+"icono": 33,
 "unique": true
 },
 "5": {
@@ -1941,19 +2224,22 @@
 "civ": "Celts",
 "en": "Furor Celtica",
 "es": "Furor celta",
+"icono": 107,
 "unique": true
 },
 "50": {
 "age": "castle",
 "building": 209,
 "en": "Masonry",
-"es": "Albañilería"
+"es": "Albañilería",
+"icono": 13
 },
 "504": {
 "age": "imperial",
 "civ": "Slavs",
 "en": "Elite Boyar",
 "es": "Boyardo de élite",
+"icono": 494,
 "upgrades_to": 878
 },
 "506": {
@@ -1962,6 +2248,7 @@
 "civ": "Indians",
 "en": "Grand Trunk Road",
 "es": "Camino del Gran Tronco",
+"icono": 33,
 "unique": true
 },
 "507": {
@@ -1970,6 +2257,7 @@
 "civ": "Indians",
 "en": "Shatagni",
 "es": "Shatagni",
+"icono": 107,
 "unique": true
 },
 "509": {
@@ -1977,13 +2265,15 @@
 "civ": "Incas",
 "en": "Elite Kamayuk",
 "es": "Kamayuk de élite",
+"icono": 495,
 "upgrades_to": 881
 },
 "51": {
 "age": "imperial",
 "building": 209,
 "en": "Architecture",
-"es": "Arquitectura"
+"es": "Arquitectura",
+"icono": 14
 },
 "513": {
 "age": "imperial",
@@ -1991,6 +2281,7 @@
 "civ": "Slavs",
 "en": "Druzhina",
 "es": "Druzhina",
+"icono": 107,
 "unique": true
 },
 "514": {
@@ -1999,6 +2290,7 @@
 "civ": "Magyar",
 "en": "Corvinian Army",
 "es": "Ejército corviniano",
+"icono": 33,
 "unique": true
 },
 "515": {
@@ -2007,6 +2299,7 @@
 "civ": "Magyar",
 "en": "Recurve Bow",
 "es": "Arco recurvo",
+"icono": 107,
 "unique": true
 },
 "516": {
@@ -2015,6 +2308,7 @@
 "civ": "Incas",
 "en": "Andean Sling",
 "es": "Hondero andino",
+"icono": 33,
 "unique": true
 },
 "517": {
@@ -2023,6 +2317,7 @@
 "civ": "Incas",
 "en": "Fabric Shields",
 "es": "Escudos de tela",
+"icono": 107,
 "unique": true
 },
 "52": {
@@ -2031,6 +2326,7 @@
 "civ": "Chinese",
 "en": "Rocketry",
 "es": "Cohetería",
+"icono": 107,
 "unique": true
 },
 "521": {
@@ -2038,6 +2334,7 @@
 "civ": "Indians",
 "en": "Imperial Camel Rider",
 "es": "Jinete de camello imperial",
+"icono": 185,
 "upgrades_to": 207
 },
 "526": {
@@ -2045,25 +2342,29 @@
 "civ": "Persians",
 "en": "Savar",
 "es": "Savar",
+"icono": 410,
 "upgrades_to": 1813
 },
 "54": {
 "age": "castle",
 "building": 209,
 "en": "Treadmill Crane",
-"es": "Grúa"
+"es": "Grúa",
+"icono": 60
 },
 "55": {
 "age": "feudal",
 "building": 584,
 "en": "Gold Mining",
-"es": "Minería aurífera"
+"es": "Minería aurífera",
+"icono": 15
 },
 "563": {
 "age": "imperial",
 "civ": "Portuguese",
 "en": "Elite Organ Gun",
 "es": "Cañón de salvas de élite",
+"icono": 496,
 "upgrades_to": 1003
 },
 "565": {
@@ -2071,6 +2372,7 @@
 "civ": "Berbers",
 "en": "Elite Camel Archer",
 "es": "Arquero en camello de élite",
+"icono": 498,
 "upgrades_to": 1009
 },
 "567": {
@@ -2078,6 +2380,7 @@
 "civ": "Malians",
 "en": "Elite Gbeto",
 "es": "Guardiana gbeto de élite",
+"icono": 500,
 "upgrades_to": 1015
 },
 "569": {
@@ -2085,6 +2388,7 @@
 "civ": "Ethiopians",
 "en": "Elite Shotel Warrior",
 "es": "Shotelai de élite",
+"icono": 501,
 "upgrades_to": 1018
 },
 "573": {
@@ -2093,6 +2397,7 @@
 "civ": "Portuguese",
 "en": "Arquebus",
 "es": "Arcabuz",
+"icono": 107,
 "unique": true
 },
 "574": {
@@ -2101,6 +2406,7 @@
 "civ": "Ethiopians",
 "en": "Royal Heirs",
 "es": "Centralización",
+"icono": 33,
 "unique": true
 },
 "575": {
@@ -2109,6 +2415,7 @@
 "civ": "Ethiopians",
 "en": "Torsion Engines",
 "es": "Mecanismos de torsión",
+"icono": 107,
 "unique": true
 },
 "576": {
@@ -2117,6 +2424,7 @@
 "civ": "Malians",
 "en": "Tigui",
 "es": "Gran asamblea",
+"icono": 33,
 "unique": true
 },
 "577": {
@@ -2125,6 +2433,7 @@
 "civ": "Malians",
 "en": "Farimba",
 "es": "Farimba",
+"icono": 107,
 "unique": true
 },
 "578": {
@@ -2133,6 +2442,7 @@
 "civ": "Berbers",
 "en": "Kasbah",
 "es": "Alcazabas",
+"icono": 33,
 "unique": true
 },
 "579": {
@@ -2141,6 +2451,7 @@
 "civ": "Berbers",
 "en": "Maghrebi Camels",
 "es": "Camellos magrebíes",
+"icono": 107,
 "unique": true
 },
 "59": {
@@ -2149,6 +2460,7 @@
 "civ": "Japanese",
 "en": "Kataparuto",
 "es": "Kataparuto",
+"icono": 107,
 "unique": true
 },
 "597": {
@@ -2156,6 +2468,7 @@
 "civ": "Portuguese",
 "en": "Elite Caravel",
 "es": "Carabela de élite",
+"icono": 497,
 "upgrades_to": 1006
 },
 "599": {
@@ -2163,6 +2476,7 @@
 "civ": "Berbers",
 "en": "Elite Genitour",
 "es": "Escaramuzador zenete de élite",
+"icono": 499,
 "upgrades_to": 1012
 },
 "6": {
@@ -2171,6 +2485,7 @@
 "civ": "Mongols",
 "en": "Drill",
 "es": "Instrucción militar",
+"icono": 107,
 "unique": true
 },
 "60": {
@@ -2178,19 +2493,22 @@
 "civ": "Spanish",
 "en": "Elite Conquistador",
 "es": "Conquistador de élite",
+"icono": 489,
 "upgrades_to": 773
 },
 "602": {
 "age": "feudal",
 "building": 12,
 "en": "Arson",
-"es": "Incendiarismo"
+"es": "Incendiarismo",
+"icono": 118
 },
 "608": {
 "age": "imperial",
 "building": 209,
 "en": "Arrowslits",
-"es": "Aspillera en cruz"
+"es": "Aspillera en cruz",
+"icono": 119
 },
 "61": {
 "age": "imperial",
@@ -2198,6 +2516,7 @@
 "civ": "Byzantines",
 "en": "Logistica",
 "es": "Logística",
+"icono": 107,
 "unique": true
 },
 "615": {
@@ -2205,6 +2524,7 @@
 "civ": "Khmer",
 "en": "Elite Ballista Elephant",
 "es": "Elefante con balista de élite",
+"icono": 502,
 "upgrades_to": 1122
 },
 "617": {
@@ -2212,6 +2532,7 @@
 "civ": "Malay",
 "en": "Elite Karambit Warrior",
 "es": "Recluta con karambit de élite",
+"icono": 503,
 "upgrades_to": 1125
 },
 "619": {
@@ -2219,6 +2540,7 @@
 "civ": "Burmese",
 "en": "Elite Arambai",
 "es": "Arambai de élite",
+"icono": 504,
 "upgrades_to": 1128
 },
 "621": {
@@ -2226,6 +2548,7 @@
 "civ": "Vietnamese",
 "en": "Elite Rattan Archer",
 "es": "Arquero de ratán de élite",
+"icono": 505,
 "upgrades_to": 1131
 },
 "622": {
@@ -2234,6 +2557,7 @@
 "civ": "Khmer",
 "en": "Tusk Swords",
 "es": "Colmillos de acero",
+"icono": 33,
 "unique": true
 },
 "623": {
@@ -2242,6 +2566,7 @@
 "civ": "Khmer",
 "en": "Double Crossbow",
 "es": "Ballesta doble",
+"icono": 107,
 "unique": true
 },
 "624": {
@@ -2250,6 +2575,7 @@
 "civ": "Malay",
 "en": "Thalassocracy",
 "es": "Talasocracia",
+"icono": 33,
 "unique": true
 },
 "625": {
@@ -2258,6 +2584,7 @@
 "civ": "Malay",
 "en": "Forced Levy",
 "es": "Leva en masa",
+"icono": 107,
 "unique": true
 },
 "626": {
@@ -2266,6 +2593,7 @@
 "civ": "Burmese",
 "en": "Howdah",
 "es": "Howdah",
+"icono": 107,
 "unique": true
 },
 "627": {
@@ -2274,6 +2602,7 @@
 "civ": "Burmese",
 "en": "Manipur Cavalry",
 "es": "Caballería manipur",
+"icono": 33,
 "unique": true
 },
 "628": {
@@ -2282,6 +2611,7 @@
 "civ": "Vietnamese",
 "en": "Chatras",
 "es": "Chatras",
+"icono": 33,
 "unique": true
 },
 "629": {
@@ -2290,69 +2620,80 @@
 "civ": "Vietnamese",
 "en": "Paper Money",
 "es": "Papel moneda",
+"icono": 107,
 "unique": true
 },
 "63": {
 "age": "imperial",
 "building": 209,
 "en": "Keep",
-"es": "Fortaleza"
+"es": "Fortaleza",
+"icono": 16
 },
 "630": {
 "age": "castle",
 "en": "Battle Elephant",
 "es": "Elefante de combate",
+"icono": 228,
 "upgrades_to": 1132
 },
 "631": {
 "age": "imperial",
 "en": "Elite Battle Elephant",
 "es": "Elefante de combate de élite",
+"icono": 246,
 "upgrades_to": 1134
 },
 "64": {
 "age": "imperial",
 "building": 209,
 "en": "Bombard Tower",
-"es": "Torre de bombardeo"
+"es": "Torre de bombardeo",
+"icono": 47
 },
 "65": {
 "age": "castle",
 "building": 45,
 "en": "Gillnets",
-"es": "Red agallera"
+"es": "Red agallera",
+"icono": 41
 },
 "655": {
 "age": "imperial",
 "civ": "Vietnamese",
 "en": "Imperial Skirmisher",
 "es": "Hostigador imperial",
+"icono": 229,
 "upgrades_to": 1155
 },
 "67": {
 "age": "feudal",
 "building": 103,
 "en": "Forging",
-"es": "Forja"
+"es": "Forja",
+"icono": 17
 },
 "678": {
 "age": "imperial",
 "civ": "Bulgarians",
 "en": "Elite Konnik",
 "es": "Konnik de élite",
+"icono": 506,
 "upgrades_to": 1255
 },
 "68": {
 "age": "castle",
 "building": 103,
 "en": "Iron Casting",
-"es": "Fundición de hierro"
+"es": "Fundición de hierro",
+"icono": 18
 },
 "680": {
 "age": "imperial",
 "civ": "Tatars",
 "en": "Elite Keshik",
 "es": "Keshik de élite",
+"icono": 507,
 "upgrades_to": 1230
 },
 "682": {
@@ -2360,6 +2701,7 @@
 "civ": "Cumans",
 "en": "Elite Kipchak",
 "es": "Kipchak de élite",
+"icono": 508,
 "upgrades_to": 1233
 },
 "684": {
@@ -2367,6 +2709,7 @@
 "civ": "Lithuanians",
 "en": "Elite Leitis",
 "es": "Leitis de élite",
+"icono": 509,
 "upgrades_to": 1236
 },
 "685": {
@@ -2375,6 +2718,7 @@
 "civ": "Bulgarians",
 "en": "Stirrups",
 "es": "Estribos",
+"icono": 33,
 "unique": true
 },
 "686": {
@@ -2383,6 +2727,7 @@
 "civ": "Bulgarians",
 "en": "Bagains",
 "es": "Bagains",
+"icono": 107,
 "unique": true
 },
 "687": {
@@ -2391,6 +2736,7 @@
 "civ": "Tatars",
 "en": "Silk Armor",
 "es": "Armadura de seda",
+"icono": 33,
 "unique": true
 },
 "688": {
@@ -2399,6 +2745,7 @@
 "civ": "Tatars",
 "en": "Timurid Siegecraft",
 "es": "Tácticas de asedio timúridas",
+"icono": 107,
 "unique": true
 },
 "689": {
@@ -2407,6 +2754,7 @@
 "civ": "Cumans",
 "en": "Steppe Husbandry",
 "es": "Ganadería de la estepa",
+"icono": 33,
 "unique": true
 },
 "690": {
@@ -2415,6 +2763,7 @@
 "civ": "Cumans",
 "en": "Cuman Mercenaries",
 "es": "Mercenarios cumanos",
+"icono": 107,
 "unique": true
 },
 "691": {
@@ -2423,6 +2772,7 @@
 "civ": "Lithuanians",
 "en": "Hill Forts",
 "es": "Fuertes en las colinas",
+"icono": 33,
 "unique": true
 },
 "692": {
@@ -2431,6 +2781,7 @@
 "civ": "Lithuanians",
 "en": "Tower Shields",
 "es": "Escudos rectangulares",
+"icono": 107,
 "unique": true
 },
 "7": {
@@ -2439,31 +2790,36 @@
 "civ": "Persians",
 "en": "Citadels",
 "es": "Ciudadelas",
+"icono": 107,
 "unique": true
 },
 "715": {
 "age": "imperial",
 "en": "Elite Steppe Lancer",
 "es": "Lancero estepario de élite",
+"icono": 274,
 "upgrades_to": 1372
 },
 "74": {
 "age": "feudal",
 "building": 103,
 "en": "Scale Mail Armor",
-"es": "Armadura de láminas"
+"es": "Armadura de láminas",
+"icono": 63
 },
 "75": {
 "age": "imperial",
 "building": 103,
 "en": "Blast Furnace",
-"es": "Alto horno"
+"es": "Alto horno",
+"icono": 21
 },
 "751": {
 "age": "imperial",
 "civ": "Burgundians",
 "en": "Elite Coustillier",
 "es": "Costiller de élite",
+"icono": 511,
 "upgrades_to": 1657
 },
 "753": {
@@ -2471,6 +2827,7 @@
 "civ": "Sicilians",
 "en": "Elite Serjeant",
 "es": "Serjeant de élite",
+"icono": 512,
 "upgrades_to": 1661
 },
 "754": {
@@ -2479,6 +2836,7 @@
 "civ": "Burgundians",
 "en": "Burgundian Vineyards",
 "es": "Viñedos de Borgoña",
+"icono": 33,
 "unique": true
 },
 "755": {
@@ -2487,6 +2845,7 @@
 "civ": "Burgundians",
 "en": "Flemish Revolution",
 "es": "Revolución flamenca",
+"icono": 107,
 "unique": true
 },
 "756": {
@@ -2495,6 +2854,7 @@
 "civ": "Sicilians",
 "en": "First Crusade",
 "es": "Primera cruzada",
+"icono": 33,
 "unique": true
 },
 "757": {
@@ -2503,25 +2863,29 @@
 "civ": "Sicilians",
 "en": "Hauberk",
 "es": "Cota de malla",
+"icono": 107,
 "unique": true
 },
 "76": {
 "age": "castle",
 "building": 103,
 "en": "Chain Mail Armor",
-"es": "Cota de malla"
+"es": "Cota de malla",
+"icono": 22
 },
 "77": {
 "age": "imperial",
 "building": 103,
 "en": "Plate Mail Armor",
-"es": "Arm. placas de malla"
+"es": "Arm. placas de malla",
+"icono": 64
 },
 "779": {
 "age": "imperial",
 "civ": "Poles",
 "en": "Elite Obuch",
 "es": "Martillo de guerra de élite",
+"icono": 513,
 "upgrades_to": 1703
 },
 "781": {
@@ -2529,6 +2893,7 @@
 "civ": "Bohemians",
 "en": "Elite Hussite Wagon",
 "es": "Carro de guerra husita de élite",
+"icono": 514,
 "upgrades_to": 1706
 },
 "782": {
@@ -2537,6 +2902,7 @@
 "civ": "Poles",
 "en": "Szlachta Privileges",
 "es": "Privilegios de Szlachta",
+"icono": 33,
 "unique": true
 },
 "783": {
@@ -2545,6 +2911,7 @@
 "civ": "Poles",
 "en": "Lechitic Legacy",
 "es": "Legado lequítico",
+"icono": 107,
 "unique": true
 },
 "784": {
@@ -2553,6 +2920,7 @@
 "civ": "Bohemians",
 "en": "Wagenburg Tactics",
 "es": "Tácticas de fuerte de carretas",
+"icono": 33,
 "unique": true
 },
 "785": {
@@ -2561,12 +2929,14 @@
 "civ": "Bohemians",
 "en": "Hussite Reforms",
 "es": "Reformas husitas",
+"icono": 107,
 "unique": true
 },
 "786": {
 "age": "imperial",
 "en": "Winged Hussar",
 "es": "Húsar alado",
+"icono": 371,
 "upgrades_to": 1707
 },
 "787": {
@@ -2574,37 +2944,43 @@
 "civ": "Bohemians",
 "en": "Houfnice",
 "es": "Obús",
+"icono": 372,
 "upgrades_to": 1709
 },
 "8": {
 "age": "feudal",
 "building": 109,
 "en": "Town Watch",
-"es": "Guardia urbana"
+"es": "Guardia urbana",
+"icono": 69
 },
 "80": {
 "age": "imperial",
 "building": 103,
 "en": "Plate Barding Armor",
-"es": "Arm. placas de cab."
+"es": "Arm. placas de cab.",
+"icono": 65
 },
 "81": {
 "age": "feudal",
 "building": 103,
 "en": "Scale Barding Armor",
-"es": "Arm. láminas de cab. pesada"
+"es": "Arm. láminas de cab. pesada",
+"icono": 66
 },
 "82": {
 "age": "castle",
 "building": 103,
 "en": "Chain Barding Armor",
-"es": "Arm. cota de malla de cab."
+"es": "Arm. cota de malla de cab.",
+"icono": 23
 },
 "826": {
 "age": "imperial",
 "civ": "Dravidians",
 "en": "Elite Urumi Swordsman",
 "es": "Espadachín urumi de élite",
+"icono": 515,
 "upgrades_to": 1737
 },
 "828": {
@@ -2612,6 +2988,7 @@
 "civ": "Bengalis",
 "en": "Elite Ratha",
 "es": "Ratha de élite",
+"icono": 520,
 "upgrades_to": 1761
 },
 "830": {
@@ -2619,6 +2996,7 @@
 "civ": "Gurjaras",
 "en": "Elite Chakram Thrower",
 "es": "Lanzador de chakrams de élite",
+"icono": 517,
 "upgrades_to": 1743
 },
 "831": {
@@ -2627,6 +3005,7 @@
 "civ": "Dravidians",
 "en": "Medical Corps",
 "es": "Cuerpo de médicos",
+"icono": 33,
 "unique": true
 },
 "832": {
@@ -2635,6 +3014,7 @@
 "civ": "Dravidians",
 "en": "Wootz Steel",
 "es": "Acero wootz",
+"icono": 107,
 "unique": true
 },
 "833": {
@@ -2643,6 +3023,7 @@
 "civ": "Bengalis",
 "en": "Paiks",
 "es": "Paiks",
+"icono": 33,
 "unique": true
 },
 "834": {
@@ -2651,6 +3032,7 @@
 "civ": "Bengalis",
 "en": "Mahayana",
 "es": "Mahāyāna",
+"icono": 107,
 "unique": true
 },
 "835": {
@@ -2659,6 +3041,7 @@
 "civ": "Gurjaras",
 "en": "Kshatriyas",
 "es": "Chatrias",
+"icono": 33,
 "unique": true
 },
 "836": {
@@ -2667,12 +3050,14 @@
 "civ": "Gurjaras",
 "en": "Frontier Guards",
 "es": "Guardas fronterizos",
+"icono": 107,
 "unique": true
 },
 "838": {
 "age": "imperial",
 "en": "Siege Elephant",
 "es": "Elefante de asedio",
+"icono": 395,
 "upgrades_to": 1746
 },
 "840": {
@@ -2680,6 +3065,7 @@
 "civ": "Indians",
 "en": "Elite Ghulam",
 "es": "Ghulam de élite",
+"icono": 518,
 "upgrades_to": 1749
 },
 "843": {
@@ -2687,19 +3073,22 @@
 "civ": "Gurjaras",
 "en": "E. Shrivamsha Rider",
 "es": "Jinete Shrivamsha de E.",
+"icono": 519,
 "upgrades_to": 1753
 },
 "875": {
 "age": "castle",
 "building": 12,
 "en": "Gambesons",
-"es": "Gambesones"
+"es": "Gambesones",
+"icono": 116
 },
 "882": {
 "age": "imperial",
 "civ": "Romans",
 "en": "Elite Centurion",
 "es": "Centurión de élite",
+"icono": 521,
 "upgrades_to": 1792
 },
 "883": {
@@ -2708,6 +3097,7 @@
 "civ": "Romans",
 "en": "Ballistas",
 "es": "Balistas",
+"icono": 33,
 "unique": true
 },
 "884": {
@@ -2716,6 +3106,7 @@
 "civ": "Romans",
 "en": "Comitatenses",
 "es": "Comitatenses",
+"icono": 107,
 "unique": true
 },
 "885": {
@@ -2723,6 +3114,7 @@
 "civ": "Romans",
 "en": "Legionary",
 "es": "Legionario",
+"icono": 139,
 "upgrades_to": 1793
 },
 "902": {
@@ -2731,55 +3123,64 @@
 "civ": "Italians",
 "en": "Pirotechnia",
 "es": "Pirotecnia",
+"icono": 107,
 "unique": true
 },
 "904": {
 "age": "imperial",
 "en": "Carrack",
 "es": "Carracas",
+"icono": 567,
 "upgrades_to": 2628
 },
 "905": {
 "age": "castle",
 "en": "Demolition Ship",
 "es": "Buque de demolición",
+"icono": 84,
 "upgrades_to": 527
 },
 "906": {
 "age": "feudal",
 "building": 45,
 "en": "Fishing Lines",
-"es": "Hilo de pesca"
+"es": "Hilo de pesca",
+"icono": 140
 },
 "907": {
 "age": "imperial",
 "building": 209,
 "en": "Carvel Hull",
-"es": "Casco liso"
+"es": "Casco liso",
+"icono": 141
 },
 "908": {
 "age": "castle",
 "building": 209,
 "en": "Clinker Construction",
-"es": "Construcción de cascos a tingladillo"
+"es": "Construcción de cascos a tingladillo",
+"icono": 142
 },
 "909": {
 "age": "castle",
 "building": 209,
 "en": "Siphons",
-"es": "Sifones"
+"es": "Sifones",
+"icono": 40
 },
 "910": {
 "age": "imperial",
 "building": 209,
 "en": "Incendiaries",
-"es": "Incendiarias"
+"es": "Incendiarias",
+"icono": 143
 },
 "918": {
 "age": "imperial",
 "civ": "Armenians",
 "en": "E. Composite Bowman",
 "es": "Arq. con arco compuesto de E.",
+"icono": 522,
 "upgrades_to": 1802
 },
 "920": {
@@ -2787,6 +3188,7 @@
 "civ": "Georgians",
 "en": "Elite Monaspa",
 "es": "Monaspa de élite",
+"icono": 523,
 "upgrades_to": 1805
 },
 "921": {
@@ -2795,6 +3197,7 @@
 "civ": "Armenians",
 "en": "Fereters",
 "es": "Relicario",
+"icono": 107,
 "unique": true
 },
 "922": {
@@ -2803,6 +3206,7 @@
 "civ": "Armenians",
 "en": "Cilician Fleet",
 "es": "Flota cilicia",
+"icono": 33,
 "unique": true
 },
 "923": {
@@ -2811,6 +3215,7 @@
 "civ": "Georgians",
 "en": "Svan Towers",
 "es": "Torres esvanas",
+"icono": 33,
 "unique": true
 },
 "924": {
@@ -2819,36 +3224,42 @@
 "civ": "Georgians",
 "en": "Aznauri Cavalry",
 "es": "Caballería aznauri",
+"icono": 107,
 "unique": true
 },
 "93": {
 "age": "castle",
 "building": 209,
 "en": "Ballistics",
-"es": "Balística"
+"es": "Balística",
+"icono": 25
 },
 "96": {
 "age": "imperial",
 "en": "Capped Ram",
 "es": "Ariete cubierto",
+"icono": 63,
 "upgrades_to": 422
 },
 "98": {
 "age": "castle",
 "en": "Elite Skirmisher",
 "es": "Hostigador de élite",
+"icono": 21,
 "upgrades_to": 6
 },
 "980": {
 "age": "imperial",
 "en": "Heavy Rocket Cart",
 "es": "Carro de cohetes pesado",
+"icono": 460,
 "upgrades_to": 1907
 },
 "982": {
 "age": "imperial",
 "en": "Elite Fire Lancer",
 "es": "Lancero incendiario de élite",
+"icono": 458,
 "upgrades_to": 1903
 },
 "991": {
@@ -2856,6 +3267,7 @@
 "civ": "Jurchens",
 "en": "Elite Iron Pagoda",
 "es": "Pagoda de hierro de élite",
+"icono": 524,
 "upgrades_to": 1910
 },
 "996": {
@@ -2864,6 +3276,7 @@
 "civ": "Jurchens",
 "en": "Fortified Bastions",
 "es": "Bastiones fortificados",
+"icono": 33,
 "unique": true
 },
 "997": {
@@ -2872,6 +3285,7 @@
 "civ": "Jurchens",
 "en": "Thunderclap Bombs",
 "es": "Bombas trueno",
+"icono": 107,
 "unique": true
 }
 },
@@ -2882,6 +3296,7 @@
 "civ": "Portuguese",
 "en": "Organ Gun",
 "es": "Cañón de salvas",
+"icono": 190,
 "unique": true
 },
 "1003": {
@@ -2890,6 +3305,7 @@
 "civ": "Portuguese",
 "en": "Elite Organ Gun",
 "es": "Cañón de salvas de élite",
+"icono": 496,
 "trigger_tech": 563,
 "unique": true
 },
@@ -2899,6 +3315,7 @@
 "civ": "Portuguese",
 "en": "Caravel",
 "es": "Carabela",
+"icono": 198,
 "unique": true
 },
 "1006": {
@@ -2907,6 +3324,7 @@
 "civ": "Portuguese",
 "en": "Elite Caravel",
 "es": "Carabela de élite",
+"icono": 497,
 "trigger_tech": 597,
 "unique": true
 },
@@ -2916,6 +3334,7 @@
 "civ": "Berbers",
 "en": "Camel Archer",
 "es": "Arquero en camello",
+"icono": 191,
 "unique": true
 },
 "1009": {
@@ -2924,6 +3343,7 @@
 "civ": "Berbers",
 "en": "Elite Camel Archer",
 "es": "Arquero en camello de élite",
+"icono": 498,
 "trigger_tech": 565,
 "unique": true
 },
@@ -2933,6 +3353,7 @@
 "civ": "Berbers",
 "en": "Genitour",
 "es": "Escaramuzador zenete",
+"icono": 201,
 "unique": true
 },
 "1012": {
@@ -2941,6 +3362,7 @@
 "civ": "Berbers",
 "en": "Elite Genitour",
 "es": "Escaramuzador zenete de élite",
+"icono": 499,
 "trigger_tech": 599,
 "unique": true
 },
@@ -2950,6 +3372,7 @@
 "civ": "Malians",
 "en": "Gbeto",
 "es": "Guardiana gbeto",
+"icono": 197,
 "unique": true
 },
 "1015": {
@@ -2958,6 +3381,7 @@
 "civ": "Malians",
 "en": "Elite Gbeto",
 "es": "Guardiana gbeto de élite",
+"icono": 500,
 "trigger_tech": 567,
 "unique": true
 },
@@ -2967,6 +3391,7 @@
 "civ": "Ethiopians",
 "en": "Shotel Warrior",
 "es": "Shotelai",
+"icono": 195,
 "unique": true
 },
 "1018": {
@@ -2975,6 +3400,7 @@
 "civ": "Ethiopians",
 "en": "Elite Shotel Warrior",
 "es": "Shotelai de élite",
+"icono": 501,
 "trigger_tech": 569,
 "unique": true
 },
@@ -2984,25 +3410,29 @@
 "civ": "Mongols",
 "en": "Mangudai",
 "es": "Mangudai",
+"icono": 42,
 "unique": true
 },
 "1103": {
 "age": "feudal",
 "building": 45,
 "en": "Fire Galley",
-"es": "Galera incendiaria"
+"es": "Galera incendiaria",
+"icono": 203
 },
 "1104": {
 "age": "feudal",
 "building": 45,
 "en": "Demolition Raft",
-"es": "Balsa de demolición"
+"es": "Balsa de demolición",
+"icono": 202
 },
 "1105": {
 "age": "castle",
 "building": 49,
 "en": "Siege Tower",
-"es": "Torre de asedio"
+"es": "Torre de asedio",
+"icono": 212
 },
 "1120": {
 "age": "castle",
@@ -3010,6 +3440,7 @@
 "civ": "Khmer",
 "en": "Ballista Elephant",
 "es": "Elefante con balista",
+"icono": 231,
 "unique": true
 },
 "1122": {
@@ -3018,6 +3449,7 @@
 "civ": "Khmer",
 "en": "Elite Ballista Elephant",
 "es": "Elefante con balista de élite",
+"icono": 502,
 "trigger_tech": 615,
 "unique": true
 },
@@ -3027,6 +3459,7 @@
 "civ": "Malay",
 "en": "Karambit Warrior",
 "es": "Recluta con karambit",
+"icono": 233,
 "unique": true
 },
 "1125": {
@@ -3035,6 +3468,7 @@
 "civ": "Malay",
 "en": "Elite Karambit Warrior",
 "es": "Recluta con karambit de élite",
+"icono": 503,
 "trigger_tech": 617,
 "unique": true
 },
@@ -3044,6 +3478,7 @@
 "civ": "Burmese",
 "en": "Arambai",
 "es": "Arambai",
+"icono": 230,
 "unique": true
 },
 "1128": {
@@ -3052,6 +3487,7 @@
 "civ": "Burmese",
 "en": "Elite Arambai",
 "es": "Arambai de élite",
+"icono": 504,
 "trigger_tech": 619,
 "unique": true
 },
@@ -3061,6 +3497,7 @@
 "civ": "Vietnamese",
 "en": "Rattan Archer",
 "es": "Arquero de ratán",
+"icono": 232,
 "unique": true
 },
 "1131": {
@@ -3069,6 +3506,7 @@
 "civ": "Vietnamese",
 "en": "Elite Rattan Archer",
 "es": "Arquero de ratán de élite",
+"icono": 505,
 "trigger_tech": 621,
 "unique": true
 },
@@ -3077,6 +3515,7 @@
 "building": 101,
 "en": "Battle Elephant",
 "es": "Elefante de combate",
+"icono": 228,
 "trigger_tech": 630
 },
 "1134": {
@@ -3084,6 +3523,7 @@
 "building": 101,
 "en": "Elite Battle Elephant",
 "es": "Elefante de combate de élite",
+"icono": 246,
 "trigger_tech": 631
 },
 "1155": {
@@ -3092,6 +3532,7 @@
 "civ": "Vietnamese",
 "en": "Imperial Skirmisher",
 "es": "Hostigador imperial",
+"icono": 229,
 "trigger_tech": 655,
 "unique": true
 },
@@ -3101,6 +3542,7 @@
 "civ": "Bulgarians",
 "en": "Konnik",
 "es": "Konnik",
+"icono": 249,
 "unique": true
 },
 "1227": {
@@ -3109,6 +3551,7 @@
 "civ": "Bulgarians",
 "en": "Elite Konnik",
 "es": "Konnik de élite",
+"icono": 506,
 "trigger_tech": 678,
 "unique": true
 },
@@ -3118,6 +3561,7 @@
 "civ": "Tatars",
 "en": "Keshik",
 "es": "Keshik",
+"icono": 251,
 "unique": true
 },
 "1230": {
@@ -3126,6 +3570,7 @@
 "civ": "Tatars",
 "en": "Elite Keshik",
 "es": "Keshik de élite",
+"icono": 507,
 "trigger_tech": 680,
 "unique": true
 },
@@ -3135,6 +3580,7 @@
 "civ": "Cumans",
 "en": "Kipchak",
 "es": "Kipchak",
+"icono": 252,
 "unique": true
 },
 "1233": {
@@ -3143,6 +3589,7 @@
 "civ": "Cumans",
 "en": "Elite Kipchak",
 "es": "Kipchak de élite",
+"icono": 508,
 "trigger_tech": 682,
 "unique": true
 },
@@ -3152,6 +3599,7 @@
 "civ": "Lithuanians",
 "en": "Leitis",
 "es": "Leitis",
+"icono": 253,
 "unique": true
 },
 "1236": {
@@ -3160,6 +3608,7 @@
 "civ": "Lithuanians",
 "en": "Elite Leitis",
 "es": "Leitis de élite",
+"icono": 509,
 "trigger_tech": 684,
 "unique": true
 },
@@ -3167,7 +3616,8 @@
 "age": "castle",
 "building": 104,
 "en": "Monk",
-"es": "Monje"
+"es": "Monje",
+"icono": 33
 },
 "1254": {
 "age": "castle",
@@ -3175,6 +3625,7 @@
 "civ": "Bulgarians",
 "en": "Konnik",
 "es": "Konnik",
+"icono": 249,
 "unique": true
 },
 "1255": {
@@ -3183,6 +3634,7 @@
 "civ": "Bulgarians",
 "en": "Elite Konnik",
 "es": "Konnik de élite",
+"icono": 506,
 "trigger_tech": 678,
 "unique": true
 },
@@ -3190,7 +3642,8 @@
 "age": "castle",
 "building": 49,
 "en": "Battering Ram",
-"es": "Ariete"
+"es": "Ariete",
+"icono": 74
 },
 "1260": {
 "age": "imperial",
@@ -3198,6 +3651,7 @@
 "civ": "Cumans",
 "en": "Elite Kipchak",
 "es": "Kipchak de élite",
+"icono": 508,
 "unique": true
 },
 "1263": {
@@ -3206,19 +3660,22 @@
 "civ": "Tatars",
 "en": "Flaming Camel",
 "es": "Camello llameante",
+"icono": 270,
 "unique": true
 },
 "128": {
 "age": "feudal",
 "building": 84,
 "en": "Trade Cart",
-"es": "Carreta de mercancías"
+"es": "Carreta de mercancías",
+"icono": 34
 },
 "13": {
 "age": "dark",
 "building": 2172,
 "en": "Fishing Ship",
-"es": "Pesquero"
+"es": "Pesquero",
+"icono": 24
 },
 "1302": {
 "age": "imperial",
@@ -3226,6 +3683,7 @@
 "civ": "Chinese",
 "en": "Dragon Ship",
 "es": "Bote dragón",
+"icono": 178,
 "trigger_tech": 1010,
 "unique": true
 },
@@ -3233,13 +3691,15 @@
 "age": "castle",
 "building": 101,
 "en": "Steppe Lancer",
-"es": "Lancero estepario"
+"es": "Lancero estepario",
+"icono": 273
 },
 "1372": {
 "age": "imperial",
 "building": 101,
 "en": "Elite Steppe Lancer",
 "es": "Lancero estepario de élite",
+"icono": 274,
 "trigger_tech": 715
 },
 "1655": {
@@ -3248,6 +3708,7 @@
 "civ": "Burgundians",
 "en": "Coustillier",
 "es": "Costiller",
+"icono": 355,
 "unique": true
 },
 "1657": {
@@ -3256,6 +3717,7 @@
 "civ": "Burgundians",
 "en": "Elite Coustillier",
 "es": "Costiller de élite",
+"icono": 511,
 "trigger_tech": 751,
 "unique": true
 },
@@ -3265,6 +3727,7 @@
 "civ": "Sicilians",
 "en": "Serjeant",
 "es": "Serjeant",
+"icono": 356,
 "unique": true
 },
 "1659": {
@@ -3273,6 +3736,7 @@
 "civ": "Sicilians",
 "en": "Elite Serjeant",
 "es": "Serjeant de élite",
+"icono": 512,
 "trigger_tech": 753,
 "unique": true
 },
@@ -3282,6 +3746,7 @@
 "civ": "Sicilians",
 "en": "Serjeant",
 "es": "Serjeant",
+"icono": 356,
 "unique": true
 },
 "1661": {
@@ -3290,6 +3755,7 @@
 "civ": "Sicilians",
 "en": "Elite Serjeant",
 "es": "Serjeant de élite",
+"icono": 512,
 "trigger_tech": 753,
 "unique": true
 },
@@ -3299,13 +3765,15 @@
 "civ": "Burgundians",
 "en": "Flemish Militia",
 "es": "Milicia flamenca",
+"icono": 354,
 "unique": true
 },
 "17": {
 "age": "feudal",
 "building": 45,
 "en": "Trade Cog",
-"es": "Barca mercante"
+"es": "Barca mercante",
+"icono": 23
 },
 "1701": {
 "age": "castle",
@@ -3313,6 +3781,7 @@
 "civ": "Poles",
 "en": "Obuch",
 "es": "Martillo de guerra",
+"icono": 369,
 "unique": true
 },
 "1703": {
@@ -3321,6 +3790,7 @@
 "civ": "Poles",
 "en": "Elite Obuch",
 "es": "Martillo de guerra de élite",
+"icono": 513,
 "trigger_tech": 779,
 "unique": true
 },
@@ -3330,6 +3800,7 @@
 "civ": "Bohemians",
 "en": "Hussite Wagon",
 "es": "Carro de guerra husita",
+"icono": 370,
 "unique": true
 },
 "1706": {
@@ -3338,6 +3809,7 @@
 "civ": "Bohemians",
 "en": "Elite Hussite Wagon",
 "es": "Carro de guerra husita de élite",
+"icono": 514,
 "trigger_tech": 781,
 "unique": true
 },
@@ -3346,6 +3818,7 @@
 "building": 101,
 "en": "Winged Hussar",
 "es": "Húsar alado",
+"icono": 371,
 "trigger_tech": 786,
 "unique": true
 },
@@ -3355,6 +3828,7 @@
 "civ": "Bohemians",
 "en": "Houfnice",
 "es": "Obús",
+"icono": 372,
 "trigger_tech": 787,
 "unique": true
 },
@@ -3364,6 +3838,7 @@
 "civ": "Dravidians",
 "en": "Urumi Swordsman",
 "es": "Espadachín urumi",
+"icono": 386,
 "unique": true
 },
 "1737": {
@@ -3372,6 +3847,7 @@
 "civ": "Dravidians",
 "en": "Elite Urumi Swordsman",
 "es": "Espadachín urumi de élite",
+"icono": 515,
 "trigger_tech": 826,
 "unique": true
 },
@@ -3381,6 +3857,7 @@
 "civ": "Gurjaras",
 "en": "Chakram Thrower",
 "es": "Lanzador de chakrams",
+"icono": 390,
 "unique": true
 },
 "1743": {
@@ -3389,6 +3866,7 @@
 "civ": "Gurjaras",
 "en": "Elite Chakram Thrower",
 "es": "Lanzador de chakrams de élite",
+"icono": 517,
 "trigger_tech": 830,
 "unique": true
 },
@@ -3396,13 +3874,15 @@
 "age": "castle",
 "building": 49,
 "en": "Armored Elephant",
-"es": "Elefante acorazado"
+"es": "Elefante acorazado",
+"icono": 394
 },
 "1746": {
 "age": "imperial",
 "building": 49,
 "en": "Siege Elephant",
 "es": "Elefante de asedio",
+"icono": 395,
 "trigger_tech": 838
 },
 "1747": {
@@ -3411,6 +3891,7 @@
 "civ": "Indians",
 "en": "Ghulam",
 "es": "Ghulam",
+"icono": 385,
 "unique": true
 },
 "1749": {
@@ -3419,6 +3900,7 @@
 "civ": "Indians",
 "en": "Elite Ghulam",
 "es": "Ghulam de élite",
+"icono": 518,
 "trigger_tech": 840,
 "unique": true
 },
@@ -3428,6 +3910,7 @@
 "civ": "Dravidians",
 "en": "Thirisadai",
 "es": "Thirisadai",
+"icono": 387,
 "unique": true
 },
 "1751": {
@@ -3436,6 +3919,7 @@
 "civ": "Gurjaras",
 "en": "Shrivamsha Rider",
 "es": "Jinete shrivamsha",
+"icono": 391,
 "unique": true
 },
 "1753": {
@@ -3444,6 +3928,7 @@
 "civ": "Gurjaras",
 "en": "E. Shrivamsha Rider",
 "es": "Jinete Shrivamsha de E.",
+"icono": 519,
 "trigger_tech": 843,
 "unique": true
 },
@@ -3453,6 +3938,7 @@
 "civ": "Gurjaras",
 "en": "Camel Scout",
 "es": "Explorador a camello",
+"icono": 392,
 "unique": true
 },
 "1759": {
@@ -3461,6 +3947,7 @@
 "civ": "Bengalis",
 "en": "Ratha",
 "es": "Ratha",
+"icono": 389,
 "unique": true
 },
 "1761": {
@@ -3469,6 +3956,7 @@
 "civ": "Bengalis",
 "en": "Elite Ratha",
 "es": "Ratha de élite",
+"icono": 520,
 "trigger_tech": 828,
 "unique": true
 },
@@ -3477,7 +3965,8 @@
 "building": 1665,
 "civ": "Sicilians",
 "en": "Spearman",
-"es": "Lancero"
+"es": "Lancero",
+"icono": 31
 },
 "1787": {
 "age": "castle",
@@ -3485,6 +3974,7 @@
 "civ": "Sicilians",
 "en": "Pikeman",
 "es": "Piquero",
+"icono": 11,
 "trigger_tech": 197,
 "upgrade_of": 1786
 },
@@ -3494,6 +3984,7 @@
 "civ": "Sicilians",
 "en": "Halberdier",
 "es": "Alabardero",
+"icono": 104,
 "trigger_tech": 429,
 "upgrade_of": 1787
 },
@@ -3503,6 +3994,7 @@
 "civ": "Romans",
 "en": "Centurion",
 "es": "Centurión",
+"icono": 405,
 "unique": true
 },
 "1792": {
@@ -3511,6 +4003,7 @@
 "civ": "Romans",
 "en": "Elite Centurion",
 "es": "Centurión de élite",
+"icono": 521,
 "trigger_tech": 882,
 "unique": true
 },
@@ -3520,6 +4013,7 @@
 "civ": "Romans",
 "en": "Legionary",
 "es": "Legionario",
+"icono": 139,
 "trigger_tech": 885,
 "unique": true
 },
@@ -3527,7 +4021,8 @@
 "age": "imperial",
 "building": 45,
 "en": "Dromon",
-"es": "Dromón"
+"es": "Dromón",
+"icono": 406
 },
 "1800": {
 "age": "castle",
@@ -3535,6 +4030,7 @@
 "civ": "Armenians",
 "en": "Composite Bowman",
 "es": "Arquero arco compuesto",
+"icono": 407,
 "unique": true
 },
 "1802": {
@@ -3543,6 +4039,7 @@
 "civ": "Armenians",
 "en": "E. Composite Bowman",
 "es": "Arq. con arco compuesto de E.",
+"icono": 522,
 "trigger_tech": 918,
 "unique": true
 },
@@ -3552,6 +4049,7 @@
 "civ": "Georgians",
 "en": "Monaspa",
 "es": "Monaspa",
+"icono": 408,
 "unique": true
 },
 "1805": {
@@ -3560,6 +4058,7 @@
 "civ": "Georgians",
 "en": "Elite Monaspa",
 "es": "Monaspa de élite",
+"icono": 523,
 "trigger_tech": 920,
 "unique": true
 },
@@ -3569,6 +4068,7 @@
 "civ": "Armenians",
 "en": "Warrior Priest",
 "es": "Sacerdote guerrero",
+"icono": 409,
 "unique": true
 },
 "1813": {
@@ -3577,6 +4077,7 @@
 "civ": "Persians",
 "en": "Savar",
 "es": "Savar",
+"icono": 410,
 "trigger_tech": 526,
 "unique": true
 },
@@ -3584,32 +4085,37 @@
 "age": "castle",
 "building": 87,
 "en": "Slinger",
-"es": "Hondero"
+"es": "Hondero",
+"icono": 143
 },
 "1901": {
 "age": "castle",
 "building": 12,
 "en": "Fire Lancer",
-"es": "Lancero incendiario"
+"es": "Lancero incendiario",
+"icono": 457
 },
 "1903": {
 "age": "imperial",
 "building": 12,
 "en": "Elite Fire Lancer",
 "es": "Lancero incendiario de élite",
+"icono": 458,
 "trigger_tech": 982
 },
 "1904": {
 "age": "castle",
 "building": 49,
 "en": "Rocket Cart",
-"es": "Carro de cohetes"
+"es": "Carro de cohetes",
+"icono": 459
 },
 "1907": {
 "age": "imperial",
 "building": 49,
 "en": "Heavy Rocket Cart",
 "es": "Carro de cohetes pesado",
+"icono": 460,
 "trigger_tech": 980
 },
 "1908": {
@@ -3618,6 +4124,7 @@
 "civ": "Jurchens",
 "en": "Iron Pagoda",
 "es": "Pagoda de hierro",
+"icono": 461,
 "unique": true
 },
 "1910": {
@@ -3626,6 +4133,7 @@
 "civ": "Jurchens",
 "en": "Elite Iron Pagoda",
 "es": "Pagoda de hierro de élite",
+"icono": 524,
 "trigger_tech": 991,
 "unique": true
 },
@@ -3635,6 +4143,7 @@
 "civ": "Jurchens",
 "en": "Grenadier",
 "es": "Granadero",
+"icono": 462,
 "unique": true
 },
 "1920": {
@@ -3643,6 +4152,7 @@
 "civ": "Khitans",
 "en": "Liao Dao",
 "es": "Liao Dao",
+"icono": 463,
 "unique": true
 },
 "1922": {
@@ -3651,6 +4161,7 @@
 "civ": "Khitans",
 "en": "Elite Liao Dao",
 "es": "Liao Dao de élite",
+"icono": 525,
 "trigger_tech": 1002,
 "unique": true
 },
@@ -3660,32 +4171,37 @@
 "civ": "Khitans",
 "en": "Mounted Trebuchet",
 "es": "Trebuchet montado",
+"icono": 464,
 "unique": true
 },
 "1942": {
 "age": "imperial",
 "building": 49,
 "en": "Traction Trebuchet",
-"es": "Mangonel"
+"es": "Mangonel",
+"icono": 428
 },
 "1944": {
 "age": "castle",
 "building": 101,
 "en": "Hei Guang Cavalry",
-"es": "Caballería de Hei Guang"
+"es": "Caballería de Hei Guang",
+"icono": 429
 },
 "1946": {
 "age": "imperial",
 "building": 101,
 "en": "Heavy Hei Guang Cavalry",
 "es": "Caballería pesada de Hei Guang",
+"icono": 430,
 "trigger_tech": 1033
 },
 "1948": {
 "age": "imperial",
 "building": 45,
 "en": "Lou Chuan",
-"es": "Lou Chuan"
+"es": "Lou Chuan",
+"icono": 431
 },
 "1949": {
 "age": "castle",
@@ -3693,6 +4209,7 @@
 "civ": "Wei",
 "en": "Tiger Cavalry",
 "es": "Caballería tigresa",
+"icono": 432,
 "unique": true
 },
 "1951": {
@@ -3701,6 +4218,7 @@
 "civ": "Wei",
 "en": "Elite Tiger Cavalry",
 "es": "Caballería tigresa de élite",
+"icono": 526,
 "trigger_tech": 1036,
 "unique": true
 },
@@ -3710,6 +4228,7 @@
 "civ": "Wei",
 "en": "Xianbei Raider",
 "es": "Saqueador xianbei",
+"icono": 433,
 "unique": true
 },
 "1954": {
@@ -3718,6 +4237,7 @@
 "civ": "Wei",
 "en": "Cao Cao",
 "es": "Cao Cao",
+"icono": 465,
 "unique": true
 },
 "1959": {
@@ -3726,6 +4246,7 @@
 "civ": "Shu",
 "en": "White Feather Guard",
 "es": "Guardia de la pluma blanca",
+"icono": 434,
 "unique": true
 },
 "1961": {
@@ -3734,6 +4255,7 @@
 "civ": "Shu",
 "en": "Elite White Feather Guard",
 "es": "Guardia de la pluma blanca de élite",
+"icono": 527,
 "trigger_tech": 1064,
 "unique": true
 },
@@ -3743,6 +4265,7 @@
 "civ": "Shu",
 "en": "War Chariot",
 "es": "Carro de guerra",
+"icono": 435,
 "unique": true
 },
 "1966": {
@@ -3751,6 +4274,7 @@
 "civ": "Shu",
 "en": "Liu Bei",
 "es": "Liu Bei",
+"icono": 466,
 "unique": true
 },
 "1968": {
@@ -3759,6 +4283,7 @@
 "civ": "Wu",
 "en": "Fire Archer",
 "es": "Arquero de fuego",
+"icono": 436,
 "unique": true
 },
 "1970": {
@@ -3767,6 +4292,7 @@
 "civ": "Wu",
 "en": "Elite Fire Archer",
 "es": "Carro de fuego de élite",
+"icono": 528,
 "trigger_tech": 1074,
 "unique": true
 },
@@ -3776,6 +4302,7 @@
 "civ": "Wu",
 "en": "Jian Swordsman",
 "es": "Espadachín de Jian",
+"icono": 437,
 "trigger_tech": 1156,
 "unique": true
 },
@@ -3785,6 +4312,7 @@
 "civ": "Wu",
 "en": "Sun Jian",
 "es": "Sun Jian",
+"icono": 467,
 "unique": true
 },
 "207": {
@@ -3793,6 +4321,7 @@
 "civ": "Indians",
 "en": "Imperial Camel Rider",
 "es": "Jinete de camello imperial",
+"icono": 185,
 "trigger_tech": 521,
 "unique": true
 },
@@ -3801,6 +4330,7 @@
 "building": 45,
 "en": "War Galley",
 "es": "Galera de guerra",
+"icono": 25,
 "trigger_tech": 34,
 "upgrade_of": 539
 },
@@ -3810,6 +4340,7 @@
 "civ": "Achaemenids",
 "en": "Immortal (Melee)",
 "es": "Inmortal (cuerpo a cuerpo)",
+"icono": 621,
 "unique": true
 },
 "2102": {
@@ -3818,6 +4349,7 @@
 "civ": "Achaemenids",
 "en": "Elite Immortal (Melee)",
 "es": "Inmortal de élite (cuerpo a cuerpo)",
+"icono": 621,
 "trigger_tech": 1115,
 "unique": true
 },
@@ -3827,6 +4359,7 @@
 "civ": "Athenians",
 "en": "Strategos",
 "es": "Strategos",
+"icono": 624,
 "unique": true
 },
 "2105": {
@@ -3835,6 +4368,7 @@
 "civ": "Athenians",
 "en": "Elite Strategos",
 "es": "Strategos de élite",
+"icono": 624,
 "trigger_tech": 1125,
 "unique": true
 },
@@ -3844,6 +4378,7 @@
 "civ": "Spartans",
 "en": "Hippeus",
 "es": "Hippeus",
+"icono": 623,
 "unique": true
 },
 "2108": {
@@ -3852,6 +4387,7 @@
 "civ": "Spartans",
 "en": "Elite Hippeus",
 "es": "Hippeus de élite",
+"icono": 623,
 "trigger_tech": 1135,
 "unique": true
 },
@@ -3859,26 +4395,30 @@
 "age": "castle",
 "building": 12,
 "en": "Hoplite",
-"es": "Hoplita"
+"es": "Hoplita",
+"icono": 625
 },
 "2111": {
 "age": "imperial",
 "building": 12,
 "en": "Elite Hoplite",
 "es": "Hoplita de élite",
+"icono": 626,
 "trigger_tech": 1137
 },
 "2123": {
 "age": "dark",
 "building": 2172,
 "en": "Lembos",
-"es": "Lembus"
+"es": "Lembus",
+"icono": 656
 },
 "2124": {
 "age": "feudal",
 "building": 2172,
 "en": "War Lembos",
 "es": "Lembus de guerra",
+"icono": 657,
 "trigger_tech": 1144,
 "upgrade_of": 2123
 },
@@ -3887,6 +4427,7 @@
 "building": 2172,
 "en": "Heavy Lembos",
 "es": "Lembus pesado",
+"icono": 658,
 "trigger_tech": 1145,
 "upgrade_of": 2124
 },
@@ -3895,6 +4436,7 @@
 "building": 2172,
 "en": "Elite Lembos",
 "es": "Lembus de élite",
+"icono": 659,
 "trigger_tech": 1146,
 "upgrade_of": 2125
 },
@@ -3902,13 +4444,15 @@
 "age": "feudal",
 "building": 2119,
 "en": "Monoreme",
-"es": "Monorreme"
+"es": "Monorreme",
+"icono": 661
 },
 "2128": {
 "age": "castle",
 "building": 2119,
 "en": "Bireme",
 "es": "Birreme",
+"icono": 662,
 "trigger_tech": 1148,
 "upgrade_of": 2127
 },
@@ -3917,6 +4461,7 @@
 "building": 2119,
 "en": "Trireme",
 "es": "Trirreme",
+"icono": 663,
 "trigger_tech": 1149,
 "upgrade_of": 2128
 },
@@ -3924,13 +4469,15 @@
 "age": "feudal",
 "building": 2119,
 "en": "Galley",
-"es": "Galera"
+"es": "Galera",
+"icono": 664
 },
 "2131": {
 "age": "castle",
 "building": 2119,
 "en": "War Galley",
 "es": "Galera de guerra",
+"icono": 666,
 "trigger_tech": 1151,
 "upgrade_of": 2130
 },
@@ -3939,6 +4486,7 @@
 "building": 2119,
 "en": "Elite Galley",
 "es": "Galera de élite",
+"icono": 665,
 "trigger_tech": 1152,
 "upgrade_of": 2131
 },
@@ -3946,13 +4494,15 @@
 "age": "feudal",
 "building": 2119,
 "en": "Incendiary Raft",
-"es": "Balsa incendiaria"
+"es": "Balsa incendiaria",
+"icono": 667
 },
 "2134": {
 "age": "castle",
 "building": 2119,
 "en": "Incendiary Ship",
 "es": "Barco flamígero",
+"icono": 668,
 "trigger_tech": 1154,
 "upgrade_of": 2133
 },
@@ -3961,6 +4511,7 @@
 "building": 2119,
 "en": "Heavy Incen. Ship",
 "es": "Barco incendiario pesado",
+"icono": 669,
 "trigger_tech": 1155,
 "upgrade_of": 2134
 },
@@ -3968,13 +4519,15 @@
 "age": "castle",
 "building": 2119,
 "en": "Catapult Ship",
-"es": "Barco con catapulta"
+"es": "Barco con catapulta",
+"icono": 671
 },
 "2139": {
 "age": "imperial",
 "building": 2119,
 "en": "Onager Ship",
 "es": "Barco onagro",
+"icono": 672,
 "trigger_tech": 1159,
 "upgrade_of": 2138
 },
@@ -3982,26 +4535,30 @@
 "age": "imperial",
 "building": 2119,
 "en": "Leviathan",
-"es": "Leviatán"
+"es": "Leviatán",
+"icono": 670
 },
 "2148": {
 "age": "dark",
 "building": 2172,
 "en": "Transport Ship",
-"es": "Barco de transporte"
+"es": "Barco de transporte",
+"icono": 655
 },
 "2149": {
 "age": "feudal",
 "building": 2172,
 "en": "Merchant Ship",
-"es": "Buque mercante"
+"es": "Buque mercante",
+"icono": 660
 },
 "2150": {
 "age": "castle",
 "building": 101,
 "civ": "Achaemenids",
 "en": "War Chariot",
-"es": "Carro de guerra"
+"es": "Carro de guerra",
+"icono": 627
 },
 "2151": {
 "age": "imperial",
@@ -4009,6 +4566,7 @@
 "civ": "Achaemenids",
 "en": "Elite War Chariot",
 "es": "Carro de guerra de élite",
+"icono": 628,
 "trigger_tech": 1171
 },
 "2162": {
@@ -4017,6 +4575,7 @@
 "civ": "Spartans",
 "en": "Polemarch",
 "es": "Polemarca",
+"icono": 622,
 "unique": true
 },
 "232": {
@@ -4025,6 +4584,7 @@
 "civ": "Celts",
 "en": "Woad Raider",
 "es": "Incursor azul",
+"icono": 47,
 "unique": true
 },
 "2382": {
@@ -4033,6 +4593,7 @@
 "civ": "Macedonians",
 "en": "Companion Cavalry",
 "es": "Caballería de compañeros",
+"icono": 709,
 "unique": true
 },
 "2383": {
@@ -4041,6 +4602,7 @@
 "civ": "Macedonians",
 "en": "Elite Companion Cavalry",
 "es": "Caballería de compañeros de élite",
+"icono": 709,
 "trigger_tech": 1289,
 "unique": true
 },
@@ -4050,6 +4612,7 @@
 "civ": "Macedonians",
 "en": "Phalangite",
 "es": "Falangita",
+"icono": 704,
 "unique": true
 },
 "2385": {
@@ -4058,6 +4621,7 @@
 "civ": "Macedonians",
 "en": "Elite Phalangite",
 "es": "Falangita de élite",
+"icono": 704,
 "trigger_tech": 1291,
 "unique": true
 },
@@ -4067,6 +4631,7 @@
 "civ": "Thracians",
 "en": "Rhomphaia Warrior",
 "es": "Guerrero con romfaia",
+"icono": 703,
 "unique": true
 },
 "2387": {
@@ -4075,6 +4640,7 @@
 "civ": "Thracians",
 "en": "Elite Rhomphaia Warrior",
 "es": "Guerrero con romfaia de élite",
+"icono": 703,
 "trigger_tech": 1301,
 "unique": true
 },
@@ -4084,6 +4650,7 @@
 "civ": "Puru",
 "en": "Pattiyodha Longbowman",
 "es": "Arquero de tiro largo pattiyodha",
+"icono": 702,
 "unique": true
 },
 "2389": {
@@ -4092,6 +4659,7 @@
 "civ": "Puru",
 "en": "Elite Pattiyodha Longbowman",
 "es": "Arquero de tiro largo pattiyodha de élite",
+"icono": 702,
 "trigger_tech": 1326,
 "unique": true
 },
@@ -4101,6 +4669,7 @@
 "civ": "Persians",
 "en": "War Elephant",
 "es": "Elefante de guerra",
+"icono": 43,
 "unique": true
 },
 "2390": {
@@ -4109,6 +4678,7 @@
 "civ": "Puru",
 "en": "Sannāhya",
 "es": "Sannāhya",
+"icono": 710,
 "unique": true
 },
 "2391": {
@@ -4117,6 +4687,7 @@
 "civ": "Puru",
 "en": "Elite Sannāhya",
 "es": "Sannāhya de élite",
+"icono": 710,
 "trigger_tech": 1328,
 "unique": true
 },
@@ -4125,6 +4696,7 @@
 "building": 87,
 "en": "Crossbowman",
 "es": "Ballestero",
+"icono": 18,
 "trigger_tech": 100,
 "upgrade_of": 4
 },
@@ -4134,19 +4706,22 @@
 "civ": "Teutons",
 "en": "Teutonic Knight",
 "es": "Caballero teutónico",
+"icono": 45,
 "unique": true
 },
 "250": {
 "age": "castle",
 "building": 45,
 "en": "Longship",
-"es": "Drakkar"
+"es": "Drakkar",
+"icono": 40
 },
 "2550": {
 "age": "dark",
 "building": 12,
 "en": "Champi Scout",
 "es": "Explorador champi",
+"icono": 540,
 "trigger_tech": 1350
 },
 "2552": {
@@ -4154,6 +4729,7 @@
 "building": 12,
 "en": "Champi Warrior",
 "es": "Guerrero champi",
+"icono": 541,
 "trigger_tech": 1351
 },
 "2554": {
@@ -4161,6 +4737,7 @@
 "building": 12,
 "en": "Elite Champi Warrior",
 "es": "Guerrero champi de élite",
+"icono": 542,
 "trigger_tech": 1352
 },
 "2562": {
@@ -4169,6 +4746,7 @@
 "civ": "Muisca",
 "en": "Guecha Warrior",
 "es": "Guerrero guecha",
+"icono": 543,
 "unique": true
 },
 "2564": {
@@ -4177,6 +4755,7 @@
 "civ": "Muisca",
 "en": "Elite Guecha Warrior",
 "es": "Guerrero guecha de élite",
+"icono": 544,
 "trigger_tech": 1364,
 "unique": true
 },
@@ -4186,6 +4765,7 @@
 "civ": "Mapuche",
 "en": "Kona",
 "es": "Kona",
+"icono": 545,
 "unique": true
 },
 "2568": {
@@ -4194,6 +4774,7 @@
 "civ": "Mapuche",
 "en": "Elite Kona",
 "es": "Kona de élite",
+"icono": 546,
 "trigger_tech": 1376,
 "unique": true
 },
@@ -4203,6 +4784,7 @@
 "civ": "Mapuche",
 "en": "Bolas Rider",
 "es": "Jinete con boleadoras",
+"icono": 547,
 "unique": true
 },
 "2571": {
@@ -4211,6 +4793,7 @@
 "civ": "Mapuche",
 "en": "Elite Bolas Rider",
 "es": "Jinete con boleadoras de élite",
+"icono": 548,
 "trigger_tech": 1378,
 "unique": true
 },
@@ -4220,6 +4803,7 @@
 "civ": "Tupi",
 "en": "Blackwood Archer",
 "es": "Arquero de los bosques",
+"icono": 549,
 "unique": true
 },
 "2581": {
@@ -4228,6 +4812,7 @@
 "civ": "Tupi",
 "en": "Elite Blackwood Archer",
 "es": "Arquero de los bosques de élite",
+"icono": 550,
 "trigger_tech": 1389,
 "unique": true
 },
@@ -4237,6 +4822,7 @@
 "civ": "Tupi",
 "en": "Ibirapema Warrior",
 "es": "Guerrero ibirapema",
+"icono": 551,
 "unique": true
 },
 "2584": {
@@ -4245,6 +4831,7 @@
 "civ": "Tupi",
 "en": "Elite Ibirapema Warrior",
 "es": "Guerrero ibirapema de élite",
+"icono": 552,
 "trigger_tech": 1391,
 "unique": true
 },
@@ -4254,6 +4841,7 @@
 "civ": "Muisca",
 "en": "Temple Guard",
 "es": "Guardia del templo",
+"icono": 553,
 "unique": true
 },
 "2587": {
@@ -4262,6 +4850,7 @@
 "civ": "Muisca",
 "en": "Elite Temple Guard",
 "es": "Guardia del templo de élite",
+"icono": 554,
 "trigger_tech": 1401,
 "unique": true
 },
@@ -4270,19 +4859,22 @@
 "building": 12,
 "en": "Champi Runner",
 "es": "Corredor champi",
+"icono": 555,
 "trigger_tech": 1402
 },
 "2626": {
 "age": "feudal",
 "building": 45,
 "en": "Hulk",
-"es": "Urca"
+"es": "Urca",
+"icono": 566
 },
 "2627": {
 "age": "castle",
 "building": 45,
 "en": "War Hulk",
 "es": "Urca de guerra",
+"icono": 565,
 "trigger_tech": 34,
 "upgrade_of": 2626
 },
@@ -4291,6 +4883,7 @@
 "building": 45,
 "en": "Carrack",
 "es": "Carracas",
+"icono": 567,
 "trigger_tech": 904,
 "upgrade_of": 2627
 },
@@ -4298,32 +4891,37 @@
 "age": "imperial",
 "building": 45,
 "en": "Catapult Galleon",
-"es": "Galeón con catapulta"
+"es": "Galeón con catapulta",
+"icono": 591
 },
 "2700": {
 "age": "castle",
 "building": 87,
 "en": "Mounted Crossbowman",
-"es": "Ballestero montado"
+"es": "Ballestero montado",
+"icono": 900
 },
 "2701": {
 "age": "imperial",
 "building": 87,
 "en": "H. Mounted Crossbowman",
 "es": "Ballestero m. pesado",
+"icono": 901,
 "trigger_tech": 1451
 },
 "2703": {
 "age": "castle",
 "building": 12,
 "en": "Varangian Guard",
-"es": "Guardia varega"
+"es": "Guardia varega",
+"icono": 902
 },
 "2704": {
 "age": "imperial",
 "building": 12,
 "en": "E. Varangian Guard",
 "es": "G. varego de élite",
+"icono": 903,
 "trigger_tech": 1454
 },
 "2705": {
@@ -4332,6 +4930,7 @@
 "civ": "Saxons",
 "en": "Hearth Troop",
 "es": "Tropas del hogar",
+"icono": 904,
 "unique": true
 },
 "2706": {
@@ -4340,6 +4939,7 @@
 "civ": "Saxons",
 "en": "Elite Hearth Troop",
 "es": "Tropas del hogar de élite",
+"icono": 905,
 "trigger_tech": 1462,
 "unique": true
 },
@@ -4349,6 +4949,7 @@
 "civ": "Varangians",
 "en": "Jarl",
 "es": "Jarl",
+"icono": 906,
 "unique": true
 },
 "2709": {
@@ -4357,6 +4958,7 @@
 "civ": "Varangians",
 "en": "Elite Jarl",
 "es": "Jarl de élite",
+"icono": 907,
 "trigger_tech": 1472,
 "unique": true
 },
@@ -4366,6 +4968,7 @@
 "civ": "Danes",
 "en": "Jomsviking",
 "es": "Vikingo de Jomsborg",
+"icono": 908,
 "unique": true
 },
 "2712": {
@@ -4374,6 +4977,7 @@
 "civ": "Danes",
 "en": "Elite Jomsviking",
 "es": "Vikingo de Jomsborg de élite",
+"icono": 909,
 "trigger_tech": 1482,
 "unique": true
 },
@@ -4381,13 +4985,15 @@
 "age": "castle",
 "building": 49,
 "en": "Scorpion",
-"es": "Escorpión"
+"es": "Escorpión",
+"icono": 80
 },
 "280": {
 "age": "castle",
 "building": 49,
 "en": "Mangonel",
-"es": "Mangana"
+"es": "Mangana",
+"icono": 27
 },
 "281": {
 "age": "castle",
@@ -4395,6 +5001,7 @@
 "civ": "Franks",
 "en": "Throwing Axeman",
 "es": "Lanzador de hachas",
+"icono": 46,
 "unique": true
 },
 "282": {
@@ -4403,6 +5010,7 @@
 "civ": "Saracens",
 "en": "Mameluke",
 "es": "Mameluco",
+"icono": 37,
 "unique": true
 },
 "283": {
@@ -4410,6 +5018,7 @@
 "building": 101,
 "en": "Cavalier",
 "es": "Caballero",
+"icono": 49,
 "trigger_tech": 209,
 "upgrade_of": 38
 },
@@ -4419,32 +5028,37 @@
 "civ": "Japanese",
 "en": "Samurai",
 "es": "Samurai",
+"icono": 44,
 "unique": true
 },
 "329": {
 "age": "castle",
 "building": 101,
 "en": "Camel Rider",
-"es": "Jinete de camello"
+"es": "Jinete de camello",
+"icono": 78
 },
 "330": {
 "age": "imperial",
 "building": 101,
 "en": "Heavy Camel Rider",
 "es": "Jinete de camello pesado",
+"icono": 79,
 "trigger_tech": 236
 },
 "331": {
 "age": "imperial",
 "building": 82,
 "en": "Trebuchet",
-"es": "Lanzapiedras"
+"es": "Lanzapiedras",
+"icono": 29
 },
 "358": {
 "age": "castle",
 "building": 12,
 "en": "Pikeman",
 "es": "Piquero",
+"icono": 11,
 "trigger_tech": 197,
 "upgrade_of": 93
 },
@@ -4453,6 +5067,7 @@
 "building": 12,
 "en": "Halberdier",
 "es": "Alabardero",
+"icono": 104,
 "trigger_tech": 429,
 "upgrade_of": 358
 },
@@ -4460,25 +5075,29 @@
 "age": "imperial",
 "building": 49,
 "en": "Bombard Cannon",
-"es": "Cañón de asedio"
+"es": "Cañón de asedio",
+"icono": 30
 },
 "38": {
 "age": "castle",
 "building": 101,
 "en": "Knight",
-"es": "Caballero"
+"es": "Caballero",
+"icono": 1
 },
 "39": {
 "age": "castle",
 "building": 87,
 "en": "Cavalry Archer",
-"es": "Arquero a caballo"
+"es": "Arquero a caballo",
+"icono": 19
 },
 "4": {
 "age": "feudal",
 "building": 87,
 "en": "Archer",
-"es": "Arquero"
+"es": "Arquero",
+"icono": 17
 },
 "40": {
 "age": "castle",
@@ -4486,6 +5105,7 @@
 "civ": "Byzantines",
 "en": "Cataphract",
 "es": "Catafracta",
+"icono": 35,
 "unique": true
 },
 "41": {
@@ -4494,19 +5114,22 @@
 "civ": "Goths",
 "en": "Huskarl",
 "es": "Huscarle",
+"icono": 50,
 "unique": true
 },
 "420": {
 "age": "imperial",
 "building": 45,
 "en": "Cannon Galleon",
-"es": "Galeón artillado"
+"es": "Galeón artillado",
+"icono": 55
 },
 "422": {
 "age": "imperial",
 "building": 49,
 "en": "Capped Ram",
 "es": "Ariete cubierto",
+"icono": 63,
 "trigger_tech": 96,
 "upgrade_of": 1258
 },
@@ -4514,13 +5137,15 @@
 "age": "castle",
 "building": 82,
 "en": "Petard",
-"es": "Petardo"
+"es": "Petardo",
+"icono": 113
 },
 "441": {
 "age": "imperial",
 "building": 101,
 "en": "Hussar",
 "es": "Húsar",
+"icono": 103,
 "trigger_tech": 428,
 "upgrade_of": 546
 },
@@ -4529,6 +5154,7 @@
 "building": 45,
 "en": "Galleon",
 "es": "Galeón",
+"icono": 60,
 "trigger_tech": 35,
 "upgrade_of": 21
 },
@@ -4536,7 +5162,8 @@
 "age": "feudal",
 "building": 101,
 "en": "Scout Cavalry",
-"es": "Caballería de exploración"
+"es": "Caballería de exploración",
+"icono": 64
 },
 "46": {
 "age": "castle",
@@ -4544,6 +5171,7 @@
 "civ": "Turks",
 "en": "Janissary",
 "es": "Jenízaro",
+"icono": 39,
 "unique": true
 },
 "473": {
@@ -4551,6 +5179,7 @@
 "building": 12,
 "en": "Two-Handed Swordsman",
 "es": "Espadachín de mandoble",
+"icono": 12,
 "trigger_tech": 217,
 "upgrade_of": 77
 },
@@ -4559,6 +5188,7 @@
 "building": 87,
 "en": "Heavy Cavalry Archer",
 "es": "Arquero de caballería pesada",
+"icono": 71,
 "trigger_tech": 218,
 "upgrade_of": 39
 },
@@ -4567,6 +5197,7 @@
 "building": 87,
 "en": "Arbalester",
 "es": "Arbalestero",
+"icono": 90,
 "trigger_tech": 237,
 "upgrade_of": 24
 },
@@ -4574,13 +5205,15 @@
 "age": "imperial",
 "building": 87,
 "en": "Hand Cannoneer",
-"es": "Artillero manual"
+"es": "Artillero manual",
+"icono": 22
 },
 "527": {
 "age": "castle",
 "building": 45,
 "en": "Demolition Ship",
 "es": "Buque de demolición",
+"icono": 84,
 "trigger_tech": 905,
 "upgrade_of": 1104
 },
@@ -4589,6 +5222,7 @@
 "building": 45,
 "en": "Heavy Demo Ship",
 "es": "Buque de dem. pesado",
+"icono": 83,
 "trigger_tech": 244,
 "upgrade_of": 527
 },
@@ -4597,6 +5231,7 @@
 "building": 45,
 "en": "Fire Ship",
 "es": "Barco incendiario",
+"icono": 86,
 "trigger_tech": 34,
 "upgrade_of": 1103
 },
@@ -4606,6 +5241,7 @@
 "civ": "Britons",
 "en": "Elite Longbowman",
 "es": "Arquero con arco largo de élite",
+"icono": 472,
 "trigger_tech": 360,
 "unique": true
 },
@@ -4615,6 +5251,7 @@
 "civ": "Franks",
 "en": "Elite Throwing Axeman",
 "es": "Lanzador de hachas de élite",
+"icono": 473,
 "trigger_tech": 363,
 "unique": true
 },
@@ -4623,6 +5260,7 @@
 "building": 45,
 "en": "Fast Fire Ship",
 "es": "Barco incendiario rápido",
+"icono": 85,
 "trigger_tech": 246,
 "upgrade_of": 529
 },
@@ -4631,6 +5269,7 @@
 "building": 45,
 "en": "Elite Longship",
 "es": "Drakkar de élite",
+"icono": 474,
 "trigger_tech": 372
 },
 "534": {
@@ -4639,6 +5278,7 @@
 "civ": "Celts",
 "en": "Elite Woad Raider",
 "es": "Incursor azul de élite",
+"icono": 475,
 "trigger_tech": 370,
 "unique": true
 },
@@ -4646,13 +5286,15 @@
 "age": "feudal",
 "building": 45,
 "en": "Galley",
-"es": "Galera"
+"es": "Galera",
+"icono": 87
 },
 "542": {
 "age": "imperial",
 "building": 49,
 "en": "Heavy Scorpion",
 "es": "Escorpión pesado",
+"icono": 89,
 "trigger_tech": 239,
 "upgrade_of": 279
 },
@@ -4660,13 +5302,15 @@
 "age": "dark",
 "building": 45,
 "en": "Transport Ship",
-"es": "Barco de transporte"
+"es": "Barco de transporte",
+"icono": 95
 },
 "546": {
 "age": "castle",
 "building": 101,
 "en": "Light Cavalry",
 "es": "Caballería ligera",
+"icono": 91,
 "trigger_tech": 254,
 "upgrade_of": 448
 },
@@ -4675,6 +5319,7 @@
 "building": 49,
 "en": "Siege Ram",
 "es": "Ariete de asedio",
+"icono": 73,
 "trigger_tech": 255,
 "upgrade_of": 422
 },
@@ -4683,6 +5328,7 @@
 "building": 49,
 "en": "Onager",
 "es": "Onagro",
+"icono": 101,
 "trigger_tech": 257,
 "upgrade_of": 280
 },
@@ -4692,6 +5338,7 @@
 "civ": "Byzantines",
 "en": "Elite Cataphract",
 "es": "Catafracta de élite",
+"icono": 476,
 "trigger_tech": 361,
 "unique": true
 },
@@ -4701,6 +5348,7 @@
 "civ": "Teutons",
 "en": "Elite Teutonic Knight",
 "es": "Caballero teutónico de élite",
+"icono": 477,
 "trigger_tech": 364,
 "unique": true
 },
@@ -4710,6 +5358,7 @@
 "civ": "Goths",
 "en": "Elite Huskarl",
 "es": "Huscarle de élite",
+"icono": 478,
 "trigger_tech": 365,
 "unique": true
 },
@@ -4719,6 +5368,7 @@
 "civ": "Saracens",
 "en": "Elite Mameluke",
 "es": "Mameluco de élite",
+"icono": 479,
 "trigger_tech": 368,
 "unique": true
 },
@@ -4728,6 +5378,7 @@
 "civ": "Turks",
 "en": "Elite Janissary",
 "es": "Jenízaro de élite",
+"icono": 480,
 "trigger_tech": 369,
 "unique": true
 },
@@ -4737,6 +5388,7 @@
 "civ": "Persians",
 "en": "Elite War Elephant",
 "es": "Elefante de guerra de élite",
+"icono": 481,
 "trigger_tech": 367,
 "unique": true
 },
@@ -4746,6 +5398,7 @@
 "civ": "Chinese",
 "en": "Elite Chu Ko Nu",
 "es": "Chu ko nu de élite",
+"icono": 482,
 "trigger_tech": 362,
 "unique": true
 },
@@ -4755,6 +5408,7 @@
 "civ": "Japanese",
 "en": "Elite Samurai",
 "es": "Samurai de élite",
+"icono": 483,
 "trigger_tech": 366,
 "unique": true
 },
@@ -4764,6 +5418,7 @@
 "civ": "Mongols",
 "en": "Elite Mangudai",
 "es": "Mangudai de élite",
+"icono": 484,
 "trigger_tech": 371,
 "unique": true
 },
@@ -4772,6 +5427,7 @@
 "building": 12,
 "en": "Champion",
 "es": "Campeón",
+"icono": 72,
 "trigger_tech": 264,
 "upgrade_of": 473
 },
@@ -4780,6 +5436,7 @@
 "building": 101,
 "en": "Paladin",
 "es": "Paladín",
+"icono": 2,
 "trigger_tech": 265,
 "upgrade_of": 283
 },
@@ -4788,6 +5445,7 @@
 "building": 49,
 "en": "Siege Onager",
 "es": "Onagro de asedio",
+"icono": 102,
 "trigger_tech": 320,
 "upgrade_of": 550
 },
@@ -4796,6 +5454,7 @@
 "building": 87,
 "en": "Elite Skirmisher",
 "es": "Hostigador de élite",
+"icono": 21,
 "trigger_tech": 98,
 "upgrade_of": 7
 },
@@ -4804,6 +5463,7 @@
 "building": 45,
 "en": "Elite Cannon Galleon",
 "es": "Galeón artillado de élite",
+"icono": 298,
 "trigger_tech": 376,
 "upgrade_of": 420
 },
@@ -4813,6 +5473,7 @@
 "civ": "Vikings",
 "en": "Berserk",
 "es": "Berserker",
+"icono": 38,
 "unique": true
 },
 "694": {
@@ -4821,6 +5482,7 @@
 "civ": "Vikings",
 "en": "Elite Berserk",
 "es": "Berserker de élite",
+"icono": 485,
 "trigger_tech": 398,
 "unique": true
 },
@@ -4828,7 +5490,8 @@
 "age": "feudal",
 "building": 87,
 "en": "Skirmisher",
-"es": "Hostigador"
+"es": "Hostigador",
+"icono": 20
 },
 "725": {
 "age": "castle",
@@ -4836,6 +5499,7 @@
 "civ": "Aztecs",
 "en": "Jaguar Warrior",
 "es": "Guerrero jaguar",
+"icono": 110,
 "unique": true
 },
 "726": {
@@ -4844,6 +5508,7 @@
 "civ": "Aztecs",
 "en": "Elite Jaguar Warrior",
 "es": "Guerrero jaguar de élite",
+"icono": 486,
 "trigger_tech": 432,
 "unique": true
 },
@@ -4853,19 +5518,22 @@
 "civ": "Chinese",
 "en": "Chu Ko Nu",
 "es": "Chu ko nu",
+"icono": 36,
 "unique": true
 },
 "74": {
 "age": "dark",
 "building": 12,
 "en": "Militia",
-"es": "Milicia"
+"es": "Milicia",
+"icono": 8
 },
 "75": {
 "age": "feudal",
 "building": 12,
 "en": "Man-at-Arms",
 "es": "Hombre de armas",
+"icono": 10,
 "trigger_tech": 222,
 "upgrade_of": 74
 },
@@ -4873,13 +5541,15 @@
 "age": "feudal",
 "building": 12,
 "en": "Eagle Scout",
-"es": "Explorador águila"
+"es": "Explorador águila",
+"icono": 109
 },
 "752": {
 "age": "imperial",
 "building": 12,
 "en": "Elite Eagle Warrior",
 "es": "Guerrero águila de élite",
+"icono": 149,
 "trigger_tech": 434
 },
 "753": {
@@ -4887,6 +5557,7 @@
 "building": 12,
 "en": "Eagle Warrior",
 "es": "Guerrero águila",
+"icono": 148,
 "trigger_tech": 384
 },
 "755": {
@@ -4895,6 +5566,7 @@
 "civ": "Huns",
 "en": "Tarkan",
 "es": "Tarcano",
+"icono": 105,
 "unique": true
 },
 "757": {
@@ -4903,6 +5575,7 @@
 "civ": "Huns",
 "en": "Elite Tarkan",
 "es": "Tarcano de élite",
+"icono": 487,
 "trigger_tech": 2,
 "unique": true
 },
@@ -4912,6 +5585,7 @@
 "civ": "Goths",
 "en": "Huskarl",
 "es": "Huscarle",
+"icono": 50,
 "unique": true
 },
 "761": {
@@ -4920,6 +5594,7 @@
 "civ": "Goths",
 "en": "Elite Huskarl",
 "es": "Huscarle de élite",
+"icono": 478,
 "trigger_tech": 365,
 "unique": true
 },
@@ -4929,6 +5604,7 @@
 "civ": "Mayans",
 "en": "Plumed Archer",
 "es": "Arquero emplumado",
+"icono": 108,
 "unique": true
 },
 "765": {
@@ -4937,6 +5613,7 @@
 "civ": "Mayans",
 "en": "Elite Plumed Archer",
 "es": "Arquero emplumado de élite",
+"icono": 488,
 "trigger_tech": 27,
 "unique": true
 },
@@ -4945,6 +5622,7 @@
 "building": 12,
 "en": "Long Swordsman",
 "es": "Soldado con espada larga",
+"icono": 13,
 "trigger_tech": 207,
 "upgrade_of": 75
 },
@@ -4954,6 +5632,7 @@
 "civ": "Spanish",
 "en": "Conquistador",
 "es": "Conquistador",
+"icono": 106,
 "unique": true
 },
 "773": {
@@ -4962,6 +5641,7 @@
 "civ": "Spanish",
 "en": "Elite Conquistador",
 "es": "Conquistador de élite",
+"icono": 489,
 "trigger_tech": 60,
 "unique": true
 },
@@ -4971,6 +5651,7 @@
 "civ": "Spanish",
 "en": "Missionary",
 "es": "Misionero",
+"icono": 107,
 "unique": true
 },
 "8": {
@@ -4979,6 +5660,7 @@
 "civ": "Britons",
 "en": "Longbowman",
 "es": "Arquero con arco largo",
+"icono": 41,
 "unique": true
 },
 "827": {
@@ -4987,6 +5669,7 @@
 "civ": "Koreans",
 "en": "War Wagon",
 "es": "Carreta de guerra",
+"icono": 117,
 "unique": true
 },
 "829": {
@@ -4995,6 +5678,7 @@
 "civ": "Koreans",
 "en": "Elite War Wagon",
 "es": "Carreta de guerra de élite",
+"icono": 490,
 "trigger_tech": 450,
 "unique": true
 },
@@ -5002,7 +5686,8 @@
 "age": "dark",
 "building": 109,
 "en": "Villager",
-"es": "Aldeano"
+"es": "Aldeano",
+"icono": 15
 },
 "831": {
 "age": "castle",
@@ -5010,6 +5695,7 @@
 "civ": "Koreans",
 "en": "Turtle Ship",
 "es": "Barco tortuga",
+"icono": 116,
 "unique": true
 },
 "832": {
@@ -5018,6 +5704,7 @@
 "civ": "Koreans",
 "en": "Elite Turtle Ship",
 "es": "Barco tortuga de élite",
+"icono": 491,
 "trigger_tech": 448,
 "unique": true
 },
@@ -5027,6 +5714,7 @@
 "civ": "Italians",
 "en": "Genoese Crossbowman",
 "es": "Genovés ballestero",
+"icono": 133,
 "unique": true
 },
 "868": {
@@ -5035,6 +5723,7 @@
 "civ": "Italians",
 "en": "Elite Genoese Crossbowman",
 "es": "Genovés ballestero de élite",
+"icono": 492,
 "trigger_tech": 468,
 "unique": true
 },
@@ -5044,6 +5733,7 @@
 "civ": "Magyar",
 "en": "Magyar Huszar",
 "es": "Huszár magiar",
+"icono": 99,
 "unique": true
 },
 "871": {
@@ -5052,6 +5742,7 @@
 "civ": "Magyar",
 "en": "Elite Magyar Huszar",
 "es": "Huszár magiar de élite",
+"icono": 493,
 "trigger_tech": 472,
 "unique": true
 },
@@ -5059,13 +5750,15 @@
 "age": "castle",
 "building": 87,
 "en": "Elephant Archer",
-"es": "Arquero en elefante"
+"es": "Arquero en elefante",
+"icono": 393
 },
 "875": {
 "age": "imperial",
 "building": 87,
 "en": "Elite Elephant Archer",
 "es": "Arquero en elefante de élite",
+"icono": 93,
 "trigger_tech": 481
 },
 "876": {
@@ -5074,6 +5767,7 @@
 "civ": "Slavs",
 "en": "Boyar",
 "es": "Boyardo",
+"icono": 114,
 "unique": true
 },
 "878": {
@@ -5082,6 +5776,7 @@
 "civ": "Slavs",
 "en": "Elite Boyar",
 "es": "Boyardo de élite",
+"icono": 494,
 "trigger_tech": 504,
 "unique": true
 },
@@ -5091,6 +5786,7 @@
 "civ": "Incas",
 "en": "Kamayuk",
 "es": "Kamayuk",
+"icono": 97,
 "unique": true
 },
 "881": {
@@ -5099,6 +5795,7 @@
 "civ": "Incas",
 "en": "Elite Kamayuk",
 "es": "Kamayuk de élite",
+"icono": 495,
 "trigger_tech": 509,
 "unique": true
 },
@@ -5108,6 +5805,7 @@
 "civ": "Italians",
 "en": "Condottiero",
 "es": "Condotiero",
+"icono": 134,
 "unique": true
 },
 "886": {
@@ -5116,6 +5814,7 @@
 "civ": "Huns",
 "en": "Tarkan",
 "es": "Tarcano",
+"icono": 105,
 "unique": true
 },
 "887": {
@@ -5124,6 +5823,7 @@
 "civ": "Huns",
 "en": "Elite Tarkan",
 "es": "Tarcano de élite",
+"icono": 487,
 "trigger_tech": 2,
 "unique": true
 },
@@ -5131,7 +5831,8 @@
 "age": "feudal",
 "building": 12,
 "en": "Spearman",
-"es": "Lancero"
+"es": "Lancero",
+"icono": 31
 }
 }
 }

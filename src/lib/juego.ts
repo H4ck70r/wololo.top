@@ -29,6 +29,8 @@ export interface FichaJuego {
   trigger_tech?: number;
   /** edificio donde se produce o investiga */
   building?: number;
+  /** índice del icono del juego, con el que se nombran sus ficheros */
+  icono?: number;
   /** unidad o tecnología exclusiva de una civilización */
   unique?: boolean;
   civ?: string;
@@ -85,3 +87,22 @@ export function claseDeUnidad(id: number): 'eco' | 'inf' | 'tiro' | 'cab' | 'ase
   if (b === 49) return 'asedio';
   return 'otros';
 }
+
+
+/**
+ * La ruta del icono del juego.
+ *
+ * El juego numera sus iconos con el mismo Picture Index que publica el árbol
+ * tecnológico, así que la pieza difícil -saber qué icono va con qué unidad- ya
+ * venía resuelta con los nombres.
+ *
+ * El índice varía por civilización porque AoE2 tiene aspectos regionales: el
+ * arquero usa el 17 en 56 civilizaciones y el 613 en las seis de antigüedad.
+ * La tabla se queda con el mayoritario.
+ */
+const RUTA = (grupo: string, f?: FichaJuego) =>
+  f?.icono == null ? null : `/iconos/${grupo}/${f.icono}.webp`;
+
+export const iconoEdificio = (id: number) => RUTA('buildings', edificio(id));
+export const iconoUnidad = (id: number) => RUTA('units', unidad(id));
+export const iconoTecnologia = (id: number) => RUTA('techs', tecnologia(id));

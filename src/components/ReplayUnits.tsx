@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import { useT } from '../lib/i18n';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import { CLASE_COLOR } from '../lib/units';
-import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia } from '../lib/juego';
+import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia,
+         iconoUnidad, iconoTecnologia } from '../lib/juego';
 import type { ReplayTimeline } from '../lib/types';
 
 interface Props {
@@ -148,8 +149,14 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
               <div className="flex flex-col gap-1">
                 {lista.map(([id, n]) => (
                   <div key={id} className="flex items-center gap-2">
-                    <span className="text-xs text-gray-400 w-28 truncate" title={nombreUnidad(id, lang)}>
-                      {nombreUnidad(id, lang)}
+                    {/* El icono del propio juego: una lista con los dibujos
+                        que uno ya reconoce se lee de un vistazo. */}
+                    <span className="flex items-center gap-1.5 w-32 min-w-0" title={nombreUnidad(id, lang)}>
+                      {iconoUnidad(id) && (
+                        <img src={iconoUnidad(id)!} alt="" width={20} height={20}
+                             className="w-5 h-5 shrink-0 rounded-sm" loading="lazy" />
+                      )}
+                      <span className="text-xs text-gray-400 truncate">{nombreUnidad(id, lang)}</span>
                     </span>
                     <span className="flex-1 h-2 rounded-full bg-dark-600 overflow-hidden">
                       <span
@@ -270,6 +277,10 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
                       return (
                         <div key={x.id} className="flex items-baseline gap-2 text-xs">
                           <span className="tabular-nums text-gray-600 w-9">{reloj(x.t)}</span>
+                          {iconoTecnologia(x.id) && (
+                            <img src={iconoTecnologia(x.id)!} alt="" width={16} height={16}
+                                 className="w-4 h-4 shrink-0 rounded-sm" loading="lazy" />
+                          )}
                           <span className={f?.unique ? 'text-gold-400/90' : 'text-gray-300'}>
                             {nombreTecnologia(x.id, lang)}
                           </span>
