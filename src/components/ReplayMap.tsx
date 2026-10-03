@@ -445,7 +445,7 @@ export default function ReplayMap({ timeline }: Props) {
             const iy = (p.y - p.x) / 2;
             const vert = iy < -lado * 0.08 ? t('map.top') : iy > lado * 0.08 ? t('map.bottom') : '';
             const horiz = ix < -lado * 0.08 ? t('map.left') : ix > lado * 0.08 ? t('map.right') : '';
-            donde = [vert, horiz].filter(Boolean).join(' ') || t('map.centre');
+            donde = [vert, horiz].filter(Boolean).join(' ') || t('map.center');
           }
           return (
             <span key={j.numero} className="flex items-center gap-1.5 text-xs text-gray-400">

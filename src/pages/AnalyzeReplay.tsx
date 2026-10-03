@@ -76,7 +76,7 @@ export default function AnalyzeReplay() {
             }`}
           >
             <p className="text-sm text-gray-300 m-0">
-              {cargando ? t('up.analysing') : t('up.drop')}
+              {cargando ? t('up.analyzing') : t('up.drop')}
             </p>
           </div>
 
