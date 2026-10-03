@@ -487,6 +487,8 @@ const EN = {
   'units.age.feudal': 'Feudal',
   'units.age.castle': 'Castle',
   'units.age.imperial': 'Imperial',
+  'map.terrainId': 'terrain {id}',
+  'map.terrainHint': 'The terrain comes from the replay, tile by tile, and the shapes are exact. The colors go by how common each terrain is on this map \u2014 the most common is the ground, the next ones are usually forest and water. The game gives no reliable table of terrain names, so the raw id is shown rather than a made-up name.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -961,6 +963,8 @@ const ES: Partial<Record<TKey, string>> = {
   'units.age.feudal': 'Feudal',
   'units.age.castle': 'Castillos',
   'units.age.imperial': 'Imperial',
+  'map.terrainId': 'terreno {id}',
+  'map.terrainHint': 'El terreno sale del replay, casilla a casilla, y las formas son exactas. Los colores van por lo com\u00fan que es cada terreno en este mapa \u2014 el m\u00e1s com\u00fan es el suelo y los siguientes suelen ser bosque y agua. El juego no da una tabla fiable de nombres de terreno, as\u00ed que se ense\u00f1a el id crudo en vez de un nombre inventado.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

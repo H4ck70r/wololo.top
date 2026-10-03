@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '../lib/i18n';
 import type { ReplayTimeline } from '../lib/types';
 import { nombreEdificio } from '../lib/juego';
-import { claseTerreno, COLOR_TERRENO, expandir } from '../lib/terreno';
+import { expandir, paletaDelMapa, resumenTerreno } from '../lib/terreno';
 
 interface Props {
   timeline: ReplayTimeline;
@@ -127,7 +127,9 @@ export default function ReplayMap({ timeline }: Props) {
     const s = timeline.suelo;
     if (!s) return null;
     const total = s.lado * s.lado;
-    return { lado: s.lado, terreno: expandir(s.terreno, total) };
+    const terreno = expandir(s.terreno, total);
+    const paleta = paletaDelMapa(terreno);
+    return { lado: s.lado, terreno, paleta, resumen: resumenTerreno(terreno, paleta) };
   }, [timeline]);
 
   const colorDe = (numero: number) => {
@@ -233,8 +235,8 @@ export default function ReplayMap({ timeline }: Props) {
       const paso = Math.max(1, Math.floor(1 / Math.max(esc, 0.01)));
       for (let y = 0; y < suelo.lado; y += paso) {
         for (let x = 0; x < suelo.lado; x += paso) {
-          const clase = claseTerreno(suelo.terreno[y * suelo.lado + x]);
-          ctx.fillStyle = COLOR_TERRENO[clase];
+          const tid = suelo.terreno[y * suelo.lado + x];
+          ctx.fillStyle = suelo.paleta.get(tid) ?? '#8a7a52';
           //  Cada casilla es un rombo en isométrico; se pinta como tal para
           //  que no queden costuras entre casillas vecinas.
           const cx = px(x + 0.5, y + 0.5);
@@ -518,6 +520,18 @@ export default function ReplayMap({ timeline }: Props) {
           {t('map.start')}
         </span>
       </div>
+
+      {suelo && (
+        <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
+          {suelo.resumen.slice(0, 6).map((r) => (
+            <span key={r.id} className="flex items-center gap-1.5 text-[11px] text-gray-500"
+                  title={t('map.terrainHint')}>
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: r.color }} />
+              {t('map.terrainId', { id: String(r.id) })} {r.pct.toFixed(0)}%
+            </span>
+          ))}
+        </div>
+      )}
 
       <p className="text-[11px] text-gray-600 mt-3 m-0">{t('map.note')}</p>
     </div>
