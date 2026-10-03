@@ -13,14 +13,26 @@ const reloj = (s: number) =>
   `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.round(s % 60)).padStart(2, '0')}`;
 
 /**
- * Los tiempos de edad se leen en reloj; el centro urbano parado en segundos
- * sueltos, porque son decenas y un 00:64 no se entiende.
+ * Lo que se ensena de una edad es el tiempo de ATERRIZAJE, no el de la
+ * peticion. El replay solo registra el clic, pero la cifra que usa todo el
+ * mundo —las guias, los coaches, YouTube— es cuando la edad cae. Publicar la
+ * peticion con la misma etiqueta hace que el jugador compare su 18:38 con el
+ * 19:00 de su guia y crea que va bien cuando va dos minutos tarde.
+ *
+ * Los segundos a sumar los manda la API en research_s, para que el dia que un
+ * parche los cambie no haya que buscarlos en el frontend.
  */
 function formato(m: AssessmentMetric, v: number | null): string {
   if (v == null) return '—';
   if (m.key === 'tc_idle_ms') return `${Math.round(v)}s`;
-  if (m.unit === 's') return reloj(v);
+  if (m.unit === 's') return reloj(v + (m.research_s ?? 0));
   return v.toFixed(1);
+}
+
+/** El tiempo del clic, que es lo que el jugador controla. */
+function pedida(m: AssessmentMetric, v: number | null): string | null {
+  if (v == null || !m.research_s) return null;
+  return reloj(v);
 }
 
 /**
@@ -137,7 +149,16 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
               const bajo = m.percentile != null && m.percentile < 50;
               return (
                 <tr key={m.key} className="border-b border-dark-500/40">
-                  <td className="py-2.5 pr-3 text-gray-300">{nombre(m.key)}</td>
+                  <td className="py-2.5 pr-3 text-gray-300">
+                    {nombre(m.key)}
+                    {/* El clic va debajo y pequeno: es lo que el jugador
+                        controla, pero no es lo que se compara con una guia. */}
+                    {pedida(m, m.you) && (
+                      <span className="block text-[10px] text-gray-600">
+                        {t('assess.requested')} {pedida(m, m.you)}
+                      </span>
+                    )}
+                  </td>
                   <td className={`py-2.5 px-2 text-right tabular-nums font-medium ${
                     bajo ? 'text-red-300' : 'text-gray-200'
                   }`}>
@@ -224,8 +245,9 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
         </div>
       </div>
 
+      <p className="text-[11px] text-gray-600 mt-4 m-0">{t('assess.ageNote')}</p>
       {data.weights_from_pairs != null && (
-        <p className="text-[11px] text-gray-600 mt-4 m-0">
+        <p className="text-[11px] text-gray-600 mt-1 m-0">
           {t('assess.weights', { n: data.weights_from_pairs.toLocaleString() })}
         </p>
       )}

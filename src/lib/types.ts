@@ -816,6 +816,8 @@ export interface AssessmentMetric {
   key: string;
   unit: string;
   lower_is_better: boolean;
+  /** segundos de investigación que hay que sumar para el tiempo de aterrizaje */
+  research_s?: number | null;
   you: number | null;
   bracket_median: number | null;
   /** % de jugadores de tu tramo a los que superas */
