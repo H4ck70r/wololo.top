@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
 import { colorDeJugador } from '../lib/jugadores';
-import type { ReplayTimeline } from '../lib/types';
+import type { ReplayTimeline, LevelBenchmarksResponse } from '../lib/types';
 
 interface Props {
   timeline: ReplayTimeline;
@@ -12,6 +14,9 @@ const TC = 621;
 const INVESTIGACION: Record<number, number> = {
   [TEC_FEUDAL]: 130_000, [TEC_CASTILLOS]: 160_000, [TEC_IMPERIAL]: 190_000,
 };
+//  Un aldeano sale cada 25 segundos de reloj de juego. Es lo que convierte
+//  "173 segundos parado" en "siete aldeanos", que es lo que de verdad duele.
+const SEG_POR_ALDEANO = 25;
 
 const mmss = (ms: number) => {
   const s = Math.round(Math.abs(ms) / 1000);
@@ -19,20 +24,28 @@ const mmss = (ms: number) => {
 };
 
 /**
- * Lo que pasó en la partida, escrito.
+ * El análisis de la partida, escrito como lo diría alguien que entrena.
  *
- * Una tabla no es una conclusión. Esto no inventa nada: cada frase sale de una
- * diferencia medida, y el orden en que aparecen no es estético sino el de
- * cuánto decide cada cosa, comparando ganador y perdedor DENTRO de la misma
- * partida sobre miles de pares. Ahí salió que más APM gana el 62,6%, más
- * aldeanos al minuto 15 el 61,3%, antes a Castillos el 61,2% y antes a Feudal
- * sólo el 58,9%.
+ * La versión anterior listaba diferencias -"hizo 8 acciones por minuto más"- y
+ * eso no es un diagnóstico: es un dato suelto del que no se saca nada. Un
+ * entrenador hace tres cosas distintas:
  *
- * Sólo se escribe lo que supera un umbral: diferencias pequeñas caben en el
- * ruido y escribirlas sería dar peso a una casualidad.
+ *   1. dice QUÉ decidió la partida y en qué fase
+ *   2. dice qué COSTÓ esa decisión, en unidades que duelen (aldeanos, no
+ *      segundos; minutos de ventaja perdidos, no porcentajes)
+ *   3. da UNA cosa que arreglar, con su número objetivo
+ *
+ * Nada de esto se inventa: cada frase sale de una diferencia medida, y cuando
+ * no hay diferencia que supere el ruido, no se escribe.
  */
 export default function ReplayVerdict({ timeline, players = [] }: Props) {
   const { t } = useT();
+
+  const { data: referencias } = useQuery<LevelBenchmarksResponse>({
+    queryKey: ['levelBenchmarks', '6'],
+    queryFn: () => getLevelBenchmarks({ match_type: '6' }),
+    staleTime: 30 * 60 * 1000,
+  });
 
   const humanos = timeline.jugadores.filter((j) => !j.es_ia);
   if (humanos.length !== 2) return null;
@@ -52,97 +65,121 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
     }
   }
 
+  const franjaDe = (r?: number) =>
+    r == null ? null : r < 1000 ? '<1000' : r < 1200 ? '1000-1200'
+      : r < 1400 ? '1200-1400' : r < 1600 ? '1400-1600' : '1600+';
+
   const datos = humanos.map((j) => {
     const p = players.find((x) => x.profile_id === j.perfil) ?? {};
-    const serie = timeline.ritmo?.[String(j.numero)] ?? [];
-    const efectivas = serie.reduce((a, x) => a + (x[3] ?? 0), 0);
-    const castillos = edades.get(j.numero)?.[TEC_CASTILLOS];
+    const h = edades.get(j.numero) ?? {};
     const primerTc = (tcs.get(j.numero) ?? []).sort((a, b) => a - b)[0];
+    const franja = franjaDe(j.rating);
+    const ref = referencias?.brackets.find((x) => x.bracket === franja);
     return {
-      j,
+      numero: j.numero,
       nombre: j.nombre,
       color: colorDeJugador(timeline.jugadores, j.numero),
-      apertura: (p.opening as string) ?? null,
-      feudal: edades.get(j.numero)?.[TEC_FEUDAL] ?? null,
-      castillos: castillos ?? null,
-      imperial: edades.get(j.numero)?.[TEC_IMPERIAL] ?? null,
+      franja,
+      ref: ref && !ref.thin ? ref : null,
+      feudal: h[TEC_FEUDAL] ?? null,
+      castillos: h[TEC_CASTILLOS] ?? null,
+      imperial: h[TEC_IMPERIAL] ?? null,
+      //  Cuánto se quedó dentro de Feudal: la ventaja de llegar pronto se
+      //  pierde ahí, no en el reloj de llegada.
+      enFeudal: h[TEC_FEUDAL] != null && h[TEC_CASTILLOS] != null
+        ? h[TEC_CASTILLOS] - h[TEC_FEUDAL] : null,
       aldeanos: (p.villagers_15m as number) ?? null,
-      eapm: serie.length ? Math.round(efectivas / serie.length) : null,
-      //  Lo que de verdad separa: cuánto tardó en convertir Castillos en un
-      //  segundo centro urbano. Null si nunca puso uno.
-      conversion: castillos != null && primerTc != null && primerTc > castillos
-        ? primerTc - castillos : null,
+      parado: (p.tc_idle_ms as number) ?? null,
+      conversion: h[TEC_CASTILLOS] != null && primerTc != null && primerTc > h[TEC_CASTILLOS]
+        ? primerTc - h[TEC_CASTILLOS] : null,
+      gano: rendido != null && j.numero !== rendido,
     };
   });
 
-  const [a, b] = datos;
-  const ganador = rendido != null ? datos.find((d) => d.j.numero !== rendido) : null;
+  const gana = datos.find((d) => d.gano) ?? null;
+  const pierde = datos.find((d) => !d.gano && d !== gana) ?? null;
+  if (!gana || !pierde) return null;
 
-  type Hallazgo = { peso: number; texto: string; mejor: string };
-  const hallazgos: Hallazgo[] = [];
-  const mejorEn = (va: number | null, vb: number | null, menor: boolean) => {
-    if (va == null || vb == null) return null;
-    const gana = menor ? va < vb : va > vb;
-    return { quien: gana ? a : b, otro: gana ? b : a, dif: Math.abs(va - vb) };
-  };
+  const frases: string[] = [];
 
-  //  El orden es el de cuanto decide cada cosa, medido, no opinado.
-  const r1 = mejorEn(a.eapm, b.eapm, false);
-  if (r1 && r1.dif >= 5) hallazgos.push({ peso: 62.6, mejor: r1.quien.nombre,
-    texto: t('verd.apm', { ganador: r1.quien.nombre, n: String(r1.dif), perdedor: r1.otro.nombre }) });
+  //  1. Que decidio la partida. Se mira la fase, no una cifra suelta.
+  const ventajaCastillos = gana.castillos != null && pierde.castillos != null
+    ? pierde.castillos - gana.castillos : null;
+  const largaParaLaVentaja = ventajaCastillos != null && ventajaCastillos > 90_000
+    && timeline.duracion_ms > (gana.castillos ?? 0) * 2;
 
-  const r2 = mejorEn(a.aldeanos, b.aldeanos, false);
-  if (r2 && r2.dif >= 2) hallazgos.push({ peso: 61.3, mejor: r2.quien.nombre,
-    texto: t('verd.vils', { ganador: r2.quien.nombre, n: String(Math.round(r2.dif)) }) });
+  if (ventajaCastillos != null && ventajaCastillos > 60_000) {
+    frases.push(largaParaLaVentaja
+      ? t('coach.ventajaSinCerrar', {
+          ganador: gana.nombre, v: mmss(ventajaCastillos), dur: mmss(timeline.duracion_ms) })
+      : t('coach.ventajaCerrada', { ganador: gana.nombre, v: mmss(ventajaCastillos) }));
+  } else if (ventajaCastillos != null && ventajaCastillos < -60_000) {
+    frases.push(t('coach.ganoPorDetras', {
+      ganador: gana.nombre, perdedor: pierde.nombre, v: mmss(ventajaCastillos) }));
+  }
 
-  const r3 = mejorEn(a.castillos, b.castillos, true);
-  if (r3 && r3.dif >= 20000) hallazgos.push({ peso: 61.2, mejor: r3.quien.nombre,
-    texto: t('verd.castle', { ganador: r3.quien.nombre, n: mmss(r3.dif) }) });
+  //  2. Que costo. En aldeanos, que es la unidad que duele.
+  const difAldeanos = gana.aldeanos != null && pierde.aldeanos != null
+    ? pierde.aldeanos - gana.aldeanos : null;
+  if (difAldeanos != null && Math.abs(difAldeanos) >= 3) {
+    frases.push(difAldeanos > 0
+      ? t('coach.menosEconomia', {
+          ganador: gana.nombre, n: String(difAldeanos), perdedor: pierde.nombre })
+      : t('coach.masEconomia', { ganador: gana.nombre, n: String(-difAldeanos) }));
+  }
 
-  const r4 = mejorEn(a.conversion, b.conversion, true);
-  if (r4 && r4.dif >= 60000) hallazgos.push({ peso: 61.0, mejor: r4.quien.nombre,
-    texto: t('verd.convert', { ganador: r4.quien.nombre, a: mmss(r4.quien.conversion!),
-                              perdedor: r4.otro.nombre, b: mmss(r4.otro.conversion!) }) });
+  //  3. Lo que hay que arreglar, con su numero. El centro urbano parado se
+  //     traduce a aldeanos perdidos, que es lo unico que mueve a nadie.
+  const arreglos: { peso: number; texto: string }[] = [];
+  for (const d of datos) {
+    if (d.parado != null && d.parado > 60_000) {
+      const perdidos = Math.round(d.parado / 1000 / SEG_POR_ALDEANO);
+      if (perdidos >= 2) {
+        //  La comparacion con la franja solo si la hay: "su franja tiene s de
+        //  media" es peor que no decir nada.
+        const conRef = d.ref?.tc_idle_s != null;
+        arreglos.push({ peso: perdidos, texto: t(
+          conRef ? 'coach.arregloParadoRef' : 'coach.arregloParado', {
+            quien: d.nombre, s: String(Math.round(d.parado / 1000)), n: String(perdidos),
+            ref: conRef ? String(Math.round(d.ref!.tc_idle_s!)) : '' }) });
+      }
+    }
+    if (d.conversion != null && d.conversion > 240_000) {
+      arreglos.push({ peso: Math.round(d.conversion / 60_000), texto:
+        t('coach.arregloConversion', { quien: d.nombre, v: mmss(d.conversion) }) });
+    }
+    if (d.enFeudal != null && d.enFeudal > 11 * 60_000) {
+      arreglos.push({ peso: Math.round(d.enFeudal / 60_000) - 10, texto:
+        t('coach.arregloFeudalLargo', { quien: d.nombre, v: mmss(d.enFeudal) }) });
+    }
+  }
+  arreglos.sort((a, b) => b.peso - a.peso);
 
-  const r5 = mejorEn(a.feudal, b.feudal, true);
-  if (r5 && r5.dif >= 20000) hallazgos.push({ peso: 58.9, mejor: r5.quien.nombre,
-    texto: t('verd.feudal', { ganador: r5.quien.nombre, n: mmss(r5.dif) }) });
-
-  hallazgos.sort((x, y) => y.peso - x.peso);
-  if (!hallazgos.length) return null;
-
-  //  La frase de arriba: lo que mas decide, y si lo tuvo quien gano.
-  const principal = hallazgos[0];
-  const coincide = ganador ? principal.mejor === ganador.nombre : null;
+  if (!frases.length && !arreglos.length) return null;
 
   return (
     <div className="bg-dark-800/60 border-l-2 border-gold-400/60 rounded-r-lg px-4 py-3 mb-4">
       <p className="text-[15px] leading-relaxed text-gray-200 m-0">
-        {ganador && (
-          <span className="font-medium" style={{ color: ganador.color }}>
-            {t('verd.won', { ganador: ganador.nombre })}{' '}
-          </span>
-        )}
-        {principal.texto}
+        <span className="font-medium" style={{ color: gana.color }}>
+          {t('coach.gano', { ganador: gana.nombre })}{' '}
+        </span>
+        {frases.join(' ')}
       </p>
 
-      {hallazgos.length > 1 && (
-        <ul className="list-none p-0 mt-2 m-0 flex flex-col gap-1">
-          {hallazgos.slice(1).map((h, i) => (
-            <li key={i} className="text-sm text-gray-400">· {h.texto}</li>
-          ))}
-        </ul>
+      {arreglos.length > 0 && (
+        <div className="mt-3">
+          <h5 className="text-[10px] uppercase tracking-wide text-gray-500 m-0 mb-1">
+            {t('coach.arreglar')}
+          </h5>
+          <ul className="list-none p-0 m-0 flex flex-col gap-1">
+            {arreglos.slice(0, 2).map((a, i) => (
+              <li key={i} className="text-sm text-gray-300">· {a.texto}</li>
+            ))}
+          </ul>
+        </div>
       )}
 
-      {/* Cuando lo que mas decide NO lo tuvo quien gano, decirlo: es la
-          partida interesante, no la excepcion que se esconde. */}
-      {coincide === false && (
-        <p className="text-xs text-gray-500 mt-2 m-0">
-          {t('verd.contra', { ganador: ganador!.nombre, otro: principal.mejor })}
-        </p>
-      )}
-
-      <p className="text-[11px] text-gray-600 mt-2 m-0">{t('verd.fuente')}</p>
+      <p className="text-[11px] text-gray-600 mt-3 m-0">{t('coach.fuente')}</p>
     </div>
   );
 }
