@@ -178,24 +178,24 @@ export default function ReplayMap({ timeline }: Props) {
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    //  El rombo ocupa 2*lado de ancho y lado de alto: de ahí el 2:1.
+    //  La proyección: ix = x + y, iy = (y - x) / 2.
+    //
+    //  Esto costó varias vueltas porque estaba probando espejos cuando lo que
+    //  hacía falta era una rotación de 90 grados: los ejes estaban
+    //  intercambiados, y ningún espejo arregla eso.
+    //
+    //  Se decidió con las ocho orientaciones posibles dibujadas sobre los
+    //  datos reales de una partida y DOS criterios a la vez: dónde cae la base
+    //  de un jugador y dónde quedan los dos castillos del otro DENTRO de su
+    //  propia base. Sólo una las cumple las dos, y es ésta.
+    //
+    //  Las esquinas salen donde deben: (0,0) a la izquierda, (lado,0) arriba,
+    //  (lado,lado) a la derecha y (0,lado) abajo.
     const esc = Math.min(ancho / (lado * 2), alto / lado);
-    const despX = (ancho - lado * 2 * esc) / 2 + lado * esc;
+    const despX = (ancho - lado * 2 * esc) / 2;
     const despY = (alto - lado * esc) / 2;
-    //  (x - y), la proyección estándar de AoE2.
-    //
-    //  Esto bailó varias veces comparando capturas, así que queda la prueba.
-    //  La clave fue mirar el interior de una base en vez de dónde cae la base
-    //  entera: en aoe2insights los dos castillos de un jugador están en el
-    //  lado DERECHO de su propia base, y eso sólo lo da (x - y); con (y - x)
-    //  salen a la izquierda.
-    //
-    //  La proyección es lineal, así que las dos cosas no se pueden ajustar por
-    //  separado: fijado el interior de la base, la posición de la base queda
-    //  determinada. El interior es la señal más fiable de las dos, porque son
-    //  edificios concretos en sitios concretos y no una impresión de conjunto.
-    const px = (x: number, y: number) => (x - y) * esc + despX;
-    const py = (x: number, y: number) => ((x + y) / 2) * esc + despY;
+    const px = (x: number, y: number) => (x + y) * esc + despX;
+    const py = (x: number, y: number) => ((y - x + lado) / 2) * esc + despY;
 
     ctx.fillStyle = '#0d1116';
     ctx.fillRect(0, 0, ancho, alto);
@@ -437,11 +437,11 @@ export default function ReplayMap({ timeline }: Props) {
       <div className="flex items-center gap-3 mt-2 flex-wrap">
         {timeline.jugadores.map((j) => {
           const p = inicios.get(j.numero);
-          const centro = lado / 2;
           let donde = '';
           if (p) {
-            const ix = p.y - p.x;
-            const iy = (p.x + p.y) / 2 - centro;
+            //  La misma proyección que el dibujo: si no, el texto miente.
+            const ix = p.x + p.y - lado;
+            const iy = (p.y - p.x) / 2;
             const vert = iy < -lado * 0.08 ? t('map.top') : iy > lado * 0.08 ? t('map.bottom') : '';
             const horiz = ix < -lado * 0.08 ? t('map.left') : ix > lado * 0.08 ? t('map.right') : '';
             donde = [vert, horiz].filter(Boolean).join(' ') || t('map.centre');
