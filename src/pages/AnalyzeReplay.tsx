@@ -14,7 +14,7 @@ const reloj = (ms: number | null | undefined) => {
 
 //  Lo que hay que sumar al clic para saber cuándo CAE la edad. Es lo que usan
 //  las guías, así que es lo que se enseña.
-const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000 };
+const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
 
 /**
  * Subir una partida y verla.
@@ -149,6 +149,7 @@ export default function AnalyzeReplay() {
                       <th className="text-left py-2 px-2 font-medium">{t('up.opening')}</th>
                       <th className="text-right py-2 px-2 font-medium">{t('up.feudal')}</th>
                       <th className="text-right py-2 px-2 font-medium">{t('up.castle')}</th>
+                      <th className="text-right py-2 px-2 font-medium">{t('up.imperial')}</th>
                       <th className="text-right py-2 px-2 font-medium">{t('up.vils')}</th>
                       <th className="text-right py-2 pl-2 font-medium">{t('up.apm')}</th>
                     </tr>
@@ -164,6 +165,7 @@ export default function AnalyzeReplay() {
                       const nombre = j.nombre;
                       const f = p.feudal_ms as number | null;
                       const c = p.castle_ms as number | null;
+                      const im = p.imperial_ms as number | null;
                       return (
                         <tr key={k} className="border-b border-dark-500/40">
                           <td className="py-2 pr-3 text-gray-300">
@@ -184,6 +186,11 @@ export default function AnalyzeReplay() {
                           </td>
                           <td className="py-2 px-2 text-right tabular-nums text-gray-300">
                             {c == null ? '—' : reloj(c + INVESTIGACION_MS.castle)}
+                          </td>
+                          {/* Un guion aqui no es un hueco: significa que esa
+                              partida acabo sin que el jugador llegase. */}
+                          <td className="py-2 px-2 text-right tabular-nums text-gray-300">
+                            {im == null ? '—' : reloj(im + INVESTIGACION_MS.imperial)}
                           </td>
                           <td className="py-2 px-2 text-right tabular-nums text-gray-300">
                             {(p.villagers_15m as number) ?? '—'}

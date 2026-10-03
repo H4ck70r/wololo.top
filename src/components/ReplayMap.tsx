@@ -182,14 +182,16 @@ export default function ReplayMap({ timeline }: Props) {
     const esc = Math.min(ancho / (lado * 2), alto / lado);
     const despX = (ancho - lado * 2 * esc) / 2 + lado * esc;
     const despY = (alto - lado * esc) / 2;
-    //  (x - y), que es la proyección estándar de AoE2.
+    //  (y - x), comprobado y no deducido.
     //
-    //  Estuvo un rato como (y - x) porque deduje el espejo mirando una captura
-    //  de aoe2insights, y lo deduje mal: quien jugó la partida recuerda las
-    //  bases al revés de lo que yo leí en la imagen. Su memoria de la partida
-    //  vale más que mi lectura de unos píxeles, y con (x - y) la base de centro
-    //  (61,101) cae a la izquierda, que es donde estaba.
-    const px = (x: number, y: number) => (x - y) * esc + despX;
+    //  Esto cambió dos veces por ir mirando capturas, así que queda la prueba
+    //  escrita. En una partida, el replay dice que maestro_006 pidió Imperial
+    //  en el 44,46 -cae a las 47:37- y se rindió en el 51:31; aoe2insights
+    //  escribe exactamente esos dos tiempos, así que estamos hablando del
+    //  mismo jugador y las coordenadas son buenas. Sus dos castillos están en
+    //  (74,110) y (69,94), y aoe2insights los pinta a la DERECHA: eso sólo
+    //  sale con (y - x), porque (x - y) los manda a la izquierda.
+    const px = (x: number, y: number) => (y - x) * esc + despX;
     const py = (x: number, y: number) => ((x + y) / 2) * esc + despY;
 
     ctx.fillStyle = '#0d1116';
@@ -250,6 +252,21 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.fillStyle = colorDe(j);
       ctx.fill();
       ctx.globalAlpha = 1;
+
+      //  Con el nombre encima no hay que deducir quien esta donde, que es lo
+      //  que hizo falta para enderezar la orientacion del mapa.
+      const etiqueta = timeline.jugadores.find((x) => x.numero === j)?.nombre;
+      if (etiqueta) {
+        ctx.font = '600 11px system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.strokeText(etiqueta, X, Y - r - 3);
+        ctx.fillStyle = colorDe(j);
+        ctx.fillText(etiqueta, X, Y - r - 3);
+      }
     }
 
     //  Murallas debajo de los edificios, y gruesas: antes no se veían.
