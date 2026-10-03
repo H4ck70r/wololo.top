@@ -3,11 +3,12 @@ import { useT } from '../lib/i18n';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { getHeadToHead, getPlayer } from '../lib/api';
+import { getHeadToHead, getPlayer, getSignalFlags } from '../lib/api';
 import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
 import SearchBar from '../components/SearchBar';
 import H2HStoryline from '../components/H2HStoryline';
+import SharedCopyBadge from '../components/SharedCopyBadge';
 
 export default function HeadToHead() {
   const { t } = useT();
@@ -32,6 +33,15 @@ export default function HeadToHead() {
     queryKey: ['player', opponentId],
     queryFn: () => getPlayer(opponentId!),
     enabled: !!opponentId,
+  });
+
+  // Se marcan los dos lados, no solo al rival: senalar a uno y callar del otro
+  // en una pagina simetrica ya seria tomar partido. Solo confianza >= 80.
+  const { data: flagsData } = useQuery({
+    queryKey: ['signalFlags', [profileId, opponentId]],
+    queryFn: () => getSignalFlags([profileId!, opponentId!]),
+    enabled: !!profileId && !!opponentId,
+    staleTime: 10 * 60 * 1000,
   });
 
   if (isLoading) {
@@ -87,7 +97,10 @@ export default function HeadToHead() {
               </div>
             )}
             <div>
-              <p className="font-bold text-xl text-gold-400 m-0">{playerName}</p>
+              <p className="font-bold text-xl text-gold-400 m-0 flex items-center gap-2 flex-wrap">
+                {playerName}
+                <SharedCopyBadge flag={flagsData?.flags?.[String(profileId)]} />
+              </p>
               <p className="text-sm text-gray-500 m-0">{t('h2h.winRateOf', { pct: win_rate })}</p>
             </div>
           </div>
@@ -106,7 +119,10 @@ export default function HeadToHead() {
               </div>
             )}
             <div className="text-right">
-              <p className="font-bold text-xl text-blue-accent m-0">{opponentName}</p>
+              <p className="font-bold text-xl text-blue-accent m-0 flex items-center gap-2 flex-wrap justify-end">
+                {opponentName}
+                <SharedCopyBadge flag={flagsData?.flags?.[String(opponentId)]} />
+              </p>
               <p className="text-sm text-gray-500 m-0">{t('h2h.winRateOf', { pct: (100 - win_rate).toFixed(1) })}</p>
             </div>
           </div>

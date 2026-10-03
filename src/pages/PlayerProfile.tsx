@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches } from '../lib/api';
+import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches, getPlayerSignals, getSignalFlags } from '../lib/api';
 import { countryFlag, MATCH_FILTERS } from '../lib/constants';
 import { isFavorite, addFavorite, removeFavorite } from '../lib/favorites';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
@@ -22,6 +22,8 @@ import MilestonesTimeline from '../components/MilestonesTimeline';
 import ActivityHeatmap from '../components/ActivityHeatmap';
 import MatchRow from '../components/MatchRow';
 import SearchBar from '../components/SearchBar';
+import SharedAccountCard from '../components/SharedAccountCard';
+import AccountFactsLine from '../components/AccountFactsLine';
 
 const MATCHES_PER_PAGE = 50;
 
@@ -59,6 +61,15 @@ export default function PlayerProfile() {
     enabled: !!profileId,
   });
 
+  // Senales de cuenta: deteccion de copia compartida (solo confianza >= 80, el
+  // backend no manda menos) mas los datos neutros de la cuenta de Steam.
+  const { data: signals } = useQuery({
+    queryKey: ['playerSignals', profileId],
+    queryFn: () => getPlayerSignals(profileId!),
+    enabled: !!profileId,
+    staleTime: 10 * 60 * 1000,
+  });
+
   const { data: matchesData, isLoading: loadingMatches } = useQuery({
     queryKey: ['playerMatches', profileId, matchFilter, matchPage],
     queryFn: () => getPlayerMatches(profileId!, {
@@ -67,6 +78,29 @@ export default function PlayerProfile() {
       match_type: matchFilter || undefined,
     }),
     enabled: !!profileId,
+  });
+
+  // Rivales de la pagina de partidas que estan visible. Una sola peticion por
+  // pagina en vez de una por rival, y solo devuelve confianza >= 80.
+  const opponentIds = useMemo(() => {
+    const ids = new Set<number>();
+    const self = Number(profileId);
+    for (const m of matchesData?.matches ?? []) {
+      for (const team of m.teams ?? []) {
+        if (team.team_id === m.team_id) continue;
+        for (const p of team.players ?? []) {
+          if (p.profile_id && p.profile_id !== self) ids.add(p.profile_id);
+        }
+      }
+    }
+    return [...ids].sort((a, b) => a - b);
+  }, [matchesData, profileId]);
+
+  const { data: opponentFlags } = useQuery({
+    queryKey: ['signalFlags', opponentIds],
+    queryFn: () => getSignalFlags(opponentIds),
+    enabled: opponentIds.length > 0,
+    staleTime: 10 * 60 * 1000,
   });
 
   // Auto-enrich: check if player needs more match data
@@ -264,6 +298,11 @@ export default function PlayerProfile() {
             </div>
             <p className="text-sm text-gray-500 mt-1 m-0">{t('profile.profileId')}: {player.profile_id}</p>
             <PreviousAliases aliases={player.previous_aliases} />
+            <AccountFactsLine
+              account={signals?.account}
+              nickCount={signals?.aliases.distinct_count ?? 0}
+              renameCount={signals?.aliases.recorded_changes ?? 0}
+            />
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {enriching && (
@@ -318,6 +357,10 @@ export default function PlayerProfile() {
           </div>
         </div>
       </div>
+
+      {/* Deteccion de copia compartida. Fuera de las pestanas porque es un hecho
+          del perfil, no de una seccion. Si no hay deteccion no pinta nada. */}
+      <SharedAccountCard detections={signals?.shared_account} />
 
       {/* Recent form */}
       {matches.length > 0 && (
@@ -493,7 +536,12 @@ export default function PlayerProfile() {
           ) : matches.length > 0 ? (
             <div className="flex flex-col gap-2">
               {matches.map((match) => (
-                <MatchRow key={match.match_id} match={match} profileId={profileId} />
+                <MatchRow
+                  key={match.match_id}
+                  match={match}
+                  profileId={profileId}
+                  signalFlags={opponentFlags?.flags}
+                />
               ))}
             </div>
           ) : (

@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_BADGE, OUTCOME_CHIP, OUTCOME_CARD } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
-import type { MatchRecord, MatchPlayer } from '../lib/types';
+import type { MatchRecord, MatchPlayer, SignalFlag } from '../lib/types';
+import SharedCopyBadge from './SharedCopyBadge';
 
 interface MatchRowProps {
   match: MatchRecord;
   profileId?: string | number;
+  /** detecciones de copia compartida de los rivales, indexadas por profile_id */
+  signalFlags?: Record<string, SignalFlag>;
 }
 
 function CivBadge({ civId, size = 'md' }: { civId: number | null | undefined; size?: 'sm' | 'md' }) {
@@ -32,7 +35,15 @@ function CivBadge({ civId, size = 'md' }: { civId: number | null | undefined; si
   );
 }
 
-function PlayerLine({ player, isCurrentPlayer }: { player: MatchPlayer; isCurrentPlayer: boolean }) {
+function PlayerLine({
+  player,
+  isCurrentPlayer,
+  flag,
+}: {
+  player: MatchPlayer;
+  isCurrentPlayer: boolean;
+  flag?: SignalFlag;
+}) {
   const ratingStr = player.new_rating != null ? `${player.new_rating}` : '';
   const diffStr =
     player.rating_diff != null
@@ -52,6 +63,7 @@ function PlayerLine({ player, isCurrentPlayer }: { player: MatchPlayer; isCurren
       >
         {player.alias || `Player ${player.profile_id}`}
       </Link>
+      <SharedCopyBadge flag={flag} compact />
       {ratingStr && (
         <span className="text-[11px] text-gray-500 ml-auto tabular-nums">{ratingStr}</span>
       )}
@@ -68,7 +80,7 @@ function PlayerLine({ player, isCurrentPlayer }: { player: MatchPlayer; isCurren
   );
 }
 
-export default function MatchRow({ match, profileId }: MatchRowProps) {
+export default function MatchRow({ match, profileId, signalFlags }: MatchRowProps) {
   const { t } = useT();
   const outcomeLabel = { win: t('match.win'), loss: t('match.loss'), pending: t('match.resultPending') } as const;
   const [expanded, setExpanded] = useState(false);
@@ -128,6 +140,7 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
                   >
                     {enemyTeams[0].players[0].alias || 'Unknown'}
                   </Link>
+                  <SharedCopyBadge flag={signalFlags?.[String(enemyTeams[0].players[0].profile_id)]} />
                 </div>
               </>
             ) : isTeamGame ? (
@@ -213,7 +226,12 @@ export default function MatchRow({ match, profileId }: MatchRowProps) {
                   {outcome === 'pending' ? t('match.undecidedTeam') : !isWin ? t('match.winners') : t('match.losers')} &middot; Team {team.team_id}
                 </p>
                 {team.players.map((p) => (
-                  <PlayerLine key={p.profile_id} player={p} isCurrentPlayer={false} />
+                  <PlayerLine
+                    key={p.profile_id}
+                    player={p}
+                    isCurrentPlayer={false}
+                    flag={signalFlags?.[String(p.profile_id)]}
+                  />
                 ))}
               </div>
             ))}

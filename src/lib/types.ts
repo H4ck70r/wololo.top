@@ -624,3 +624,69 @@ export interface EnrichmentStatusResponse {
   can_enrich: boolean;
   needs_enrichment: boolean;
 }
+
+// Account signals. El detector de juego familiar compartido lleva meses
+// llenando la base; esto es lo que el front puede ensenar de ello.
+// Nada por debajo de confianza 80 llega hasta aqui: el backend lo filtra.
+
+/** Cada pata de la evidencia puede faltar, y eso se dice en vez de suponerse. */
+export type EvidenceState = 'match' | 'differ' | 'unknown';
+
+export interface SharedAccountEvidence {
+  country: EvidenceState;
+  state: EvidenceState;
+  city: EvidenceState;
+  /** dias entre la creacion de las dos cuentas de Steam, null si falta el dato */
+  accounts_created_days_apart: number | null;
+}
+
+export interface SharedAccountDetection {
+  detection_id: string | null;
+  /** duenno de la copia del juego */
+  lender_name: string | null;
+  lender_profile_id: number | null;
+  confidence: number;
+  detection_method: 'passive_scan' | 'active_scan' | 'manual' | null;
+  detected_at: string | null;
+  last_seen: string | null;
+  detection_count: number | null;
+  game_name: string | null;
+  evidence: SharedAccountEvidence;
+}
+
+/** Datos neutros de la cuenta de Steam. No son una acusacion de nada. */
+export interface AccountFacts {
+  steam_id: string | null;
+  created_at: string | null;
+  created_year: number | null;
+  steam_level: number | null;
+  game_count: number | null;
+  friend_count: number | null;
+  last_online: string | null;
+  is_online: boolean;
+  playing_now: string | null;
+}
+
+export interface PlayerSignalsResponse {
+  status: string;
+  profile_id: number;
+  min_confidence: number;
+  account: AccountFacts | null;
+  aliases: {
+    distinct_count: number;
+    recorded_changes: number;
+    list: PreviousAlias[];
+  };
+  shared_account: SharedAccountDetection[];
+  has_signals: boolean;
+}
+
+export type SignalFlag = Omit<SharedAccountDetection, 'detection_id' | 'game_name'>;
+
+export interface SignalFlagsResponse {
+  status: string;
+  min_confidence: number;
+  requested: number;
+  /** indexado por profile_id en texto */
+  flags: Record<string, SignalFlag>;
+}

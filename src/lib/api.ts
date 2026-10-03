@@ -47,6 +47,8 @@ import type {
   MatchDetailResponse,
   LadderDistribution,
   LadderRangeStats,
+  PlayerSignalsResponse,
+  SignalFlagsResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -189,4 +191,15 @@ export async function enrichPlayerMatches(profileId: number | string): Promise<{
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
+}
+
+export async function getPlayerSignals(profileId: number | string): Promise<PlayerSignalsResponse> {
+  return apiFetch<PlayerSignalsResponse>(`/api/players/${profileId}/signals`);
+}
+
+/** Marcar rivales en un listado sin una peticion por rival. */
+export async function getSignalFlags(profileIds: (number | string)[]): Promise<SignalFlagsResponse> {
+  return apiFetch<SignalFlagsResponse>('/api/players/signals/flags', {
+    profile_ids: profileIds.join(','),
+  });
 }
