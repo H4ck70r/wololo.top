@@ -12,6 +12,14 @@ function reloj(ms: number | null | undefined) {
   return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 }
 
+//  Lo que tarda la investigacion de cada edad. El replay guarda el CLIC y lo
+//  que usan las guias y los coaches es cuando la edad CAE, asi que se suma.
+//  Validado contra la pantalla final del propio juego: Feudal e Imperial
+//  cuadran al segundo.
+const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
+const caeA = (ms: number | null | undefined, edad: keyof typeof INVESTIGACION_MS) =>
+  ms == null ? null : reloj(ms + INVESTIGACION_MS[edad]);
+
 /**
  * Lo que sale del replay de la partida. Solo aparece cuando hay datos: Relic
  * borra los replays al cabo de un ano, asi que la mayoria de las partidas
@@ -25,9 +33,9 @@ export default function ReplayInsights({ players }: Props) {
   const filas: { clave: string; etiqueta: string; valor: (p: MatchDetailPlayer) => string | null;
                  mejorBajo?: boolean }[] = [
     { clave: 'opening', etiqueta: t('replay.opening'), valor: (p) => p.replay?.opening ?? null },
-    { clave: 'feudal', etiqueta: t('replay.feudal'), valor: (p) => reloj(p.replay?.feudal_ms), mejorBajo: true },
-    { clave: 'castle', etiqueta: t('replay.castle'), valor: (p) => reloj(p.replay?.castle_ms), mejorBajo: true },
-    { clave: 'imperial', etiqueta: t('replay.imperial'), valor: (p) => reloj(p.replay?.imperial_ms), mejorBajo: true },
+    { clave: 'feudal', etiqueta: t('replay.feudal'), valor: (p) => caeA(p.replay?.feudal_ms, 'feudal'), mejorBajo: true },
+    { clave: 'castle', etiqueta: t('replay.castle'), valor: (p) => caeA(p.replay?.castle_ms, 'castle'), mejorBajo: true },
+    { clave: 'imperial', etiqueta: t('replay.imperial'), valor: (p) => caeA(p.replay?.imperial_ms, 'imperial'), mejorBajo: true },
     { clave: 'vills', etiqueta: t('replay.villagers'), valor: (p) => p.replay?.villagers_15m?.toString() ?? null },
     { clave: 'idle', etiqueta: t('replay.tcIdle'), valor: (p) =>
         p.replay?.tc_idle_ms == null ? null : `${Math.round(p.replay.tc_idle_ms / 1000)}s`, mejorBajo: true },

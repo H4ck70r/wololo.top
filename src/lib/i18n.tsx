@@ -489,6 +489,11 @@ const EN = {
   'units.age.imperial': 'Imperial',
   'map.terrainId': 'terrain {id}',
   'map.terrainHint': 'The terrain comes from the replay, tile by tile, and the shapes are exact. The colors go by how common each terrain is on this map \u2014 the most common is the ground, the next ones are usually forest and water. The game gives no reliable table of terrain names, so the raw id is shown rather than a made-up name.',
+  'matchMap.title': 'The map of this game',
+  'matchMap.intro': 'Buildings, walls, army movement, what each player ordered and every technology, with its minute. The replay is fetched from the server and parsed on the spot, so it takes a few seconds.',
+  'matchMap.load': 'Load the map',
+  'matchMap.loading': 'Fetching the replay and parsing it\u2026',
+  'matchMap.gone': 'The server no longer has this replay. They are kept for about a year, so older games cannot be shown \u2014 unless you upload the file yourself.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -965,6 +970,11 @@ const ES: Partial<Record<TKey, string>> = {
   'units.age.imperial': 'Imperial',
   'map.terrainId': 'terreno {id}',
   'map.terrainHint': 'El terreno sale del replay, casilla a casilla, y las formas son exactas. Los colores van por lo com\u00fan que es cada terreno en este mapa \u2014 el m\u00e1s com\u00fan es el suelo y los siguientes suelen ser bosque y agua. El juego no da una tabla fiable de nombres de terreno, as\u00ed que se ense\u00f1a el id crudo en vez de un nombre inventado.',
+  'matchMap.title': 'El mapa de esta partida',
+  'matchMap.intro': 'Edificios, murallas, movimiento del ej\u00e9rcito, lo que encarg\u00f3 cada jugador y todas las tecnolog\u00edas con su minuto. El replay se baja del servidor y se analiza al vuelo, as\u00ed que tarda unos segundos.',
+  'matchMap.load': 'Cargar el mapa',
+  'matchMap.loading': 'Bajando el replay y analiz\u00e1ndolo\u2026',
+  'matchMap.gone': 'El servidor ya no tiene este replay. Se guardan alrededor de un a\u00f1o, as\u00ed que las partidas viejas no se pueden ense\u00f1ar \u2014 salvo que subas t\u00fa el fichero.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

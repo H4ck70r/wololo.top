@@ -6,6 +6,7 @@ import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/cons
 import { outcomeOf } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
 import ReplayInsights from '../components/ReplayInsights';
+import MatchReplayAnalysis from '../components/MatchReplayAnalysis';
 
 export default function MatchDetailPage() {
   const { t } = useT();
@@ -73,10 +74,15 @@ export default function MatchDetailPage() {
         </div>
       </div>
 
+      {/* Las cifras del replay, a ancho completo. Estaban metidas en la rejilla
+          de dos columnas junto a los equipos y la tabla quedaba aplastada en
+          media pantalla, que es justo donde peor se lee una comparacion. */}
+      <div className="mb-6">
+        <ReplayInsights players={match.teams.flatMap((t) => t.players)} />
+      </div>
+
       {/* Teams */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ReplayInsights players={match.teams.flatMap((t) => t.players)} />
-
         {match.teams.map((team) => {
           const teamOutcome = outcomeOf(team.result);
           const isWinner = teamOutcome === 'win';
@@ -151,6 +157,13 @@ export default function MatchDetailPage() {
             </div>
           );
         })}
+      </div>
+
+      {/* El mapa y el detalle completo, detras de un boton porque bajar el
+          replay de Relic y parsearlo son unos segundos y una peticion a un
+          servidor ajeno: no se hace solo porque alguien abra la ficha. */}
+      <div className="mt-6">
+        <MatchReplayAnalysis matchId={match.match_id} />
       </div>
     </div>
   );
