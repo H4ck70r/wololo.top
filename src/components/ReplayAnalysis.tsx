@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
 import ReplayMap from './ReplayMap';
 import ReplayUnits from './ReplayUnits';
 import ReplayEconomy from './ReplayEconomy';
 import ReplayApm from './ReplayApm';
-import type { ReplayTimeline, TimelinePlayer } from '../lib/types';
+import type { ReplayTimeline, TimelinePlayer, LevelBenchmarksResponse } from '../lib/types';
 
 interface Props {
   timeline: ReplayTimeline;
@@ -37,11 +39,64 @@ type Pestana = 'unidades' | 'economia' | 'tecnologias' | 'apm';
  * Lo usan la página de análisis y la ficha de partida: una sola vista, para
  * que no acaben divergiendo.
  */
+/** La diferencia con la franja, bajo la cifra. Verde mejor, rojo peor. */
+function Delta({ v, seg }: { v: { dif: number; mejor: boolean; franja: string } | null; seg?: boolean }) {
+  const { t } = useT();
+  if (!v || Math.abs(v.dif) < (seg ? 5 : 0.5)) return null;
+  const n = seg ? `${Math.abs(Math.round(v.dif))}s` : Math.abs(v.dif).toFixed(1);
+  return (
+    <span
+      className={`block text-[10px] tabular-nums ${v.mejor ? 'text-emerald-400/80' : 'text-red-400/80'}`}
+      title={t('ana.vsBracket', { b: v.franja })}
+    >
+      {v.mejor ? '−' : '+'}{n}
+    </span>
+  );
+}
+
 export default function ReplayAnalysis({ timeline, players = [], info }: Props) {
   const { t } = useT();
   const [pestana, setPestana] = useState<Pestana>('unidades');
 
   const jugadores = info?.jugadores ?? timeline.jugadores;
+
+  /**
+   * Lo que separa esto de un analizador de partidas sueltas: cada cifra lleva
+   * al lado lo que hace su propia franja de ELO, sacado de miles de partidas.
+   *
+   * Un analizador puede decirte que llegaste a Castillos a las 21:38. Para
+   * saber si eso es bueno hace falta saber qué hacen los demás a tu nivel, y
+   * eso no sale de un fichero: sale de haber medido muchos.
+   *
+   * El rating lo trae el propio replay en su bloque final, así que funciona
+   * incluso en partidas que el ladder nunca vio.
+   */
+  const { data: referencias } = useQuery<LevelBenchmarksResponse>({
+    queryKey: ['levelBenchmarks', '6'],
+    queryFn: () => getLevelBenchmarks({ match_type: '6' }),
+    staleTime: 30 * 60 * 1000,
+  });
+
+  const franjaDe = (rating?: number) => {
+    if (rating == null) return null;
+    if (rating < 1000) return '<1000';
+    if (rating < 1200) return '1000-1200';
+    if (rating < 1400) return '1200-1400';
+    if (rating < 1600) return '1400-1600';
+    return '1600+';
+  };
+
+  /** Cuánto mejor o peor que su franja, en segundos o en unidades. */
+  const contra = (rating: number | undefined, campo: 'feudal_s' | 'castle_s' | 'villagers_15m' | 'apm',
+                  valor: number | null | undefined, menorEsMejor: boolean) => {
+    if (valor == null || !referencias) return null;
+    const franja = franjaDe(rating);
+    const b = referencias.brackets.find((x) => x.bracket === franja);
+    const ref = b?.[campo];
+    if (b?.thin || ref == null) return null;
+    const dif = menorEsMejor ? ref - valor : valor - ref;
+    return { dif, mejor: dif > 0, franja: franja! };
+  };
   const PESTANAS: { id: Pestana; etiqueta: string }[] = [
     { id: 'unidades', etiqueta: t('tabs.units') },
     { id: 'economia', etiqueta: t('tabs.economy') },
@@ -77,6 +132,9 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
                 <tr key={k} className="border-b border-dark-500/40">
                   <td className="py-2 pr-3 text-gray-300 whitespace-nowrap">
                     {j.nombre}
+                    {j.rating != null && (
+                      <span className="ml-1.5 text-[10px] text-gray-500 tabular-nums">{j.rating}</span>
+                    )}
                     {j.es_ia && (
                       <span className="ml-1.5 text-[10px] text-gray-500 border border-dark-400 rounded px-1">
                         {t('up.ai')}
@@ -86,18 +144,22 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
                   <td className="py-2 px-2 text-gray-300">{(p.opening as string) ?? '—'}</td>
                   <td className="py-2 px-2 text-right tabular-nums text-gray-300">
                     {f == null ? '—' : reloj(f + INVESTIGACION_MS.feudal)}
+                    <Delta v={contra(j.rating, 'feudal_s', f == null ? null : f / 1000, true)} seg />
                   </td>
                   <td className="py-2 px-2 text-right tabular-nums text-gray-300">
                     {c == null ? '—' : reloj(c + INVESTIGACION_MS.castle)}
+                    <Delta v={contra(j.rating, 'castle_s', c == null ? null : c / 1000, true)} seg />
                   </td>
                   <td className="py-2 px-2 text-right tabular-nums text-gray-300">
                     {im == null ? '—' : reloj(im + INVESTIGACION_MS.imperial)}
                   </td>
                   <td className="py-2 px-2 text-right tabular-nums text-gray-300 hidden sm:table-cell">
                     {(p.villagers_15m as number) ?? '—'}
+                    <Delta v={contra(j.rating, 'villagers_15m', p.villagers_15m as number, false)} />
                   </td>
                   <td className="py-2 pl-2 text-right tabular-nums text-gray-300 hidden sm:table-cell">
                     {(p.apm as number) ?? '—'}
+                    <Delta v={contra(j.rating, 'apm', p.apm as number, false)} />
                   </td>
                 </tr>
               );

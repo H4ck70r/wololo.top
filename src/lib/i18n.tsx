@@ -535,6 +535,7 @@ const EN = {
   'apm.peak': 'peak',
   'apm.repeated': 'repeated',
   'apm.limite': 'Per minute of GAME clock, which runs at 1.7x real time — the clock on screen and the one the guides use. The split between ordering and building goes by command type, not unit type, because the replay does not say what each object is.',
+  'ana.vsBracket': 'against the {b} bracket, measured on thousands of games',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -1057,6 +1058,7 @@ const ES: Partial<Record<TKey, string>> = {
   'apm.peak': 'pico',
   'apm.repeated': 'repetidas',
   'apm.limite': 'Por minuto de reloj de JUEGO, que corre a 1,7x el real — el reloj que se ve en pantalla y el que usan las guías. El reparto entre mandar y construir va por tipo de comando, no por tipo de unidad, porque el replay no dice qué es cada objeto.',
+  'ana.vsBracket': 'contra la franja {b}, medido sobre miles de partidas',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

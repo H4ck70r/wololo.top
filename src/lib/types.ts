@@ -920,6 +920,9 @@ export interface TimelinePlayer {
   color?: number;
   /** true si es un bot; su nombre sale del campo de IA del replay */
   es_ia?: boolean;
+  /** el rating con el que jugó, sacado del bloque final del propio replay */
+  rating?: number;
+  rank?: number;
   nombre_ia?: string;
 }
 
