@@ -529,7 +529,7 @@ const EN = {
   'eco.limite': 'The game’s own end screen also shows food, wood, stone and gold collected, units killed and buildings razed. None of that is in the replay: the game works it out by replaying the match, and the file only holds the commands. Showing an estimate here would be inventing it.',
   'tabs.apm': 'Pace',
   'apm.title': 'Actions per minute',
-  'apm.note': 'Two numbers, not one: every action, and the EFFECTIVE ones. Two identical orders to the same units moments apart count once, because in a fight the same attack click gets repeated over and over and that inflates the number without doing anything new.',
+  'apm.note': 'How busy each player was, and how much of that busyness did something.',
   'apm.apm': 'actions',
   'apm.eapm': 'effective',
   'apm.peak': 'peak',
@@ -544,6 +544,12 @@ const EN = {
   'verd.feudal': '{ganador} reached Feudal {n} earlier.',
   'verd.contra': 'Worth noting: {ganador} won without the thing that usually decides these games \u2014 {otro} had it.',
   'verd.fuente': 'Ordered by how much each thing actually decides a game, measured by comparing winner and loser INSIDE the same match over thousands of pairs: more actions wins 62.6% of the time, more villagers 61.3%, earlier Castle 61.2%, earlier Feudal only 58.9%. Differences too small to mean anything are not listed.',
+  'apm.frase': '{total} commands a minute, of which {efectivas} did something new.',
+  'apm.repetidasFrase': 'Out of every 100 orders, {n} repeated the one before \u2014 the same click on the same units, moments apart.',
+  'apm.masQueFranja': '{n} a minute more than the {franja} bracket, which averages {ref}.',
+  'apm.menosQueFranja': '{n} a minute less than the {franja} bracket, which averages {ref}.',
+  'apm.ejeY': 'each bar is one minute \u00b7 highest {pico}',
+  'apm.repartoFrase': '{mando}% was ordering units about; {gestion}% was building, queueing and researching.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -1075,6 +1081,12 @@ const ES: Partial<Record<TKey, string>> = {
   'verd.feudal': '{ganador} llegó a Feudal {n} antes.',
   'verd.contra': 'Vale la pena fijarse: {ganador} ganó sin lo que normalmente decide estas partidas \u2014 lo tenía {otro}.',
   'verd.fuente': 'Ordenado por cuánto decide cada cosa de verdad, medido comparando ganador y perdedor DENTRO de la misma partida sobre miles de pares: más acciones gana el 62,6% de las veces, más aldeanos el 61,3%, antes a Castillos el 61,2% y antes a Feudal sólo el 58,9%. Las diferencias demasiado pequeñas para significar algo no se listan.',
+  'apm.frase': '{total} \u00f3rdenes por minuto, de las cuales {efectivas} hicieron algo nuevo.',
+  'apm.repetidasFrase': 'De cada 100 \u00f3rdenes, {n} repet\u00edan la anterior \u2014 el mismo clic sobre las mismas unidades, casi seguido.',
+  'apm.masQueFranja': '{n} por minuto m\u00e1s que la franja {franja}, que hace {ref} de media.',
+  'apm.menosQueFranja': '{n} por minuto menos que la franja {franja}, que hace {ref} de media.',
+  'apm.ejeY': 'cada barra es un minuto \u00b7 la m\u00e1s alta {pico}',
+  'apm.repartoFrase': 'El {mando}% fueron \u00f3rdenes a unidades; el {gestion}%, construir, encolar e investigar.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

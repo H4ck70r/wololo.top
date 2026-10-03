@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
-import type { ReplayTimeline } from '../lib/types';
+import type { ReplayTimeline, LevelBenchmarksResponse } from '../lib/types';
 
 interface Props {
   timeline: ReplayTimeline;
@@ -23,6 +25,21 @@ interface Props {
 export default function ReplayApm({ timeline }: Props) {
   const { t } = useT();
   const ritmo = timeline.ritmo ?? {};
+
+  //  La referencia de su propia franja, que es lo que convierte un numero en
+  //  un juicio: 40 por minuto no dice nada hasta saber que su nivel hace 32.
+  const { data: referencias } = useQuery<LevelBenchmarksResponse>({
+    queryKey: ['levelBenchmarks', '6'],
+    queryFn: () => getLevelBenchmarks({ match_type: '6' }),
+    staleTime: 30 * 60 * 1000,
+  });
+  const refDeFranja = (rating?: number) => {
+    if (rating == null || !referencias) return null;
+    const franja = rating < 1000 ? '<1000' : rating < 1200 ? '1000-1200'
+      : rating < 1400 ? '1200-1400' : rating < 1600 ? '1400-1600' : '1600+';
+    const b = referencias.brackets.find((x) => x.bracket === franja);
+    return b && !b.thin && b.apm != null ? { franja, apm: b.apm } : null;
+  };
   const colorDe = (n: number) => colorDeJugador(timeline.jugadores, n);
   const nombreJ = (n: number) => nombreDeJugador(timeline.jugadores, n);
 
@@ -62,15 +79,28 @@ export default function ReplayApm({ timeline }: Props) {
               <span className="text-sm text-gray-200">{nombreJ(s.numero)}</span>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 mb-3">
-              {([['apm.apm', s.apm], ['apm.eapm', s.eapm],
-                 ['apm.peak', s.pico], ['apm.repeated', `${s.repetido}%`]] as const).map(([k, v]) => (
-                <div key={k} className="text-center">
-                  <div className="text-base tabular-nums text-gray-100">{v}</div>
-                  <div className="text-[10px] text-gray-500 leading-tight">{t(k as never)}</div>
-                </div>
-              ))}
-            </div>
+            {/* Una frase y no cuatro numeros sueltos: lo que importa es
+                cuantas ordenes utiles hizo por minuto, y si eso es mucho o
+                poco para su nivel. */}
+            <p className="text-[15px] text-gray-200 m-0 mb-1">
+              {t('apm.frase', { total: String(s.apm), efectivas: String(s.eapm) })}
+            </p>
+            <p className="text-xs text-gray-500 m-0 mb-1">
+              {t('apm.repetidasFrase', { n: String(s.repetido) })}
+            </p>
+            {(() => {
+              const r = refDeFranja(timeline.jugadores.find((j) => j.numero === s.numero)?.rating);
+              if (!r) return null;
+              const dif = s.apm - r.apm;
+              return (
+                <p className="text-xs m-0 mb-3">
+                  <span className={dif >= 0 ? 'text-emerald-400/90' : 'text-red-400/90'}>
+                    {t(dif >= 0 ? 'apm.masQueFranja' : 'apm.menosQueFranja',
+                       { n: String(Math.abs(Math.round(dif))), franja: r.franja, ref: String(Math.round(r.apm)) })}
+                  </span>
+                </p>
+              );
+            })()}
 
             {/* Las efectivas minuto a minuto. */}
             <div className="flex items-end gap-px h-14">
@@ -89,6 +119,7 @@ export default function ReplayApm({ timeline }: Props) {
             </div>
             <div className="flex justify-between text-[10px] text-gray-600 mt-0.5">
               <span>0:00</span>
+              <span className="text-gray-500">{t('apm.ejeY', { pico: String(s.pico) })}</span>
               <span>{largo}:00</span>
             </div>
 
@@ -99,10 +130,12 @@ export default function ReplayApm({ timeline }: Props) {
                 <span style={{ width: `${(100 * s.gestion) / (s.total || 1)}%`,
                                background: colorDe(s.numero) }} />
               </div>
-              <div className="flex justify-between text-[10px] text-gray-600 mt-0.5">
-                <span>{t('eco.command')} {Math.round((100 * s.mando) / (s.total || 1))}%</span>
-                <span>{t('eco.manage')} {Math.round((100 * s.gestion) / (s.total || 1))}%</span>
-              </div>
+              <p className="text-xs text-gray-500 mt-1 m-0">
+                {t('apm.repartoFrase', {
+                  mando: String(Math.round((100 * s.mando) / (s.total || 1))),
+                  gestion: String(Math.round((100 * s.gestion) / (s.total || 1))),
+                })}
+              </p>
             </div>
           </div>
         ))}
