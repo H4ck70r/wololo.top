@@ -318,7 +318,7 @@ const EN = {
   // Percentil en el tiempo (parte A) e inflacion del ladder (parte B).
   'pct.title': 'Percentile over time',
   'pct.titleOther': "{who}'s percentile over time",
-  'pct.why': 'Rating inflates when the whole ladder does. The share of players above you cannot.',
+  'pct.why': 'Rating inflates when the whole ladder does. The share of the ladder sitting above does not.',
   'pct.hint': 'Better is up: the top 1% sits at the top of the chart.',
   'pct.empty': 'Not enough ladder history for this player yet.',
   'pct.percentile': 'Percentile',
@@ -353,7 +353,7 @@ const EN = {
   'infl.verdictInflated': 'The whole ladder drifted up: the median gained {n} points, so the same rating is worth less than it was.',
   'infl.verdictDeflated': 'The whole ladder drifted down: the median lost {n} points, so the same rating is worth more than it was.',
   'infl.verdictStable': 'The ladder barely moved: the median shifted {n} points, so a rating means about what it did.',
-  'infl.footnote': 'Share of the ladder, not head count: the ladder itself grew, which would lift every bar without anyone inflating.',
+  'infl.footnote': 'Share of the ladder, not head count: the ladder itself took in {n} accounts over this window, which would lift every bar without anyone inflating.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -659,7 +659,7 @@ const ES: Partial<Record<TKey, string>> = {
   'dist.backToTop10': 'Volver al top 10',
   'pct.title': 'Tu percentil en el tiempo',
   'pct.titleOther': 'El percentil de {who} en el tiempo',
-  'pct.why': 'La puntuación se infla cuando se infla el ladder entero. La proporción de gente que tienes por encima, no.',
+  'pct.why': 'La puntuación se infla cuando se infla el ladder entero. La proporción del ladder que queda por encima, no.',
   'pct.hint': 'Mejor es arriba: el top 1% está en lo más alto del gráfico.',
   'pct.empty': 'Todavía no hay suficiente historial de ladder para este jugador.',
   'pct.percentile': 'Percentil',
@@ -694,7 +694,7 @@ const ES: Partial<Record<TKey, string>> = {
   'infl.verdictInflated': 'El ladder entero se desplazó hacia arriba: la mediana ganó {n} puntos, así que la misma puntuación vale menos que antes.',
   'infl.verdictDeflated': 'El ladder entero se desplazó hacia abajo: la mediana perdió {n} puntos, así que la misma puntuación vale más que antes.',
   'infl.verdictStable': 'El ladder casi no se movió: la mediana se desplazó {n} puntos, así que una puntuación significa más o menos lo mismo.',
-  'infl.footnote': 'Proporción del ladder, no número de cabezas: el ladder en sí creció, y eso subiría todas las barras sin que nadie se infle.',
+  'infl.footnote': 'Proporción del ladder, no número de cabezas: el ladder sumó {n} cuentas en esta ventana, y eso subiría todas las barras sin que nadie se infle.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

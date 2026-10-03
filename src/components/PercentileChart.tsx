@@ -53,7 +53,7 @@ interface Props {
 type ChartPoint = { date: string } & Record<string, number | string>;
 
 export default function PercentileChart({ profileId, playerName, isSelf = false }: Props) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [days, setDays] = useState(180);
   const [activeLadders, setActiveLadders] = useState<Set<LadderKey>>(new Set(['rm']));
   const [showRating, setShowRating] = useState(true);
@@ -128,8 +128,11 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
   const lead: PercentileSeries | undefined = data?.ladders[visible[0]];
   const summary = lead?.summary;
 
+  // El idioma lo manda el selector del sitio, no el del navegador: con la web
+  // en espanol las fechas salian en ingles.
+  const locale = lang === 'es' ? 'es-ES' : 'en-US';
   const fmtDate = (d: string) =>
-    new Date(`${d}T12:00:00`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    new Date(`${d}T12:00:00`).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
 
   const tile = (label: string, p: PercentilePoint | undefined) =>
     p ? (
@@ -253,7 +256,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
                 }}
                 labelStyle={{ color: '#e2e8f0' }}
                 labelFormatter={(d) =>
-                  new Date(`${String(d)}T12:00:00`).toLocaleDateString(undefined, {
+                  new Date(`${String(d)}T12:00:00`).toLocaleDateString(locale, {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',
@@ -270,8 +273,8 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
                   return [
                     pos != null && size != null
                       ? `${t('pct.tooltipTop', { pct: Number(value) })} · ${t('pct.tooltipPlace', {
-                          position: pos.toLocaleString(),
-                          total: size.toLocaleString(),
+                          position: pos.toLocaleString(locale),
+                          total: size.toLocaleString(locale),
                         })}`
                       : t('pct.tooltipTop', { pct: Number(value) }),
                     label,
@@ -280,14 +283,9 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
               />
 
               {GUIDES.filter((g) => g > pctDomain[0] && g < pctDomain[1]).map((g) => (
-                <ReferenceLine
-                  key={g}
-                  yAxisId="pct"
-                  y={g}
-                  stroke="#3d4358"
-                  strokeDasharray="2 4"
-                  label={{ value: `${g}%`, position: 'insideLeft', fill: '#4b5563', fontSize: 9 }}
-                />
+                // Sin etiqueta: el eje ya rotula el porcentaje y las dos se
+                // pisaban justo en el borde izquierdo.
+                <ReferenceLine key={g} yAxisId="pct" y={g} stroke="#3d4358" strokeDasharray="2 4" />
               ))}
 
               {showRating &&
@@ -297,8 +295,11 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
                     yAxisId="rating"
                     type="monotone"
                     dataKey={`${ladder}_rating`}
-                    stroke={LADDER_CONFIG[ladder].color}
-                    strokeOpacity={0.3}
+                    // Gris y no del color del ladder: las dos lineas se mueven
+                    // casi igual (es el sentido del bloque, que se vea cuando
+                    // NO lo hacen) y en el mismo tono eran la misma linea.
+                    stroke="#8b93a7"
+                    strokeOpacity={0.55}
                     strokeWidth={1}
                     strokeDasharray="4 3"
                     dot={false}

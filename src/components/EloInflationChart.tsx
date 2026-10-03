@@ -37,7 +37,7 @@ interface Props {
 }
 
 export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [months, setMonths] = useState(6);
 
   const { data, isLoading } = useQuery<DistributionHistoryResponse>({
@@ -70,12 +70,21 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
     hit.after = b.share;
     byRating.set(b.rating, hit);
   }
-  const points = [...byRating.values()]
+  const all = [...byRating.values()]
     .sort((a, b) => a.rating - b.rating)
     .map((p) => ({ rating: p.rating, before: p.before ?? 0, after: p.after ?? 0 }));
+  // Los extremos vacios se recortan: con los cubos de 0 a 400 dentro, un tercio
+  // del ancho era linea plana y las dos curvas quedaban apretadas en el resto,
+  // que es justo donde hay que verlas separarse o no.
+  const meaty = (p: { before: number; after: number }) => p.before >= 0.02 || p.after >= 0.02;
+  const lo = all.findIndex(meaty);
+  const hi = all.length - 1 - [...all].reverse().findIndex(meaty);
+  const points = lo >= 0 ? all.slice(lo, hi + 1) : all;
 
+  // El idioma lo manda el selector del sitio, no el del navegador.
+  const locale = lang === 'es' ? 'es-ES' : 'en-US';
   const fmtDate = (d: string) =>
-    new Date(`${d}T12:00:00`).toLocaleDateString(undefined, {
+    new Date(`${d}T12:00:00`).toLocaleDateString(locale, {
       month: 'short',
       day: 'numeric',
       year: 'numeric',
@@ -206,7 +215,7 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
       </div>
 
       <p className="text-[11px] text-gray-600 mt-3 m-0">
-        {t('infl.footnote')} {sign(shift.players)} {t('infl.shiftPlayers')}.
+        {t('infl.footnote', { n: shift.players.toLocaleString(locale) })}
       </p>
     </div>
   );
