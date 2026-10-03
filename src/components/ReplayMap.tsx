@@ -6,9 +6,16 @@ interface Props {
   timeline: ReplayTimeline;
 }
 
-/** Los colores de jugador del juego, por índice, para que el mapa se parezca
- *  a lo que el jugador vio en su partida. */
-const COLORES = ['#8b8b8b', '#4a7fd4', '#d44a4a', '#3fa64f', '#d9c13c',
+/**
+ * La paleta de jugador de AoE2, en el orden que usa el juego y empezando en 0.
+ *
+ * Verificado contra una partida: maestro_006 trae color=1 y en el chat del
+ * juego su nombre sale en ROJO, que es el 1 de esta lista. Antes el mapa ni
+ * siquiera llegaba a leer este campo -la cronología no lo pasaba- y pintaba a
+ * cada jugador por su número de hueco, así que los colores no tenían nada que
+ * ver con los que se vieron en la partida.
+ */
+const COLORES = ['#4a7fd4', '#d44a4a', '#3fa64f', '#d9c13c',
                  '#3fb8bd', '#9a56c4', '#9a9a9a', '#dd8b35'];
 
 /**
@@ -24,25 +31,25 @@ const COLORES = ['#8b8b8b', '#4a7fd4', '#d44a4a', '#3fa64f', '#d9c13c',
  */
 type Edificio = { es: string; en: string; icono: string; r: number; peso: number };
 const EDIFICIOS: Record<number, Edificio> = {
-  70:  { es: 'Casa', en: 'House', icono: '', r: 1.6, peso: 0 },
-  50:  { es: 'Granja', en: 'Farm', icono: '', r: 1.6, peso: 0 },
-  68:  { es: 'Molino', en: 'Mill', icono: '◍', r: 2.4, peso: 1 },
-  562: { es: 'Camp. madera', en: 'Lumber camp', icono: '◍', r: 2.4, peso: 1 },
-  584: { es: 'Camp. minero', en: 'Mining camp', icono: '◍', r: 2.4, peso: 1 },
-  12:  { es: 'Cuartel', en: 'Barracks', icono: '⚔', r: 3.4, peso: 3 },
-  87:  { es: 'Galería', en: 'Archery range', icono: '➹', r: 3.4, peso: 3 },
-  101: { es: 'Establo', en: 'Stable', icono: '♞', r: 3.4, peso: 3 },
-  49:  { es: 'Asedio', en: 'Siege workshop', icono: '⚙', r: 3.4, peso: 3 },
-  103: { es: 'Herrería', en: 'Blacksmith', icono: '⚒', r: 2.6, peso: 2 },
-  84:  { es: 'Mercado', en: 'Market', icono: '⚖', r: 2.6, peso: 2 },
-  104: { es: 'Monasterio', en: 'Monastery', icono: '✝', r: 2.6, peso: 2 },
-  209: { es: 'Universidad', en: 'University', icono: '✦', r: 2.6, peso: 2 },
-  79:  { es: 'Torre', en: 'Tower', icono: '♖', r: 2.8, peso: 3 },
-  82:  { es: 'Castillo', en: 'Castle', icono: '♜', r: 5, peso: 5 },
-  621: { es: 'Centro urbano', en: 'Town centre', icono: '⌂', r: 5, peso: 4 },
+  70:  { es: 'Casa', en: 'House', icono: '', r: 1.3, peso: 0 },
+  50:  { es: 'Granja', en: 'Farm', icono: '', r: 1.3, peso: 0 },
+  68:  { es: 'Molino', en: 'Mill', icono: '', r: 1.8, peso: 1 },
+  562: { es: 'Camp. madera', en: 'Lumber camp', icono: '', r: 1.8, peso: 1 },
+  584: { es: 'Camp. minero', en: 'Mining camp', icono: '', r: 1.8, peso: 1 },
+  103: { es: 'Herrería', en: 'Blacksmith', icono: '', r: 2, peso: 2 },
+  84:  { es: 'Mercado', en: 'Market', icono: '', r: 2, peso: 2 },
+  209: { es: 'Universidad', en: 'University', icono: '', r: 2, peso: 2 },
+  104: { es: 'Monasterio', en: 'Monastery', icono: '✝', r: 4.5, peso: 3 },
+  12:  { es: 'Cuartel', en: 'Barracks', icono: '⚔', r: 5.5, peso: 4 },
+  87:  { es: 'Galería', en: 'Archery range', icono: '➹', r: 5.5, peso: 4 },
+  101: { es: 'Establo', en: 'Stable', icono: '♞', r: 5.5, peso: 4 },
+  49:  { es: 'Asedio', en: 'Siege workshop', icono: '⚙', r: 5.5, peso: 4 },
+  79:  { es: 'Torre', en: 'Tower', icono: '♖', r: 4.5, peso: 4 },
+  82:  { es: 'Castillo', en: 'Castle', icono: '♜', r: 8, peso: 6 },
+  621: { es: 'Centro urbano', en: 'Town centre', icono: '⌂', r: 8, peso: 5 },
 };
 //  Los que salen en la leyenda: los que cuentan una historia.
-const EN_LEYENDA = [621, 82, 12, 87, 101, 49, 79];
+const EN_LEYENDA = [621, 82, 12, 87, 101, 49, 79, 104];
 
 const VELOCIDADES = [15, 30, 60];
 //  Nunca 1x: 35 minutos a tiempo real es inmirable. A 30x cabe en 70 segundos.
@@ -90,7 +97,10 @@ export default function ReplayMap({ timeline }: Props) {
 
   const colorDe = (numero: number) => {
     const j = timeline.jugadores.find((x) => x.numero === numero);
-    return COLORES[(j?.color ?? numero) % COLORES.length];
+    //  El color del replay manda. Si falta -formatos viejos que lee mgz-, se
+    //  cae al número de hueco, que al menos distingue a los jugadores.
+    const idx = j?.color != null ? j.color : numero - 1;
+    return COLORES[((idx % COLORES.length) + COLORES.length) % COLORES.length];
   };
 
   const hitos = useMemo(() => {
@@ -147,7 +157,10 @@ export default function ReplayMap({ timeline }: Props) {
     const esc = Math.min(ancho / (lado * 2), alto / lado);
     const despX = (ancho - lado * 2 * esc) / 2 + lado * esc;
     const despY = (alto - lado * esc) / 2;
-    const px = (x: number, y: number) => (x - y) * esc + despX;
+    //  El eje X va espejado respecto a (x - y): comprobado contra la misma
+    //  partida en aoe2insights, donde la base de maestro_006 -centro (61,101)-
+    //  cae abajo a la DERECHA. Con (x - y) salía a la izquierda.
+    const px = (x: number, y: number) => (y - x) * esc + despX;
     const py = (x: number, y: number) => ((x + y) / 2) * esc + despY;
 
     ctx.fillStyle = '#0d1116';
@@ -222,33 +235,39 @@ export default function ReplayMap({ timeline }: Props) {
       const r = Math.max((def?.r ?? 1.8) * esc * 0.55, 2);
 
       if (!def || !def.icono) {
-        //  Casas, granjas y lo no identificado: puntos tenues. Son el relleno
-        //  que da forma a la base sin tapar lo que importa.
-        ctx.globalAlpha = def ? 0.5 : 0.3;
+        //  Casas, granjas, campamentos: cuadraditos tenues. Son el relleno que
+        //  dibuja la forma de la base; si compiten con los iconos no se ve
+        //  nada, que es lo que pasaba antes.
+        ctx.globalAlpha = def ? 0.55 : 0.35;
         ctx.fillStyle = def ? color : '#8b8b8b';
-        ctx.beginPath();
-        ctx.arc(X, Y, Math.max(r * 0.8, 1.2), 0, Math.PI * 2);
-        ctx.fill();
+        const lado2 = Math.max(r * 0.9, 1.5);
+        ctx.fillRect(X - lado2, Y - lado2, lado2 * 2, lado2 * 2);
         ctx.globalAlpha = 1;
         continue;
       }
 
+      //  Lo que cuenta una historia: circulo del color del jugador, borde
+      //  oscuro para separarlo del fondo y el icono en BLANCO encima. En negro
+      //  sobre rojo o azul no se leia.
       ctx.fillStyle = color;
-      ctx.globalAlpha = 0.9;
       ctx.beginPath();
       ctx.arc(X, Y, r, 0, Math.PI * 2);
       ctx.fill();
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = 'rgba(0,0,0,0.55)';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      const tam = Math.round(r * 1.5);
-      if (tam >= 7) {
-        ctx.fillStyle = '#0f1318';
+      const tam = Math.round(r * 1.35);
+      if (tam >= 8) {
         ctx.font = `${tam}px system-ui, "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        //  Halo oscuro para que el blanco se lea sobre cualquier color.
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.strokeText(def.icono, X, Y + tam * 0.06);
+        ctx.fillStyle = '#ffffff';
         ctx.fillText(def.icono, X, Y + tam * 0.06);
       }
     }
@@ -345,17 +364,27 @@ export default function ReplayMap({ timeline }: Props) {
         ))}
       </div>
 
-      {/* Sin leyenda los iconos son un acertijo. */}
-      <div className="flex items-center gap-x-4 gap-y-1 mt-2 flex-wrap">
+      {/* Sin leyenda los iconos son un acertijo, y sueltos sobre el fondo no
+          se parecen a lo que se ve en el mapa. Van en su círculo. */}
+      <div className="flex items-center gap-x-3 gap-y-1.5 mt-2 flex-wrap">
         {EN_LEYENDA.map((id) => {
           const d = EDIFICIOS[id];
           return (
-            <span key={id} className="flex items-center gap-1 text-[11px] text-gray-500">
-              <span className="text-gray-300">{d.icono}</span>
+            <span key={id} className="flex items-center gap-1.5 text-[11px] text-gray-400">
+              <span
+                className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
+                style={{ background: '#6b7280' }}
+              >
+                {d.icono}
+              </span>
               {lang === 'es' ? d.es : d.en}
             </span>
           );
         })}
+        <span className="flex items-center gap-1.5 text-[11px] text-gray-500">
+          <span className="w-2.5 h-2.5 rounded-sm bg-gray-500/60" />
+          {t('map.filler')}
+        </span>
       </div>
 
       <p className="text-[11px] text-gray-600 mt-3 m-0">{t('map.note')}</p>

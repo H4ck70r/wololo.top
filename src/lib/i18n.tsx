@@ -470,6 +470,7 @@ const EN = {
   'units.class.otros': 'Other',
   'up.ai': 'AI',
   'up.aiHint': 'A bot, not a person. Its slot has no profile and its name comes from the replay’s AI field. A bot does not research ages through commands, so it has no age times — and its games never enter the statistics.',
+  'map.filler': 'houses, farms, camps',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -927,6 +928,7 @@ const ES: Partial<Record<TKey, string>> = {
   'units.class.otros': 'Otras',
   'up.ai': 'IA',
   'up.aiHint': 'Es un bot, no una persona. Su hueco no tiene perfil y su nombre sale del campo de IA del replay. Un bot no investiga las edades por comando, así que no tiene tiempos — y sus partidas no entran nunca en las estadísticas.',
+  'map.filler': 'casas, granjas, campamentos',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
