@@ -44,7 +44,7 @@ const EDIFICIOS: Record<number, Edificio> = {
   87:  { es: 'Galería', en: 'Archery range', icono: '➹', r: 5.5, peso: 4 },
   101: { es: 'Establo', en: 'Stable', icono: '♞', r: 5.5, peso: 4 },
   49:  { es: 'Asedio', en: 'Siege workshop', icono: '⚙', r: 5.5, peso: 4 },
-  79:  { es: 'Torre', en: 'Tower', icono: '♖', r: 4.5, peso: 4 },
+  79:  { es: 'Torre', en: 'Tower', icono: '▲', r: 4, peso: 4 },
   82:  { es: 'Castillo', en: 'Castle', icono: '♜', r: 8, peso: 6 },
   621: { es: 'Centro urbano', en: 'Town centre', icono: '⌂', r: 8, peso: 5 },
 };
