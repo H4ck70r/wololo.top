@@ -182,10 +182,14 @@ export default function ReplayMap({ timeline }: Props) {
     const esc = Math.min(ancho / (lado * 2), alto / lado);
     const despX = (ancho - lado * 2 * esc) / 2 + lado * esc;
     const despY = (alto - lado * esc) / 2;
-    //  El eje X va espejado respecto a (x - y): comprobado contra la misma
-    //  partida en aoe2insights, donde la base de maestro_006 -centro (61,101)-
-    //  cae abajo a la DERECHA. Con (x - y) salía a la izquierda.
-    const px = (x: number, y: number) => (y - x) * esc + despX;
+    //  (x - y), que es la proyección estándar de AoE2.
+    //
+    //  Estuvo un rato como (y - x) porque deduje el espejo mirando una captura
+    //  de aoe2insights, y lo deduje mal: quien jugó la partida recuerda las
+    //  bases al revés de lo que yo leí en la imagen. Su memoria de la partida
+    //  vale más que mi lectura de unos píxeles, y con (x - y) la base de centro
+    //  (61,101) cae a la izquierda, que es donde estaba.
+    const px = (x: number, y: number) => (x - y) * esc + despX;
     const py = (x: number, y: number) => ((x + y) / 2) * esc + despY;
 
     ctx.fillStyle = '#0d1116';
