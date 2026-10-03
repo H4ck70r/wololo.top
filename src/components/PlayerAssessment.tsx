@@ -87,7 +87,35 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
         </p>
       )}
 
-      {/* El veredicto primero: es lo único accionable de toda la tarjeta. */}
+      {/* El titular. Una tabla no es una conclusión: la mayoría de la gente
+          que juega a esto no lee percentiles, lee frases. Los números van
+          dentro de la frase para que no haya que buscarlos. */}
+      {(() => {
+        const top = verdict[0];
+        const m = top ? metrics.find((x) => x.key === top.key) : null;
+        if (!m) return null;
+        const brecha = m.in_wins != null && m.in_losses != null
+          ? Math.abs(m.lower_is_better ? m.in_losses - m.in_wins : m.in_wins - m.in_losses)
+          : null;
+        const separa = brecha != null && brecha >= (m.unit === 's' ? 20 : 2);
+        return (
+          <p className="text-[15px] leading-relaxed text-gray-200 bg-dark-800/60 border-l-2 border-red-400/60 rounded-r-lg px-4 py-3 mt-4 m-0">
+            {separa
+              ? t('assess.headlineSplit', {
+                  metric: nombre(m.key),
+                  win: formato(m, m.in_wins),
+                  loss: formato(m, m.in_losses),
+                  pct: String(m.percentile ?? 0),
+                })
+              : t('assess.headlinePlain', {
+                  metric: nombre(m.key),
+                  pct: String(m.percentile ?? 0),
+                })}
+          </p>
+        );
+      })()}
+
+      {/* El detalle del veredicto, ya con la frase leída. */}
       <div className="mt-4">
         <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
           {t('assess.verdictTitle')}
@@ -141,7 +169,12 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
               <th className="text-right py-2 px-2 text-gray-500 font-medium whitespace-nowrap">
                 {t('assess.percentile')}
               </th>
-              <th className="text-right py-2 pl-2 text-gray-500 font-medium">{t('assess.decides')}</th>
+              <th
+                className="text-right py-2 pl-2 text-gray-500 font-medium"
+                title={t('assess.decidesHint')}
+              >
+                {t('assess.decides')}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -178,7 +211,12 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
                             style={{ width: `${m.percentile}%` }}
                           />
                         </span>
-                        <span className="tabular-nums text-gray-300 w-9 text-right">{m.percentile}%</span>
+                        <span
+                          className="tabular-nums text-gray-300 w-9 text-right"
+                          title={t('assess.percentileHint', { pct: String(m.percentile) })}
+                        >
+                          {m.percentile}%
+                        </span>
                       </span>
                     )}
                   </td>
@@ -246,11 +284,14 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
                     <td className={`py-2 pl-2 text-right tabular-nums text-xs ${
                       plano ? 'text-gray-600' : delta > 0 ? 'text-emerald-400/80' : 'text-red-400/80'
                     }`}>
-                      {plano
-                        ? '≈'
-                        : `${delta > 0 ? '+' : ''}${
-                            m.unit === 's' ? `${Math.round(delta)}s` : delta.toFixed(1)
-                          }`}
+                      {plano ? (
+                        //  'Igual' dice algo; un simbolo matematico no.
+                        <span title={t('assess.flatHint')}>{t('assess.flat')}</span>
+                      ) : (
+                        `${delta > 0 ? '+' : ''}${
+                          m.unit === 's' ? `${Math.round(delta)}s` : delta.toFixed(1)
+                        }`
+                      )}
                     </td>
                   </tr>
                 );

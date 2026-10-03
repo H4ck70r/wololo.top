@@ -430,7 +430,9 @@ const EN = {
   'up.title': 'Analyse a game',
   'up.intro': 'Drop a .aoe2record and get its times, opening and map. Works for games the ladder never saw: unranked lobbies, games older than a year, and games nobody uploaded to the server.',
   'up.drop': 'Drop your .aoe2record here, or click to pick one',
-  'up.where': 'Windows: Documents \\ My Games \\ Age of Empires 2 DE \\ <your steam id> \\ SaveGame. Linux/Steam Deck: ~/.local/share/Steam/steamapps/compatdata/813780/pfx/drive_c/users/steamuser/Games/Age of Empires 2 DE/<your steam id>/savegame \u2014 note it is Games, not Documents/My Games.',
+  'up.whereTitle': 'Where are my replays?',
+  'up.whereLinux': 'Careful: on Linux it is Games, not Documents/My Games, and savegame is lowercase.',
+  'up.errNetwork': 'The server did not accept the upload ({mb} MB). Usually the file is larger than the proxy allows, or there is no connection.',
   'up.analysing': 'Analysing\u2026',
   'up.privacy': 'The file is not stored. It is parsed and deleted \u2014 what we keep are the numbers.',
   'up.matched': 'Matched to ladder game #{id}',
@@ -450,6 +452,12 @@ const EN = {
   'replayBadge.queuedHint': 'Waiting its turn. The queue goes oldest first, because those are the replays about to expire \u2014 so recent games wait longest. You can upload the file yourself to skip the queue.',
   'replayBadge.gone': 'no replay',
   'replayBadge.goneHint': 'The server does not have this replay \u2014 nobody uploaded it, or it expired. This one will never have data unless you upload the file.',
+  'assess.headlineSplit': '{metric} is what separates your wins from your losses: {win} when you win, {loss} when you lose. It is also your weakest number against your bracket — you only beat {pct}% of them.',
+  'assess.headlinePlain': 'Your weakest number against your bracket is {metric}: you beat only {pct}% of players at your level.',
+  'assess.percentileHint': 'You do this better than {pct}% of the players in your rating bracket.',
+  'assess.decidesHint': 'Out of every 100 games where one player had the better number here, this is how many that player won. 50% would be a coin flip.',
+  'assess.flat': 'same',
+  'assess.flatHint': 'This number is nearly identical whether you win or lose, so it is not what decides your games.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -867,7 +875,9 @@ const ES: Partial<Record<TKey, string>> = {
   'up.title': 'Analizar una partida',
   'up.intro': 'Suelta un .aoe2record y te saca sus tiempos, la apertura y el mapa. Sirve para partidas que el ladder nunca vio: lobbies sin ranked, partidas de m\u00e1s de un a\u00f1o y partidas que nadie subi\u00f3 al servidor.',
   'up.drop': 'Suelta aqu\u00ed tu .aoe2record, o haz clic para elegirlo',
-  'up.where': 'Windows: Documentos \\ My Games \\ Age of Empires 2 DE \\ <tu steam id> \\ SaveGame. Linux o Steam Deck: ~/.local/share/Steam/steamapps/compatdata/813780/pfx/drive_c/users/steamuser/Games/Age of Empires 2 DE/<tu steam id>/savegame \u2014 ojo, es Games, no Documentos/My Games.',
+  'up.whereTitle': '¿Dónde están mis recs?',
+  'up.whereLinux': 'Ojo: en Linux es Games, no Documentos/My Games, y savegame va en minúsculas.',
+  'up.errNetwork': 'El servidor no aceptó la subida ({mb} MB). Suele ser que el fichero pasa del límite del proxy, o que no hay conexión.',
   'up.analysing': 'Analizando\u2026',
   'up.privacy': 'El fichero no se guarda. Se analiza y se borra \u2014 lo que nos queda son las cifras.',
   'up.matched': 'Emparejada con la partida #{id} del ladder',
@@ -887,6 +897,12 @@ const ES: Partial<Record<TKey, string>> = {
   'replayBadge.queuedHint': 'Esperando su turno. La cola va de lo m\u00e1s viejo a lo m\u00e1s nuevo, porque esos son los replays que est\u00e1n a punto de caducar \u2014 as\u00ed que las partidas recientes son las que m\u00e1s esperan. Puedes subir el fichero t\u00fa y saltarte la cola.',
   'replayBadge.gone': 'sin replay',
   'replayBadge.goneHint': 'El servidor no tiene este replay \u2014 nadie lo subi\u00f3, o ya caduc\u00f3. Esta partida no va a tener datos nunca, salvo que subas el fichero.',
+  'assess.headlineSplit': 'Lo que separa tus victorias de tus derrotas es {metric}: {win} cuando ganas y {loss} cuando pierdes. Es además tu cifra más floja contra tu franja — solo superas al {pct}%.',
+  'assess.headlinePlain': 'Tu cifra más floja contra tu franja es {metric}: solo superas al {pct}% de los jugadores de tu nivel.',
+  'assess.percentileHint': 'Esto lo haces mejor que el {pct}% de los jugadores de tu misma franja de ELO.',
+  'assess.decidesHint': 'De cada 100 partidas en las que un jugador tenía mejor número aquí, esas son las que ganó. El 50% sería una moneda al aire.',
+  'assess.flat': 'igual',
+  'assess.flatHint': 'Esta cifra es casi la misma ganes o pierdas, así que no es lo que decide tus partidas.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
