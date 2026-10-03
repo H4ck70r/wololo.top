@@ -6,6 +6,10 @@ import type { ReplayTimeline } from '../lib/types';
 
 interface Props {
   timeline: ReplayTimeline;
+  /** enseñar solo las unidades, sin el bloque de tecnologías */
+  soloUnidades?: boolean;
+  /** enseñar solo las tecnologías */
+  soloTecnologias?: boolean;
 }
 
 const COLORES = ['#8b8b8b', '#4a7fd4', '#d44a4a', '#3fa64f', '#d9c13c',
@@ -27,7 +31,7 @@ const reloj = (ms: number) =>
  * llegó a existir. Si alguien pide cinco scouts y le tiran el establo, el
  * replay dice que los pidió. El fichero registra órdenes, no estado.
  */
-export default function ReplayUnits({ timeline }: Props) {
+export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }: Props) {
   const { t, lang } = useT();
 
   const datos = useMemo(() => {
@@ -115,9 +119,14 @@ export default function ReplayUnits({ timeline }: Props) {
 
   const jugadores = [...datos.porJugador.keys()].sort((a, b) => a - b);
   if (!jugadores.length) return null;
+  //  Por defecto se enseña todo; los dos modos existen para la vista con
+  //  pestañas, donde unidades y tecnologías van separadas.
+  const verUnidades = !soloTecnologias;
+  const verTecnologias = !soloUnidades;
 
   return (
-    <div className="mt-5">
+    <div className="mt-1">
+      {verUnidades && (<>
       <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
         {t('units.title')}
       </h4>
@@ -221,8 +230,18 @@ export default function ReplayUnits({ timeline }: Props) {
         <span>0:00</span>
         <span>{reloj(timeline.duracion_ms)}</span>
       </div>
-      {/* Las tecnologias: sin nombre todavia, pero la cuenta esta validada. */}
-      {datos.tecnologias.size > 0 && (
+      {/* Sin leyenda las barras de colores son adorno. */}
+      <div className="flex gap-x-3 gap-y-1 mt-2 flex-wrap">
+        {(['inf', 'tiro', 'cab', 'asedio', 'otros'] as const).map((cl) => (
+          <span key={cl} className="flex items-center gap-1 text-[11px] text-gray-500">
+            <span className="w-2 h-2 rounded-sm" style={{ background: CLASE_COLOR[cl] }} />
+            {t(`units.class.${cl}` as never)}
+          </span>
+        ))}
+      </div>
+      </>)}
+
+      {verTecnologias && datos.tecnologias.size > 0 && (
         <div className="mt-5">
           <h5 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
             {t('units.techTitle')}
@@ -273,15 +292,6 @@ export default function ReplayUnits({ timeline }: Props) {
         </div>
       )}
 
-      {/* Sin leyenda las barras de colores son adorno. */}
-      <div className="flex gap-x-3 gap-y-1 mt-2 flex-wrap">
-        {(['inf', 'tiro', 'cab', 'asedio', 'otros'] as const).map((cl) => (
-          <span key={cl} className="flex items-center gap-1 text-[11px] text-gray-500">
-            <span className="w-2 h-2 rounded-sm" style={{ background: CLASE_COLOR[cl] }} />
-            {t(`units.class.${cl}` as never)}
-          </span>
-        ))}
-      </div>
     </div>
   );
 }

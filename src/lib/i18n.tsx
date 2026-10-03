@@ -498,6 +498,9 @@ const EN = {
   'map.res.piedra': 'stone',
   'map.res.animal': 'animals',
   'map.res.pesca': 'fish',
+  'tabs.map': 'Map',
+  'tabs.units': 'Units',
+  'tabs.techs': 'Technologies',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -983,6 +986,9 @@ const ES: Partial<Record<TKey, string>> = {
   'map.res.piedra': 'piedra',
   'map.res.animal': 'animales',
   'map.res.pesca': 'pesca',
+  'tabs.map': 'Mapa',
+  'tabs.units': 'Unidades',
+  'tabs.techs': 'Tecnologías',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

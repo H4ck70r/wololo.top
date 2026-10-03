@@ -2,19 +2,8 @@ import { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { analyzeReplays } from '../lib/api';
 import { useT } from '../lib/i18n';
-import ReplayMap from '../components/ReplayMap';
-import ReplayUnits from '../components/ReplayUnits';
+import ReplayAnalysis from '../components/ReplayAnalysis';
 import type { ReplayUploadResult } from '../lib/types';
-
-const reloj = (ms: number | null | undefined) => {
-  if (ms == null) return '—';
-  const s = Math.round(ms / 1000);
-  return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
-};
-
-//  Lo que hay que sumar al clic para saber cuándo CAE la edad. Es lo que usan
-//  las guías, así que es lo que se enseña.
-const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
 
 /**
  * Subir una partida y verla.
@@ -56,7 +45,7 @@ export default function AnalyzeReplay() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
+    <div className="max-w-6xl mx-auto px-4 py-6">
       <Helmet>
         <title>{t('up.title')} · wololo.top</title>
       </Helmet>
@@ -141,77 +130,14 @@ export default function AnalyzeReplay() {
                 {r.stored && t('up.stored')}
               </p>
 
-              <div className="mt-3 -mx-4 px-4 overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-dark-400 text-gray-500">
-                      <th className="text-left py-2 pr-3 font-medium">·</th>
-                      <th className="text-left py-2 px-2 font-medium">{t('up.opening')}</th>
-                      <th className="text-right py-2 px-2 font-medium">{t('up.feudal')}</th>
-                      <th className="text-right py-2 px-2 font-medium">{t('up.castle')}</th>
-                      <th className="text-right py-2 px-2 font-medium">{t('up.imperial')}</th>
-                      <th className="text-right py-2 px-2 font-medium">{t('up.vils')}</th>
-                      <th className="text-right py-2 pl-2 font-medium">{t('up.apm')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* Se recorre la CABECERA y no las métricas: así un bot
-                        sale en la tabla con su nombre y un guion en cada
-                        cifra, en vez de desaparecer y dejar la partida con un
-                        solo jugador, que parecía un fallo. */}
-                    {(r.info?.jugadores ?? []).map((j, k) => {
-                      const p = ((r.players ?? []) as Record<string, number | string | null>[])
-                        .find((x) => x.profile_id === j.perfil) ?? {};
-                      const nombre = j.nombre;
-                      const f = p.feudal_ms as number | null;
-                      const c = p.castle_ms as number | null;
-                      const im = p.imperial_ms as number | null;
-                      return (
-                        <tr key={k} className="border-b border-dark-500/40">
-                          <td className="py-2 pr-3 text-gray-300">
-                            {nombre}
-                            {j.es_ia && (
-                              <span
-                                className="ml-1.5 text-[10px] text-gray-500 border border-dark-400 rounded px-1"
-                                title={t('up.aiHint')}
-                              >
-                                {t('up.ai')}
-                              </span>
-                            )}
-                          </td>
-                          <td className="py-2 px-2 text-gray-300">{(p.opening as string) ?? '—'}</td>
-                          {/* En aterrizaje, no en el clic: es lo que dicen las guías. */}
-                          <td className="py-2 px-2 text-right tabular-nums text-gray-300">
-                            {f == null ? '—' : reloj(f + INVESTIGACION_MS.feudal)}
-                          </td>
-                          <td className="py-2 px-2 text-right tabular-nums text-gray-300">
-                            {c == null ? '—' : reloj(c + INVESTIGACION_MS.castle)}
-                          </td>
-                          {/* Un guion aqui no es un hueco: significa que esa
-                              partida acabo sin que el jugador llegase. */}
-                          <td className="py-2 px-2 text-right tabular-nums text-gray-300">
-                            {im == null ? '—' : reloj(im + INVESTIGACION_MS.imperial)}
-                          </td>
-                          <td className="py-2 px-2 text-right tabular-nums text-gray-300">
-                            {(p.villagers_15m as number) ?? '—'}
-                          </td>
-                          <td className="py-2 pl-2 text-right tabular-nums text-gray-300">
-                            {(p.apm as number) ?? '—'}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-
               {r.timeline && (
-                <>
-                  <div className="mt-5">
-                    <ReplayMap timeline={r.timeline} />
-                  </div>
-                  <ReplayUnits timeline={r.timeline} />
-                </>
+                <div className="mt-4">
+                  <ReplayAnalysis
+                    timeline={r.timeline}
+                    players={r.players as Record<string, number | string | null>[]}
+                    info={r.info}
+                  />
+                </div>
               )}
               {r.timeline_error && (
                 <p className="text-[11px] text-gray-600 mt-2 m-0">{r.timeline_error}</p>

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMatchTimeline } from '../lib/api';
 import { useT } from '../lib/i18n';
-import ReplayMap from './ReplayMap';
-import ReplayUnits from './ReplayUnits';
+import ReplayAnalysis from './ReplayAnalysis';
 import type { MatchTimelineResponse } from '../lib/types';
 
 interface Props {
@@ -54,10 +53,11 @@ export default function MatchReplayAnalysis({ matchId }: Props) {
       {isLoading && <p className="text-sm text-gray-500 m-0">{t('matchMap.loading')}</p>}
       {error && <p className="text-sm text-gray-500 m-0">{t('matchMap.gone')}</p>}
       {data?.timeline && (
-        <>
-          <ReplayMap timeline={data.timeline} />
-          <ReplayUnits timeline={data.timeline} />
-        </>
+        <ReplayAnalysis
+          timeline={data.timeline}
+          players={data.players as Record<string, number | string | null>[]}
+          info={data.info}
+        />
       )}
       {data && !data.timeline && (
         <p className="text-sm text-gray-500 m-0">{data.timeline_error || t('matchMap.gone')}</p>
