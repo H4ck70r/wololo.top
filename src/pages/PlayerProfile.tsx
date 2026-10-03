@@ -17,6 +17,7 @@ import EloInflationChart from '../components/EloInflationChart';
 import LadderDistributionChart from '../components/LadderDistributionChart';
 import { useSession } from '../lib/session';
 import PlayerAssessment from '../components/PlayerAssessment';
+import BuildOrderCompare from '../components/BuildOrderCompare';
 import CivStatsTable from '../components/CivStatsTable';
 import MapStatsTable from '../components/MapStatsTable';
 import RatingTrends from '../components/RatingTrends';
@@ -484,6 +485,14 @@ export default function PlayerProfile() {
         {viewingOwnProfile && (
           <div className="mb-6">
             <PlayerAssessment profileId={profileId!} />
+          </div>
+        )}
+
+        {/* Va justo debajo del diagnostico: el diagnostico dice que cifra
+            falla y esto dice contra que plan falla. */}
+        {viewingOwnProfile && (
+          <div className="mb-6">
+            <BuildOrderCompare profileId={profileId!} />
           </div>
         )}
 

@@ -856,3 +856,35 @@ export interface AssessmentResponse {
   metrics?: AssessmentMetric[];
   verdict?: AssessmentVerdictItem[];
 }
+
+export interface BuildOrderComparison {
+  age: 'feudal' | 'castle' | 'imperial';
+  /** el "perfect landing time" que da la guía, en segundos */
+  target_s: number;
+  target_vils: number | null;
+  /** cuándo te cae a ti */
+  you_s: number;
+  requested_s: number;
+  delta_s: number;
+}
+
+export interface PlayerOpeningBuild {
+  opening: string;
+  games: number;
+  wins: number;
+  villagers_15m: number | null;
+  build_order: { slug: string; name: string; source: string; civs: string[]; title_vils: number | null };
+  comparison: BuildOrderComparison[];
+  /** edades para las que la guía no da objetivo: el hueco es suyo, no nuestro */
+  ages_not_specified: string[];
+}
+
+export interface PlayerBuildOrdersResponse {
+  status: string;
+  profile_id: number;
+  match_type: number;
+  /** el mapeo apertura -> build es nuestro, no de la guía */
+  mapping_is_ours: boolean;
+  openings: PlayerOpeningBuild[];
+  openings_without_build: { opening: string; games: number }[];
+}

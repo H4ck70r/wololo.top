@@ -53,6 +53,7 @@ import type {
   PercentileHistoryResponse,
   DistributionHistoryResponse,
   AssessmentResponse,
+  PlayerBuildOrdersResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -216,6 +217,20 @@ export async function getPlayerAssessment(
 ): Promise<AssessmentResponse> {
   return apiFetch<AssessmentResponse>(
     `/api/players/${profileId}/assessment`,
+    params as Record<string, string | number>
+  );
+}
+
+/**
+ * Contra qué build order jugaste cada apertura y cuánto te desviaste. Sólo
+ * compara las edades para las que la guía da un objetivo.
+ */
+export async function getPlayerBuildOrders(
+  profileId: number | string,
+  params?: { match_type?: string }
+): Promise<PlayerBuildOrdersResponse> {
+  return apiFetch<PlayerBuildOrdersResponse>(
+    `/api/players/${profileId}/build-orders`,
     params as Record<string, string | number>
   );
 }

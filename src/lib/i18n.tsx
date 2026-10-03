@@ -404,6 +404,18 @@ const EN = {
   'assess.villagers_15m': 'Villagers by 15:00',
   'assess.tc_idle_ms': 'Town centre idle',
   'assess.apm': 'Actions/min',
+  'bo.title': 'Against the guide',
+  'bo.intro': 'Which reference build each of your openings matches, and how far off its target you land.',
+  'bo.mapping': 'Matching your openings to these builds is our call, not the guide\u2019s. Times are landing times, as the guide writes them.',
+  'bo.games': '{n} games',
+  'bo.notSpecified': 'The guide gives no {ages} target for this build.',
+  'bo.noBuild': 'No build in the guide covers these: {list}.',
+  'bo.target': 'target',
+  'bo.you': 'you',
+  'bo.feudal': 'Feudal',
+  'bo.castle': 'Castle',
+  'bo.imperial': 'Imperial',
+  'bo.empty': 'None of your games have been rescued yet.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -795,6 +807,18 @@ const ES: Partial<Record<TKey, string>> = {
   'assess.villagers_15m': 'Aldeanos al 15:00',
   'assess.tc_idle_ms': 'Centro urbano parado',
   'assess.apm': 'Acciones/min',
+  'bo.title': 'Contra la gu\u00eda',
+  'bo.intro': 'Con qu\u00e9 build de referencia encaja cada una de tus aperturas, y a cu\u00e1nto de su objetivo te cae.',
+  'bo.mapping': 'Emparejar tus aperturas con estas builds es decisi\u00f3n nuestra, no de la gu\u00eda. Los tiempos son de aterrizaje, como los escribe ella.',
+  'bo.games': '{n} partidas',
+  'bo.notSpecified': 'La gu\u00eda no da objetivo de {ages} para esta build.',
+  'bo.noBuild': 'Ninguna build de la gu\u00eda cubre esto: {list}.',
+  'bo.target': 'objetivo',
+  'bo.you': 't\u00fa',
+  'bo.feudal': 'Feudal',
+  'bo.castle': 'Castillos',
+  'bo.imperial': 'Imperial',
+  'bo.empty': 'Todav\u00eda no se ha rescatado ninguna partida tuya.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
