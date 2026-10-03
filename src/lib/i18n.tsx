@@ -960,7 +960,7 @@ const ES: Partial<Record<TKey, string>> = {
   'up.ai': 'IA',
   'up.aiHint': 'Es un bot, no una persona. Su hueco no tiene perfil y su nombre sale del campo de IA del replay. Un bot no investiga las edades por comando, así que no tiene tiempos — y sus partidas no entran nunca en las estadísticas.',
   'map.filler': 'casas, granjas, campamentos',
-  'map.start': 'posición de salida (aprox.)',
+  'map.start': 'centro urbano inicial (aprox.)',
   'map.startHint': 'El centro urbano inicial ya está puesto cuando empieza la partida, así que el replay no trae ninguna orden de construcción para él. Este anillo se estima con la primera casa, que en AoE2 se planta pegada al centro urbano y se construye en el 0:06 en todas las partidas medidas.',
   'assess.imperial_ms': 'Imperial (cae)',
   'map.top': 'arriba',
