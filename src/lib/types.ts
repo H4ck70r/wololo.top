@@ -810,3 +810,47 @@ export interface LevelBenchmarksResponse {
   total_samples: number;
   brackets: LevelBenchmark[];
 }
+
+/** Una cifra del diagnóstico: dónde estás tú contra los de tu mismo tramo. */
+export interface AssessmentMetric {
+  key: string;
+  unit: string;
+  lower_is_better: boolean;
+  you: number | null;
+  bracket_median: number | null;
+  /** % de jugadores de tu tramo a los que superas */
+  percentile: number | null;
+  /** cuánto decide esta cifra una partida, medido dentro de la misma partida */
+  decides_pct: number;
+  in_wins: number | null;
+  in_losses: number | null;
+}
+
+export interface AssessmentVerdictItem {
+  key: string;
+  percentile: number;
+  gap_to_median: number | null;
+  priority: number;
+}
+
+export interface AssessmentResponse {
+  status: string;
+  profile_id: number;
+  match_type: number;
+  /** partidas del jugador rescatadas del replay */
+  sample: number;
+  ready: boolean;
+  message?: string;
+  /** true por debajo de min_reliable: se enseña igual, pero avisando */
+  thin?: boolean;
+  min_reliable?: number;
+  rating?: number | null;
+  bracket?: string;
+  bracket_players?: number;
+  wins_measured?: number;
+  losses_measured?: number;
+  /** sobre cuántos pares ganador-perdedor se midieron los pesos */
+  weights_from_pairs?: number;
+  metrics?: AssessmentMetric[];
+  verdict?: AssessmentVerdictItem[];
+}

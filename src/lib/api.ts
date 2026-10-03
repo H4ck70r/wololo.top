@@ -52,6 +52,7 @@ import type {
   SignalFlagsResponse,
   PercentileHistoryResponse,
   DistributionHistoryResponse,
+  AssessmentResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -202,6 +203,21 @@ export async function getCivMatchups(params: {
 
 export async function getLevelBenchmarks(params?: { match_type?: string }): Promise<LevelBenchmarksResponse> {
   return apiFetch<LevelBenchmarksResponse>('/api/meta/benchmarks', params as Record<string, string | number>);
+}
+
+/**
+ * El diagnóstico: en qué está el jugador por debajo de los de su mismo tramo,
+ * ordenado por lo que de verdad decide partidas. Los pesos los mide la API
+ * comparando ganador y perdedor dentro de la misma partida.
+ */
+export async function getPlayerAssessment(
+  profileId: number | string,
+  params?: { match_type?: string }
+): Promise<AssessmentResponse> {
+  return apiFetch<AssessmentResponse>(
+    `/api/players/${profileId}/assessment`,
+    params as Record<string, string | number>
+  );
 }
 
 export async function getMapMeta(params: {

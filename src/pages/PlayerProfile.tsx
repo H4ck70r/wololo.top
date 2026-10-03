@@ -16,6 +16,7 @@ import PercentileChart from '../components/PercentileChart';
 import EloInflationChart from '../components/EloInflationChart';
 import LadderDistributionChart from '../components/LadderDistributionChart';
 import { useSession } from '../lib/session';
+import PlayerAssessment from '../components/PlayerAssessment';
 import CivStatsTable from '../components/CivStatsTable';
 import MapStatsTable from '../components/MapStatsTable';
 import RatingTrends from '../components/RatingTrends';
@@ -476,6 +477,16 @@ export default function PlayerProfile() {
 
       {activeTab === 'overview' && (
         <>
+        {/* Abre la pestana porque es lo unico accionable del perfil entero.
+            Solo en el perfil propio: es un diagnostico de tu juego, no una
+            ficha publica, y ensenarselo a cualquiera sobre cualquiera seria
+            regalar justo lo que va a ser de pago. */}
+        {viewingOwnProfile && (
+          <div className="mb-6">
+            <PlayerAssessment profileId={profileId!} />
+          </div>
+        )}
+
         {/* Rating trends (deltas, streaks) */}
         <div className="mb-6">
           <RatingTrends profileId={profileId!} />
