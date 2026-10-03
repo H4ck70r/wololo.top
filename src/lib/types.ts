@@ -938,6 +938,8 @@ export interface ReplayTimeline {
     terreno: [number, number][];
     elevacion: [number, number][];
   } | null;
+  /** oro, piedra, animales y pesca del mapa (sin árboles) */
+  recursos?: { t: 'oro' | 'piedra' | 'animal' | 'pesca'; id: number; x: number; y: number }[] | null;
 }
 
 export interface MatchTimelineResponse {

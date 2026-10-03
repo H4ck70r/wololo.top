@@ -494,6 +494,10 @@ const EN = {
   'matchMap.load': 'Load the map',
   'matchMap.loading': 'Fetching the replay and parsing it\u2026',
   'matchMap.gone': 'The server no longer has this replay. They are kept for about a year, so older games cannot be shown \u2014 unless you upload the file yourself.',
+  'map.res.oro': 'gold',
+  'map.res.piedra': 'stone',
+  'map.res.animal': 'animals',
+  'map.res.pesca': 'fish',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -975,6 +979,10 @@ const ES: Partial<Record<TKey, string>> = {
   'matchMap.load': 'Cargar el mapa',
   'matchMap.loading': 'Bajando el replay y analiz\u00e1ndolo\u2026',
   'matchMap.gone': 'El servidor ya no tiene este replay. Se guardan alrededor de un a\u00f1o, as\u00ed que las partidas viejas no se pueden ense\u00f1ar \u2014 salvo que subas t\u00fa el fichero.',
+  'map.res.oro': 'oro',
+  'map.res.piedra': 'piedra',
+  'map.res.animal': 'animales',
+  'map.res.pesca': 'pesca',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

@@ -53,6 +53,22 @@ const EDIFICIOS: Record<number, Edificio> = {
 //  Los que salen en la leyenda: los que cuentan una historia.
 const EN_LEYENDA = [621, 82, 12, 87, 101, 49, 79, 104];
 
+/**
+ * Los recursos del mapa. Van en los colores con los que el juego los pinta en
+ * su minimapa, que es donde el jugador ya los reconoce sin pensar.
+ *
+ * Las especies de animal no se separan: los ids clásicos de oveja y jabalí no
+ * aparecen en esta versión del juego, así que se marcan todos como animal en
+ * vez de inventarles especie. Lo que importa para leer el mapa es dónde hay
+ * comida, no si son ovejas o ciervos.
+ */
+const COLOR_RECURSO: Record<string, string> = {
+  oro: '#e0b33a',
+  piedra: '#c9c9c9',
+  animal: '#d98b5a',
+  pesca: '#5ab0d9',
+};
+
 const VELOCIDADES = [15, 30, 60];
 //  Nunca 1x: 35 minutos a tiempo real es inmirable. A 30x cabe en 70 segundos.
 const VELOCIDAD_POR_DEFECTO = 30;
@@ -274,6 +290,20 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.fill();
     }
     ctx.globalAlpha = 1;
+
+    //  Los recursos, encima del terreno y debajo de todo lo demás: son el
+    //  decorado que explica por qué las bases están donde están.
+    for (const r of timeline.recursos ?? []) {
+      const X = px(r.x, r.y);
+      const Y = py(r.x, r.y);
+      ctx.fillStyle = COLOR_RECURSO[r.t] ?? '#999';
+      ctx.globalAlpha = 0.95;
+      const rad = Math.max(esc * (r.t === 'animal' ? 0.8 : 1), 1.4);
+      ctx.beginPath();
+      ctx.arc(X, Y, rad, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
 
     //  La posición de salida va siempre visible, también en el segundo cero:
     //  es la referencia que permite leer todo lo demás.
@@ -520,6 +550,21 @@ export default function ReplayMap({ timeline }: Props) {
           {t('map.start')}
         </span>
       </div>
+
+      {(timeline.recursos?.length ?? 0) > 0 && (
+        <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
+          {(['oro', 'piedra', 'animal', 'pesca'] as const).map((k) => {
+            const n = (timeline.recursos ?? []).filter((r) => r.t === k).length;
+            if (!n) return null;
+            return (
+              <span key={k} className="flex items-center gap-1.5 text-[11px] text-gray-400">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: COLOR_RECURSO[k] }} />
+                {t(`map.res.${k}` as never)} {n}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {suelo && (
         <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
