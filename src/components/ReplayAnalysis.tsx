@@ -6,6 +6,7 @@ import ReplayMap from './ReplayMap';
 import ReplayUnits from './ReplayUnits';
 import ReplayEconomy from './ReplayEconomy';
 import ReplayApm from './ReplayApm';
+import ReplayVerdict from './ReplayVerdict';
 import type { ReplayTimeline, TimelinePlayer, LevelBenchmarksResponse } from '../lib/types';
 
 interface Props {
@@ -106,6 +107,11 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
 
   return (
     <div>
+      {/* Lo primero de todo: qué pasó, escrito. Una tabla no es una
+          conclusión, y el que abre esto quiere la respuesta antes que los
+          datos que la sostienen. */}
+      <ReplayVerdict timeline={timeline} players={players} />
+
       {/* El resumen va fuera de las pestañas: es la respuesta corta y se
           quiere ver siempre, sea cual sea la pestaña abierta. */}
       <div className="-mx-4 px-4 overflow-x-auto mb-4">

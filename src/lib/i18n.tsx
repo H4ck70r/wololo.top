@@ -536,6 +536,14 @@ const EN = {
   'apm.repeated': 'repeated',
   'apm.limite': 'Per minute of GAME clock, which runs at 1.7x real time — the clock on screen and the one the guides use. The split between ordering and building goes by command type, not unit type, because the replay does not say what each object is.',
   'ana.vsBracket': 'against the {b} bracket, measured on thousands of games',
+  'verd.won': '{ganador} won in {min}.',
+  'verd.apm': '{ganador} played {n} more effective actions per minute than {perdedor}.',
+  'verd.vils': '{ganador} had {n} more villagers by 15:00.',
+  'verd.castle': '{ganador} reached Castle {n} earlier.',
+  'verd.convert': '{ganador} turned Castle Age into a second town center in {a}; {perdedor} took {b}.',
+  'verd.feudal': '{ganador} reached Feudal {n} earlier.',
+  'verd.contra': 'Worth noting: {ganador} won without the thing that usually decides these games \u2014 {otro} had it.',
+  'verd.fuente': 'Ordered by how much each thing actually decides a game, measured by comparing winner and loser INSIDE the same match over thousands of pairs: more actions wins 62.6% of the time, more villagers 61.3%, earlier Castle 61.2%, earlier Feudal only 58.9%. Differences too small to mean anything are not listed.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -1059,6 +1067,14 @@ const ES: Partial<Record<TKey, string>> = {
   'apm.repeated': 'repetidas',
   'apm.limite': 'Por minuto de reloj de JUEGO, que corre a 1,7x el real — el reloj que se ve en pantalla y el que usan las guías. El reparto entre mandar y construir va por tipo de comando, no por tipo de unidad, porque el replay no dice qué es cada objeto.',
   'ana.vsBracket': 'contra la franja {b}, medido sobre miles de partidas',
+  'verd.won': '{ganador} ganó en {min}.',
+  'verd.apm': '{ganador} hizo {n} acciones efectivas por minuto más que {perdedor}.',
+  'verd.vils': '{ganador} llegó al 15:00 con {n} aldeanos más.',
+  'verd.castle': '{ganador} llegó a Castillos {n} antes.',
+  'verd.convert': '{ganador} convirtió Castillos en un segundo centro urbano en {a}; {perdedor} tardó {b}.',
+  'verd.feudal': '{ganador} llegó a Feudal {n} antes.',
+  'verd.contra': 'Vale la pena fijarse: {ganador} ganó sin lo que normalmente decide estas partidas \u2014 lo tenía {otro}.',
+  'verd.fuente': 'Ordenado por cuánto decide cada cosa de verdad, medido comparando ganador y perdedor DENTRO de la misma partida sobre miles de pares: más acciones gana el 62,6% de las veces, más aldeanos el 61,3%, antes a Castillos el 61,2% y antes a Feudal sólo el 58,9%. Las diferencias demasiado pequeñas para significar algo no se listan.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
