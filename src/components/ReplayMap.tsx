@@ -182,16 +182,19 @@ export default function ReplayMap({ timeline }: Props) {
     const esc = Math.min(ancho / (lado * 2), alto / lado);
     const despX = (ancho - lado * 2 * esc) / 2 + lado * esc;
     const despY = (alto - lado * esc) / 2;
-    //  (y - x), comprobado y no deducido.
+    //  (x - y), la proyección estándar de AoE2.
     //
-    //  Esto cambió dos veces por ir mirando capturas, así que queda la prueba
-    //  escrita. En una partida, el replay dice que maestro_006 pidió Imperial
-    //  en el 44,46 -cae a las 47:37- y se rindió en el 51:31; aoe2insights
-    //  escribe exactamente esos dos tiempos, así que estamos hablando del
-    //  mismo jugador y las coordenadas son buenas. Sus dos castillos están en
-    //  (74,110) y (69,94), y aoe2insights los pinta a la DERECHA: eso sólo
-    //  sale con (y - x), porque (x - y) los manda a la izquierda.
-    const px = (x: number, y: number) => (y - x) * esc + despX;
+    //  Esto bailó varias veces comparando capturas, así que queda la prueba.
+    //  La clave fue mirar el interior de una base en vez de dónde cae la base
+    //  entera: en aoe2insights los dos castillos de un jugador están en el
+    //  lado DERECHO de su propia base, y eso sólo lo da (x - y); con (y - x)
+    //  salen a la izquierda.
+    //
+    //  La proyección es lineal, así que las dos cosas no se pueden ajustar por
+    //  separado: fijado el interior de la base, la posición de la base queda
+    //  determinada. El interior es la señal más fiable de las dos, porque son
+    //  edificios concretos en sitios concretos y no una impresión de conjunto.
+    const px = (x: number, y: number) => (x - y) * esc + despX;
     const py = (x: number, y: number) => ((x + y) / 2) * esc + despY;
 
     ctx.fillStyle = '#0d1116';
