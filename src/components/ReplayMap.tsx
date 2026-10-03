@@ -74,42 +74,19 @@ export default function ReplayMap({ timeline }: Props) {
   );
 
   /**
-   * El encuadre.
+   * El encuadre: el mapa ENTERO, no solo donde hubo acción.
    *
-   * Dos cosas que estaban mal: el mapa de Age es un ROMBO, no una cuadrícula
-   * recta -el juego gira la rejilla 45 grados-, y pintar los 120x120 enteros
-   * dejaba toda la partida metida en una esquina.
-   *
-   * Aquí se gira a isométrico y se encuadra sobre lo que de verdad ocupa la
-   * partida, con un margen para que no quede nada pegado al borde.
+   * Dos cosas que lo rompían. El mapa de Age es un rombo 2:1 -el doble de
+   * ancho que de alto-, no un cuadrado girado: por eso se gira con la vertical
+   * a la mitad. Y encuadrar sobre los eventos dejaba la partida minúscula,
+   * porque bastaba una orden de ejército perdida para estirar el marco; además
+   * el mapa entero dice algo que el recorte no dice, que es quién estaba
+   * arriba y quién abajo.
    */
-  const encuadre = useMemo(() => {
-    const puntos: [number, number][] = [];
-    for (const e of eventos) {
-      if (e.x != null && e.y != null) {
-        puntos.push([e.x, e.y]);
-        if (e.x2 != null && e.y2 != null) puntos.push([e.x2, e.y2]);
-      }
-    }
-    for (const o of ejercito) puntos.push([o.x, o.y]);
-    if (!puntos.length) return { ix0: -60, iy0: 0, iw: 120, ih: 120 };
-
-    let ix0 = Infinity, ix1 = -Infinity, iy0 = Infinity, iy1 = -Infinity;
-    for (const [x, y] of puntos) {
-      const ix = x - y;
-      const iy = x + y;
-      if (ix < ix0) ix0 = ix;
-      if (ix > ix1) ix1 = ix;
-      if (iy < iy0) iy0 = iy;
-      if (iy > iy1) iy1 = iy;
-    }
-    const margen = 10;
-    return {
-      ix0: ix0 - margen, iy0: iy0 - margen,
-      iw: Math.max(ix1 - ix0 + margen * 2, 20),
-      ih: Math.max(iy1 - iy0 + margen * 2, 20),
-    };
-  }, [eventos, ejercito]);
+  const lado = timeline.lado_mapa ?? Math.max(
+    120,
+    Math.ceil(Math.max(timeline.limites.x_max, timeline.limites.y_max) / 8) * 8
+  );
 
   const colorDe = (numero: number) => {
     const j = timeline.jugadores.find((x) => x.numero === numero);
@@ -166,23 +143,37 @@ export default function ReplayMap({ timeline }: Props) {
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const esc = Math.min(ancho / encuadre.iw, alto / encuadre.ih);
-    const despX = (ancho - encuadre.iw * esc) / 2;
-    const despY = (alto - encuadre.ih * esc) / 2;
-    //  Giro de 45 grados: así es como el juego dibuja la rejilla.
-    const px = (x: number, y: number) => (x - y - encuadre.ix0) * esc + despX;
-    const py = (x: number, y: number) => (x + y - encuadre.iy0) * esc + despY;
+    //  El rombo ocupa 2*lado de ancho y lado de alto: de ahí el 2:1.
+    const esc = Math.min(ancho / (lado * 2), alto / lado);
+    const despX = (ancho - lado * 2 * esc) / 2 + lado * esc;
+    const despY = (alto - lado * esc) / 2;
+    const px = (x: number, y: number) => (x - y) * esc + despX;
+    const py = (x: number, y: number) => ((x + y) / 2) * esc + despY;
 
-    ctx.fillStyle = '#12161c';
+    ctx.fillStyle = '#0d1116';
     ctx.fillRect(0, 0, ancho, alto);
 
-    //  Rejilla en diagonal, para que se lea como terreno del juego.
-    ctx.strokeStyle = 'rgba(255,255,255,0.045)';
+    //  El rombo del mapa, para que se vea dónde acaba el terreno.
+    ctx.beginPath();
+    ctx.moveTo(px(0, 0), py(0, 0));
+    ctx.lineTo(px(lado, 0), py(lado, 0));
+    ctx.lineTo(px(lado, lado), py(lado, lado));
+    ctx.lineTo(px(0, lado), py(0, lado));
+    ctx.closePath();
+    ctx.fillStyle = '#18202a';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.lineWidth = 1;
-    for (let v = 0; v <= 140; v += 10) {
+    ctx.stroke();
+
+    ctx.save();
+    ctx.clip();
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    for (let v = 0; v <= lado; v += 20) {
       ctx.beginPath();
-      ctx.moveTo(px(v, 0), py(v, 0)); ctx.lineTo(px(v, 140), py(v, 140));
-      ctx.moveTo(px(0, v), py(0, v)); ctx.lineTo(px(140, v), py(140, v));
+      ctx.moveTo(px(v, 0), py(v, 0)); ctx.lineTo(px(v, lado), py(v, lado));
+      ctx.moveTo(px(0, v), py(0, v)); ctx.lineTo(px(lado, v), py(lado, v));
       ctx.stroke();
     }
 
@@ -261,7 +252,8 @@ export default function ReplayMap({ timeline }: Props) {
         ctx.fillText(def.icono, X, Y + tam * 0.06);
       }
     }
-  }, [ahora, eventos, ejercito, encuadre, timeline]);
+    ctx.restore();
+  }, [ahora, eventos, ejercito, lado, timeline]);
 
   const reciente = useMemo(() => {
     const ventana = 45_000;
@@ -284,7 +276,7 @@ export default function ReplayMap({ timeline }: Props) {
   return (
     <div>
       <div className="relative">
-        <canvas ref={lienzo} className="w-full aspect-[4/3] rounded-lg border border-dark-400 block" />
+        <canvas ref={lienzo} className="w-full aspect-[2/1] rounded-lg border border-dark-400 block" />
         <div className="absolute top-2 left-2 text-xs tabular-nums text-gray-300 bg-dark-900/75 rounded px-2 py-1">
           {reloj(ahora)} / {reloj(duracion)}
         </div>

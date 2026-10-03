@@ -926,6 +926,8 @@ export interface ReplayTimeline {
   eventos: TimelineEvent[];
   ejercito: TimelineArmyOrder[];
   limites: { x_max: number; y_max: number };
+  /** lado del mapa en casillas, para dibujarlo entero y no solo donde hubo acción */
+  lado_mapa?: number;
 }
 
 export interface MatchTimelineResponse {
