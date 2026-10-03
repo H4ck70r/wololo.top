@@ -207,6 +207,25 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
         </p>
         <div className="-mx-4 px-4 overflow-x-auto">
           <table className="w-full text-sm">
+            {/* La cabecera va ARRIBA y nombra las cuatro columnas. Antes la
+                leyenda estaba debajo y solo etiquetaba dos de las tres de
+                numeros, asi que no se sabia cual era cual. */}
+            <thead>
+              <tr className="border-b border-dark-400">
+                <th className="text-left py-2 pr-3 text-gray-500 font-medium">
+                  {t('assess.metric')}
+                </th>
+                <th className="text-right py-2 px-2 text-gray-500 font-medium whitespace-nowrap">
+                  {t('assess.inWins')}
+                </th>
+                <th className="text-right py-2 px-2 text-gray-500 font-medium whitespace-nowrap">
+                  {t('assess.inLosses')}
+                </th>
+                <th className="text-right py-2 pl-2 text-gray-500 font-medium whitespace-nowrap">
+                  {t('assess.gap')}
+                </th>
+              </tr>
+            </thead>
             <tbody>
               {metrics.map((m) => {
                 if (m.in_wins == null || m.in_losses == null) return null;
@@ -239,10 +258,11 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
             </tbody>
           </table>
         </div>
-        <div className="flex justify-end gap-6 text-[10px] uppercase tracking-wide text-gray-600 mt-1 pr-2">
-          <span>{t('assess.inWins')}</span>
-          <span>{t('assess.inLosses')}</span>
-        </div>
+        {/* La diferencia va siempre en el sentido que te favorece, asi que
+            un numero en verde es "lo haces mejor cuando ganas" tanto si la
+            cifra sube como si baja. Sin decirlo, un +19s de centro urbano
+            parado se lee como 19 segundos MAS parado. */}
+        <p className="text-[11px] text-gray-600 mt-2 m-0">{t('assess.gapNote')}</p>
       </div>
 
       <p className="text-[11px] text-gray-600 mt-4 m-0">{t('assess.ageNote')}</p>
