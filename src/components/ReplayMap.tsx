@@ -544,62 +544,74 @@ export default function ReplayMap({ timeline }: Props) {
         })}
       </div>
 
+      {/* Plegada por defecto: ocupaba cuatro filas bajo el mapa y el mapa es
+          lo que se quiere mirar. La línea de jugadores queda fuera porque sin
+          ella no se sabe quién es quién, que es lo único imprescindible. */}
+      <details className="mt-2 group">
+        <summary className="text-[11px] text-gray-500 cursor-pointer hover:text-gray-300 list-none select-none">
+          {t('map.legend')} ▾
+        </summary>
+        <div className="mt-2">
       {/* Sin leyenda los iconos son un acertijo, y sueltos sobre el fondo no
-          se parecen a lo que se ve en el mapa. Van en su círculo. */}
-      <div className="flex items-center gap-x-3 gap-y-1.5 mt-2 flex-wrap">
-        {EN_LEYENDA.map((id) => {
-          const d = EDIFICIOS[id];
-          return (
-            <span key={id} className="flex items-center gap-1.5 text-[11px] text-gray-400">
-              <span
-                className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
-                style={{ background: '#6b7280' }}
-              >
-                {d.icono}
-              </span>
-              {lang === 'es' ? d.es : d.en}
-            </span>
-          );
-        })}
-        <span className="flex items-center gap-1.5 text-[11px] text-gray-500">
-          <span className="w-2.5 h-2.5 rounded-sm bg-gray-500/60" />
-          {t('map.filler')}
-        </span>
-        <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.startHint')}>
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
-                style={{ background: '#6b7280' }}>⌂</span>
-          {t('map.start')}
-        </span>
-      </div>
-
-      {(timeline.recursos?.length ?? 0) > 0 && (
-        <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
-          {(['rebano', 'caza', 'oro', 'piedra', 'pesca'] as const).map((k) => {
-            const n = (timeline.recursos ?? []).filter((r) => r.t === k).length;
-            if (!n) return null;
+            se parecen a lo que se ve en el mapa. Van en su círculo. */}
+        <div className="flex items-center gap-x-3 gap-y-1.5 mt-2 flex-wrap">
+          {EN_LEYENDA.map((id) => {
+            const d = EDIFICIOS[id];
             return (
-              <span key={k} className="flex items-center gap-1.5 text-[11px] text-gray-400">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: COLOR_RECURSO[k] }} />
-                {t(`map.res.${k}` as never)} {n}
+              <span key={id} className="flex items-center gap-1.5 text-[11px] text-gray-400">
+                <span
+                  className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
+                  style={{ background: '#6b7280' }}
+                >
+                  {d.icono}
+                </span>
+                {lang === 'es' ? d.es : d.en}
               </span>
             );
           })}
+          <span className="flex items-center gap-1.5 text-[11px] text-gray-500">
+            <span className="w-2.5 h-2.5 rounded-sm bg-gray-500/60" />
+            {t('map.filler')}
+          </span>
+          <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.startHint')}>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
+                  style={{ background: '#6b7280' }}>⌂</span>
+            {t('map.start')}
+          </span>
         </div>
-      )}
 
-      {suelo && (
-        <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
-          {suelo.resumen.slice(0, 6).map((r) => (
-            <span key={r.id} className="flex items-center gap-1.5 text-[11px] text-gray-500"
-                  title={t('map.terrainHint')}>
-              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: r.color }} />
-              {t('map.terrainId', { id: String(r.id) })} {r.pct.toFixed(0)}%
-            </span>
-          ))}
+        {(timeline.recursos?.length ?? 0) > 0 && (
+          <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
+            {(['rebano', 'caza', 'oro', 'piedra', 'pesca'] as const).map((k) => {
+              const n = (timeline.recursos ?? []).filter((r) => r.t === k).length;
+              if (!n) return null;
+              return (
+                <span key={k} className="flex items-center gap-1.5 text-[11px] text-gray-400">
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: COLOR_RECURSO[k] }} />
+                  {t(`map.res.${k}` as never)} {n}
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {suelo && (
+          <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
+            {suelo.resumen.slice(0, 6).map((r) => (
+              <span key={r.id} className="flex items-center gap-1.5 text-[11px] text-gray-500"
+                    title={t('map.terrainHint')}>
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ background: r.color }} />
+                {t('map.terrainId', { id: String(r.id) })} {r.pct.toFixed(0)}%
+              </span>
+            ))}
+          </div>
+        )}
+
+
+        <p className="text-[11px] text-gray-600 mt-3 m-0">{t('map.note')}</p>
         </div>
-      )}
+      </details>
 
-      <p className="text-[11px] text-gray-600 mt-3 m-0">{t('map.note')}</p>
     </div>
   );
 }

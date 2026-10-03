@@ -503,6 +503,7 @@ const EN = {
   'tabs.map': 'Map',
   'tabs.units': 'Units',
   'tabs.techs': 'Technologies',
+  'map.legend': 'Legend and what the map does not show',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -993,6 +994,7 @@ const ES: Partial<Record<TKey, string>> = {
   'tabs.map': 'Mapa',
   'tabs.units': 'Unidades',
   'tabs.techs': 'Tecnologías',
+  'map.legend': 'Leyenda y lo que el mapa no enseña',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
