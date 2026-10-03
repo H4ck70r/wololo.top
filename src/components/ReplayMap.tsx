@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '../lib/i18n';
 import type { ReplayTimeline } from '../lib/types';
+import { nombreEdificio } from '../lib/juego';
 
 interface Props {
   timeline: ReplayTimeline;
@@ -359,7 +360,7 @@ export default function ReplayMap({ timeline }: Props) {
       if (ahora - e.t > ventana) break;
       if (e.tipo === 'build' && e.id != null) {
         const def = EDIFICIOS[e.id];
-        if (def && def.peso >= 3) out.push(`${reloj(e.t)} ${lang === 'es' ? def.es : def.en}`);
+        if (def && def.peso >= 3) out.push(`${reloj(e.t)} ${nombreEdificio(e.id, lang)}`);
       } else if (e.tipo === 'resign') {
         out.push(`${reloj(e.t)} ${t('map.resigned')}`);
       }

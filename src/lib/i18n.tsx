@@ -460,7 +460,7 @@ const EN = {
   'assess.flat': 'same',
   'assess.flatHint': 'This number is nearly identical whether you win or lose, so it is not what decides your games.',
   'units.title': 'What each player ordered',
-  'units.note': 'This is what was QUEUED, not what ended up existing: if someone orders five scouts and loses the stable, the replay still says they ordered them. The file records commands, not state.',
+  'units.note': 'Grouped by unit line: archers, crossbowmen and arbalesters are the same unit at three moments. And this is what was QUEUED, not what ended up existing \u2014 if someone orders five scouts and loses the stable, the replay still says they ordered them.',
   'units.overTime': 'Production over time',
   'units.vils': 'villagers',
   'units.onlyVils': 'Only villagers — no military ordered.',

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useT } from '../lib/i18n';
-import { nombreUnidad, claseDe, CLASE_COLOR } from '../lib/units';
+import { CLASE_COLOR } from '../lib/units';
+import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia } from '../lib/juego';
 import type { ReplayTimeline } from '../lib/types';
 
 interface Props {
@@ -40,11 +41,14 @@ export default function ReplayUnits({ timeline }: Props) {
       const n = e.n ?? 1;
       if (!porJugador.has(e.j)) porJugador.set(e.j, { total: new Map(), cubos: new Map() });
       const d = porJugador.get(e.j)!;
-      d.total.set(e.id, (d.total.get(e.id) ?? 0) + n);
+      //  Por raíz de línea: arqueros, ballesteros y arbalesteros son la misma
+      //  unidad en tres momentos, y el jugador los piensa como una sola.
+      const raiz = raizDeLinea(e.id);
+      d.total.set(raiz, (d.total.get(raiz) ?? 0) + n);
       const cubo = Math.floor(e.t / CUBO_MS);
       if (!d.cubos.has(cubo)) d.cubos.set(cubo, new Map());
       const c = d.cubos.get(cubo)!;
-      c.set(e.id, (c.get(e.id) ?? 0) + n);
+      c.set(raiz, (c.get(raiz) ?? 0) + n);
       if (cubo > maxCubo) maxCubo = cubo;
     }
     //  La escala la marca el cubo más cargado de militar de cualquiera, para
@@ -66,10 +70,14 @@ export default function ReplayUnits({ timeline }: Props) {
     //  explicacion: jugaba Francos, que reciben gratis las mejoras de granja.
     //  Una tecnologia regalada por bonus de civilizacion no genera ninguna
     //  orden, asi que el replay no puede verla.
-    const tecnologias = new Map<number, { total: Set<number>; porEdad: Map<string, number> }>();
+    const tecnologias = new Map<number, {
+      total: Set<number>;
+      porEdad: Map<string, number>;
+      lista: { id: number; t: number; edad: string }[];
+    }>();
     for (const e of timeline.eventos) {
       if (e.tipo !== 'tech' || e.id == null) continue;
-      if (!tecnologias.has(e.j)) tecnologias.set(e.j, { total: new Set(), porEdad: new Map() });
+      if (!tecnologias.has(e.j)) tecnologias.set(e.j, { total: new Set(), porEdad: new Map(), lista: [] });
       const d = tecnologias.get(e.j)!;
       if (EDADES[e.id]) continue;
       d.total.add(e.id);
@@ -92,6 +100,7 @@ export default function ReplayUnits({ timeline }: Props) {
         : h.castle != null && e.t >= h.castle ? 'castle'
         : h.feudal != null && e.t >= h.feudal ? 'feudal' : 'dark';
       d.porEdad.set(edad, (d.porEdad.get(edad) ?? 0) + 1);
+      if (!d.lista.some((x) => x.id === e.id)) d.lista.push({ id: e.id, t: e.t, edad });
     }
 
     return { porJugador, maxCubo, techo, tecnologias };
@@ -141,7 +150,7 @@ export default function ReplayUnits({ timeline }: Props) {
                     <span className="flex-1 h-2 rounded-full bg-dark-600 overflow-hidden">
                       <span
                         className="block h-full rounded-full"
-                        style={{ width: `${(n / maxLista) * 100}%`, background: CLASE_COLOR[claseDe(id)] }}
+                        style={{ width: `${(n / maxLista) * 100}%`, background: CLASE_COLOR[claseDeUnidad(id)] }}
                       />
                     </span>
                     <span className="text-xs tabular-nums text-gray-300 w-7 text-right">{n}</span>
@@ -176,7 +185,7 @@ export default function ReplayUnits({ timeline }: Props) {
                   if (c) {
                     for (const [id, n] of c) {
                       if (id === ALDEANO) continue;
-                      const cl = claseDe(id);
+                      const cl = claseDeUnidad(id);
                       porClase.set(cl, (porClase.get(cl) ?? 0) + n);
                       mil += n;
                     }
@@ -232,12 +241,30 @@ export default function ReplayUnits({ timeline }: Props) {
                       {d.total.size} {t('units.techs')}
                     </span>
                   </div>
-                  <div className="flex gap-3 text-xs text-gray-500">
+                  <div className="flex gap-3 text-xs text-gray-500 mb-2">
                     {(['dark', 'feudal', 'castle', 'imperial'] as const).map((e) => (
                       <span key={e} className="tabular-nums">
                         {t(`units.age.${e}` as never)} {d.porEdad.get(e) ?? 0}
                       </span>
                     ))}
+                  </div>
+                  {/* Con nombre y minuto: saber que investigo Balistica en el
+                      24:10 dice algo; saber que investigo "17 cosas" no. */}
+                  <div className="flex flex-col gap-0.5 max-h-56 overflow-y-auto pr-1">
+                    {[...d.lista].sort((a, b) => a.t - b.t).map((x) => {
+                      const f = tecnologia(x.id);
+                      return (
+                        <div key={x.id} className="flex items-baseline gap-2 text-xs">
+                          <span className="tabular-nums text-gray-600 w-9">{reloj(x.t)}</span>
+                          <span className={f?.unique ? 'text-gold-400/90' : 'text-gray-300'}>
+                            {nombreTecnologia(x.id, lang)}
+                          </span>
+                          {f?.unique && (
+                            <span className="text-[10px] text-gray-600">{f.civ ?? ''}</span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               );
