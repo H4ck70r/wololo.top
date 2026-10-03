@@ -33,10 +33,13 @@ const MATCHES_PER_PAGE = 50;
 
 const PROFILE_TABS = [
   { id: 'overview', key: 'profile.tab.overview' },
+  //  Solo en el perfil propio: lo de dentro es un diagnostico de tu juego.
+  { id: 'execution', key: 'profile.tab.execution', soloPropio: true },
+  { id: 'standing', key: 'profile.tab.standing' },
   { id: 'matches', key: 'profile.tab.matches' },
   { id: 'stats', key: 'profile.tab.stats' },
   { id: 'rivals', key: 'profile.tab.rivals' },
-] as const satisfies readonly { id: string; key: TKey }[];
+] as const satisfies readonly { id: string; key: TKey; soloPropio?: boolean }[];
 
 type ProfileTab = (typeof PROFILE_TABS)[number]['id'];
 
@@ -461,7 +464,7 @@ export default function PlayerProfile() {
       {/* The profile was one 18-screen scroll on mobile. Tabs also mean each
           section only fetches its data when you actually open it. */}
       <div className="flex items-center gap-1 mb-6 border-b border-dark-400 overflow-x-auto">
-        {PROFILE_TABS.map((tab) => (
+        {PROFILE_TABS.filter((tab) => !('soloPropio' in tab && tab.soloPropio) || viewingOwnProfile).map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -476,39 +479,45 @@ export default function PlayerProfile() {
         ))}
       </div>
 
+      {/* RESUMEN: "como voy". Lo que se mira a diario y nada mas. */}
       {activeTab === 'overview' && (
         <>
-        {/* Abre la pestana porque es lo unico accionable del perfil entero.
-            Solo en el perfil propio: es un diagnostico de tu juego, no una
-            ficha publica, y ensenarselo a cualquiera sobre cualquiera seria
-            regalar justo lo que va a ser de pago. */}
-        {viewingOwnProfile && (
-          <div className="mb-6">
-            <PlayerAssessment profileId={profileId!} />
-          </div>
-        )}
-
-        {/* Va justo debajo del diagnostico: el diagnostico dice que cifra
-            falla y esto dice contra que plan falla. */}
-        {viewingOwnProfile && (
-          <div className="mb-6">
-            <BuildOrderCompare profileId={profileId!} />
-          </div>
-        )}
-
-        {/* Rating trends (deltas, streaks) */}
         <div className="mb-6">
           <RatingTrends profileId={profileId!} />
         </div>
 
-        {/* Rating history chart */}
         <div className="mb-6">
           <RatingChart profileId={profileId!} />
         </div>
 
-        {/* El percentil en el tiempo. Va justo despues del historial de rating
-            a proposito: lo interesante es leer las dos curvas seguidas, porque
-            es cuando se ve que el numero puede subir sin que mejore el sitio. */}
+        <div className="mb-6">
+          <MilestonesTimeline profileId={profileId!} />
+        </div>
+        </>
+      )}
+
+      {/* EJECUCION: "que estoy haciendo mal". Solo en el perfil propio, porque
+          es un diagnostico de tu juego y no una ficha publica. La pestana
+          tampoco aparece en el perfil de otro: una pestana vacia es peor que
+          no tenerla. */}
+      {activeTab === 'execution' && viewingOwnProfile && (
+        <>
+        <div className="mb-6">
+          <PlayerAssessment profileId={profileId!} />
+        </div>
+
+        <div className="mb-6">
+          <BuildOrderCompare profileId={profileId!} />
+        </div>
+        </>
+      )}
+
+      {/* POSICION: "donde estoy respecto a los demas". Las tres van juntas a
+          proposito: el percentil y la curva cuentan la misma historia desde
+          dos lados, y la inflacion explica por que el rating puede subir sin
+          que el sitio mejore. */}
+      {activeTab === 'standing' && (
+        <>
         <div className="mb-6">
           <PercentileChart
             profileId={profileId!}
@@ -517,7 +526,6 @@ export default function PlayerProfile() {
           />
         </div>
 
-        {/* Where this rating sits against the whole ladder */}
         <div className="mb-6">
           <LadderDistributionChart
             rating={soloLadder?.rating}
@@ -530,20 +538,11 @@ export default function PlayerProfile() {
           />
         </div>
 
-        {/* Si el ladder entero se movio, el percentil de arriba ya lo delata;
-            esto ensena de donde viene ese movimiento. */}
         <div className="mb-6">
           <EloInflationChart ladder="solo" rating={soloLadder?.rating} />
         </div>
-
-        {/* Rating Milestones */}
-        <div className="mb-6">
-          <MilestonesTimeline profileId={profileId!} />
-        </div>
-
         </>
       )}
-
       {activeTab === 'matches' && (
         <>
         {/* Recent matches */}
