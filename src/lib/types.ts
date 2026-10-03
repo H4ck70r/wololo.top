@@ -111,6 +111,7 @@ export interface MatchTeam {
 }
 
 export interface MatchRecord {
+  replay?: MatchReplayState;
   match_id: number;
   map_name: string | null;
   map: string | null;
@@ -955,4 +956,17 @@ export interface ReplayUploadResponse {
   status: string;
   analyzed: number;
   results: ReplayUploadResult[];
+}
+
+/** Qué se sabe del replay de una partida, para marcarla en la lista. */
+export interface MatchReplayState {
+  analyzed: boolean;
+  players_measured: number;
+  /** la apertura del jugador cuyo perfil se mira */
+  opening: string | null;
+  feudal_ms: number | null;
+  castle_ms: number | null;
+  queue_status: string | null;
+  /** Relic ya no lo tiene: no hay nada que esperar */
+  unavailable: boolean;
 }

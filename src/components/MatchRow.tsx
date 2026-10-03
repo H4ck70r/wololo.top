@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_BADGE, OUTCOME_CHIP, OUTCOME_CARD } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
-import type { MatchRecord, MatchPlayer, SignalFlag } from '../lib/types';
+import type { MatchRecord, MatchPlayer, SignalFlag, MatchReplayState } from '../lib/types';
 import SharedCopyBadge from './SharedCopyBadge';
 
 interface MatchRowProps {
@@ -33,6 +33,54 @@ function CivBadge({ civId, size = 'md' }: { civId: number | null | undefined; si
       {getCivName(civId).charAt(0)}
     </div>
   );
+}
+
+/**
+ * Si esta partida tiene datos de replay, y si no, por que.
+ *
+ * Son tres cosas distintas y la diferencia importa: "analizada" se puede
+ * abrir, "en cola" va a llegar, y "sin replay" NO va a llegar nunca porque
+ * Relic no tiene el fichero o nadie lo subio. Pintarlas igual seria prometer
+ * algo que no va a pasar.
+ *
+ * La cola se recorre de lo mas viejo a lo mas nuevo, porque es lo que caduca
+ * antes: por eso las partidas recientes salen pendientes aunque sean tuyas.
+ */
+function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
+  const { t } = useT();
+  if (!replay) return null;
+
+  if (replay.analyzed) {
+    return (
+      <span
+        className="inline-flex items-center gap-1 text-[10px] text-emerald-300/90 bg-emerald-500/10 border border-emerald-500/25 rounded px-1.5 py-0.5"
+        title={t('replayBadge.analyzedHint')}
+      >
+        ▶ {replay.opening || t('replayBadge.analyzed')}
+      </span>
+    );
+  }
+  if (replay.unavailable) {
+    return (
+      <span
+        className="text-[10px] text-gray-600 border border-dark-400 rounded px-1.5 py-0.5"
+        title={t('replayBadge.goneHint')}
+      >
+        {t('replayBadge.gone')}
+      </span>
+    );
+  }
+  if (replay.queue_status === 'pending') {
+    return (
+      <span
+        className="text-[10px] text-gray-500 border border-dark-400 rounded px-1.5 py-0.5"
+        title={t('replayBadge.queuedHint')}
+      >
+        {t('replayBadge.queued')}
+      </span>
+    );
+  }
+  return null;
 }
 
 function PlayerLine({
@@ -152,6 +200,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
 
           <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
             <span>{match.map || match.map_name || 'Unknown'}</span>
+            <ReplayBadge replay={match.replay} />
             {match.duration_seconds != null && match.duration_seconds > 0 && (
               <span>{formatDuration(match.duration_seconds)}</span>
             )}

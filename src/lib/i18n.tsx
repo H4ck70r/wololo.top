@@ -440,6 +440,12 @@ const EN = {
   'up.vils': 'Vils by 15:00',
   'up.apm': 'APM',
   'up.again': 'Analyse another',
+  'replayBadge.analyzed': 'analysed',
+  'replayBadge.analyzedHint': 'This game has replay data: open it for age times, opening and the animated map.',
+  'replayBadge.queued': 'queued',
+  'replayBadge.queuedHint': 'Waiting its turn. The queue goes oldest first, because those are the replays about to expire \u2014 so recent games wait longest. You can upload the file yourself to skip the queue.',
+  'replayBadge.gone': 'no replay',
+  'replayBadge.goneHint': 'The server does not have this replay \u2014 nobody uploaded it, or it expired. This one will never have data unless you upload the file.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -867,6 +873,12 @@ const ES: Partial<Record<TKey, string>> = {
   'up.vils': 'Aldeanos al 15:00',
   'up.apm': 'APM',
   'up.again': 'Analizar otra',
+  'replayBadge.analyzed': 'analizada',
+  'replayBadge.analyzedHint': 'Esta partida tiene datos de replay: \u00e1brela para ver tiempos de edad, apertura y el mapa animado.',
+  'replayBadge.queued': 'en cola',
+  'replayBadge.queuedHint': 'Esperando su turno. La cola va de lo m\u00e1s viejo a lo m\u00e1s nuevo, porque esos son los replays que est\u00e1n a punto de caducar \u2014 as\u00ed que las partidas recientes son las que m\u00e1s esperan. Puedes subir el fichero t\u00fa y saltarte la cola.',
+  'replayBadge.gone': 'sin replay',
+  'replayBadge.goneHint': 'El servidor no tiene este replay \u2014 nadie lo subi\u00f3, o ya caduc\u00f3. Esta partida no va a tener datos nunca, salvo que subas el fichero.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
