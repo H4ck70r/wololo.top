@@ -332,6 +332,85 @@ export interface LadderDistribution {
   };
 }
 
+// Parte A: el percentil de un jugador a lo largo del tiempo. Un punto por
+// instantanea del ladder, no por partida: el percentil se mueve aunque el
+// jugador no juegue, porque el ladder se mueve debajo de el.
+export interface PercentilePoint {
+  date: string;
+  rating: number;
+  players_above: number;
+  /** players_above + 1: el puesto que ocupa ese rating ese dia */
+  position: number;
+  /** cuantas cuentas con rating tenia el ladder ese dia */
+  ladder_size: number;
+  /** nunca 0: el mejor del mundo es el top 0,1%, no el top 0% */
+  top_percent: number;
+}
+
+export interface PercentileSeries {
+  points: PercentilePoint[];
+  summary: {
+    first: PercentilePoint;
+    last: PercentilePoint;
+    /** el percentil mas bajo, que no tiene que ser el rating mas alto */
+    best: PercentilePoint;
+    worst: PercentilePoint;
+    /** negativo = subio en el ladder */
+    percent_change: number;
+    rating_change: number;
+    improved: boolean;
+  };
+}
+
+export interface PercentileHistoryResponse {
+  status: string;
+  profile_id: number;
+  days: number;
+  ladders: Record<string, PercentileSeries>;
+}
+
+// Parte B: la curva del ladder hoy contra la de hace N meses.
+export interface DistributionSnapshot {
+  date: string;
+  total_players: number;
+  mean: number;
+  median: number;
+  stddev: number;
+  min: number;
+  max: number;
+  cutoffs: {
+    top_50: number;
+    top_25: number;
+    top_10: number;
+    top_5: number;
+    top_1: number;
+    top_100: number;
+  };
+  /** share va en porcentaje del ladder, que es lo comparable entre fechas */
+  buckets: { rating: number; players: number; share: number }[];
+}
+
+export interface DistributionHistoryResponse {
+  status: string;
+  ladder: string;
+  bucket_size: number;
+  requested_months: number;
+  span_days: number;
+  earliest_date: string;
+  before: DistributionSnapshot;
+  after: DistributionSnapshot;
+  shift: {
+    mean: number;
+    median: number;
+    top_50: number;
+    top_25: number;
+    top_10: number;
+    top_5: number;
+    top_1: number;
+    players: number;
+  };
+}
+
 export interface RatingSnapshot {
   date: string;
   rating: number;

@@ -12,6 +12,8 @@ import { useT } from '../lib/i18n';
 import type { TKey } from '../lib/i18n';
 import RatingCard from '../components/RatingCard';
 import RatingChart from '../components/RatingChart';
+import PercentileChart from '../components/PercentileChart';
+import EloInflationChart from '../components/EloInflationChart';
 import LadderDistributionChart from '../components/LadderDistributionChart';
 import { useSession } from '../lib/session';
 import CivStatsTable from '../components/CivStatsTable';
@@ -484,6 +486,17 @@ export default function PlayerProfile() {
           <RatingChart profileId={profileId!} />
         </div>
 
+        {/* El percentil en el tiempo. Va justo despues del historial de rating
+            a proposito: lo interesante es leer las dos curvas seguidas, porque
+            es cuando se ve que el numero puede subir sin que mejore el sitio. */}
+        <div className="mb-6">
+          <PercentileChart
+            profileId={profileId!}
+            playerName={player?.alias}
+            isSelf={viewingOwnProfile}
+          />
+        </div>
+
         {/* Where this rating sits against the whole ladder */}
         <div className="mb-6">
           <LadderDistributionChart
@@ -495,6 +508,12 @@ export default function PlayerProfile() {
             playerName={player?.alias}
             isSelf={viewingOwnProfile}
           />
+        </div>
+
+        {/* Si el ladder entero se movio, el percentil de arriba ya lo delata;
+            esto ensena de donde viene ese movimiento. */}
+        <div className="mb-6">
+          <EloInflationChart ladder="solo" rating={soloLadder?.rating} />
         </div>
 
         {/* Rating Milestones */}

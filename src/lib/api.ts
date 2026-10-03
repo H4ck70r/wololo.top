@@ -49,6 +49,8 @@ import type {
   LadderRangeStats,
   PlayerSignalsResponse,
   SignalFlagsResponse,
+  PercentileHistoryResponse,
+  DistributionHistoryResponse,
 } from './types';
 
 export async function searchPlayers(query: string): Promise<PlayerSearchResponse> {
@@ -82,6 +84,27 @@ export async function getRatingHistory(
   params?: { days?: number; ladder?: string }
 ): Promise<RatingHistoryResponse> {
   return apiFetch<RatingHistoryResponse>(`/api/players/${profileId}/rating-history`, params as Record<string, string | number>);
+}
+
+export async function getPercentileHistory(
+  profileId: number | string,
+  params?: { days?: number; ladder?: string }
+): Promise<PercentileHistoryResponse> {
+  return apiFetch<PercentileHistoryResponse>(
+    `/api/players/${profileId}/percentile-history`,
+    params as Record<string, string | number>
+  );
+}
+
+export async function getLadderDistributionHistory(params?: {
+  type?: 'solo' | 'team';
+  months?: number;
+  bucket?: number;
+}): Promise<DistributionHistoryResponse> {
+  return apiFetch<DistributionHistoryResponse>(
+    '/api/ladder/distribution-history',
+    params as Record<string, string | number>
+  );
 }
 
 export async function getLadderDistribution(

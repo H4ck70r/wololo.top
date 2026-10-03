@@ -5,6 +5,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getEnhancedLeaderboard, getEnhancedCountryStats, getPlayer } from '../lib/api';
 import LadderDistributionChart from '../components/LadderDistributionChart';
+import EloInflationChart from '../components/EloInflationChart';
 import { useSession } from '../lib/session';
 import CountryFilter from '../components/CountryFilter';
 import { countryFlag, countryName } from '../lib/constants';
@@ -193,6 +194,15 @@ export default function LeaderboardEnhanced() {
             onRangeChange={applyBand}
             showPlayers={false}
           />
+        </div>
+      )}
+
+      {/* La misma curva contra la de hace meses: si el ladder entero se
+          desplazo, los cortes de las bandas de arriba no significan hoy lo que
+          significaban. */}
+      {distLadder && (
+        <div className="mb-4">
+          <EloInflationChart ladder={distLadder} rating={myRating} />
         </div>
       )}
 
