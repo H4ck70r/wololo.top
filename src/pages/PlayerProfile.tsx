@@ -128,6 +128,10 @@ export default function PlayerProfile() {
     }).catch(() => {});
   }, [profileId, queryClient]);
 
+  // Estaba por debajo del return de carga, asi que React veia un hook de mas en
+  // cuanto el perfil terminaba de cargar y avisaba de orden de hooks cambiado.
+  const { isSelf } = useSession();
+
   // Sync favorite state
   useEffect(() => {
     if (profileId) {
@@ -165,7 +169,6 @@ export default function PlayerProfile() {
   }
 
   const player = playerData?.player;
-  const { isSelf } = useSession();
   const viewingOwnProfile = isSelf(profileId);
 
   if (playerError || !player) {
