@@ -1066,7 +1066,7 @@ const ES: Partial<Record<TKey, string>> = {
   'eco.limite': 'La pantalla final del propio juego enseña además comida, madera, piedra y oro recolectados, unidades matadas y edificios arrasados. Nada de eso está en el replay: el juego lo calcula volviendo a simular la partida, y el fichero sólo guarda los comandos. Poner aquí una estimación sería inventarla.',
   'tabs.apm': 'Ritmo',
   'apm.title': 'Acciones por minuto',
-  'apm.note': 'Dos cifras y no una: todas las acciones, y las EFECTIVAS. Dos órdenes iguales a las mismas unidades y casi seguidas cuentan una sola, porque en una pelea se repite el mismo clic de ataque muchas veces y eso infla el número sin hacer nada nuevo.',
+  'apm.note': 'Lo ocupado que estuvo cada jugador, y cuánto de esa actividad sirvió para algo.',
   'apm.apm': 'acciones',
   'apm.eapm': 'efectivas',
   'apm.peak': 'pico',
