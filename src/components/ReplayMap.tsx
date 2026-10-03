@@ -548,13 +548,15 @@ export default function ReplayMap({ timeline }: Props) {
       {/* Plegada por defecto: ocupaba cuatro filas bajo el mapa y el mapa es
           lo que se quiere mirar. La línea de jugadores queda fuera porque sin
           ella no se sabe quién es quién, que es lo único imprescindible. */}
-      <details className="mt-2 group">
+      <details className="mt-2 group relative">
         {/* inline-block y sin marcador: como caja a todo lo ancho reservaba
             una fila entera aunque estuviese plegada. */}
         <summary className="inline-block text-[11px] text-gray-500 cursor-pointer hover:text-gray-300 list-none select-none marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none">
           {t('map.legend')} <span className="group-open:hidden">▸</span><span className="hidden group-open:inline">▾</span>
         </summary>
-        <div className="mt-2">
+        {/* Flotante: desplegada empujaba todo lo de abajo y la tarjeta
+            entera cambiaba de alto. Asi se abre encima y no mueve nada. */}
+        <div className="absolute z-20 left-0 right-0 mt-2 p-3 rounded-lg bg-dark-800 border border-dark-400 shadow-xl">
       {/* Sin leyenda los iconos son un acertijo, y sueltos sobre el fondo no
             se parecen a lo que se ve en el mapa. Van en su círculo. */}
         <div className="flex items-center gap-x-3 gap-y-1.5 mt-2 flex-wrap">

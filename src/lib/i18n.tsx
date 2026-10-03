@@ -520,6 +520,21 @@ const EN = {
   'eco.command': 'ordering',
   'eco.manage': 'building and queueing',
   'tabs.economy': 'Economy',
+  'eco.villTitle': 'Villagers and town centers',
+  'eco.villNote': 'Queued villagers over the whole game, how many by 15:00, how long the town center sat idle, and when each extra one went down.',
+  'eco.villQueued': 'Villagers queued',
+  'eco.vill15': 'By 15:00',
+  'eco.tcIdle': 'Town center idle',
+  'eco.extraTcs': 'Extra town centers',
+  'eco.limite': 'The game’s own end screen also shows food, wood, stone and gold collected, units killed and buildings razed. None of that is in the replay: the game works it out by replaying the match, and the file only holds the commands. Showing an estimate here would be inventing it.',
+  'tabs.apm': 'Pace',
+  'apm.title': 'Actions per minute',
+  'apm.note': 'Two numbers, not one: every action, and the EFFECTIVE ones. Two identical orders to the same units moments apart count once, because in a fight the same attack click gets repeated over and over and that inflates the number without doing anything new.',
+  'apm.apm': 'actions',
+  'apm.eapm': 'effective',
+  'apm.peak': 'peak',
+  'apm.repeated': 'repeated',
+  'apm.limite': 'Per minute of GAME clock, which runs at 1.7x real time — the clock on screen and the one the guides use. The split between ordering and building goes by command type, not unit type, because the replay does not say what each object is.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -1027,6 +1042,21 @@ const ES: Partial<Record<TKey, string>> = {
   'eco.command': 'mandando',
   'eco.manage': 'construyendo y encolando',
   'tabs.economy': 'Economía',
+  'eco.villTitle': 'Aldeanos y centros urbanos',
+  'eco.villNote': 'Aldeanos encolados en toda la partida, cuántos al 15:00, cuánto estuvo parado el centro urbano y cuándo cayó cada uno de los extra.',
+  'eco.villQueued': 'Aldeanos encolados',
+  'eco.vill15': 'Al 15:00',
+  'eco.tcIdle': 'Centro urbano parado',
+  'eco.extraTcs': 'Centros urbanos extra',
+  'eco.limite': 'La pantalla final del propio juego enseña además comida, madera, piedra y oro recolectados, unidades matadas y edificios arrasados. Nada de eso está en el replay: el juego lo calcula volviendo a simular la partida, y el fichero sólo guarda los comandos. Poner aquí una estimación sería inventarla.',
+  'tabs.apm': 'Ritmo',
+  'apm.title': 'Acciones por minuto',
+  'apm.note': 'Dos cifras y no una: todas las acciones, y las EFECTIVAS. Dos órdenes iguales a las mismas unidades y casi seguidas cuentan una sola, porque en una pelea se repite el mismo clic de ataque muchas veces y eso infla el número sin hacer nada nuevo.',
+  'apm.apm': 'acciones',
+  'apm.eapm': 'efectivas',
+  'apm.peak': 'pico',
+  'apm.repeated': 'repetidas',
+  'apm.limite': 'Por minuto de reloj de JUEGO, que corre a 1,7x el real — el reloj que se ve en pantalla y el que usan las guías. El reparto entre mandar y construir va por tipo de comando, no por tipo de unidad, porque el replay no dice qué es cada objeto.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };

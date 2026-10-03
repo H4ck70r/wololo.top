@@ -940,8 +940,8 @@ export interface ReplayTimeline {
   } | null;
   /** lo comprado y vendido en el mercado, por jugador y recurso */
   mercado?: Record<string, Record<string, { compra: number; venta: number }>>;
-  /** acciones por minuto: [minuto, mando, gestión] por jugador */
-  ritmo?: Record<string, [number, number, number][]>;
+  /** acciones por minuto: [minuto, mando, gestión, efectivas] por jugador */
+  ritmo?: Record<string, [number, number, number, number][]>;
   /** oro, piedra, rebaño, caza, pesca y fauna del mapa (sin árboles) */
   recursos?: {
     t: 'oro' | 'piedra' | 'rebano' | 'caza' | 'pesca' | 'fauna';

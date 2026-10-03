@@ -3,6 +3,7 @@ import { useT } from '../lib/i18n';
 import ReplayMap from './ReplayMap';
 import ReplayUnits from './ReplayUnits';
 import ReplayEconomy from './ReplayEconomy';
+import ReplayApm from './ReplayApm';
 import type { ReplayTimeline, TimelinePlayer } from '../lib/types';
 
 interface Props {
@@ -23,7 +24,7 @@ const reloj = (ms: number | null | undefined) => {
 //  guías y los coaches es cuándo la edad CAE.
 const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
 
-type Pestana = 'unidades' | 'economia' | 'tecnologias';
+type Pestana = 'unidades' | 'economia' | 'tecnologias' | 'apm';
 
 /**
  * El análisis de una partida, en pestañas.
@@ -45,6 +46,7 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
     { id: 'unidades', etiqueta: t('tabs.units') },
     { id: 'economia', etiqueta: t('tabs.economy') },
     { id: 'tecnologias', etiqueta: t('tabs.techs') },
+    { id: 'apm', etiqueta: t('tabs.apm') },
   ];
 
   return (
@@ -135,10 +137,14 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
           {/* Altura acotada con desplazamiento propio: el panel no puede
               estirar la pagina hasta dejar el mapa fuera de pantalla, que es
               justo lo que se quiere evitar. */}
-          <div className="lg:max-h-[34rem] lg:overflow-y-auto pr-1">
+          {/* Altura fija y no solo maxima: con max-h la tarjeta se encogia y
+              crecia al cambiar de pestaña, y una caja que salta de tamaño se
+              lee como algo a medio hacer. */}
+          <div className="lg:h-[34rem] lg:overflow-y-auto pr-1">
             {pestana === 'unidades' && <ReplayUnits timeline={timeline} soloUnidades />}
-            {pestana === 'economia' && <ReplayEconomy timeline={timeline} />}
+            {pestana === 'economia' && <ReplayEconomy timeline={timeline} players={players} />}
             {pestana === 'tecnologias' && <ReplayUnits timeline={timeline} soloTecnologias />}
+            {pestana === 'apm' && <ReplayApm timeline={timeline} />}
           </div>
         </div>
       </div>
