@@ -1,4 +1,7 @@
 import { useT } from '../lib/i18n';
+import LevelBenchmarks from '../components/LevelBenchmarks';
+import { useSession } from '../lib/session';
+import { getPlayer } from '../lib/api';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
@@ -33,7 +36,17 @@ export default function CivMeta() {
   const [matchType, setMatchType] = useState('6');
   const [eloBracket, setEloBracket] = useState(0);
   const [days, setDays] = useState(90);
-  const [tab, setTab] = useState<'civs' | 'maps'>('civs');
+  const [tab, setTab] = useState<'civs' | 'maps' | 'levels'>('civs');
+
+  //  Si ha entrado con Steam, se le resalta su propio escalon en la tabla.
+  const { user } = useSession();
+  const { data: yo } = useQuery({
+    queryKey: ['player', user?.profile_id],
+    queryFn: () => getPlayer(String(user!.profile_id)),
+    enabled: !!user?.profile_id && tab === 'levels',
+    staleTime: 10 * 60 * 1000,
+  });
+  const miRating = yo?.player?.ladders?.find((l) => l.type === 'solo')?.rating;
 
   const bracket = ELO_BRACKETS[eloBracket];
 
@@ -147,6 +160,14 @@ export default function CivMeta() {
           }`}
         >
           {t('meta.tabCivs')}
+        </button>
+        <button
+          onClick={() => setTab('levels')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            tab === 'levels' ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
+          }`}
+        >
+          {t('meta.tabLevels')}
         </button>
         <button
           onClick={() => setTab('maps')}
@@ -276,6 +297,8 @@ export default function CivMeta() {
           )}
         </>
       )}
+
+      {tab === 'levels' && <LevelBenchmarks matchType={matchType} rating={miRating} />}
 
       {tab === 'maps' && (
         <>

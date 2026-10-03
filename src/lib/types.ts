@@ -788,3 +788,25 @@ export interface SignalFlagsResponse {
   /** indexado por profile_id en texto */
   flags: Record<string, SignalFlag>;
 }
+
+export interface LevelBenchmark {
+  bracket: string;
+  samples: number;
+  /** muestra demasiado corta para tomarla como referencia */
+  thin: boolean;
+  feudal_s: number | null;
+  castle_s: number | null;
+  villagers_15m: number | null;
+  tc_idle_s: number | null;
+  apm: number | null;
+  /** negativo = puso el centro extra ANTES de pedir Castillos */
+  first_extra_tc_s: number | null;
+}
+
+export interface LevelBenchmarksResponse {
+  status: string;
+  match_type: number;
+  min_samples: number;
+  total_samples: number;
+  brackets: LevelBenchmark[];
+}

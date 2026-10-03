@@ -43,6 +43,7 @@ import type {
   EnrichmentStatusResponse,
   CivMetaResponse,
   CivMatchupsResponse,
+  LevelBenchmarksResponse,
   MapMetaResponse,
   MatchDetailResponse,
   LadderDistribution,
@@ -197,6 +198,10 @@ export async function getCivMatchups(params: {
   days?: number;
 }): Promise<CivMatchupsResponse> {
   return apiFetch<CivMatchupsResponse>('/api/meta/civ-matchups', params as Record<string, string | number>);
+}
+
+export async function getLevelBenchmarks(params?: { match_type?: string }): Promise<LevelBenchmarksResponse> {
+  return apiFetch<LevelBenchmarksResponse>('/api/meta/benchmarks', params as Record<string, string | number>);
 }
 
 export async function getMapMeta(params: {

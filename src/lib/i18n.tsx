@@ -133,6 +133,7 @@ const EN = {
   'meta.loadingMatchups': 'Working out the matchup matrix…',
   'meta.tabCivs': 'Civilizations',
   'meta.tabMaps': 'Maps',
+  'meta.tabLevels': 'Levels',
   'meta.topMatchups': 'Top Matchups',
   'meta.civA': 'Civ A',
   'meta.civB': 'Civ B',
@@ -365,6 +366,18 @@ const EN = {
   'replay.tcIdle': 'Town centre idle',
   'replay.apm': 'Actions per minute',
   'replay.footnote': 'Times are on the in-game clock and mark when the age was REQUESTED, not when it completed. Idle time simulates the town centre queue: it is time the building sat empty, not time between clicks.',
+  'bench.intro': 'What the players above you actually do, measured from their own recorded games.',
+  'bench.sample': 'Over {n} player-games rescued from replays.',
+  'bench.bracket': 'Rating',
+  'bench.feudal': 'Feudal requested',
+  'bench.castle': 'Castle requested',
+  'bench.villagers': 'Villagers by 15:00',
+  'bench.tcIdle': 'Town centre idle',
+  'bench.apm': 'Actions/min',
+  'bench.you': 'you',
+  'bench.thin': '(thin)',
+  'bench.footnote': 'Averages, not targets: nobody wins by matching a mean. Times are on the in-game clock and mark when the age was requested. Brackets marked thin have too few games to lean on yet.',
+  'bench.signInHint': 'Sign in with Steam and your own bracket gets highlighted.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -489,6 +502,7 @@ const ES: Partial<Record<TKey, string>> = {
   'meta.loadingMatchups': 'Calculando la matriz de enfrentamientos…',
   'meta.tabCivs': 'Civilizaciones',
   'meta.tabMaps': 'Mapas',
+  'meta.tabLevels': 'Niveles',
   'meta.topMatchups': 'Mejores enfrentamientos',
   'meta.civA': 'Civ A',
   'meta.civB': 'Civ B',
@@ -717,6 +731,18 @@ const ES: Partial<Record<TKey, string>> = {
   'replay.tcIdle': 'Centro urbano parado',
   'replay.apm': 'Acciones por minuto',
   'replay.footnote': 'Los tiempos van en el reloj del juego y marcan cuándo se PIDIÓ la edad, no cuándo terminó. El tiempo parado simula la cola del centro urbano: es tiempo con el edificio vacío, no tiempo entre clics.',
+  'bench.intro': 'Lo que de verdad hacen los que están por encima de ti, medido en sus propias partidas grabadas.',
+  'bench.sample': 'Sobre {n} jugadores-partida rescatados de los replays.',
+  'bench.bracket': 'Puntuación',
+  'bench.feudal': 'Feudal pedida',
+  'bench.castle': 'Castillos pedida',
+  'bench.villagers': 'Aldeanos al 15:00',
+  'bench.tcIdle': 'Centro urbano parado',
+  'bench.apm': 'Acciones/min',
+  'bench.you': 'tú',
+  'bench.thin': '(poca muestra)',
+  'bench.footnote': 'Son promedios, no objetivos: nadie gana por igualar una media. Los tiempos van en el reloj del juego y marcan cuándo se pidió la edad. Los tramos marcados tienen todavía pocas partidas para apoyarse en ellos.',
+  'bench.signInHint': 'Entra con Steam y se te resalta tu propio tramo.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
