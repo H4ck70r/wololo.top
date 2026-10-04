@@ -1,0 +1,1922 @@
+{
+"1001": {
+"en": {
+"fuerte": "large groups of units",
+"debil": "Cavalry and Mangonel-line"
+},
+"es": {
+"fuerte": "large groups of units",
+"debil": "Cavalry and Mangonel-line"
+}
+},
+"1003": {
+"en": {
+"fuerte": "large groups of units",
+"debil": "Cavalry and Mangonel-line"
+},
+"es": {
+"fuerte": "large groups of units",
+"debil": "Cavalry and Mangonel-line"
+}
+},
+"1004": {
+"en": {
+"fuerte": "large groups of ships",
+"debil": "Fire Ships"
+},
+"es": {
+"fuerte": "large groups of ships",
+"debil": "Fire Ships"
+}
+},
+"1006": {
+"en": {
+"fuerte": "large groups of ships",
+"debil": "Fire Ships"
+},
+"es": {
+"fuerte": "large groups of ships",
+"debil": "Fire Ships"
+}
+},
+"1007": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+}
+},
+"1009": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+}
+},
+"1010": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+}
+},
+"1012": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+}
+},
+"1013": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Ranged Soldiers"
+}
+},
+"1015": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Ranged Soldiers"
+}
+},
+"1016": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units"
+}
+},
+"1018": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units"
+}
+},
+"11": {
+"en": {
+"fuerte": "Siege Weapons and Infantry",
+"debil": "Skirmishers, Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Siege Weapons and Infantry",
+"debil": "Skirmishers, Spearman-line and Camel Riders"
+}
+},
+"1120": {
+"en": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Cavalry and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Cavalry and Siege Weapons"
+}
+},
+"1122": {
+"en": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Cavalry and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Cavalry and Siege Weapons"
+}
+},
+"1123": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry and Ranged Soldiers"
+},
+"es": {
+"fuerte": null,
+"debil": "Cavalry and Ranged Soldiers"
+}
+},
+"1125": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry and Ranged Soldiers"
+},
+"es": {
+"fuerte": null,
+"debil": "Cavalry and Ranged Soldiers"
+}
+},
+"1126": {
+"en": {
+"fuerte": "units at medium and close range",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "units at medium and close range",
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"1128": {
+"en": {
+"fuerte": "units at medium and close range",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "unidades a media y corta distancia",
+"debil": "unidades de arqueros y armas de asedio"
+}
+},
+"1129": {
+"en": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry, Skirmishers and Siege Weapons"
+},
+"es": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry, Skirmishers and Siege Weapons"
+}
+},
+"1131": {
+"en": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry, Skirmishers and Siege Weapons"
+},
+"es": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry, Skirmishers and Siege Weapons"
+}
+},
+"1132": {
+"en": {
+"fuerte": "units at close range",
+"debil": "Monks and Spearman-line"
+},
+"es": {
+"fuerte": "units at close range",
+"debil": "Monks and Spearman-line"
+}
+},
+"1134": {
+"en": {
+"fuerte": "units at close range",
+"debil": "Monks and Spearman-line"
+},
+"es": {
+"fuerte": "units at close range",
+"debil": "Monks and Spearman-line"
+}
+},
+"1155": {
+"en": {
+"fuerte": "Ranged Soldiers and Spearman-line",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers and Spearman-line",
+"debil": "units at close range"
+}
+},
+"1225": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+}
+},
+"1227": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+}
+},
+"1228": {
+"en": {
+"fuerte": "Archery Units",
+"debil": "Spearman-line, Camel Riders and Monks"
+},
+"es": {
+"fuerte": "Archery Units",
+"debil": "Spearman-line, Camel Riders and Monks"
+}
+},
+"1230": {
+"en": {
+"fuerte": "Archery Units",
+"debil": "Spearman-line, Camel Riders and Monks"
+},
+"es": {
+"fuerte": "Archery Units",
+"debil": "Spearman-line, Camel Riders and Monks"
+}
+},
+"1231": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Foot Archers"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Foot Archers"
+}
+},
+"1233": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Foot Archers"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Foot Archers"
+}
+},
+"1234": {
+"en": {
+"fuerte": "Cavalry and Infantry, especially with high armor",
+"debil": "Archery Units"
+},
+"es": {
+"fuerte": "Cavalry and Infantry, especially with high armor",
+"debil": "Archery Units"
+}
+},
+"1236": {
+"en": {
+"fuerte": "Cavalry and Infantry, especially with high armor",
+"debil": "Archery Units"
+},
+"es": {
+"fuerte": "Cavalry and Infantry, especially with high armor",
+"debil": "Archery Units"
+}
+},
+"125": {
+"en": {
+"fuerte": "slow and non-ranged units",
+"debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
+},
+"es": {
+"fuerte": "slow and non-ranged units",
+"debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
+}
+},
+"1254": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+}
+},
+"1255": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+}
+},
+"1260": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Foot Archers"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Foot Archers"
+}
+},
+"1263": {
+"en": {
+"fuerte": "Mounted Units, especially Elephants",
+"debil": "Foot Archers and Infantry"
+},
+"es": {
+"fuerte": "Mounted Units, especially Elephants",
+"debil": "Foot Archers and Infantry"
+}
+},
+"1370": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry, Camel Riders and Archery Units"
+},
+"es": {
+"fuerte": null,
+"debil": "caballería, jinetes de camello y arqueros"
+}
+},
+"1372": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry, Camel Riders and Archery Units"
+},
+"es": {
+"fuerte": null,
+"debil": "caballería, jinetes de camello y unidades de arqueros"
+}
+},
+"1655": {
+"en": {
+"fuerte": "Infantry and Archery Units",
+"debil": "Camel Riders and Monks"
+},
+"es": {
+"fuerte": "unidades de infantería y arqueros",
+"debil": "jinetes de camello y monjes"
+}
+},
+"1657": {
+"en": {
+"fuerte": "Infantry and Archery Units",
+"debil": "Camel Riders and Monks"
+},
+"es": {
+"fuerte": "unidades de infantería y arqueros",
+"debil": "jinetes de camello y monjes"
+}
+},
+"1658": {
+"en": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+},
+"es": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+}
+},
+"1659": {
+"en": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+},
+"es": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+}
+},
+"1660": {
+"en": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+},
+"es": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+}
+},
+"1661": {
+"en": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+},
+"es": {
+"fuerte": "Infantry and Camel Riders",
+"debil": "Mounted Archers and Gunners"
+}
+},
+"1699": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": "unidades montadas",
+"debil": "soldados a distancia"
+}
+},
+"1701": {
+"en": {
+"fuerte": "buildings, Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "buildings, Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+}
+},
+"1703": {
+"en": {
+"fuerte": "buildings, Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "buildings, Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+}
+},
+"1707": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "línea de lanceros y jinetes de camello"
+}
+},
+"1735": {
+"en": {
+"fuerte": "buildings and units at close range",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "edificios y unidades a corta distancia",
+"debil": "soldados a distancia a larga distancia"
+}
+},
+"1737": {
+"en": {
+"fuerte": "buildings and units at close range",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "edificios y unidades a corta distancia",
+"debil": "soldados a distancia a larga distancia"
+}
+},
+"1741": {
+"en": {
+"fuerte": "Infantry and large groups of units",
+"debil": "Cavalry and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry and large groups of units",
+"debil": "Cavalry and Siege Weapons"
+}
+},
+"1743": {
+"en": {
+"fuerte": "Infantry and large groups of units",
+"debil": "Cavalry and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry and large groups of units",
+"debil": "Cavalry and Siege Weapons"
+}
+},
+"1744": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line"
+}
+},
+"1746": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line"
+}
+},
+"1747": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": null,
+"debil": "Cavalry"
+}
+},
+"1749": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": null,
+"debil": "Cavalry"
+}
+},
+"1751": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "soldados a distancia",
+"debil": "línea de lanceros y jinetes de camello"
+}
+},
+"1755": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+}
+},
+"1759": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Skirmishers and Camel Riders"
+}
+},
+"1761": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Skirmishers and Camel Riders"
+}
+},
+"1786": {
+"en": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+},
+"es": {
+"fuerte": "unidades montadas, especialmente elefantes",
+"debil": "soldados a distancia e infantería"
+}
+},
+"1787": {
+"en": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+},
+"es": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+}
+},
+"1788": {
+"en": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+},
+"es": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+}
+},
+"1790": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"1792": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"1793": {
+"en": {
+"fuerte": "buildings, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "buildings, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+}
+},
+"1800": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"1803": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+}
+},
+"1805": {
+"en": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "Infantry and Cavalry",
+"debil": "Spearman-line and Monks"
+}
+},
+"1811": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Scout Cavalry-line and Archery Units"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Scout Cavalry-line and Archery Units"
+}
+},
+"1813": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line, Camel Riders, and Monks"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line, Camel Riders, and Monks"
+}
+},
+"185": {
+"en": {
+"fuerte": "Infantry, Monks and Siege Weapons",
+"debil": "Ranged Soldiers and Cavalry"
+},
+"es": {
+"fuerte": "Infantry, Monks and Siege Weapons",
+"debil": "Ranged Soldiers and Cavalry"
+}
+},
+"1901": {
+"en": {
+"fuerte": "Cavalry and buildings",
+"debil": "Militia-line and Archery Units"
+},
+"es": {
+"fuerte": "Cavalry and buildings",
+"debil": "Militia-line and Archery Units"
+}
+},
+"1903": {
+"en": {
+"fuerte": "Cavalry and buildings",
+"debil": "Militia-line and Archery Units"
+},
+"es": {
+"fuerte": "Cavalry and buildings",
+"debil": "Militia-line and Archery Units"
+}
+},
+"1908": {
+"en": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"1910": {
+"en": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry and Ranged Soldiers",
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"1911": {
+"en": {
+"fuerte": "Infantry and tight groups of units",
+"debil": "Ranged Soldiers and units at close range"
+},
+"es": {
+"fuerte": "Infantry and tight groups of units",
+"debil": "Ranged Soldiers and units at close range"
+}
+},
+"1920": {
+"en": {
+"fuerte": "Cavalry and Infantry",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "caballería e infantería",
+"debil": "soldados a distancia a larga distancia"
+}
+},
+"1922": {
+"en": {
+"fuerte": "Cavalry and Infantry",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "caballería e infantería",
+"debil": "soldados a distancia a larga distancia"
+}
+},
+"1944": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+}
+},
+"1946": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+}
+},
+"1949": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line"
+}
+},
+"1951": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line"
+}
+},
+"1952": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Skirmishers and Camel Riders"
+}
+},
+"1959": {
+"en": {
+"fuerte": "Cavalry",
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": "Cavalry",
+"debil": "Ranged Soldiers"
+}
+},
+"1961": {
+"en": {
+"fuerte": "Cavalry",
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": "Cavalry",
+"debil": "Ranged Soldiers"
+}
+},
+"1968": {
+"en": {
+"fuerte": "Infantry, Siege Weapons and buildings",
+"debil": "Cavalry and Skirmishers"
+},
+"es": {
+"fuerte": "Infantry, Siege Weapons and buildings",
+"debil": "Cavalry and Skirmishers"
+}
+},
+"1970": {
+"en": {
+"fuerte": "Infantry, Siege Weapons and buildings",
+"debil": "Cavalry and Skirmishers"
+},
+"es": {
+"fuerte": "Infantry, Siege Weapons and buildings",
+"debil": "Cavalry and Skirmishers"
+}
+},
+"1974": {
+"en": {
+"fuerte": null,
+"debil": "Militia-line"
+},
+"es": {
+"fuerte": null,
+"debil": "Militia-line"
+}
+},
+"207": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+}
+},
+"232": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Cavalry"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Cavalry"
+}
+},
+"239": {
+"en": {
+"fuerte": "buildings and units at close range",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "buildings and units at close range",
+"debil": "Spearman-line and Monks"
+}
+},
+"24": {
+"en": {
+"fuerte": "units at long range",
+"debil": "Skirmishers, Mangonel-line and units at close range"
+},
+"es": {
+"fuerte": "units at long range",
+"debil": "Skirmishers, Mangonel-line and units at close range"
+}
+},
+"25": {
+"en": {
+"fuerte": "melee units",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "melee units",
+"debil": "Archery Units and Gunners"
+}
+},
+"2550": {
+"en": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+}
+},
+"2552": {
+"en": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "arqueros a pie, armas de asedio y edificios",
+"debil": "caballería"
+}
+},
+"2554": {
+"en": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+}
+},
+"2562": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+}
+},
+"2564": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers",
+"debil": "units at close range"
+}
+},
+"2566": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders and Monks"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders and Monks"
+}
+},
+"2568": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders and Monks"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders and Monks"
+}
+},
+"2569": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Foot Archers, Skirmishers and units at close range"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Foot Archers, Skirmishers and units at close range"
+}
+},
+"2571": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Foot Archers, Skirmishers and units at close range"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Foot Archers, Skirmishers and units at close range"
+}
+},
+"2582": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Foot Archers at long range"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Foot Archers at long range"
+}
+},
+"2584": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Foot Archers at long range"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Foot Archers at long range"
+}
+},
+"2586": {
+"en": {
+"fuerte": "buildings and Mounted Units",
+"debil": "Militia-line"
+},
+"es": {
+"fuerte": "buildings and Mounted Units",
+"debil": "Militia-line"
+}
+},
+"2587": {
+"en": {
+"fuerte": "buildings and Mounted Units",
+"debil": "Militia-line"
+},
+"es": {
+"fuerte": "buildings and Mounted Units",
+"debil": "Militia-line"
+}
+},
+"2588": {
+"en": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Foot Archers, Siege Weapons and buildings",
+"debil": "Cavalry"
+}
+},
+"2700": {
+"en": {
+"fuerte": "slow units at long range",
+"debil": "Skirmishers, Scorpions and units at close range"
+},
+"es": {
+"fuerte": "unidades lentas a larga distancia",
+"debil": "guerrilleros, escorpiones y unidades a corta distancia"
+}
+},
+"2703": {
+"en": {
+"fuerte": "Cavalry and buildings",
+"debil": "Militia-line"
+},
+"es": {
+"fuerte": "Cavalry and buildings",
+"debil": "Militia-line"
+}
+},
+"2705": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Ranged Soldiers",
+"debil": "Cavalry"
+}
+},
+"2706": {
+"en": {
+"fuerte": "Ranged Soldiers",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Ranged Soldiers",
+"debil": "Cavalry"
+}
+},
+"2708": {
+"en": {
+"fuerte": null,
+"debil": "Camel Riders and Monks"
+},
+"es": {
+"fuerte": null,
+"debil": "Camel Riders and Monks"
+}
+},
+"2709": {
+"en": {
+"fuerte": null,
+"debil": "Camel Riders and Monks"
+},
+"es": {
+"fuerte": null,
+"debil": "Camel Riders and Monks"
+}
+},
+"2711": {
+"en": {
+"fuerte": null,
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": null,
+"debil": "Ranged Soldiers"
+}
+},
+"2712": {
+"en": {
+"fuerte": null,
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": null,
+"debil": "Ranged Soldiers"
+}
+},
+"281": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"282": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Archery Units and Spearman-line"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Archery Units and Spearman-line"
+}
+},
+"283": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+},
+"es": {
+"fuerte": "infantería y arqueros a pie",
+"debil": "líneas de lanceros, jinetes de camello y monjes"
+}
+},
+"291": {
+"en": {
+"fuerte": "Unique Units",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "Unique Units",
+"debil": "Archery Units and Gunners"
+}
+},
+"329": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+}
+},
+"330": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Infantry, Monks and Foot Archers"
+}
+},
+"358": {
+"en": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+},
+"es": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+}
+},
+"359": {
+"en": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+},
+"es": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+}
+},
+"38": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+},
+"es": {
+"fuerte": "infantería y arqueros a pie",
+"debil": "líneas de lanceros, jinetes de camello y monjes"
+}
+},
+"39": {
+"en": {
+"fuerte": "slow units at long range",
+"debil": "Skirmishers, Scorpions and units at close range"
+},
+"es": {
+"fuerte": "slow units at long range",
+"debil": "Skirmishers, Scorpions and units at close range"
+}
+},
+"4": {
+"en": {
+"fuerte": "units at long range",
+"debil": "Skirmishers, Mangonel-line and units at close range"
+},
+"es": {
+"fuerte": "unidades a distancia",
+"debil": "guerrilleros, líneas de mangoneles y unidades a corta distancia"
+}
+},
+"40": {
+"en": {
+"fuerte": null,
+"debil": "Archery Units"
+},
+"es": {
+"fuerte": null,
+"debil": "Archery Units"
+}
+},
+"41": {
+"en": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+},
+"es": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+}
+},
+"440": {
+"en": {
+"fuerte": "buildings",
+"debil": "other units"
+},
+"es": {
+"fuerte": "buildings",
+"debil": "other units"
+}
+},
+"441": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"448": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"46": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Skirmishers"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Skirmishers"
+}
+},
+"473": {
+"en": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+}
+},
+"474": {
+"en": {
+"fuerte": "slow units at long range",
+"debil": "Skirmishers, Scorpions and units at close range"
+},
+"es": {
+"fuerte": "slow units at long range",
+"debil": "Skirmishers, Scorpions and units at close range"
+}
+},
+"492": {
+"en": {
+"fuerte": "units at long range",
+"debil": "Skirmishers, Mangonel-line and units at close range"
+},
+"es": {
+"fuerte": "units at long range",
+"debil": "Skirmishers, Mangonel-line and units at close range"
+}
+},
+"5": {
+"en": {
+"fuerte": null,
+"debil": "Ranged Soldiers"
+},
+"es": {
+"fuerte": null,
+"debil": "Ranged Soldiers"
+}
+},
+"530": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Cavalry and Skirmishers"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Cavalry and Skirmishers"
+}
+},
+"531": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"534": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Cavalry"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Cavalry"
+}
+},
+"546": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"553": {
+"en": {
+"fuerte": null,
+"debil": "Archery Units"
+},
+"es": {
+"fuerte": null,
+"debil": "Archery Units"
+}
+},
+"554": {
+"en": {
+"fuerte": "melee units",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "melee units",
+"debil": "Archery Units and Gunners"
+}
+},
+"555": {
+"en": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+},
+"es": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+}
+},
+"556": {
+"en": {
+"fuerte": "Mounted Units",
+"debil": "Archery Units and Spearman-line"
+},
+"es": {
+"fuerte": "Mounted Units",
+"debil": "Archery Units and Spearman-line"
+}
+},
+"557": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Skirmishers"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Skirmishers"
+}
+},
+"558": {
+"en": {
+"fuerte": "buildings and units at close range",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "buildings and units at close range",
+"debil": "Spearman-line and Monks"
+}
+},
+"559": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"560": {
+"en": {
+"fuerte": "Unique Units",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "Unique Units",
+"debil": "Archery Units and Gunners"
+}
+},
+"561": {
+"en": {
+"fuerte": "Siege Weapons and Infantry",
+"debil": "Skirmishers, Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Siege Weapons and Infantry",
+"debil": "Skirmishers, Spearman-line and Camel Riders"
+}
+},
+"567": {
+"en": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+}
+},
+"569": {
+"en": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+},
+"es": {
+"fuerte": "Infantry and Foot Archers",
+"debil": "Spearman-line, Camel Riders, and Monks"
+}
+},
+"6": {
+"en": {
+"fuerte": "Ranged Soldiers and Spearman-line",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers and Spearman-line",
+"debil": "units at close range"
+}
+},
+"692": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Gunners"
+}
+},
+"694": {
+"en": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "Infantry and Siege Weapons",
+"debil": "Archery Units and Gunners"
+}
+},
+"7": {
+"en": {
+"fuerte": "Ranged Soldiers and Spearman-line",
+"debil": "units at close range"
+},
+"es": {
+"fuerte": "Ranged Soldiers and Spearman-line",
+"debil": "units at close range"
+}
+},
+"725": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry and Archery Units"
+},
+"es": {
+"fuerte": null,
+"debil": "Cavalry and Archery Units"
+}
+},
+"726": {
+"en": {
+"fuerte": null,
+"debil": "Cavalry and Archery Units"
+},
+"es": {
+"fuerte": null,
+"debil": "Cavalry and Archery Units"
+}
+},
+"73": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": "infantería",
+"debil": "arqueros y armas de asedio"
+}
+},
+"74": {
+"en": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+}
+},
+"75": {
+"en": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+}
+},
+"751": {
+"en": {
+"fuerte": "Monastery Units and Archery Units",
+"debil": "Militia-line and Cavalry"
+},
+"es": {
+"fuerte": "Monastery Units and Archery Units",
+"debil": "Militia-line and Cavalry"
+}
+},
+"752": {
+"en": {
+"fuerte": "Monastery Units and Archery Units",
+"debil": "Militia-line and Cavalry"
+},
+"es": {
+"fuerte": "Monastery Units and Archery Units",
+"debil": "Militia-line and Cavalry"
+}
+},
+"753": {
+"en": {
+"fuerte": "Monastery Units and Archery Units",
+"debil": "Militia-line and Cavalry"
+},
+"es": {
+"fuerte": "Monastery Units and Archery Units",
+"debil": "Militia-line and Cavalry"
+}
+},
+"755": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"757": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"759": {
+"en": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+},
+"es": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+}
+},
+"761": {
+"en": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+},
+"es": {
+"fuerte": "Ranged Soldiers and buildings",
+"debil": "Cavalry and Militia-line"
+}
+},
+"763": {
+"en": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry"
+}
+},
+"765": {
+"en": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry"
+},
+"es": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Cavalry"
+}
+},
+"77": {
+"en": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+},
+"es": {
+"fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
+"debil": "Ranged Soldiers at long range"
+}
+},
+"771": {
+"en": {
+"fuerte": "units at range",
+"debil": "Spearman-line, Skirmishers, and Monks"
+},
+"es": {
+"fuerte": "units at range",
+"debil": "Spearman-line, Skirmishers, and Monks"
+}
+},
+"773": {
+"en": {
+"fuerte": "units at range",
+"debil": "Spearman-line, Skirmishers, and Monks"
+},
+"es": {
+"fuerte": "units at range",
+"debil": "Spearman-line, Skirmishers, and Monks"
+}
+},
+"775": {
+"en": {
+"fuerte": "slow, non-ranged units",
+"debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
+},
+"es": {
+"fuerte": "slow, non-ranged units",
+"debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
+}
+},
+"8": {
+"en": {
+"fuerte": "Infantry",
+"debil": "Cavalry and Skirmishers"
+},
+"es": {
+"fuerte": "Infantry",
+"debil": "Cavalry and Skirmishers"
+}
+},
+"827": {
+"en": {
+"fuerte": "Infantry and Archery Units",
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry and Archery Units",
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+}
+},
+"829": {
+"en": {
+"fuerte": "Infantry and Archery Units",
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+},
+"es": {
+"fuerte": "Infantry and Archery Units",
+"debil": "Spearman-line, Skirmishers and Camel Riders"
+}
+},
+"866": {
+"en": {
+"fuerte": null,
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": null,
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"868": {
+"en": {
+"fuerte": null,
+"debil": "Archery Units and Siege Weapons"
+},
+"es": {
+"fuerte": null,
+"debil": "Archery Units and Siege Weapons"
+}
+},
+"869": {
+"en": {
+"fuerte": "Siege Weapons",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Siege Weapons",
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"871": {
+"en": {
+"fuerte": "Siege Weapons",
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": "Siege Weapons",
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"873": {
+"en": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Spearman-line, Skirmishers, and Camel Riders"
+},
+"es": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Spearman-line, Skirmishers, and Camel Riders"
+}
+},
+"875": {
+"en": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Spearman-line, Skirmishers, and Camel Riders"
+},
+"es": {
+"fuerte": "Archery Units and Infantry",
+"debil": "Spearman-line, Skirmishers, and Camel Riders"
+}
+},
+"876": {
+"en": {
+"fuerte": "units at close range",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "units at close range",
+"debil": "Spearman-line and Monks"
+}
+},
+"878": {
+"en": {
+"fuerte": "units at close range",
+"debil": "Spearman-line and Monks"
+},
+"es": {
+"fuerte": "units at close range",
+"debil": "Spearman-line and Monks"
+}
+},
+"879": {
+"en": {
+"fuerte": "Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+}
+},
+"881": {
+"en": {
+"fuerte": "Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+},
+"es": {
+"fuerte": "Cavalry and Infantry",
+"debil": "Archery Units and Gunners"
+}
+},
+"882": {
+"en": {
+"fuerte": "Gunpowder Units",
+"debil": "Cavalry and Archery Units"
+},
+"es": {
+"fuerte": "Gunpowder Units",
+"debil": "Cavalry and Archery Units"
+}
+},
+"886": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"887": {
+"en": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+},
+"es": {
+"fuerte": null,
+"debil": "Spearman-line and Camel Riders"
+}
+},
+"93": {
+"en": {
+"fuerte": "Mounted Units, especially elephants",
+"debil": "Ranged Soldiers and Infantry"
+},
+"es": {
+"fuerte": "unidades montadas, especialmente elefantes",
+"debil": "soldados a distancia e infantería"
+}
+}
+}
