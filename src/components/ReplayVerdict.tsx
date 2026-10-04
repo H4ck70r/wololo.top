@@ -141,6 +141,7 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
         arreglos.push({ peso: perdidos, texto: t(
           conRef ? 'coach.arregloParadoRef' : 'coach.arregloParado', {
             quien: d.nombre, s: String(Math.round(d.parado / 1000)), n: String(perdidos),
+            franja: d.franja ?? '',
             ref: conRef ? String(Math.round(d.ref!.tc_idle_s!)) : '' }) });
       }
     }
