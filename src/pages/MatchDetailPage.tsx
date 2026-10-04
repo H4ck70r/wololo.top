@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { getMatchDetail } from '../lib/api';
+import { getMatchDetail, getSignalFlags } from '../lib/api';
 import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/constants';
 import { outcomeOf } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
 import MatchReplayAnalysis from '../components/MatchReplayAnalysis';
+import SharedCopyBadge from '../components/SharedCopyBadge';
 
 export default function MatchDetailPage() {
   const { t } = useT();
@@ -16,6 +17,20 @@ export default function MatchDetailPage() {
     queryFn: () => getMatchDetail(matchId!),
     enabled: !!matchId,
   });
+
+  //  Se miran TODOS los jugadores de la partida, no solo el rival: marcar a
+  //  uno y callar del otro en una pagina que los enseña a los dos ya seria
+  //  tomar partido. El badge solo aparece si hay una deteccion de verdad, con
+  //  confianza 80 o mas; no es un enlace de "comprueba a este tio".
+  const perfiles = (data?.match?.teams ?? []).flatMap((eq) =>
+    (eq.players ?? []).map((p) => p.profile_id).filter((x): x is number => x != null));
+  const { data: flagsData } = useQuery({
+    queryKey: ['signalFlags', perfiles],
+    queryFn: () => getSignalFlags(perfiles),
+    enabled: perfiles.length > 0,
+    staleTime: 10 * 60 * 1000,
+  });
+  const flags = flagsData?.flags ?? {};
 
   if (isLoading) {
     return (
@@ -125,6 +140,7 @@ export default function MatchDetailPage() {
                             {player.country && <span className="mr-1">{countryFlag(player.country)}</span>}
                             {player.alias || `Player ${player.profile_id}`}
                           </Link>
+                          <SharedCopyBadge flag={flags[String(player.profile_id)]} />
                         </div>
                         <div className="flex items-center gap-2 mt-0.5">
                           {civIcon ? (

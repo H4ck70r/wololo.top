@@ -673,6 +673,39 @@ export default function ReplayMap({ timeline }: Props) {
       }
     }
 
+    //  El punto de reunion vigente de cada uno: a donde mandaba lo que salia
+    //  de sus edificios EN ESE MOMENTO, no en toda la partida. Va dentro del
+    //  recorte porque es una posicion del mapa como cualquier otra.
+    const reunionVigente = new Map<number, { x: number; y: number }>();
+    for (const e of eventos) {
+      if (e.t > ahora) break;
+      if (e.tipo === 'reunion' && e.x != null && e.y != null) {
+        reunionVigente.set(e.j, { x: e.x, y: e.y });
+      }
+    }
+    for (const [j, p2] of reunionVigente) {
+      const X = px(p2.x, p2.y);
+      const Y = py(p2.x, p2.y);
+      const alto = Math.max(esc * 5, 11);
+      ctx.globalAlpha = 0.85;
+      ctx.strokeStyle = colorDe(j);
+      ctx.lineWidth = 1.5;
+      //  Un banderin: el mastil y el triangulo. Se distingue de un edificio
+      //  -que es un circulo- de un vistazo y sin leer la leyenda.
+      ctx.beginPath();
+      ctx.moveTo(X, Y);
+      ctx.lineTo(X, Y - alto);
+      ctx.stroke();
+      ctx.fillStyle = colorDe(j);
+      ctx.beginPath();
+      ctx.moveTo(X, Y - alto);
+      ctx.lineTo(X + alto * 0.6, Y - alto * 0.72);
+      ctx.lineTo(X, Y - alto * 0.44);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
     ctx.restore();
 
     //  Donde estaba mirando en este instante. Es un anillo y no un rectangulo
@@ -1025,6 +1058,14 @@ export default function ReplayMap({ timeline }: Props) {
           <span className="flex items-center gap-1.5 text-[11px] text-gray-500">
             <span className="w-2.5 h-2.5 rounded-sm bg-gray-500/60" />
             {t('map.filler')}
+          </span>
+          <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.reunionNota')}>
+            {/* El mismo banderin que se pinta en el lienzo. */}
+            <svg className="w-4 h-4 text-gray-400" viewBox="0 0 16 16" aria-hidden>
+              <path d="M5 14V2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+              <path d="M5 2.5 L12 4.3 L5 6.1 Z" fill="currentColor" />
+            </svg>
+            {t('map.reunion')}
           </span>
           <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.startHint')}>
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
