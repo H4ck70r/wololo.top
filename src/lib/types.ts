@@ -893,7 +893,11 @@ export interface PlayerBuildOrdersResponse {
 export interface TimelineEvent {
   t: number;
   j: number;
-  tipo: 'build' | 'wall' | 'tech' | 'queue' | 'resign' | 'delete';
+  tipo: 'build' | 'wall' | 'tech' | 'queue' | 'resign' | 'delete'
+    /** pulso "volver al trabajo": antes habia metido aldeanos a cubierto */
+    | 'a_trabajar'
+    /** movio el punto de reunion, y lo movio lejos */
+    | 'reunion';
   id?: number;
   x?: number;
   y?: number;
@@ -945,6 +949,25 @@ export interface ReplayTimeline {
   mercado?: Record<string, Record<string, { compra: number; venta: number }>>;
   /** acciones por minuto: [minuto, mando, gestión, efectivas] por jugador */
   ritmo?: Record<string, [number, number, number, number][]>;
+  /**
+   * Dónde miraba la cámara, una muestra cada dos segundos: [ms, x, y].
+   * Es la del jugador que GUARDÓ la rec, no la de los dos.
+   */
+  vista?: [number, number, number][];
+  /** de qué jugador es esa cámara; null si no se puede afirmar */
+  vista_de?: number | null;
+  /** la conversación, sin los avisos automáticos del juego */
+  chat?: {
+    t: number;
+    j: number | null;
+    texto: string;
+    /** número del taunt, o null si lo escribió a mano */
+    taunt: number | null;
+    /** el fichero lo soltó en su volcado inicial: la hora no es fiable */
+    sin_hora: boolean;
+  }[];
+  /** cuántas veces cambió cada uno la postura de sus unidades */
+  posturas?: Record<string, number>;
   /** oro, piedra, rebaño, caza, pesca y fauna del mapa (sin árboles) */
   recursos?: {
     t: 'oro' | 'piedra' | 'rebano' | 'caza' | 'pesca' | 'fauna';

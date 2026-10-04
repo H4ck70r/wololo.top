@@ -83,6 +83,9 @@ export default function ReplayMap({ timeline }: Props) {
   //  El dibujado mide el lienzo con clientWidth: al cambiar de tamaño hay que
   //  forzar un repintado o el mapa se queda con la escala vieja, estirado.
   const [medida, setMedida] = useState(0);
+  //  La capa de atencion va apagada: es informacion de otro orden y encendida
+  //  siempre taparia el mapa, que es lo que se viene a ver.
+  const [verCalor, setVerCalor] = useState(false);
   const ultimoCuadro = useRef<number | null>(null);
 
   const duracion = timeline.duracion_ms || 1;
@@ -147,6 +150,35 @@ export default function ReplayMap({ timeline }: Props) {
   }, [timeline]);
 
 
+  /** De quien es la camara que guarda el fichero, si se puede afirmar. */
+  const duenoVista = timeline.vista_de ?? null;
+  const nombreVista = duenoVista != null
+    ? (timeline.jugadores.find((x) => x.numero === duenoVista)?.nombre ?? null)
+    : null;
+  const vista = timeline.vista ?? [];
+
+  /**
+   * El mapa de calor, en casillas. Se cuenta cuanto tiempo paso la camara en
+   * cada celda y se guarda el maximo para normalizar: sin normalizar, una
+   * partida larga sale toda del mismo color.
+   */
+  const calor = useMemo(() => {
+    if (!vista.length) return null;
+    const LADO_CELDA = 6;
+    const celdas = new Map<string, { x: number; y: number; n: number }>();
+    let tope = 0;
+    for (const [, x, y] of vista) {
+      const cx = Math.floor(x / LADO_CELDA);
+      const cy = Math.floor(y / LADO_CELDA);
+      const clave = `${cx},${cy}`;
+      const c = celdas.get(clave) ?? { x: (cx + 0.5) * LADO_CELDA, y: (cy + 0.5) * LADO_CELDA, n: 0 };
+      c.n += 1;
+      celdas.set(clave, c);
+      if (c.n > tope) tope = c.n;
+    }
+    return { celdas: [...celdas.values()], tope, lado: LADO_CELDA };
+  }, [vista]);
+
   const hitos = useMemo(() => {
     const TEC_EDAD: Record<number, string> = { 101: 'F', 102: 'C', 103: 'I' };
     const out: { t: number; etiqueta: string; j: number }[] = [];
@@ -197,6 +229,8 @@ export default function ReplayMap({ timeline }: Props) {
     const centros: Momento[] = [];
     const militares: Momento[] = [];
     const finales: Momento[] = [];
+    const apuros: Momento[] = [];
+    const ultimoApuro = new Map<number, number>();
 
     const puesta = new Set<string>();
     const tcs = new Map<number, number>();
@@ -212,6 +246,16 @@ export default function ReplayMap({ timeline }: Props) {
         edades.push({ t: e.t, j: e.j, texto: t('mom.age', { quien: nombreDe(e.j), edad: TEC_EDAD[e.id] }) });
       } else if (e.tipo === 'resign') {
         finales.push({ t: e.t, j: e.j, texto: t('mom.resign', { quien: nombreDe(e.j) }) });
+      } else if (e.tipo === 'a_trabajar') {
+        //  Ese boton solo se pulsa tras meter aldeanos dentro para que no los
+        //  maten: es la huella de haber estado bajo presion, no una
+        //  estimacion. Van juntos los que caen seguidos, que son el mismo
+        //  apuro pulsado tres veces.
+        const previo = ultimoApuro.get(e.j);
+        if (previo == null || e.t - previo > 120_000) {
+          apuros.push({ t: e.t, j: e.j, texto: t('mom.aCubierto', { quien: nombreDe(e.j) }) });
+        }
+        ultimoApuro.set(e.j, e.t);
       } else if (e.tipo === 'build' && e.id != null) {
         if (e.id === CASTILLO) {
           //  El primero cuenta una decision; el cuarto es relleno.
@@ -295,6 +339,7 @@ export default function ReplayMap({ timeline }: Props) {
       ...castillos,
       ...centros,
       ...militares,
+      ...apuros,
       ...agotadas.sort(porTiempo).slice(0, 3),
       ...empujones.sort(porTiempo).slice(0, 4),
     ];
@@ -408,6 +453,25 @@ export default function ReplayMap({ timeline }: Props) {
     ctx.save();
     ctx.clip();
 
+    //  La capa de atencion va aqui, pegada al terreno y debajo de las
+    //  unidades: es contexto, no un actor.
+    const pintarCalor = () => {
+      if (!verCalor || !calor) return;
+      for (const c of calor.celdas) {
+        const peso = c.n / calor.tope;
+        const X = px(c.x, c.y);
+        const Y = py(c.x, c.y);
+        const r = calor.lado * esc * 1.1;
+        const g = ctx.createRadialGradient(X, Y, 0, X, Y, r);
+        g.addColorStop(0, `rgba(255,190,70,${0.5 * peso})`);
+        g.addColorStop(1, 'rgba(255,190,70,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(X, Y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+
     //  El terreno, casilla a casilla. Es lo que convierte el mapa en un sitio
     //  reconocible en vez de puntos sobre un rombo vacío: los bosques y el agua
     //  son lo que uno usa para orientarse.
@@ -433,6 +497,8 @@ export default function ReplayMap({ timeline }: Props) {
         }
       }
     }
+
+    pintarCalor();
 
     ctx.strokeStyle = 'rgba(255,255,255,0.05)';
     for (let v = 0; v <= lado; v += 20) {
@@ -609,6 +675,25 @@ export default function ReplayMap({ timeline }: Props) {
 
     ctx.restore();
 
+    //  Donde estaba mirando en este instante. Es un anillo y no un rectangulo
+    //  de pantalla porque el fichero da el centro de la camara, no su zoom:
+    //  dibujar un recuadro seria inventarse cuanto abarcaba.
+    if (vista.length) {
+      let i = 0;
+      while (i + 1 < vista.length && vista[i + 1][0] <= ahora) i += 1;
+      if (vista[i][0] <= ahora) {
+        const X = px(vista[i][1], vista[i][2]);
+        const Y = py(vista[i][1], vista[i][2]);
+        ctx.strokeStyle = 'rgba(255,205,90,0.85)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        ctx.arc(X, Y, Math.max(esc * 7, 16), 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
     //  Los nombres, lo último y FUERA del recorte al rombo: dentro de él, un
     //  nombre pegado a un borde perdía las primeras letras, y debajo del resto
     //  del dibujado lo enterraban el bosque y los edificios. El reloj es un div
@@ -632,7 +717,7 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.fillStyle = '#ffffff';
       ctx.fillText(n.texto, Xe, Ye);
     }
-  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline, medida]);
+  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline, medida, verCalor, calor, vista]);
 
   const reciente = useMemo(() => {
     const ventana = 45_000;
@@ -669,6 +754,21 @@ export default function ReplayMap({ timeline }: Props) {
               : 'w-full aspect-[2/1] rounded-lg border border-dark-400'
           }`}
         />
+
+        {/* Solo si sabemos de quien es la camara: una capa de atencion sin
+            poder decir de quien es no vale nada. */}
+        {nombreVista && calor && (
+          <button
+            onClick={() => setVerCalor((v) => !v)}
+            title={t(verCalor ? 'map.calorOn' : 'map.calorOff', { quien: nombreVista })}
+            aria-pressed={verCalor}
+            className={`absolute top-2 ${puedeCompleta ? 'right-12' : 'right-2'} px-2 py-2 rounded-lg text-xs bg-dark-900/75 border-none cursor-pointer transition-colors ${
+              verCalor ? 'text-gold-400' : 'text-gray-300 hover:text-gold-400'
+            }`}
+          >
+            {t('map.calor')}
+          </button>
+        )}
 
         {puedeCompleta && (
         <button
@@ -849,6 +949,48 @@ export default function ReplayMap({ timeline }: Props) {
             })}
           </ol>
         </div>
+      )}
+
+      {/* La conversacion. No ayuda a jugar mejor y por eso va plegada, pero
+          es lo unico de aqui que recuerda que al otro lado habia una persona.
+          Los del volcado inicial van aparte: el fichero les pone hora cero
+          aunque sean del final, y una hora falsa es peor que ninguna. */}
+      {(timeline.chat?.length ?? 0) > 0 && (
+        <details className="mt-2">
+          <summary className="text-xs text-gray-500 cursor-pointer inline-block select-none">
+            {t('chat.title')} ({timeline.chat!.length}) ▸
+          </summary>
+          <ol className="m-0 mt-2 p-0 list-none flex flex-col gap-1">
+            {[...timeline.chat!]
+              .sort((a, b) => Number(a.sin_hora) - Number(b.sin_hora) || a.t - b.t)
+              .map((m, i) => (
+                <li key={i} className="flex items-baseline gap-2 text-xs">
+                  <span className="tabular-nums text-gray-600 shrink-0 w-12 text-right">
+                    {m.sin_hora ? '—' : reloj(m.t)}
+                  </span>
+                  <span
+                    className="shrink-0 font-medium truncate max-w-28"
+                    style={{ color: m.j != null ? colorDe(m.j) : undefined }}
+                  >
+                    {m.j != null
+                      ? (timeline.jugadores.find((x) => x.numero === m.j)?.nombre ?? m.j)
+                      : '?'}
+                  </span>
+                  <span className="text-gray-300 min-w-0 break-words">
+                    {m.texto}
+                    {m.taunt != null && (
+                      <span className="ml-1.5 text-[10px] text-gray-600">
+                        {t('chat.taunt', { n: String(m.taunt) })}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ))}
+          </ol>
+          {timeline.chat!.some((m) => m.sin_hora) && (
+            <p className="text-[11px] text-gray-600 mt-2 m-0">{t('chat.sinHoraNota')}</p>
+          )}
+        </details>
       )}
 
       {/* Plegada por defecto: ocupaba cuatro filas bajo el mapa y el mapa es
