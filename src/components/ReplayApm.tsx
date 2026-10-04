@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
 import Nota from './Nota';
+import { nombreEdificio } from '../lib/juego';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline, LevelBenchmarksResponse } from '../lib/types';
 
@@ -24,7 +25,7 @@ interface Props {
  * unidad, porque el replay no dice qué es cada objeto.
  */
 export default function ReplayApm({ timeline }: Props) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const ritmo = timeline.ritmo ?? {};
 
   //  La referencia de su propia franja, que es lo que convierte un numero en
@@ -70,7 +71,8 @@ export default function ReplayApm({ timeline }: Props) {
    * tarde de un ataque cuesta mas que cualquier numero de APM.
    */
   const RADIO_BASE = 22;       // casillas que se consideran "su base"
-  const RADIO_LLEGADA = 16;    // cuando se da por mirado un sitio
+  const RADIO_LLEGADA = 16;
+  const RADIO_MIRADA = 14;      // cuando se da por mirado un edificio    // cuando se da por mirado un sitio
   const UNIDADES_ATAQUE = 6;
   const SEPARA_ATAQUES_MS = 120_000;
 
@@ -120,8 +122,31 @@ export default function ReplayApm({ timeline }: Props) {
     const tiempos = ataques.map((a) => a.reaccion).filter((v): v is number => v != null).sort((a, b) => a - b);
     const mediana = tiempos.length ? tiempos[Math.floor(tiempos.length / 2)] : null;
 
+    //  Que le vio construir al rival y cuanto tardo en mirarlo.
+    //
+    //  Es la pregunta que el jugador formulo mejor que nadie: si el rival abre
+    //  arqueros y luego levanta establos, la atencion va ahi o no. En una
+    //  partida real el establo de la transicion tardo 8:25 en recibir una
+    //  mirada, cinco veces mas que la arqueria de la apertura.
+    //
+    //  "Mirarlo" es que la camara se acerque a RADIO_MIRADA casillas. No es lo
+    //  mismo que saberlo -el minimapa tambien enseña- y por eso la nota lo dice.
+    const MILITARES = [12, 87, 101, 49, 82];
+    const construidos: { t: number; id: number; visto: number | null }[] = [];
+    for (const e of timeline.eventos) {
+      if (e.tipo !== 'build' || e.j === dueno) continue;
+      if (e.id == null || !MILITARES.includes(e.id) || e.x == null || e.y == null) continue;
+      let visto: number | null = null;
+      for (const [tv, vx, vy] of vista) {
+        if (tv < e.t) continue;
+        if (dist(vx, vy, { x: e.x, y: e.y }) <= RADIO_MIRADA) { visto = tv; break; }
+      }
+      construidos.push({ t: e.t, id: e.id, visto });
+    }
+
     return {
       dueno,
+      construidos,
       nombre: nombreJ(dueno),
       casa: Math.round((enCasa / total) * 100),
       rival: Math.round((enRival / total) * 100),
@@ -210,6 +235,39 @@ export default function ReplayApm({ timeline }: Props) {
       {/* Las posturas. Es una firma de habitos y por eso va al final. */}
       {timeline.posturas && Object.keys(timeline.posturas).length > 0 && (
         <div className="mb-6">
+          {/* Que le vio construir al rival. Va antes de las posturas porque es
+              lo unico de todo el panel que habla de decisiones y no de manos. */}
+          {ojo && ojo.construidos.length > 0 && (
+            <div className="mb-6">
+              <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
+                {t('ojo.edificios', { quien: ojo.nombre })}
+                <Nota>{t('ojo.edificiosNota')}</Nota>
+              </h4>
+              <ol className="m-0 p-0 list-none flex flex-col gap-1">
+                {ojo.construidos.map((b, i) => {
+                  const tarda = b.visto == null ? null : b.visto - b.t;
+                  return (
+                    <li key={i} className="flex items-baseline gap-2 text-sm">
+                      <span className="tabular-nums text-gray-500 text-xs w-12 text-right shrink-0">
+                        {reloj(b.t)}
+                      </span>
+                      <span className="text-gray-300 min-w-0 truncate flex-1">
+                        {nombreEdificio(b.id, lang)}
+                      </span>
+                      <span className={`tabular-nums text-xs shrink-0 ${
+                        tarda == null ? 'text-loss'
+                          : tarda < 60_000 ? 'text-win'
+                          : tarda > 300_000 ? 'text-loss' : 'text-gray-400'
+                      }`}>
+                        {tarda == null ? t('ojo.nunca') : t('ojo.tras', { v: seg(tarda) })}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          )}
+
           <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
             {t('ojo.posturas')}
             <Nota>{t('ojo.posturasNota')}</Nota>
