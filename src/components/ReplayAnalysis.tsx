@@ -98,6 +98,42 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
     const dif = menorEsMejor ? ref - valor : valor - ref;
     return { dif, mejor: dif > 0, franja: franja! };
   };
+  // Las mismas celdas que pinta la tabla, sacadas aparte porque en movil se
+  // leen en el otro sentido: una fila por metrica en vez de una por jugador.
+  const celdas = jugadores.map((j) => {
+    const p = players.find((x) => x.profile_id === j.perfil) ?? {};
+    const f = p.feudal_ms as number | null;
+    const c = p.castle_ms as number | null;
+    const im = p.imperial_ms as number | null;
+    return {
+      j,
+      opening: (p.opening as string) ?? '—',
+      feudal: f == null ? '—' : reloj(f + INVESTIGACION_MS.feudal),
+      dFeudal: contra(j.rating, 'feudal_s', f == null ? null : f / 1000, true),
+      castle: c == null ? '—' : reloj(c + INVESTIGACION_MS.castle),
+      dCastle: contra(j.rating, 'castle_s', c == null ? null : c / 1000, true),
+      imperial: im == null ? '—' : reloj(im + INVESTIGACION_MS.imperial),
+      vils: (p.villagers_15m as number) ?? '—',
+      dVils: contra(j.rating, 'villagers_15m', p.villagers_15m as number, false),
+      apm: (p.apm as number) ?? '—',
+      dApm: contra(j.rating, 'apm', p.apm as number, false),
+    };
+  });
+  type Celda = (typeof celdas)[number];
+  const filasMovil: {
+    et: string;
+    v: (c: Celda) => string | number;
+    d?: (c: Celda) => { dif: number; mejor: boolean; franja: string } | null;
+    seg?: boolean;
+  }[] = [
+    { et: t('up.opening'), v: (c) => c.opening },
+    { et: t('up.feudal'), v: (c) => c.feudal, d: (c) => c.dFeudal, seg: true },
+    { et: t('up.castle'), v: (c) => c.castle, d: (c) => c.dCastle, seg: true },
+    { et: t('up.imperial'), v: (c) => c.imperial },
+    { et: t('up.vils'), v: (c) => c.vils, d: (c) => c.dVils },
+    { et: t('up.apm'), v: (c) => c.apm, d: (c) => c.dApm },
+  ];
+
   const PESTANAS: { id: Pestana; etiqueta: string }[] = [
     { id: 'unidades', etiqueta: t('tabs.units') },
     { id: 'economia', etiqueta: t('tabs.economy') },
@@ -114,7 +150,38 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
 
       {/* El resumen va fuera de las pestañas: es la respuesta corta y se
           quiere ver siempre, sea cual sea la pestaña abierta. */}
-      <div className="-mx-4 px-4 overflow-x-auto mb-4">
+      <div className="sm:hidden mb-4 text-sm">
+        <table className="w-full table-fixed">
+          <thead>
+            <tr className="border-b border-dark-400 text-gray-500">
+              <th className="w-[4.5rem] py-2 pr-2" />
+              {celdas.map((c, k) => (
+                <th key={k} className="py-2 pl-2 text-right font-medium text-gray-300">
+                  <span className="block truncate">{c.j.nombre}</span>
+                  <span className="block text-[10px] text-gray-500 tabular-nums font-normal">
+                    {c.j.es_ia ? t('up.ai') : (c.j.rating ?? '')}
+                  </span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filasMovil.map((f, i) => (
+              <tr key={i} className="border-b border-dark-500/40">
+                <td className="py-2 pr-2 text-xs text-gray-500">{f.et}</td>
+                {celdas.map((c, k) => (
+                  <td key={k} className="py-2 pl-2 text-right tabular-nums text-gray-300">
+                    <span className="block truncate">{String(f.v(c))}</span>
+                    {f.d && <Delta v={f.d(c)} seg={f.seg} />}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="hidden sm:block -mx-4 px-4 overflow-x-auto mb-4">
         <table className="w-full text-sm min-w-[520px]">
           <thead>
             <tr className="border-b border-dark-400 text-gray-500">

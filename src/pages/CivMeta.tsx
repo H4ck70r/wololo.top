@@ -191,14 +191,14 @@ export default function CivMeta() {
             </div>
           ) : (
             <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-x-auto">
-              <table className="w-full text-sm min-w-100">
+              <table className="w-full text-sm sm:min-w-100">
                 <thead>
                   <tr className="border-b border-dark-400 bg-dark-800/50">
-                    <th className="text-left py-3 px-4 text-gray-400 font-medium w-8">#</th>
-                    <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('common.civilization')}</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.winRate')}</th>
-                    <th className="text-left py-3 px-3 text-gray-400 font-medium hidden sm:table-cell" style={{ width: '40%' }}></th>
+                    <th className="text-left py-3 px-2 sm:px-4 text-gray-400 font-medium w-8">#</th>
+                    <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.civilization')}</th>
+                    <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.games')}</th>
+                    <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.winRate')}</th>
+                    <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium hidden sm:table-cell" style={{ width: '40%' }}></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -208,20 +208,20 @@ export default function CivMeta() {
                     const isAbove = deviation >= 0;
                     return (
                       <tr key={civ.civ_id} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                        <td className="py-2.5 px-4 text-gray-500 text-xs">{i + 1}</td>
-                        <td className="py-2.5 px-3 text-gray-200 font-medium">
+                        <td className="py-2.5 px-2 sm:px-4 text-gray-500 text-xs">{i + 1}</td>
+                        <td className="py-2.5 px-2 sm:px-3 text-gray-200 font-medium">
                           <div className="flex items-center gap-2">
                             {getCivIcon(civ.civ_id) && <img src={getCivIcon(civ.civ_id)!} alt="" className="w-5 h-5 rounded object-cover" />}
                             {getCivName(civ.civ_id)}
                           </div>
                         </td>
-                        <td className="py-2.5 px-3 text-right text-gray-400">{civ.games.toLocaleString()}</td>
-                        <td className={`py-2.5 px-3 text-right font-medium ${
+                        <td className="py-2.5 px-2 sm:px-3 text-right text-gray-400">{civ.games.toLocaleString()}</td>
+                        <td className={`py-2.5 px-2 sm:px-3 text-right font-medium ${
                           civ.win_rate >= 52 ? 'text-win' : civ.win_rate <= 48 ? 'text-loss' : 'text-gray-300'
                         }`}>
                           {civ.win_rate}%
                         </td>
-                        <td className="py-2.5 px-3 hidden sm:table-cell">
+                        <td className="py-2.5 px-2 sm:px-3 hidden sm:table-cell">
                           <div className="flex items-center h-4">
                             <div className="w-1/2 flex justify-end">
                               {!isAbove && (
@@ -261,28 +261,28 @@ export default function CivMeta() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-dark-400 bg-dark-800/50">
-                      <th className="text-left py-3 px-4 text-gray-400 font-medium">{t('meta.civA')}</th>
-                      <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('meta.civB')}</th>
-                      <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
-                      <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('meta.aWinPct')}</th>
+                      <th className="text-left py-3 px-2 sm:px-4 text-gray-400 font-medium">{t('meta.civA')}</th>
+                      <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('meta.civB')}</th>
+                      <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.games')}</th>
+                      <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('meta.aWinPct')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {matchupData.matchups.slice(0, 50).map((m, i) => (
                       <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                        <td className="py-2 px-4 text-gray-200">
+                        <td className="py-2 px-2 sm:px-4 text-gray-200">
                           <div className="flex items-center gap-1.5">
                             {getCivIcon(m.civ1) && <img src={getCivIcon(m.civ1)!} alt="" className="w-4 h-4 rounded object-cover" />}
                             {getCivName(m.civ1)}
                           </div>
                         </td>
-                        <td className="py-2 px-3 text-gray-200">
+                        <td className="py-2 px-2 sm:px-3 text-gray-200">
                           <div className="flex items-center gap-1.5">
                             {getCivIcon(m.civ2) && <img src={getCivIcon(m.civ2)!} alt="" className="w-4 h-4 rounded object-cover" />}
                             {getCivName(m.civ2)}
                           </div>
                         </td>
-                        <td className="py-2 px-3 text-right text-gray-400">{m.games.toLocaleString()}</td>
+                        <td className="py-2 px-2 sm:px-3 text-right text-gray-400">{m.games.toLocaleString()}</td>
                         <td className={`py-2 px-3 text-right font-medium ${
                           m.civ1_win_rate >= 52 ? 'text-win' : m.civ1_win_rate <= 48 ? 'text-loss' : 'text-gray-300'
                         }`}>
@@ -315,21 +315,21 @@ export default function CivMeta() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-dark-400 bg-dark-800/50">
-                    <th className="text-left py-3 px-4 text-gray-400 font-medium w-8">#</th>
-                    <th className="text-left py-3 px-3 text-gray-400 font-medium">{t('common.map')}</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.games')}</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('meta.avgDuration')}</th>
-                    <th className="text-right py-3 px-3 text-gray-400 font-medium">{t('common.players')}</th>
+                    <th className="text-left py-3 px-2 sm:px-4 text-gray-400 font-medium w-8">#</th>
+                    <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.map')}</th>
+                    <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.games')}</th>
+                    <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('meta.avgDuration')}</th>
+                    <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.players')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {mapData.maps.map((m, i) => (
                     <tr key={i} className="border-b border-dark-500/50 hover:bg-dark-600/50">
-                      <td className="py-2.5 px-4 text-gray-500 text-xs">{i + 1}</td>
-                      <td className="py-2.5 px-3 text-gray-200 font-medium">{cleanMapName(m.map_name)}</td>
-                      <td className="py-2.5 px-3 text-right text-gray-400">{m.games.toLocaleString()}</td>
-                      <td className="py-2.5 px-3 text-right text-gray-400">{m.avg_duration ? formatDuration(m.avg_duration) : '-'}</td>
-                      <td className="py-2.5 px-3 text-right text-gray-400">{m.unique_players.toLocaleString()}</td>
+                      <td className="py-2.5 px-2 sm:px-4 text-gray-500 text-xs">{i + 1}</td>
+                      <td className="py-2.5 px-2 sm:px-3 text-gray-200 font-medium">{cleanMapName(m.map_name)}</td>
+                      <td className="py-2.5 px-2 sm:px-3 text-right text-gray-400">{m.games.toLocaleString()}</td>
+                      <td className="py-2.5 px-2 sm:px-3 text-right text-gray-400">{m.avg_duration ? formatDuration(m.avg_duration) : '-'}</td>
+                      <td className="py-2.5 px-2 sm:px-3 text-right text-gray-400">{m.unique_players.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>

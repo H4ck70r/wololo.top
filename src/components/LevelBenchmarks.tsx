@@ -53,7 +53,46 @@ export default function LevelBenchmarks({ matchType, rating }: Props) {
         {t('bench.sample', { n: data.total_samples.toLocaleString() })}
       </p>
 
-      <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-x-auto">
+      {/* Siete columnas no caben en un movil ni arrastrando: ahi cada franja
+          es una tarjeta con sus cinco numeros. La tabla se queda de sm hacia
+          arriba, que es donde sabe leerse de un vistazo. */}
+      <div className="sm:hidden flex flex-col gap-2">
+        {data.brackets.map((b) => {
+          const [lo, hi] = limites(b.bracket);
+          const mio = rating != null && rating >= lo && rating < hi;
+          return (
+            <div
+              key={b.bracket}
+              className={`rounded-xl border p-3 ${
+                mio ? 'border-gold-500/40 bg-gold-500/10' : 'border-dark-400 bg-dark-700'
+              }`}
+            >
+              <div className="flex items-baseline justify-between gap-2 mb-2">
+                <span className={`font-medium ${mio ? 'text-gold-400' : 'text-gray-200'}`}>
+                  {b.bracket}
+                  {mio && <span className="ml-2 text-[10px] text-gold-400/80">{t('bench.you')}</span>}
+                </span>
+                <span className="text-[11px] text-gray-500 tabular-nums shrink-0">
+                  {t('bench.games', { n: b.samples.toLocaleString() })}
+                  {b.thin && <span className="ml-1 text-gray-600">{t('bench.thin')}</span>}
+                </span>
+              </div>
+              <dl className="grid grid-cols-2 gap-x-3 gap-y-1.5 m-0">
+                {columnas.map((c) => (
+                  <div key={String(c.clave)} className="flex items-baseline justify-between gap-2 min-w-0">
+                    <dt className="text-xs text-gray-500 truncate">{c.etiqueta}</dt>
+                    <dd className="text-sm tabular-nums text-gray-200 m-0 shrink-0">
+                      {c.fmt(b) ?? <span className="text-gray-600">—</span>}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="hidden sm:block bg-dark-700 border border-dark-400 rounded-xl overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-dark-400 bg-dark-800/50">

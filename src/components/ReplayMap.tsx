@@ -336,6 +336,7 @@ export default function ReplayMap({ timeline }: Props) {
     //  es la referencia que permite leer todo lo demás. Se dibuja con el
     //  mismo símbolo que un centro urbano porque eso es lo que hay ahí; que
     //  sea una estimación se dice en la leyenda, no ensuciando el mapa.
+    const nombres: { texto: string; X: number; Y: number; r: number }[] = [];
     for (const [j, p] of inicios) {
       const X = px(p.x, p.y);
       const Y = py(p.x, p.y);
@@ -358,20 +359,11 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.fillStyle = '#ffffff';
       ctx.fillText('⌂', X, Y + tam * 0.06);
 
-      //  Con el nombre encima no hay que deducir quién está dónde.
+      //  Con el nombre encima no hay que deducir quién está dónde. Se apunta
+      //  y se pinta al final: aquí lo tapaban los árboles y los edificios, que
+      //  se dibujan después.
       const etiqueta = timeline.jugadores.find((x) => x.numero === j)?.nombre;
-      if (etiqueta) {
-        ctx.font = '600 11px system-ui, sans-serif';
-        ctx.textBaseline = 'bottom';
-        const ancho_txt = ctx.measureText(etiqueta).width;
-        const Xe = Math.min(Math.max(X, ancho_txt / 2 + 4), ancho - ancho_txt / 2 - 4);
-        const Ye = Math.max(Y - r - 3, 14);
-        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
-        ctx.lineWidth = 3;
-        ctx.strokeText(etiqueta, Xe, Ye);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(etiqueta, Xe, Ye);
-      }
+      if (etiqueta) nombres.push({ texto: etiqueta, X, Y, r });
     }
 
     //  Murallas debajo de los edificios, y gruesas: antes no se veían.
@@ -442,7 +434,32 @@ export default function ReplayMap({ timeline }: Props) {
         ctx.fillText(def.icono, X, Y + tam * 0.06);
       }
     }
+
     ctx.restore();
+
+    //  Los nombres, lo último y FUERA del recorte al rombo: dentro de él, un
+    //  nombre pegado a un borde perdía las primeras letras, y debajo del resto
+    //  del dibujado lo enterraban el bosque y los edificios. El reloj es un div
+    //  encima del lienzo, así que la etiqueta que caiga en su esquina se pinta
+    //  al otro lado del centro urbano en vez de debajo de él.
+    const RELOJ = { x: 120, y: 36 };
+    const ALTO_TXT = 12;
+    ctx.font = '600 11px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.lineJoin = 'round';
+    for (const n of nombres) {
+      const ancho_txt = ctx.measureText(n.texto).width;
+      const Xe = Math.min(Math.max(n.X, ancho_txt / 2 + 4), ancho - ancho_txt / 2 - 4);
+      const arriba = Math.max(n.Y - n.r - 3, ALTO_TXT + 2);
+      const pisaElReloj = Xe - ancho_txt / 2 < RELOJ.x && arriba - ALTO_TXT < RELOJ.y;
+      const Ye = pisaElReloj ? n.Y + n.r + ALTO_TXT + 2 : arriba;
+      ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+      ctx.lineWidth = 3;
+      ctx.strokeText(n.texto, Xe, Ye);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(n.texto, Xe, Ye);
+    }
   }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline]);
 
   const reciente = useMemo(() => {

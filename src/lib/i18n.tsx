@@ -128,6 +128,9 @@ const EN = {
   'lb.failed': 'Failed to load leaderboard data.',
   'lb.peak': 'Peak',
   'lb.wl': 'W / L',
+  'lb.ratingCharts': 'Rating distribution and inflation',
+  'lb.moreFilters': 'Filters',
+  'lb.hideFilters': 'Hide filters',
 
   'meta.title': 'Civilization Meta',
   'meta.matchType': 'Match Type',
@@ -359,6 +362,7 @@ const EN = {
   'infl.verdictStable': 'The ladder barely moved: the median shifted {n} points, so a rating means about what it did.',
   'infl.footnote': 'Share of the ladder, not head count: the ladder itself took in {n} accounts over this window, which would lift every bar without anyone inflating.',
   'bench.intro': 'What the players above you actually do, measured from their own recorded games.',
+  'bench.games': '{n} games',
   'bench.sample': 'Over {n} player-games rescued from replays.',
   'bench.bracket': 'Rating',
   'bench.feudal': 'Feudal requested',
@@ -547,6 +551,47 @@ const EN = {
   'promo.smurfsWhat': 'Paste a profile and it looks for the signs of a second account: a rating that climbs far faster than the games played justify, a Steam account younger than the skill, shared ownership between profiles.',
   'promo.kontraTitle': 'Running a tournament?',
   'promo.kontraWhat': 'kontra.gg handles the part that eats your evening: sign-ups, single and double elimination brackets, winners advancing on their own, finals reset, and a chat per tournament so nobody has to chase anyone on Discord.',
+
+  // Singulares. El helper usa estas cuando el contador vale 1; sin hermana
+  // `#one` una clave se queda con su forma plural de siempre.
+  'stats.basedOn#one': 'Based on a single match',
+  'rivals.uniqueOpponents#one': '1 unique opponent',
+  'rivals.gamesPlayed#one': '1 game played',
+  'activity.tracked#one': '1 tracked match',
+  'lb.playersFound#one': '1 player found',
+  'meta.winRatesAcross#one': 'Win rates across a single match',
+  'live.inProgress#one': '1 match in progress',
+  'signals.shared.confirmed#one': 'Confirmed once',
+  'signals.shared.createdApart#one': 'Steam accounts created a day apart',
+  'signals.account.nicks#one': '1 nickname used',
+  'signals.account.renames#one': '1 recorded name change',
+  'h2h.gamesCount#one': '1 game',
+  'h2h.winsCount#one': '1 win',
+  'h2h.streakWin#one': '1 win in a row',
+  'h2h.streakLoss#one': '1 loss in a row',
+  'h2h.eloRatedGames#one': 'over a single rated game',
+  'h2h.expectedGames#one': 'over a single game with both ratings',
+  'h2h.unresolved#one': '1 meeting has no recorded result and is left out of every rate.',
+  'clan.membersCount#one': '1 member',
+  'clan.countriesCount#one': '1 country',
+  'dist.tiedWith#one': 'tied on {rating} with 1 other',
+  'bench.games#one': '1 game',
+  'bench.sample#one': 'Over a single player-game rescued from replays.',
+  'assess.sample#one': 'Measured on a single game of yours rescued from replays, against {p} players in {b}.',
+  'assess.thin#one': 'Only 1 game so far \u2014 read this as a hypothesis, not a verdict. The warning clears on its own past {min}.',
+  'bo.games#one': '1 game',
+  'apm.masQueFranja#one': 'One a minute more than the {franja} bracket, which averages {ref}.',
+  'apm.menosQueFranja#one': 'One a minute less than the {franja} bracket, which averages {ref}.',
+  'coach.menosEconomia#one': 'They did it with 1 fewer villager by 15:00 than {perdedor}, so the win came from tempo and not from the economy.',
+  'coach.masEconomia#one': 'They also had 1 more villager by 15:00, so the economy was never the problem.',
+  'coach.arregloParado#one': '{quien}: the town center sat idle {s}s, which is about 1 villager that never existed.',
+  'coach.arregloParadoRef#one': '{quien}: the town center sat idle {s}s, which is about 1 villager that never existed. Their bracket averages {ref}s.',
+  'pct.mirage#one': 'The rating gained a single point over the same stretch, yet the place in the ladder got worse: the whole ladder moved up.',
+  'pct.hiddenGain#one': 'The rating lost a single point over the same stretch, yet the place in the ladder got better: the whole ladder moved down more.',
+  'infl.verdictInflated#one': 'The whole ladder drifted up: the median gained a single point, so the same rating is worth less than it was.',
+  'infl.verdictDeflated#one': 'The whole ladder drifted down: the median lost a single point, so the same rating is worth more than it was.',
+  'infl.verdictStable#one': 'The ladder barely moved: the median shifted a single point, so a rating means about what it did.',
+  'infl.footnote#one': 'Share of the ladder, not head count: the ladder itself took in 1 account over this window, which would lift every bar without anyone inflating.',
 } as const;
 
 export type TKey = keyof typeof EN;
@@ -666,6 +711,9 @@ const ES: Partial<Record<TKey, string>> = {
   'lb.failed': 'No se pudo cargar la clasificación.',
   'lb.peak': 'Máximo',
   'lb.wl': 'V / D',
+  'lb.ratingCharts': 'Distribución de puntuación e inflación',
+  'lb.moreFilters': 'Filtros',
+  'lb.hideFilters': 'Ocultar filtros',
 
   'meta.title': 'Meta de civilizaciones',
   'meta.matchType': 'Tipo de partida',
@@ -893,6 +941,7 @@ const ES: Partial<Record<TKey, string>> = {
   'infl.verdictStable': 'El ladder casi no se movió: la mediana se desplazó {n} puntos, así que una puntuación significa más o menos lo mismo.',
   'infl.footnote': 'Proporción del ladder, no número de cabezas: el ladder sumó {n} cuentas en esta ventana, y eso subiría todas las barras sin que nadie se infle.',
   'bench.intro': 'Lo que de verdad hacen los que están por encima de ti, medido en sus propias partidas grabadas.',
+  'bench.games': '{n} partidas',
   'bench.sample': 'Sobre {n} jugadores-partida rescatados de los replays.',
   'bench.bracket': 'Puntuación',
   'bench.feudal': 'Feudal pedida',
@@ -1081,6 +1130,47 @@ const ES: Partial<Record<TKey, string>> = {
   'promo.smurfsWhat': 'Pegas un perfil y busca las señales de una segunda cuenta: un rating que sube mucho más rápido de lo que justifican las partidas jugadas, una cuenta de Steam más joven que su nivel de juego, propiedad compartida entre perfiles.',
   'promo.kontraTitle': '¿Organizas un torneo?',
   'promo.kontraWhat': 'kontra.gg se encarga de lo que te come la tarde: inscripciones, brackets de eliminación simple y doble, ganadores que avanzan solos, reset de finales y un chat por torneo para no andar persiguiendo a nadie por Discord.',
+
+  // Los mismos singulares en espanol. Ojo: aqui el genero importa, no basta
+  // con quitar la ese.
+  'stats.basedOn#one': 'Sobre una sola partida',
+  'rivals.uniqueOpponents#one': '1 oponente distinto',
+  'rivals.gamesPlayed#one': '1 partida jugada',
+  'activity.tracked#one': '1 partida registrada',
+  'lb.playersFound#one': '1 jugador encontrado',
+  'meta.winRatesAcross#one': 'Porcentaje de victoria sobre una sola partida',
+  'live.inProgress#one': '1 partida en curso',
+  'signals.shared.confirmed#one': 'Confirmado una vez',
+  'signals.shared.createdApart#one': 'Las dos cuentas de Steam se crearon con un día de diferencia',
+  'signals.account.nicks#one': '1 nick usado',
+  'signals.account.renames#one': '1 cambio de nombre registrado',
+  'h2h.gamesCount#one': '1 partida',
+  'h2h.winsCount#one': '1 victoria',
+  'h2h.streakWin#one': '1 victoria seguida',
+  'h2h.streakLoss#one': '1 derrota seguida',
+  'h2h.eloRatedGames#one': 'sobre una sola partida con rating',
+  'h2h.expectedGames#one': 'sobre una sola partida con los dos ratings',
+  'h2h.unresolved#one': '1 cruce no tiene resultado registrado y queda fuera de todos los porcentajes.',
+  'clan.membersCount#one': '1 miembro',
+  'clan.countriesCount#one': '1 país',
+  'dist.tiedWith#one': 'empate a {rating} con 1 más',
+  'bench.games#one': '1 partida',
+  'bench.sample#one': 'Sobre un solo jugador-partida rescatado de los replays.',
+  'assess.sample#one': 'Medido sobre una sola partida tuya rescatada de los replays, contra {p} jugadores de {b}.',
+  'assess.thin#one': 'Sólo 1 partida por ahora \u2014 tómalo como una hipótesis, no como un veredicto. El aviso se quita solo al pasar de {min}.',
+  'bo.games#one': '1 partida',
+  'apm.masQueFranja#one': 'Una por minuto más que la franja {franja}, que hace {ref} de media.',
+  'apm.menosQueFranja#one': 'Una por minuto menos que la franja {franja}, que hace {ref} de media.',
+  'coach.menosEconomia#one': 'Y lo hizo con 1 aldeano menos al 15:00 que {perdedor}, así que la victoria vino del tempo y no de la economía.',
+  'coach.masEconomia#one': 'Además llegó al 15:00 con 1 aldeano más, así que la economía nunca fue el problema.',
+  'coach.arregloParado#one': '{quien}: el centro urbano estuvo parado {s}s, que es un aldeano que no llegó a existir.',
+  'coach.arregloParadoRef#one': '{quien}: el centro urbano estuvo parado {s}s, que es un aldeano que no llegó a existir. Su franja tiene {ref}s de media.',
+  'pct.mirage#one': 'La puntuación ganó un solo punto en el mismo tramo y aun así el sitio en el ladder empeoró: lo que subió fue el ladder entero.',
+  'pct.hiddenGain#one': 'La puntuación perdió un solo punto en el mismo tramo y aun así el sitio en el ladder mejoró: el ladder entero bajó más.',
+  'infl.verdictInflated#one': 'El ladder entero se desplazó hacia arriba: la mediana ganó un solo punto, así que la misma puntuación vale menos que antes.',
+  'infl.verdictDeflated#one': 'El ladder entero se desplazó hacia abajo: la mediana perdió un solo punto, así que la misma puntuación vale más que antes.',
+  'infl.verdictStable#one': 'El ladder casi no se movió: la mediana se desplazó un solo punto, así que una puntuación significa más o menos lo mismo.',
+  'infl.footnote#one': 'Proporción del ladder, no número de cabezas: el ladder sumó 1 cuenta en esta ventana, y eso subiría todas las barras sin que nadie se infle.',
 };
 
 const DICTS: Record<Lang, Partial<Record<TKey, string>>> = { en: EN, es: ES };
@@ -1121,9 +1211,15 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback(
     (key: TKey, vars?: Record<string, string | number>) => {
-      let out: string = DICTS[lang][key] ?? EN[key] ?? key;
+      // Plural: una clave puede traer una hermana `clave#one` que se usa cuando
+      // el contador vale 1. Se busca dentro de cada idioma antes de caer al
+      // siguiente, para que un singular en ingles no se cuele en espanol.
+      const uno = Number(vars?.n ?? vars?.count) === 1;
+      const buscar = (d: Partial<Record<TKey, string>>) =>
+        (uno ? d[`${key}#one` as TKey] : undefined) ?? d[key];
+      let out: string = buscar(DICTS[lang]) ?? buscar(EN) ?? key;
       if (vars) {
-        for (const [k, v] of Object.entries(vars)) out = out.replace(`{${k}}`, String(v));
+        for (const [k, v] of Object.entries(vars)) out = out.replaceAll(`{${k}}`, String(v));
       }
       return out;
     },

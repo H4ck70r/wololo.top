@@ -42,6 +42,12 @@ export default function LeaderboardEnhanced() {
   // Debounced search value
   const [debouncedSearch, setDebouncedSearch] = useState(search);
   const [debouncedClan, setDebouncedClan] = useState(clan);
+  // En movil los cinco filtros dejaban la tabla debajo del pliegue: solo se
+  // ve la busqueda y los otros cuatro viven detras de este boton.
+  const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
+  // Lo mismo con las dos graficas: en un movil dejaban la clasificacion casi
+  // dos pantallas mas abajo, y la clasificacion es a lo que se viene.
+  const [graficosAbiertos, setGraficosAbiertos] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 400);
@@ -143,6 +149,7 @@ export default function LeaderboardEnhanced() {
   };
 
   const hasActiveFilters = country || clan || minRating || maxRating || search;
+  const filtrosAvanzados = [country, clan, minRating, maxRating].filter(Boolean).length;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -183,34 +190,50 @@ export default function LeaderboardEnhanced() {
       </div>
 
       {/* The curve doubles as a filter: picking a band narrows the table below,
-          which is why its own player listing is switched off here. */}
-      {distLadder && (
-        <div className="mb-4">
-          <LadderDistributionChart
-            ladder={distLadder}
-            rating={myRating}
-            isSelf
-            range={chartRange}
-            onRangeChange={applyBand}
-            showPlayers={false}
-          />
-        </div>
-      )}
-
-      {/* La misma curva contra la de hace meses: si el ladder entero se
-          desplazo, los cortes de las bandas de arriba no significan hoy lo que
+          which is why its own player listing is switched off here. La segunda
+          grafica es la misma curva contra la de hace meses: si el ladder entero
+          se desplazo, los cortes de las bandas no significan hoy lo que
           significaban. */}
       {distLadder && (
         <div className="mb-4">
-          <EloInflationChart ladder={distLadder} rating={myRating} />
+          <button
+            onClick={() => setGraficosAbiertos((v) => !v)}
+            aria-expanded={graficosAbiertos}
+            className="md:hidden w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl bg-dark-700 border border-dark-400 text-gray-300 text-sm cursor-pointer transition-colors hover:border-gold-500/50"
+          >
+            <span className="text-left">{t('lb.ratingCharts')}</span>
+            <svg
+              className={`w-3.5 h-3.5 shrink-0 transition-transform ${graficosAbiertos ? 'rotate-180' : ''}`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+
+          <div className={`${graficosAbiertos ? 'block' : 'hidden'} md:block`}>
+            <div className="mt-3 md:mt-0 mb-4">
+              <LadderDistributionChart
+                ladder={distLadder}
+                rating={myRating}
+                isSelf
+                range={chartRange}
+                onRangeChange={applyBand}
+                showPlayers={false}
+              />
+            </div>
+            <EloInflationChart ladder={distLadder} rating={myRating} />
+          </div>
         </div>
       )}
 
       {/* Filters */}
-      <div className="bg-dark-700 border border-dark-400 rounded-xl p-4 mb-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="bg-dark-700 border border-dark-400 rounded-xl p-3 sm:p-4 mb-4">
+        <div className="flex items-end gap-2">
           {/* Search */}
-          <div>
+          <div className="flex-1 min-w-0">
             <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.searchPlayer')}</label>
             <input
               type="text"
@@ -224,6 +247,34 @@ export default function LeaderboardEnhanced() {
             />
           </div>
 
+          <button
+            onClick={() => setFiltrosAbiertos((v) => !v)}
+            aria-expanded={filtrosAbiertos}
+            className="sm:hidden shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-lg bg-dark-600 border border-dark-400 text-gray-300 text-sm cursor-pointer transition-colors hover:border-gold-500/50"
+          >
+            <span className="whitespace-nowrap">
+              {filtrosAbiertos ? t('lb.hideFilters') : t('lb.moreFilters')}
+            </span>
+            {filtrosAvanzados > 0 && (
+              <span className="inline-flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-gold-500/20 text-gold-400 text-[10px] font-semibold">
+                {filtrosAvanzados}
+              </span>
+            )}
+            <svg
+              className={`w-3 h-3 shrink-0 transition-transform ${filtrosAbiertos ? 'rotate-180' : ''}`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+        </div>
+
+        <div
+          className={`${filtrosAbiertos ? 'grid' : 'hidden'} sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3`}
+        >
           {/* Country */}
           <div>
             <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.country')}</label>
