@@ -4,7 +4,7 @@ import Nota from './Nota';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import { CLASE_COLOR } from '../lib/units';
 import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia,
-         iconoUnidad, iconoTecnologia } from '../lib/juego';
+         iconoUnidad, iconoTecnologia, fichaUnidad } from '../lib/juego';
 import type { ReplayTimeline } from '../lib/types';
 
 interface Props {
@@ -126,7 +126,10 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
       {verUnidades && (<>
       <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('units.title')}
-        <Nota>{t('units.note')}</Nota>
+        <Nota>
+          {t('units.note')}
+          <span className="block mt-2">{t('contra.nota')}</span>
+        </Nota>
       </h4>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -158,6 +161,29 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
                              className="w-5 h-5 shrink-0 rounded-sm" loading="lazy" />
                       )}
                       <span className="text-xs text-gray-400 truncate">{nombreUnidad(id, lang)}</span>
+                      {(() => {
+                        //  Que es y contra que sirve, en palabras del juego.
+                        //  Va detras del icono porque es contexto: lo que se
+                        //  viene a ver es cuanto saco cada uno.
+                        const f = fichaUnidad(id, lang);
+                        if (!f || (!f.fuerte && !f.debil)) return null;
+                        return (
+                          <Nota>
+                            <span className="block font-medium text-gray-300">{nombreUnidad(id, lang)}</span>
+                            {f.rol && <span className="block mt-0.5">{f.rol}</span>}
+                            {f.fuerte && (
+                              <span className="block mt-1.5">
+                                <span className="text-win">{t('contra.fuerte')}</span> {f.fuerte}
+                              </span>
+                            )}
+                            {f.debil && (
+                              <span className="block mt-0.5">
+                                <span className="text-loss">{t('contra.debil')}</span> {f.debil}
+                              </span>
+                            )}
+                          </Nota>
+                        );
+                      })()}
                     </span>
                     <span className="flex-1 h-2 rounded-full bg-dark-600 overflow-hidden">
                       <span

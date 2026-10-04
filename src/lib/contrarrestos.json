@@ -1,1920 +1,2304 @@
 {
 "1001": {
 "en": {
+"rol": "Portuguese unique Siege Gunpowder Unit. Fires a volley of bullets",
 "fuerte": "large groups of units",
 "debil": "Cavalry and Mangonel-line"
 },
 "es": {
+"rol": "Portuguese unique Siege Gunpowder Unit. Fires a volley of bullets",
 "fuerte": "large groups of units",
 "debil": "Cavalry and Mangonel-line"
 }
 },
 "1003": {
 "en": {
+"rol": "Portuguese unique Siege Gunpowder Unit. Fires a volley of bullets",
 "fuerte": "large groups of units",
 "debil": "Cavalry and Mangonel-line"
 },
 "es": {
+"rol": "Portuguese unique Siege Gunpowder Unit. Fires a volley of bullets",
 "fuerte": "large groups of units",
 "debil": "Cavalry and Mangonel-line"
 }
 },
 "1004": {
 "en": {
+"rol": "Portuguese unique Warship with ranged pass through attack",
 "fuerte": "large groups of ships",
 "debil": "Fire Ships"
 },
 "es": {
+"rol": "Portuguese unique Warship with ranged pass through attack",
 "fuerte": "large groups of ships",
 "debil": "Fire Ships"
 }
 },
 "1006": {
 "en": {
+"rol": "Portuguese unique Warship with ranged pass through attack",
 "fuerte": "large groups of ships",
 "debil": "Fire Ships"
 },
 "es": {
+"rol": "Portuguese unique Warship with ranged pass through attack",
 "fuerte": "large groups of ships",
 "debil": "Fire Ships"
 }
 },
 "1007": {
 "en": {
-"fuerte": null,
+"rol": "Berber unique Mounted Archer",
+"fuerte": "Mounted Archers",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Berber unique Mounted Archer",
+"fuerte": "Mounted Archers",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 }
 },
 "1009": {
 "en": {
-"fuerte": null,
+"rol": "Berber unique Mounted Archer",
+"fuerte": "Mounted Archers",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Berber unique Mounted Archer",
+"fuerte": "Mounted Archers",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 }
 },
 "1010": {
 "en": {
+"rol": "Anti-archer Mounted Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Anti-archer Mounted Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 }
 },
 "1012": {
 "en": {
+"rol": "Anti-archer Mounted Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Anti-archer Mounted Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 }
 },
 "1013": {
 "en": {
+"rol": "Malian unique Infantry with ranged melee attack. Fast-moving",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Ranged Soldiers"
 },
 "es": {
+"rol": "Malian unique Infantry with ranged melee attack. Fast-moving",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Ranged Soldiers"
 }
 },
 "1015": {
 "en": {
+"rol": "Malian unique Infantry with ranged melee attack. Fast-moving",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Ranged Soldiers"
 },
 "es": {
+"rol": "Malian unique Infantry with ranged melee attack. Fast-moving",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Ranged Soldiers"
 }
 },
 "1016": {
 "en": {
+"rol": "Ethiopian unique Infantry with high attack and fast training speed. Fast-moving",
 "fuerte": "Infantry",
 "debil": "Archery Units"
 },
 "es": {
+"rol": "Ethiopian unique Infantry with high attack and fast training speed. Fast-moving",
 "fuerte": "Infantry",
 "debil": "Archery Units"
 }
 },
 "1018": {
 "en": {
+"rol": "Ethiopian unique Infantry with high attack and fast training speed. Fast-moving",
 "fuerte": "Infantry",
 "debil": "Archery Units"
 },
 "es": {
+"rol": "Ethiopian unique Infantry with high attack and fast training speed. Fast-moving",
 "fuerte": "Infantry",
 "debil": "Archery Units"
 }
 },
 "11": {
 "en": {
+"rol": "Mongol unique Mounted Archer with fast attack",
 "fuerte": "Siege Weapons and Infantry",
 "debil": "Skirmishers, Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Mongol unique Mounted Archer with fast attack",
 "fuerte": "Siege Weapons and Infantry",
 "debil": "Skirmishers, Spearman-line and Camel Riders"
 }
 },
 "1120": {
 "en": {
+"rol": "Khmer unique Siege Cavalry with ranged pass through attack. Can destroy trees",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Cavalry and Siege Weapons"
 },
 "es": {
+"rol": "Khmer unique Siege Cavalry with ranged pass through attack. Can destroy trees",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Cavalry and Siege Weapons"
 }
 },
 "1122": {
 "en": {
+"rol": "Khmer unique Siege Cavalry with ranged pass through attack. Can destroy trees",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Cavalry and Siege Weapons"
 },
 "es": {
+"rol": "Khmer unique Siege Cavalry with ranged pass through attack. Can destroy trees",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Cavalry and Siege Weapons"
 }
 },
 "1123": {
 "en": {
+"rol": "Malay unique Infantry that only takes half population space. Strong in high numbers",
 "fuerte": null,
 "debil": "Cavalry and Ranged Soldiers"
 },
 "es": {
+"rol": "Malay unique Infantry that only takes half population space. Strong in high numbers",
 "fuerte": null,
 "debil": "Cavalry and Ranged Soldiers"
 }
 },
 "1125": {
 "en": {
+"rol": "Malay unique Infantry that only takes half population space. Strong in high numbers",
 "fuerte": null,
 "debil": "Cavalry and Ranged Soldiers"
 },
 "es": {
+"rol": "Malay unique Infantry that only takes half population space. Strong in high numbers",
 "fuerte": null,
 "debil": "Cavalry and Ranged Soldiers"
 }
 },
 "1126": {
 "en": {
+"rol": "Burmese unique ranged Mounted Unit with a powerful but inaccurate attack",
 "fuerte": "units at medium and close range",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Burmese unique ranged Mounted Unit with a powerful but inaccurate attack",
 "fuerte": "units at medium and close range",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "1128": {
 "en": {
+"rol": "Burmese unique ranged Mounted Unit with a powerful but inaccurate attack",
 "fuerte": "units at medium and close range",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Unidad a distancia montada exclusiva de los birmanos con un ataque potente pero impreciso",
 "fuerte": "unidades a media y corta distancia",
 "debil": "unidades de arqueros y armas de asedio"
 }
 },
 "1129": {
 "en": {
+"rol": "Vietnamese unique Foot Archer with exceptional pierce armor",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry, Skirmishers and Siege Weapons"
 },
 "es": {
+"rol": "Vietnamese unique Foot Archer with exceptional pierce armor",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry, Skirmishers and Siege Weapons"
 }
 },
 "1131": {
 "en": {
+"rol": "Vietnamese unique Foot Archer with exceptional pierce armor",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry, Skirmishers and Siege Weapons"
 },
 "es": {
+"rol": "Vietnamese unique Foot Archer with exceptional pierce armor",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry, Skirmishers and Siege Weapons"
 }
 },
 "1132": {
 "en": {
+"rol": "Slow but durable Cavalry",
 "fuerte": "units at close range",
 "debil": "Monks and Spearman-line"
 },
 "es": {
+"rol": "Slow but durable Cavalry",
 "fuerte": "units at close range",
 "debil": "Monks and Spearman-line"
 }
 },
 "1134": {
 "en": {
+"rol": "Slow but durable Cavalry",
 "fuerte": "units at close range",
 "debil": "Monks and Spearman-line"
 },
 "es": {
+"rol": "Slow but durable Cavalry",
 "fuerte": "units at close range",
 "debil": "Monks and Spearman-line"
 }
 },
 "1155": {
 "en": {
+"rol": "Anti-archer Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers and Spearman-line",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Anti-archer Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers and Spearman-line",
 "debil": "units at close range"
 }
 },
 "1225": {
 "en": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 }
 },
 "1227": {
 "en": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 }
 },
 "1228": {
 "en": {
+"rol": "Tatar unique Heavy Cavalry that generates gold when fighting other units",
 "fuerte": "Archery Units",
 "debil": "Spearman-line, Camel Riders and Monks"
 },
 "es": {
+"rol": "Tatar unique Heavy Cavalry that generates gold when fighting other units",
 "fuerte": "Archery Units",
 "debil": "Spearman-line, Camel Riders and Monks"
 }
 },
 "1230": {
 "en": {
+"rol": "Tatar unique Heavy Cavalry that generates gold when fighting other units",
 "fuerte": "Archery Units",
 "debil": "Spearman-line, Camel Riders and Monks"
 },
 "es": {
+"rol": "Tatar unique Heavy Cavalry that generates gold when fighting other units",
 "fuerte": "Archery Units",
 "debil": "Spearman-line, Camel Riders and Monks"
 }
 },
 "1231": {
 "en": {
+"rol": "Cuman unique Mounted Archer that fires multiple arrows",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Foot Archers"
 },
 "es": {
+"rol": "Cuman unique Mounted Archer that fires multiple arrows",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Foot Archers"
 }
 },
 "1233": {
 "en": {
+"rol": "Cuman unique Mounted Archer that fires multiple arrows",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Foot Archers"
 },
 "es": {
+"rol": "Cuman unique Mounted Archer that fires multiple arrows",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Foot Archers"
 }
 },
 "1234": {
 "en": {
+"rol": "Lithuanian unique Heavy Cavalry that ignores armor",
 "fuerte": "Cavalry and Infantry, especially with high armor",
 "debil": "Archery Units"
 },
 "es": {
+"rol": "Lithuanian unique Heavy Cavalry that ignores armor",
 "fuerte": "Cavalry and Infantry, especially with high armor",
 "debil": "Archery Units"
 }
 },
 "1236": {
 "en": {
+"rol": "Lithuanian unique Heavy Cavalry that ignores armor",
 "fuerte": "Cavalry and Infantry, especially with high armor",
 "debil": "Archery Units"
 },
 "es": {
+"rol": "Lithuanian unique Heavy Cavalry that ignores armor",
 "fuerte": "Cavalry and Infantry, especially with high armor",
 "debil": "Archery Units"
 }
 },
 "125": {
 "en": {
+"rol": "Converts enemy units to your civilization. Heals friendly units (except ships and Siege Weapons)",
 "fuerte": "slow and non-ranged units",
 "debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
 },
 "es": {
+"rol": "Converts enemy units to your civilization. Heals friendly units (except ships and Siege Weapons)",
 "fuerte": "slow and non-ranged units",
 "debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
 }
 },
 "1254": {
 "en": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 }
 },
 "1255": {
 "en": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Bulgarian unique Heavy Cavalry that fights on as Infantry when felled",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 }
 },
 "1260": {
 "en": {
+"rol": "Cuman unique Mounted Archer that fires multiple arrows",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Foot Archers"
 },
 "es": {
+"rol": "Cuman unique Mounted Archer that fires multiple arrows",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Foot Archers"
 }
 },
 "1263": {
 "en": {
+"rol": "Tatar unique demolition Siege Cavalry",
 "fuerte": "Mounted Units, especially Elephants",
 "debil": "Foot Archers and Infantry"
 },
 "es": {
+"rol": "Tatar unique demolition Siege Cavalry",
 "fuerte": "Mounted Units, especially Elephants",
 "debil": "Foot Archers and Infantry"
 }
 },
 "1370": {
 "en": {
+"rol": "Fast moving Cavalry with increased attack range. Strong in groups",
 "fuerte": null,
 "debil": "Cavalry, Camel Riders and Archery Units"
 },
 "es": {
+"rol": "Caballería rápida que cuenta con mayor ataque a distancia. Fuerte en grupos",
 "fuerte": null,
 "debil": "caballería, jinetes de camello y arqueros"
 }
 },
 "1372": {
 "en": {
+"rol": "Fast moving Cavalry with increased attack range. Strong in groups",
 "fuerte": null,
 "debil": "Cavalry, Camel Riders and Archery Units"
 },
 "es": {
+"rol": "Caballería rápida que cuenta con mayor ataque a distancia. Fuerte en grupos",
 "fuerte": null,
 "debil": "caballería, jinetes de camello y unidades de arqueros"
 }
 },
 "1655": {
 "en": {
+"rol": "Burgundian unique Heavy Cavalry with a powerful charged attack",
 "fuerte": "Infantry and Archery Units",
 "debil": "Camel Riders and Monks"
 },
 "es": {
+"rol": "Unidad de caballería pesada exclusiva de los borgoñeses con un poderoso ataque cargado",
 "fuerte": "unidades de infantería y arqueros",
 "debil": "jinetes de camello y monjes"
 }
 },
 "1657": {
 "en": {
+"rol": "Burgundian unique Heavy Cavalry with a powerful charged attack",
 "fuerte": "Infantry and Archery Units",
 "debil": "Camel Riders and Monks"
 },
 "es": {
+"rol": "Unidad de caballería pesada exclusiva de los borgoñeses con un poderoso ataque cargado",
 "fuerte": "unidades de infantería y arqueros",
 "debil": "jinetes de camello y monjes"
 }
 },
 "1658": {
 "en": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 },
 "es": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 }
 },
 "1659": {
 "en": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 },
 "es": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 }
 },
 "1660": {
 "en": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 },
 "es": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 }
 },
 "1661": {
 "en": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 },
 "es": {
+"rol": "Sicilian unique Infantry that can construct Donjons",
 "fuerte": "Infantry and Camel Riders",
 "debil": "Mounted Archers and Gunners"
 }
 },
 "1699": {
 "en": {
+"rol": "Burgundian unique anti-cavalry Infantry",
 "fuerte": "Mounted Units",
 "debil": "Ranged Soldiers"
 },
 "es": {
+"rol": "Unidad de infantería anticaballería exclusiva de los borgoñeses",
 "fuerte": "unidades montadas",
 "debil": "soldados a distancia"
 }
 },
 "1701": {
 "en": {
+"rol": "Polish unique Infantry that tears the armor of units it is fighting",
 "fuerte": "buildings, Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Polish unique Infantry that tears the armor of units it is fighting",
 "fuerte": "buildings, Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 }
 },
 "1703": {
 "en": {
+"rol": "Polish unique Infantry that tears the armor of units it is fighting",
 "fuerte": "buildings, Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Polish unique Infantry that tears the armor of units it is fighting",
 "fuerte": "buildings, Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 }
 },
 "1707": {
 "en": {
-"fuerte": null,
+"rol": "Polish and Lithuanian unique fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Caballería rápida exclusiva de los polacos y los lituanos para explorar y saquear. Resistente a la conversión",
+"fuerte": "unidades del monasterio",
 "debil": "línea de lanceros y jinetes de camello"
 }
 },
 "1735": {
 "en": {
+"rol": "Dravidian unique Infantry with a charged blast attack",
 "fuerte": "buildings and units at close range",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "Unidad de infantería exclusiva de los pueblos dravídicos con ataque de impacto cargado",
 "fuerte": "edificios y unidades a corta distancia",
 "debil": "soldados a distancia a larga distancia"
 }
 },
 "1737": {
 "en": {
+"rol": "Dravidian unique Infantry with a charged blast attack",
 "fuerte": "buildings and units at close range",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "Unidad de infantería exclusiva de los pueblos dravídicos con ataque de impacto cargado",
 "fuerte": "edificios y unidades a corta distancia",
 "debil": "soldados a distancia a larga distancia"
 }
 },
 "1741": {
 "en": {
+"rol": "Gurjara unique Infantry with ranged melee attack that deals pass through damage",
 "fuerte": "Infantry and large groups of units",
 "debil": "Cavalry and Siege Weapons"
 },
 "es": {
+"rol": "Gurjara unique Infantry with ranged melee attack that deals pass through damage",
 "fuerte": "Infantry and large groups of units",
 "debil": "Cavalry and Siege Weapons"
 }
 },
 "1743": {
 "en": {
+"rol": "Gurjara unique Infantry with ranged melee attack that deals pass through damage",
 "fuerte": "Infantry and large groups of units",
 "debil": "Cavalry and Siege Weapons"
 },
 "es": {
+"rol": "Gurjara unique Infantry with ranged melee attack that deals pass through damage",
 "fuerte": "Infantry and large groups of units",
 "debil": "Cavalry and Siege Weapons"
 }
 },
 "1744": {
 "en": {
-"fuerte": null,
+"rol": "Anti-building Siege Cavalry. Resistant to most ranged attacks",
+"fuerte": "buildings",
 "debil": "Spearman-line"
 },
 "es": {
-"fuerte": null,
+"rol": "Anti-building Siege Cavalry. Resistant to most ranged attacks",
+"fuerte": "buildings",
 "debil": "Spearman-line"
 }
 },
 "1746": {
 "en": {
-"fuerte": null,
+"rol": "Anti-building Siege Cavalry. Resistant to most ranged attacks",
+"fuerte": "buildings",
 "debil": "Spearman-line"
 },
 "es": {
-"fuerte": null,
+"rol": "Anti-building Siege Cavalry. Resistant to most ranged attacks",
+"fuerte": "buildings",
 "debil": "Spearman-line"
 }
 },
 "1747": {
 "en": {
-"fuerte": null,
+"rol": "Hindustani unique Infantry that thrusts its spear through multiple targets",
+"fuerte": "Archery Units and Spearman-line",
 "debil": "Cavalry"
 },
 "es": {
-"fuerte": null,
+"rol": "Hindustani unique Infantry that thrusts its spear through multiple targets",
+"fuerte": "Archery Units and Spearman-line",
 "debil": "Cavalry"
 }
 },
 "1749": {
 "en": {
-"fuerte": null,
+"rol": "Hindustani unique Infantry that thrusts its spear through multiple targets",
+"fuerte": "Archery Units and Spearman-line",
 "debil": "Cavalry"
 },
 "es": {
-"fuerte": null,
+"rol": "Hindustani unique Infantry that thrusts its spear through multiple targets",
+"fuerte": "Archery Units and Spearman-line",
 "debil": "Cavalry"
 }
 },
 "1751": {
 "en": {
+"rol": "Gurjara unique fast moving Cavalry that can dodge projectiles",
 "fuerte": "Ranged Soldiers",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Caballería rápida exclusiva de los gurjaras que puede esquivar proyectiles",
 "fuerte": "soldados a distancia",
 "debil": "línea de lanceros y jinetes de camello"
 }
 },
 "1755": {
 "en": {
+"rol": "Gurjara unique scout. Fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 },
 "es": {
+"rol": "Gurjara unique scout. Fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 }
 },
 "1759": {
 "en": {
+"rol": "Bengali unique Mounted Archer that can switch between melee and ranged attacks",
 "fuerte": "Infantry",
 "debil": "Skirmishers and Camel Riders"
 },
 "es": {
+"rol": "Bengali unique Mounted Archer that can switch between melee and ranged attacks",
 "fuerte": "Infantry",
 "debil": "Skirmishers and Camel Riders"
 }
 },
 "1761": {
 "en": {
+"rol": "Bengali unique Mounted Archer that can switch between melee and ranged attacks",
 "fuerte": "Infantry",
 "debil": "Skirmishers and Camel Riders"
 },
 "es": {
+"rol": "Bengali unique Mounted Archer that can switch between melee and ranged attacks",
 "fuerte": "Infantry",
 "debil": "Skirmishers and Camel Riders"
 }
 },
 "1786": {
 "en": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 },
 "es": {
+"rol": "Infantería anticaballería",
 "fuerte": "unidades montadas, especialmente elefantes",
 "debil": "soldados a distancia e infantería"
 }
 },
 "1787": {
 "en": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 },
 "es": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 }
 },
 "1788": {
 "en": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 },
 "es": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 }
 },
 "1790": {
 "en": {
+"rol": "Roman unique Heavy Cavalry that increases movement and attack speed of nearby Militia-line units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Roman unique Heavy Cavalry that increases movement and attack speed of nearby Militia-line units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "1792": {
 "en": {
+"rol": "Roman unique Heavy Cavalry that increases movement and attack speed of nearby Militia-line units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Roman unique Heavy Cavalry that increases movement and attack speed of nearby Militia-line units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "1793": {
 "en": {
-"fuerte": "buildings, Scout Cavalry- and Skirmisher-line",
+"rol": "Roman unique all-purpose Infantry unit",
+"fuerte": "Infantry",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
-"fuerte": "buildings, Scout Cavalry- and Skirmisher-line",
+"rol": "Roman unique all-purpose Infantry unit",
+"fuerte": "Infantry",
 "debil": "Ranged Soldiers at long range"
 }
 },
 "1800": {
 "en": {
+"rol": "Armenian unique Foot Archer that ignores armor",
 "fuerte": "Infantry and Cavalry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Armenian unique Foot Archer that ignores armor",
 "fuerte": "Infantry and Cavalry",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "1803": {
 "en": {
+"rol": "Georgian unique Heavy Cavalry that becomes stronger when other Monaspas or Knight-line units are nearby",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Georgian unique Heavy Cavalry that becomes stronger when other Monaspas or Knight-line units are nearby",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 }
 },
 "1805": {
 "en": {
+"rol": "Georgian unique Heavy Cavalry that becomes stronger when other Monaspas or Knight-line units are nearby",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Georgian unique Heavy Cavalry that becomes stronger when other Monaspas or Knight-line units are nearby",
 "fuerte": "Infantry and Cavalry",
 "debil": "Spearman-line and Monks"
 }
 },
 "1811": {
 "en": {
+"rol": "Armenian unique Monastery Infantry that can heal friendly units. Can collect Relics and bring them to Monasteries",
 "fuerte": "Infantry",
 "debil": "Scout Cavalry-line and Archery Units"
 },
 "es": {
+"rol": "Armenian unique Monastery Infantry that can heal friendly units. Can collect Relics and bring them to Monasteries",
 "fuerte": "Infantry",
 "debil": "Scout Cavalry-line and Archery Units"
 }
 },
 "1813": {
 "en": {
-"fuerte": null,
+"rol": "Persian unique all-purpose Heavy Cavalry",
+"fuerte": "Ranged Soldiers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 },
 "es": {
-"fuerte": null,
+"rol": "Persian unique all-purpose Heavy Cavalry",
+"fuerte": "Ranged Soldiers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 }
 },
 "185": {
 "en": {
+"rol": "Anti-infantry Skirmisher that cannot attack at close range",
 "fuerte": "Infantry, Monks and Siege Weapons",
 "debil": "Ranged Soldiers and Cavalry"
 },
 "es": {
+"rol": "Anti-infantry Skirmisher that cannot attack at close range",
 "fuerte": "Infantry, Monks and Siege Weapons",
 "debil": "Ranged Soldiers and Cavalry"
 }
 },
 "1901": {
 "en": {
+"rol": "Gunpowder Shock Infantry that fires a short ranged firearm before engaging in melee combat",
 "fuerte": "Cavalry and buildings",
 "debil": "Militia-line and Archery Units"
 },
 "es": {
+"rol": "Gunpowder Shock Infantry that fires a short ranged firearm before engaging in melee combat",
 "fuerte": "Cavalry and buildings",
 "debil": "Militia-line and Archery Units"
 }
 },
 "1903": {
 "en": {
+"rol": "Gunpowder Shock Infantry that fires a short ranged firearm before engaging in melee combat",
 "fuerte": "Cavalry and buildings",
 "debil": "Militia-line and Archery Units"
 },
 "es": {
+"rol": "Gunpowder Shock Infantry that fires a short ranged firearm before engaging in melee combat",
 "fuerte": "Cavalry and buildings",
 "debil": "Militia-line and Archery Units"
 }
 },
 "1908": {
 "en": {
+"rol": "Jurchen unique Heavy Cavalry with durable armor that can completely block melee attacks",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Jurchen unique Heavy Cavalry with durable armor that can completely block melee attacks",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "1910": {
 "en": {
+"rol": "Jurchen unique Heavy Cavalry with durable armor that can completely block melee attacks",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Jurchen unique Heavy Cavalry with durable armor that can completely block melee attacks",
 "fuerte": "Infantry and Ranged Soldiers",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "1911": {
 "en": {
+"rol": "Jurchen unique Gunpowder Unit with ranged blast attack, but cannot attack at close range",
 "fuerte": "Infantry and tight groups of units",
 "debil": "Ranged Soldiers and units at close range"
 },
 "es": {
+"rol": "Jurchen unique Gunpowder Unit with ranged blast attack, but cannot attack at close range",
 "fuerte": "Infantry and tight groups of units",
 "debil": "Ranged Soldiers and units at close range"
 }
 },
 "1920": {
 "en": {
+"rol": "Khitan unique Infantry with powerful attack that wounds enemies, dealing damage over time",
 "fuerte": "Cavalry and Infantry",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "Infantería exclusiva de los kitán con un poderoso ataque que hiere a los enemigos y les inflige daño permanente",
 "fuerte": "caballería e infantería",
 "debil": "soldados a distancia a larga distancia"
 }
 },
 "1922": {
 "en": {
+"rol": "Khitan unique Infantry with powerful attack that wounds enemies, dealing damage over time",
 "fuerte": "Cavalry and Infantry",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "Infantería exclusiva de los kitán con un poderoso ataque que hiere a los enemigos y les inflige daño permanente",
 "fuerte": "caballería e infantería",
 "debil": "soldados a distancia a larga distancia"
 }
 },
 "1944": {
 "en": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 },
 "es": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 }
 },
 "1946": {
 "en": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 },
 "es": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 }
 },
 "1949": {
 "en": {
-"fuerte": null,
+"rol": "Wei unique Cavalry that gains HP and attack when defeating enemy military",
+"fuerte": "Ranged Soldiers",
 "debil": "Spearman-line"
 },
 "es": {
-"fuerte": null,
+"rol": "Wei unique Cavalry that gains HP and attack when defeating enemy military",
+"fuerte": "Ranged Soldiers",
 "debil": "Spearman-line"
 }
 },
 "1951": {
 "en": {
-"fuerte": null,
+"rol": "Wei unique Cavalry that gains HP and attack when defeating enemy military",
+"fuerte": "Ranged Soldiers",
 "debil": "Spearman-line"
 },
 "es": {
-"fuerte": null,
+"rol": "Wei unique Cavalry that gains HP and attack when defeating enemy military",
+"fuerte": "Ranged Soldiers",
 "debil": "Spearman-line"
 }
 },
 "1952": {
 "en": {
+"rol": "Wei unique Mounted Archer with a charged ranged attack",
 "fuerte": "Infantry",
 "debil": "Skirmishers and Camel Riders"
 },
 "es": {
+"rol": "Wei unique Mounted Archer with a charged ranged attack",
 "fuerte": "Infantry",
 "debil": "Skirmishers and Camel Riders"
 }
 },
 "1959": {
 "en": {
+"rol": "Shu unique Infantry that temporarily slows down the unit it attacks",
 "fuerte": "Cavalry",
 "debil": "Ranged Soldiers"
 },
 "es": {
+"rol": "Shu unique Infantry that temporarily slows down the unit it attacks",
 "fuerte": "Cavalry",
 "debil": "Ranged Soldiers"
 }
 },
 "1961": {
 "en": {
+"rol": "Shu unique Infantry that temporarily slows down the unit it attacks",
 "fuerte": "Cavalry",
 "debil": "Ranged Soldiers"
 },
 "es": {
+"rol": "Shu unique Infantry that temporarily slows down the unit it attacks",
 "fuerte": "Cavalry",
 "debil": "Ranged Soldiers"
 }
 },
 "1968": {
 "en": {
+"rol": "Wu unique Foot Archer that fires multiple arrows at units and uses a long range attack against buildings",
 "fuerte": "Infantry, Siege Weapons and buildings",
 "debil": "Cavalry and Skirmishers"
 },
 "es": {
+"rol": "Wu unique Foot Archer that fires multiple arrows at units and uses a long range attack against buildings",
 "fuerte": "Infantry, Siege Weapons and buildings",
 "debil": "Cavalry and Skirmishers"
 }
 },
 "1970": {
 "en": {
+"rol": "Wu unique Foot Archer that fires multiple arrows at units and uses a long range attack against buildings",
 "fuerte": "Infantry, Siege Weapons and buildings",
 "debil": "Cavalry and Skirmishers"
 },
 "es": {
+"rol": "Wu unique Foot Archer that fires multiple arrows at units and uses a long range attack against buildings",
 "fuerte": "Infantry, Siege Weapons and buildings",
 "debil": "Cavalry and Skirmishers"
 }
 },
 "1974": {
 "en": {
-"fuerte": null,
+"rol": "Wu unique Shock Infantry that gains movement speed and attack but loses armor when a damage threshold is reached",
+"fuerte": "Archery Units",
 "debil": "Militia-line"
 },
 "es": {
-"fuerte": null,
+"rol": "Wu unique Shock Infantry that gains movement speed and attack but loses armor when a damage threshold is reached",
+"fuerte": "Archery Units",
 "debil": "Militia-line"
 }
 },
 "207": {
 "en": {
+"rol": "Hindustani unique fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 },
 "es": {
+"rol": "Hindustani unique fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 }
 },
 "232": {
 "en": {
+"rol": "Celtic unique Infantry with fast movement speed",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Cavalry"
 },
 "es": {
+"rol": "Celtic unique Infantry with fast movement speed",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Cavalry"
 }
 },
 "239": {
 "en": {
+"rol": "Persian unique Cavalry that deals trample damage",
 "fuerte": "buildings and units at close range",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Persian unique Cavalry that deals trample damage",
 "fuerte": "buildings and units at close range",
 "debil": "Spearman-line and Monks"
 }
 },
 "24": {
 "en": {
+"rol": "All-purpose Foot Archer",
 "fuerte": "units at long range",
 "debil": "Skirmishers, Mangonel-line and units at close range"
 },
 "es": {
+"rol": "All-purpose Foot Archer",
 "fuerte": "units at long range",
 "debil": "Skirmishers, Mangonel-line and units at close range"
 }
 },
 "25": {
 "en": {
+"rol": "Teutonic unique Infantry with exceptional melee armor. Slow but resistant to conversion",
 "fuerte": "melee units",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Teutonic unique Infantry with exceptional melee armor. Slow but resistant to conversion",
 "fuerte": "melee units",
 "debil": "Archery Units and Gunners"
 }
 },
 "2550": {
 "en": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 }
 },
 "2552": {
 "en": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "Infantería versátil para explorar y saquear. Puede construir puestos de avanzada",
 "fuerte": "arqueros a pie, armas de asedio y edificios",
 "debil": "caballería"
 }
 },
 "2554": {
 "en": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 }
 },
 "2562": {
 "en": {
+"rol": "Muisca unique Skirmisher that regenerates HP when a nearby Guecha Warrior is defeated",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Muisca unique Skirmisher that regenerates HP when a nearby Guecha Warrior is defeated",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 }
 },
 "2564": {
 "en": {
+"rol": "Muisca unique Skirmisher that regenerates HP when a nearby Guecha Warrior is defeated",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Muisca unique Skirmisher that regenerates HP when a nearby Guecha Warrior is defeated",
 "fuerte": "Ranged Soldiers",
 "debil": "units at close range"
 }
 },
 "2566": {
 "en": {
+"rol": "Mapuche unique Cavalry that deals increasing damage to injured units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders and Monks"
 },
 "es": {
+"rol": "Mapuche unique Cavalry that deals increasing damage to injured units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders and Monks"
 }
 },
 "2568": {
 "en": {
+"rol": "Mapuche unique Cavalry that deals increasing damage to injured units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders and Monks"
 },
 "es": {
+"rol": "Mapuche unique Cavalry that deals increasing damage to injured units",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders and Monks"
 }
 },
 "2569": {
 "en": {
+"rol": "Mapuche unique Mounted Archer with a charged attack that slows down enemy units",
 "fuerte": "Mounted Units",
 "debil": "Foot Archers, Skirmishers and units at close range"
 },
 "es": {
+"rol": "Mapuche unique Mounted Archer with a charged attack that slows down enemy units",
 "fuerte": "Mounted Units",
 "debil": "Foot Archers, Skirmishers and units at close range"
 }
 },
 "2571": {
 "en": {
+"rol": "Mapuche unique Mounted Archer with a charged attack that slows down enemy units",
 "fuerte": "Mounted Units",
 "debil": "Foot Archers, Skirmishers and units at close range"
 },
 "es": {
+"rol": "Mapuche unique Mounted Archer with a charged attack that slows down enemy units",
 "fuerte": "Mounted Units",
 "debil": "Foot Archers, Skirmishers and units at close range"
 }
 },
 "2582": {
 "en": {
+"rol": "Tupi unique Infantry with a powerful frontal area attack",
 "fuerte": "Infantry",
 "debil": "Foot Archers at long range"
 },
 "es": {
+"rol": "Tupi unique Infantry with a powerful frontal area attack",
 "fuerte": "Infantry",
 "debil": "Foot Archers at long range"
 }
 },
 "2584": {
 "en": {
+"rol": "Tupi unique Infantry with a powerful frontal area attack",
 "fuerte": "Infantry",
 "debil": "Foot Archers at long range"
 },
 "es": {
+"rol": "Tupi unique Infantry with a powerful frontal area attack",
 "fuerte": "Infantry",
 "debil": "Foot Archers at long range"
 }
 },
 "2586": {
 "en": {
+"rol": "Muisca unique Shock Infantry that attacks faster the longer it remains in combat",
 "fuerte": "buildings and Mounted Units",
 "debil": "Militia-line"
 },
 "es": {
+"rol": "Muisca unique Shock Infantry that attacks faster the longer it remains in combat",
 "fuerte": "buildings and Mounted Units",
 "debil": "Militia-line"
 }
 },
 "2587": {
 "en": {
+"rol": "Muisca unique Shock Infantry that attacks faster the longer it remains in combat",
 "fuerte": "buildings and Mounted Units",
 "debil": "Militia-line"
 },
 "es": {
+"rol": "Muisca unique Shock Infantry that attacks faster the longer it remains in combat",
 "fuerte": "buildings and Mounted Units",
 "debil": "Militia-line"
 }
 },
 "2588": {
 "en": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "All-purpose Infantry for scouting and raiding. Can build Outposts",
 "fuerte": "Foot Archers, Siege Weapons and buildings",
 "debil": "Cavalry"
 }
 },
 "2700": {
 "en": {
+"rol": "Mounted Archer with powerful but slow attack",
 "fuerte": "slow units at long range",
 "debil": "Skirmishers, Scorpions and units at close range"
 },
 "es": {
+"rol": "Arquero montado con un ataque potente pero lento",
 "fuerte": "unidades lentas a larga distancia",
 "debil": "guerrilleros, escorpiones y unidades a corta distancia"
 }
 },
 "2703": {
 "en": {
+"rol": "Powerful Shock Infantry that generates gold when fighting other units",
 "fuerte": "Cavalry and buildings",
 "debil": "Militia-line"
 },
 "es": {
+"rol": "Powerful Shock Infantry that generates gold when fighting other units",
 "fuerte": "Cavalry and buildings",
 "debil": "Militia-line"
 }
 },
 "2705": {
 "en": {
+"rol": "Saxon unique Infantry that throws a javelin before engaging in melee combat",
 "fuerte": "Ranged Soldiers",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "Saxon unique Infantry that throws a javelin before engaging in melee combat",
 "fuerte": "Ranged Soldiers",
 "debil": "Cavalry"
 }
 },
 "2706": {
 "en": {
+"rol": "Saxon unique Infantry that throws a javelin before engaging in melee combat",
 "fuerte": "Ranged Soldiers",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "Saxon unique Infantry that throws a javelin before engaging in melee combat",
 "fuerte": "Ranged Soldiers",
 "debil": "Cavalry"
 }
 },
 "2708": {
 "en": {
-"fuerte": null,
+"rol": "Varangian unique Cavalry with ranged melee attack",
+"fuerte": "Infantry",
 "debil": "Camel Riders and Monks"
 },
 "es": {
-"fuerte": null,
+"rol": "Varangian unique Cavalry with ranged melee attack",
+"fuerte": "Infantry",
 "debil": "Camel Riders and Monks"
 }
 },
 "2709": {
 "en": {
-"fuerte": null,
+"rol": "Varangian unique Cavalry with ranged melee attack",
+"fuerte": "Infantry",
 "debil": "Camel Riders and Monks"
 },
 "es": {
-"fuerte": null,
+"rol": "Varangian unique Cavalry with ranged melee attack",
+"fuerte": "Infantry",
 "debil": "Camel Riders and Monks"
 }
 },
 "2711": {
 "en": {
-"fuerte": null,
+"rol": "Danish unique Infantry that throws torches when attacking buildings and ships",
+"fuerte": "Cavalry and buildings",
 "debil": "Ranged Soldiers"
 },
 "es": {
-"fuerte": null,
+"rol": "Danish unique Infantry that throws torches when attacking buildings and ships",
+"fuerte": "Cavalry and buildings",
 "debil": "Ranged Soldiers"
 }
 },
 "2712": {
 "en": {
-"fuerte": null,
+"rol": "Danish unique Infantry that throws torches when attacking buildings and ships",
+"fuerte": "Cavalry and buildings",
 "debil": "Ranged Soldiers"
 },
 "es": {
-"fuerte": null,
+"rol": "Danish unique Infantry that throws torches when attacking buildings and ships",
+"fuerte": "Cavalry and buildings",
 "debil": "Ranged Soldiers"
 }
 },
 "281": {
 "en": {
+"rol": "Frankish unique Infantry with ranged melee attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Frankish unique Infantry with ranged melee attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "282": {
 "en": {
+"rol": "Saracen unique Cavalry with ranged melee attack",
 "fuerte": "Mounted Units",
 "debil": "Archery Units and Spearman-line"
 },
 "es": {
+"rol": "Saracen unique Cavalry with ranged melee attack",
 "fuerte": "Mounted Units",
 "debil": "Archery Units and Spearman-line"
 }
 },
 "283": {
 "en": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 },
 "es": {
+"rol": "Caballería pesada poderosa y polivalente",
 "fuerte": "infantería y arqueros a pie",
 "debil": "líneas de lanceros, jinetes de camello y monjes"
 }
 },
 "291": {
 "en": {
+"rol": "Japanese unique Infantry that quickly charges into battle and has fast attack",
 "fuerte": "Unique Units",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Japanese unique Infantry that quickly charges into battle and has fast attack",
 "fuerte": "Unique Units",
 "debil": "Archery Units and Gunners"
 }
 },
 "329": {
 "en": {
+"rol": "Fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 },
 "es": {
+"rol": "Fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 }
 },
 "330": {
 "en": {
+"rol": "Fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 },
 "es": {
+"rol": "Fast moving anti-cavalry Cavalry",
 "fuerte": "Mounted Units",
 "debil": "Infantry, Monks and Foot Archers"
 }
 },
 "358": {
 "en": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 },
 "es": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 }
 },
 "359": {
 "en": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 },
 "es": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 }
 },
 "38": {
 "en": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 },
 "es": {
+"rol": "Caballería pesada poderosa y polivalente",
 "fuerte": "infantería y arqueros a pie",
 "debil": "líneas de lanceros, jinetes de camello y monjes"
 }
 },
 "39": {
 "en": {
+"rol": "Fast moving Mounted Archer for hit and run attacks",
 "fuerte": "slow units at long range",
 "debil": "Skirmishers, Scorpions and units at close range"
 },
 "es": {
+"rol": "Fast moving Mounted Archer for hit and run attacks",
 "fuerte": "slow units at long range",
 "debil": "Skirmishers, Scorpions and units at close range"
 }
 },
 "4": {
 "en": {
+"rol": "All-purpose Foot Archer",
 "fuerte": "units at long range",
 "debil": "Skirmishers, Mangonel-line and units at close range"
 },
 "es": {
+"rol": "Arquero a pie polivalente",
 "fuerte": "unidades a distancia",
 "debil": "guerrilleros, líneas de mangoneles y unidades a corta distancia"
 }
 },
 "40": {
 "en": {
-"fuerte": null,
+"rol": "Byzantine unique Heavy Cavalry",
+"fuerte": "Infantry",
 "debil": "Archery Units"
 },
 "es": {
-"fuerte": null,
+"rol": "Byzantine unique Heavy Cavalry",
+"fuerte": "Infantry",
 "debil": "Archery Units"
 }
 },
 "41": {
 "en": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 },
 "es": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 }
 },
 "440": {
 "en": {
+"rol": "Demolition Siege Weapon armed with explosives",
 "fuerte": "buildings",
 "debil": "other units"
 },
 "es": {
+"rol": "Demolition Siege Weapon armed with explosives",
 "fuerte": "buildings",
 "debil": "other units"
 }
 },
 "441": {
 "en": {
-"fuerte": null,
+"rol": "Fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "448": {
 "en": {
-"fuerte": null,
+"rol": "Fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "46": {
 "en": {
+"rol": "Turkish unique Foot Gunner with powerful attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Skirmishers"
 },
 "es": {
+"rol": "Turkish unique Foot Gunner with powerful attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Skirmishers"
 }
 },
 "473": {
 "en": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 }
 },
 "474": {
 "en": {
+"rol": "Fast moving Mounted Archer for hit and run attacks",
 "fuerte": "slow units at long range",
 "debil": "Skirmishers, Scorpions and units at close range"
 },
 "es": {
+"rol": "Fast moving Mounted Archer for hit and run attacks",
 "fuerte": "slow units at long range",
 "debil": "Skirmishers, Scorpions and units at close range"
 }
 },
 "492": {
 "en": {
+"rol": "All-purpose Foot Archer",
 "fuerte": "units at long range",
 "debil": "Skirmishers, Mangonel-line and units at close range"
 },
 "es": {
+"rol": "All-purpose Foot Archer",
 "fuerte": "units at long range",
 "debil": "Skirmishers, Mangonel-line and units at close range"
 }
 },
 "5": {
 "en": {
-"fuerte": null,
+"rol": "Foot Gunner with powerful attack, but inaccurate at long range",
+"fuerte": "Infantry",
 "debil": "Ranged Soldiers"
 },
 "es": {
-"fuerte": null,
+"rol": "Foot Gunner with powerful attack, but inaccurate at long range",
+"fuerte": "Infantry",
 "debil": "Ranged Soldiers"
 }
 },
 "530": {
 "en": {
+"rol": "British unique Foot Archer with exceptional range",
 "fuerte": "Infantry",
 "debil": "Cavalry and Skirmishers"
 },
 "es": {
+"rol": "British unique Foot Archer with exceptional range",
 "fuerte": "Infantry",
 "debil": "Cavalry and Skirmishers"
 }
 },
 "531": {
 "en": {
+"rol": "Frankish unique Infantry with ranged melee attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Frankish unique Infantry with ranged melee attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "534": {
 "en": {
+"rol": "Celtic unique Infantry with fast movement speed",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Cavalry"
 },
 "es": {
+"rol": "Celtic unique Infantry with fast movement speed",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Cavalry"
 }
 },
 "546": {
 "en": {
-"fuerte": null,
+"rol": "Fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Fast moving Cavalry for scouting and raiding. Resistant to conversion",
+"fuerte": "Monastery Units",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "553": {
 "en": {
-"fuerte": null,
+"rol": "Byzantine unique Heavy Cavalry",
+"fuerte": "Infantry",
 "debil": "Archery Units"
 },
 "es": {
-"fuerte": null,
+"rol": "Byzantine unique Heavy Cavalry",
+"fuerte": "Infantry",
 "debil": "Archery Units"
 }
 },
 "554": {
 "en": {
+"rol": "Teutonic unique Infantry with exceptional melee armor. Slow but resistant to conversion",
 "fuerte": "melee units",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Teutonic unique Infantry with exceptional melee armor. Slow but resistant to conversion",
 "fuerte": "melee units",
 "debil": "Archery Units and Gunners"
 }
 },
 "555": {
 "en": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 },
 "es": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 }
 },
 "556": {
 "en": {
+"rol": "Saracen unique Cavalry with ranged melee attack",
 "fuerte": "Mounted Units",
 "debil": "Archery Units and Spearman-line"
 },
 "es": {
+"rol": "Saracen unique Cavalry with ranged melee attack",
 "fuerte": "Mounted Units",
 "debil": "Archery Units and Spearman-line"
 }
 },
 "557": {
 "en": {
+"rol": "Turkish unique Foot Gunner with powerful attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Skirmishers"
 },
 "es": {
+"rol": "Turkish unique Foot Gunner with powerful attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Skirmishers"
 }
 },
 "558": {
 "en": {
+"rol": "Persian unique Cavalry that deals trample damage",
 "fuerte": "buildings and units at close range",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Persian unique Cavalry that deals trample damage",
 "fuerte": "buildings and units at close range",
 "debil": "Spearman-line and Monks"
 }
 },
 "559": {
 "en": {
+"rol": "Chinese unique Foot Archer with rapid-fire attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Chinese unique Foot Archer with rapid-fire attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "560": {
 "en": {
+"rol": "Japanese unique Infantry that quickly charges into battle and has fast attack",
 "fuerte": "Unique Units",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Japanese unique Infantry that quickly charges into battle and has fast attack",
 "fuerte": "Unique Units",
 "debil": "Archery Units and Gunners"
 }
 },
 "561": {
 "en": {
+"rol": "Mongol unique Mounted Archer with fast attack",
 "fuerte": "Siege Weapons and Infantry",
 "debil": "Skirmishers, Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Mongol unique Mounted Archer with fast attack",
 "fuerte": "Siege Weapons and Infantry",
 "debil": "Skirmishers, Spearman-line and Camel Riders"
 }
 },
 "567": {
 "en": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 }
 },
 "569": {
 "en": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 },
 "es": {
+"rol": "Powerful all-purpose Heavy Cavalry",
 "fuerte": "Infantry and Foot Archers",
 "debil": "Spearman-line, Camel Riders, and Monks"
 }
 },
 "6": {
 "en": {
+"rol": "Anti-archer Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers and Spearman-line",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Anti-archer Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers and Spearman-line",
 "debil": "units at close range"
 }
 },
 "692": {
 "en": {
+"rol": "Viking unique Infantry that regenerates HP",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Viking unique Infantry that regenerates HP",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Gunners"
 }
 },
 "694": {
 "en": {
+"rol": "Viking unique Infantry that regenerates HP",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Viking unique Infantry that regenerates HP",
 "fuerte": "Infantry and Siege Weapons",
 "debil": "Archery Units and Gunners"
 }
 },
 "7": {
 "en": {
+"rol": "Anti-archer Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers and Spearman-line",
 "debil": "units at close range"
 },
 "es": {
+"rol": "Anti-archer Skirmisher that cannot attack at close range",
 "fuerte": "Ranged Soldiers and Spearman-line",
 "debil": "units at close range"
 }
 },
 "725": {
 "en": {
-"fuerte": null,
+"rol": "Aztec unique Infantry that gains additional damage when defeating military units",
+"fuerte": "Infantry",
 "debil": "Cavalry and Archery Units"
 },
 "es": {
-"fuerte": null,
+"rol": "Aztec unique Infantry that gains additional damage when defeating military units",
+"fuerte": "Infantry",
 "debil": "Cavalry and Archery Units"
 }
 },
 "726": {
 "en": {
-"fuerte": null,
+"rol": "Aztec unique Infantry that gains additional damage when defeating military units",
+"fuerte": "Infantry",
 "debil": "Cavalry and Archery Units"
 },
 "es": {
-"fuerte": null,
+"rol": "Aztec unique Infantry that gains additional damage when defeating military units",
+"fuerte": "Infantry",
 "debil": "Cavalry and Archery Units"
 }
 },
 "73": {
 "en": {
+"rol": "Chinese unique Foot Archer with rapid-fire attack",
 "fuerte": "Infantry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
+"rol": "Arquero a pie exclusivo de los chinos con ataque de disparo rápido",
 "fuerte": "infantería",
 "debil": "arqueros y armas de asedio"
 }
 },
 "74": {
 "en": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 }
 },
 "75": {
 "en": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 }
 },
 "751": {
 "en": {
+"rol": "Fast moving Shock Infantry for scouting and raiding. Resistant to conversion",
 "fuerte": "Monastery Units and Archery Units",
 "debil": "Militia-line and Cavalry"
 },
 "es": {
+"rol": "Fast moving Shock Infantry for scouting and raiding. Resistant to conversion",
 "fuerte": "Monastery Units and Archery Units",
 "debil": "Militia-line and Cavalry"
 }
 },
 "752": {
 "en": {
+"rol": "Fast moving Shock Infantry for scouting and raiding. Resistant to conversion",
 "fuerte": "Monastery Units and Archery Units",
 "debil": "Militia-line and Cavalry"
 },
 "es": {
+"rol": "Fast moving Shock Infantry for scouting and raiding. Resistant to conversion",
 "fuerte": "Monastery Units and Archery Units",
 "debil": "Militia-line and Cavalry"
 }
 },
 "753": {
 "en": {
+"rol": "Fast moving Shock Infantry for scouting and raiding. Resistant to conversion",
 "fuerte": "Monastery Units and Archery Units",
 "debil": "Militia-line and Cavalry"
 },
 "es": {
+"rol": "Fast moving Shock Infantry for scouting and raiding. Resistant to conversion",
 "fuerte": "Monastery Units and Archery Units",
 "debil": "Militia-line and Cavalry"
 }
 },
 "755": {
 "en": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "757": {
 "en": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "759": {
 "en": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 },
 "es": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 }
 },
 "761": {
 "en": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 },
 "es": {
+"rol": "Gothic unique Infantry with exceptional pierce armor",
 "fuerte": "Ranged Soldiers and buildings",
 "debil": "Cavalry and Militia-line"
 }
 },
 "763": {
 "en": {
+"rol": "Mayan unique Foot Archer with fast movement speed",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "Mayan unique Foot Archer with fast movement speed",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry"
 }
 },
 "765": {
 "en": {
+"rol": "Mayan unique Foot Archer with fast movement speed",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry"
 },
 "es": {
+"rol": "Mayan unique Foot Archer with fast movement speed",
 "fuerte": "Archery Units and Infantry",
 "debil": "Cavalry"
 }
 },
 "77": {
 "en": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 },
 "es": {
+"rol": "All-purpose Infantry",
 "fuerte": "buildings, Infantry, Scout Cavalry- and Skirmisher-line",
 "debil": "Ranged Soldiers at long range"
 }
 },
 "771": {
 "en": {
+"rol": "Spanish unique Mounted Gunner with powerful attack and mobility",
 "fuerte": "units at range",
 "debil": "Spearman-line, Skirmishers, and Monks"
 },
 "es": {
+"rol": "Spanish unique Mounted Gunner with powerful attack and mobility",
 "fuerte": "units at range",
 "debil": "Spearman-line, Skirmishers, and Monks"
 }
 },
 "773": {
 "en": {
+"rol": "Spanish unique Mounted Gunner with powerful attack and mobility",
 "fuerte": "units at range",
 "debil": "Spearman-line, Skirmishers, and Monks"
 },
 "es": {
+"rol": "Spanish unique Mounted Gunner with powerful attack and mobility",
 "fuerte": "units at range",
 "debil": "Spearman-line, Skirmishers, and Monks"
 }
 },
 "775": {
 "en": {
+"rol": "Spanish unique Mounted Monk. Converts enemy units and heals friendly units. Faster than Monk but with less sight and range",
 "fuerte": "slow, non-ranged units",
 "debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
 },
 "es": {
+"rol": "Spanish unique Mounted Monk. Converts enemy units and heals friendly units. Faster than Monk but with less sight and range",
 "fuerte": "slow, non-ranged units",
 "debil": "Scout Cavalry-line, Eagle Warriors and Ranged Soldiers"
 }
 },
 "8": {
 "en": {
+"rol": "British unique Foot Archer with exceptional range",
 "fuerte": "Infantry",
 "debil": "Cavalry and Skirmishers"
 },
 "es": {
+"rol": "British unique Foot Archer with exceptional range",
 "fuerte": "Infantry",
 "debil": "Cavalry and Skirmishers"
 }
 },
 "827": {
 "en": {
+"rol": "Korean unique Mounted Archer. Slow but durable",
 "fuerte": "Infantry and Archery Units",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 },
 "es": {
+"rol": "Korean unique Mounted Archer. Slow but durable",
 "fuerte": "Infantry and Archery Units",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 }
 },
 "829": {
 "en": {
+"rol": "Korean unique Mounted Archer. Slow but durable",
 "fuerte": "Infantry and Archery Units",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 },
 "es": {
+"rol": "Korean unique Mounted Archer. Slow but durable",
 "fuerte": "Infantry and Archery Units",
 "debil": "Spearman-line, Skirmishers and Camel Riders"
 }
 },
 "866": {
 "en": {
-"fuerte": null,
+"rol": "Italian unique Foot Archer",
+"fuerte": "Cavalry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
-"fuerte": null,
+"rol": "Italian unique Foot Archer",
+"fuerte": "Cavalry",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "868": {
 "en": {
-"fuerte": null,
+"rol": "Italian unique Foot Archer",
+"fuerte": "Cavalry",
 "debil": "Archery Units and Siege Weapons"
 },
 "es": {
-"fuerte": null,
+"rol": "Italian unique Foot Archer",
+"fuerte": "Cavalry",
 "debil": "Archery Units and Siege Weapons"
 }
 },
 "869": {
 "en": {
+"rol": "Magyar unique Cavalry",
 "fuerte": "Siege Weapons",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Magyar unique Cavalry",
 "fuerte": "Siege Weapons",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "871": {
 "en": {
+"rol": "Magyar unique Cavalry",
 "fuerte": "Siege Weapons",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
+"rol": "Magyar unique Cavalry",
 "fuerte": "Siege Weapons",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "873": {
 "en": {
+"rol": "Slow and heavy Mounted Archer",
 "fuerte": "Archery Units and Infantry",
 "debil": "Spearman-line, Skirmishers, and Camel Riders"
 },
 "es": {
+"rol": "Slow and heavy Mounted Archer",
 "fuerte": "Archery Units and Infantry",
 "debil": "Spearman-line, Skirmishers, and Camel Riders"
 }
 },
 "875": {
 "en": {
+"rol": "Slow and heavy Mounted Archer",
 "fuerte": "Archery Units and Infantry",
 "debil": "Spearman-line, Skirmishers, and Camel Riders"
 },
 "es": {
+"rol": "Slow and heavy Mounted Archer",
 "fuerte": "Archery Units and Infantry",
 "debil": "Spearman-line, Skirmishers, and Camel Riders"
 }
 },
 "876": {
 "en": {
+"rol": "Slavic unique Cavalry with exceptional melee armor",
 "fuerte": "units at close range",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Slavic unique Cavalry with exceptional melee armor",
 "fuerte": "units at close range",
 "debil": "Spearman-line and Monks"
 }
 },
 "878": {
 "en": {
+"rol": "Slavic unique Cavalry with exceptional melee armor",
 "fuerte": "units at close range",
 "debil": "Spearman-line and Monks"
 },
 "es": {
+"rol": "Slavic unique Cavalry with exceptional melee armor",
 "fuerte": "units at close range",
 "debil": "Spearman-line and Monks"
 }
 },
 "879": {
 "en": {
+"rol": "Inca unique Infantry with increased attack range",
 "fuerte": "Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Inca unique Infantry with increased attack range",
 "fuerte": "Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 }
 },
 "881": {
 "en": {
+"rol": "Inca unique Infantry with increased attack range",
 "fuerte": "Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 },
 "es": {
+"rol": "Inca unique Infantry with increased attack range",
 "fuerte": "Cavalry and Infantry",
 "debil": "Archery Units and Gunners"
 }
 },
 "882": {
 "en": {
+"rol": "Fast moving anti-gunpowder Infantry",
 "fuerte": "Gunpowder Units",
 "debil": "Cavalry and Archery Units"
 },
 "es": {
+"rol": "Fast moving anti-gunpowder Infantry",
 "fuerte": "Gunpowder Units",
 "debil": "Cavalry and Archery Units"
 }
 },
 "886": {
 "en": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "887": {
 "en": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 },
 "es": {
-"fuerte": null,
+"rol": "Hunnic unique Heavy Cavalry",
+"fuerte": "buildings",
 "debil": "Spearman-line and Camel Riders"
 }
 },
 "93": {
 "en": {
+"rol": "Anti-cavalry Infantry",
 "fuerte": "Mounted Units, especially elephants",
 "debil": "Ranged Soldiers and Infantry"
 },
 "es": {
+"rol": "Infantería anticaballería",
 "fuerte": "unidades montadas, especialmente elefantes",
 "debil": "soldados a distancia e infantería"
 }

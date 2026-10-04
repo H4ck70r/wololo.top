@@ -2,6 +2,7 @@ import tabla from './nombres-juego.json';
 import taunts from './taunts.json';
 import civsReplay from './civs-replay.json';
 import civsBonus from './civs-bonus.json';
+import contras from './contrarrestos.json';
 
 /**
  * Nombres de edificio, unidad y tecnología, sacados de los ficheros del propio
@@ -144,6 +145,23 @@ export const civDeReplay = (id: number | null | undefined): string | null =>
 export const bonusDeCiv = (id: number | null | undefined, lang: string): string[] | null => {
   if (id == null) return null;
   const f = (civsBonus as Record<string, { en: string[]; es: string[] }>)[String(id)];
+  if (!f) return null;
+  return (lang === 'es' ? f.es : f.en) ?? f.en ?? null;
+};
+
+export interface FichaUnidad { rol: string | null; fuerte: string | null; debil: string | null }
+
+/**
+ * Que es cada unidad y contra que sirve, en palabras del propio juego.
+ *
+ * Sale de la ficha de entrenamiento ("Anti-archer Skirmisher... Strong vs.
+ * Ranged Soldiers and Spearman-line"). Importa que sea literal: aqui no se
+ * opina sobre si una composicion fue buena, se enseña lo que el juego dice de
+ * cada unidad y quien mira saca la cuenta.
+ */
+export const fichaUnidad = (id: number | null | undefined, lang: string): FichaUnidad | null => {
+  if (id == null) return null;
+  const f = (contras as Record<string, { en: FichaUnidad; es: FichaUnidad }>)[String(id)];
   if (!f) return null;
   return (lang === 'es' ? f.es : f.en) ?? f.en ?? null;
 };
