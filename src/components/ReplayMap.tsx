@@ -161,6 +161,141 @@ export default function ReplayMap({ timeline }: Props) {
     return out;
   }, [eventos]);
 
+  /**
+   * El indice de la partida: lo que pasó, en orden, y pinchable.
+   *
+   * Sólo entra lo que el replay SABE. No hay muertes ni edificios destruidos
+   * -el replay guarda ordenes, no estado-, asi que aqui no se habla de
+   * "batallas" ni de quien gano un combate: se dice que alguien mando N
+   * unidades sobre la base del otro, que es literalmente lo que hay grabado.
+   *
+   * Los cupos van POR TIPO y no por peso global. Con un tope global, una
+   * partida larga se llenaba de centros urbanos (cinco llego a sacar uno) y
+   * echaba fuera las vetas agotadas y los empujones, que es justo lo que no
+   * cuenta nadie mas.
+   */
+  const momentos = useMemo(() => {
+    const TEC_EDAD: Record<number, string> = {
+      101: t('up.feudal'), 102: t('up.castle'), 103: t('up.imperial'),
+    };
+    const MILITARES = [12, 87, 101, 49];
+    const TC = 621;
+    const CASTILLO = 82;
+    const nombreDe = (j: number) =>
+      timeline.jugadores.find((x) => x.numero === j)?.nombre ?? `#${j}`;
+    const rivalDe = (j: number) =>
+      timeline.jugadores.find((x) => x.numero !== j)?.nombre ?? '';
+
+    type Momento = { t: number; j: number; texto: string };
+    const edades: Momento[] = [];
+    const castillos: Momento[] = [];
+    const centros: Momento[] = [];
+    const militares: Momento[] = [];
+    const finales: Momento[] = [];
+
+    const puesta = new Set<string>();
+    const tcs = new Map<number, number>();
+    const castillosPorJugador = new Map<number, number>();
+    const primerMilitar = new Set<number>();
+
+    for (const e of eventos) {
+      if (e.tipo === 'tech' && e.id != null && TEC_EDAD[e.id]) {
+        //  Un jugador puede pulsar la edad, cancelar y volver a pulsarla.
+        const clave = `edad-${e.j}-${e.id}`;
+        if (puesta.has(clave)) continue;
+        puesta.add(clave);
+        edades.push({ t: e.t, j: e.j, texto: t('mom.age', { quien: nombreDe(e.j), edad: TEC_EDAD[e.id] }) });
+      } else if (e.tipo === 'resign') {
+        finales.push({ t: e.t, j: e.j, texto: t('mom.resign', { quien: nombreDe(e.j) }) });
+      } else if (e.tipo === 'build' && e.id != null) {
+        if (e.id === CASTILLO) {
+          //  El primero cuenta una decision; el cuarto es relleno.
+          const n = (castillosPorJugador.get(e.j) ?? 0) + 1;
+          castillosPorJugador.set(e.j, n);
+          if (n <= 2) castillos.push({ t: e.t, j: e.j, texto: t('mom.castle', { quien: nombreDe(e.j) }) });
+        } else if (e.id === TC) {
+          //  El primero es el de inicio y no lo construyó nadie: se cuenta
+          //  desde el segundo, que es el que decide si hay economia.
+          const n = (tcs.get(e.j) ?? 1) + 1;
+          tcs.set(e.j, n);
+          if (n <= 3) centros.push({ t: e.t, j: e.j, texto: t('mom.tc', { quien: nombreDe(e.j), n: String(n) }) });
+        } else if (MILITARES.includes(e.id) && !primerMilitar.has(e.j)) {
+          primerMilitar.add(e.j);
+          militares.push({ t: e.t, j: e.j, texto: t('mom.mil', { quien: nombreDe(e.j), que: nombreEdificio(e.id, lang) }) });
+        }
+      }
+    }
+
+    //  Las vetas, agrupadas. El replay da una entrada POR CASILLA, y siete
+    //  casillas pegadas son una veta, no siete momentos. Se juntan las que se
+    //  tocan y la veta se agota cuando se agota su ultima casilla.
+    const RADIO_VETA = 3;
+    const MIN_CASILLAS = 3;
+    const vetas: { tipo: 'oro' | 'piedra'; x: number; y: number; n: number; fin: number }[] = [];
+    for (const r of timeline.recursos ?? []) {
+      if (r.t !== 'oro' && r.t !== 'piedra') continue;
+      if (r.agotado_ms == null || r.usado_ms == null) continue;
+      const v = vetas.find((u) => u.tipo === r.t && Math.hypot(u.x - r.x, u.y - r.y) <= RADIO_VETA);
+      if (v) {
+        v.x = (v.x * v.n + r.x) / (v.n + 1);
+        v.y = (v.y * v.n + r.y) / (v.n + 1);
+        v.n += 1;
+        v.fin = Math.max(v.fin, r.agotado_ms);
+      } else {
+        vetas.push({ tipo: r.t, x: r.x, y: r.y, n: 1, fin: r.agotado_ms });
+      }
+    }
+    const agotadas: Momento[] = [];
+    for (const v of vetas) {
+      if (v.n < MIN_CASILLAS) continue;
+      let cerca = -1;
+      let mejor = Infinity;
+      for (const [j, pos] of inicios) {
+        const d = Math.hypot(pos.x - v.x, pos.y - v.y);
+        if (d < mejor) { mejor = d; cerca = j; }
+      }
+      //  Si no cae claramente junto a una base no se atribuye a nadie.
+      if (cerca < 0 || mejor > lado * 0.3) continue;
+      agotadas.push({ t: v.fin, j: cerca,
+                      texto: t('mom.agotado', {
+                        que: t(v.tipo === 'oro' ? 'mom.gold' : 'mom.stone'), quien: nombreDe(cerca) }) });
+    }
+
+    //  Ejercito mandado a casa del otro: una orden de muchas unidades que cae
+    //  cerca de la base rival. Se juntan las que van seguidas para no listar
+    //  veinte clics del mismo empujon.
+    const UNIDADES_MIN = 6;
+    const JUNTAR_MS = 120_000;
+    const ultimo = new Map<number, number>();
+    const empujones: Momento[] = [];
+    for (const o of ejercito) {
+      if (o.n < UNIDADES_MIN) continue;
+      let victima = -1;
+      for (const [j, pos] of inicios) {
+        if (j === o.j) continue;
+        if (Math.hypot(pos.x - o.x, pos.y - o.y) < lado * 0.18) { victima = j; break; }
+      }
+      if (victima < 0) continue;
+      if (o.t - (ultimo.get(o.j) ?? -Infinity) < JUNTAR_MS) continue;
+      ultimo.set(o.j, o.t);
+      empujones.push({ t: o.t, j: o.j,
+                       texto: t('mom.push', { quien: nombreDe(o.j), n: String(o.n), rival: rivalDe(o.j) }) });
+    }
+
+    //  Los primeros de cada cosa, que son los que cuentan algo.
+    const porTiempo = (a: Momento, b: Momento) => a.t - b.t;
+    const out = [
+      ...edades,
+      ...finales,
+      ...castillos,
+      ...centros,
+      ...militares,
+      ...agotadas.sort(porTiempo).slice(0, 3),
+      ...empujones.sort(porTiempo).slice(0, 4),
+    ];
+    return out.sort(porTiempo);
+  }, [eventos, ejercito, inicios, lado, timeline, t, lang]);
+
   useEffect(() => {
     if (!corriendo) { ultimoCuadro.current = null; return; }
     let vivo = true;
@@ -567,6 +702,52 @@ export default function ReplayMap({ timeline }: Props) {
           );
         })}
       </div>
+
+      {/* El indice de la partida. Un mapa animado sin esto obliga a arrastrar
+          a ciegas buscando el momento en que paso algo; aqui esta escrito y se
+          salta de un toque. Se resalta el ultimo momento ya ocurrido para que
+          la lista acompañe a la animacion en vez de competir con ella. */}
+      {momentos.length > 0 && (
+        <div className="mt-3">
+          <div className="flex items-baseline justify-between gap-2 mb-1.5">
+            <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+              {t('mom.title')}
+            </span>
+            <span className="text-[11px] text-gray-600">{t('mom.hint')}</span>
+          </div>
+          <ol className="m-0 p-0 list-none max-h-44 overflow-y-auto flex flex-col gap-px pr-1">
+            {momentos.map((m, i) => {
+              const pasado = m.t <= ahora;
+              const actual = pasado && (i === momentos.length - 1 || momentos[i + 1].t > ahora);
+              return (
+                <li key={i}>
+                  <button
+                    onClick={() => { setCorriendo(false); setAhora(m.t); }}
+                    className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left border-none cursor-pointer transition-colors ${
+                      actual ? 'bg-gold-500/15' : 'bg-transparent hover:bg-dark-600'
+                    }`}
+                  >
+                    <span className={`text-[11px] tabular-nums shrink-0 ${
+                      actual ? 'text-gold-400' : 'text-gray-500'
+                    }`}>
+                      {reloj(m.t)}
+                    </span>
+                    <span
+                      className="w-2 h-2 rounded-sm shrink-0"
+                      style={{ background: colorDe(m.j), opacity: pasado ? 1 : 0.4 }}
+                    />
+                    <span className={`text-xs min-w-0 truncate ${
+                      pasado ? 'text-gray-300' : 'text-gray-500'
+                    }`}>
+                      {m.texto}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      )}
 
       {/* Plegada por defecto: ocupaba cuatro filas bajo el mapa y el mapa es
           lo que se quiere mirar. La línea de jugadores queda fuera porque sin
