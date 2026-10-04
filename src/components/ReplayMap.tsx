@@ -78,6 +78,11 @@ export default function ReplayMap({ timeline }: Props) {
   const [corriendo, setCorriendo] = useState(false);
   const [velocidad, setVelocidad] = useState(VELOCIDAD_POR_DEFECTO);
   const [ahora, setAhora] = useState(0);
+  const caja = useRef<HTMLDivElement>(null);
+  const [pantallaCompleta, setPantallaCompleta] = useState(false);
+  //  El dibujado mide el lienzo con clientWidth: al cambiar de tamaño hay que
+  //  forzar un repintado o el mapa se queda con la escala vieja, estirado.
+  const [medida, setMedida] = useState(0);
   const ultimoCuadro = useRef<number | null>(null);
 
   const duracion = timeline.duracion_ms || 1;
@@ -295,6 +300,38 @@ export default function ReplayMap({ timeline }: Props) {
     ];
     return out.sort(porTiempo);
   }, [eventos, ejercito, inicios, lado, timeline, t, lang]);
+
+  useEffect(() => {
+    //  El usuario puede salir con Escape sin tocar el boton, asi que el estado
+    //  se lee del navegador y no se adivina.
+    const cambio = () => setPantallaCompleta(document.fullscreenElement === caja.current);
+    document.addEventListener('fullscreenchange', cambio);
+    return () => document.removeEventListener('fullscreenchange', cambio);
+  }, []);
+
+  useEffect(() => {
+    const c = lienzo.current;
+    if (!c || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => setMedida((n) => n + 1));
+    ro.observe(c);
+    return () => ro.disconnect();
+  }, []);
+
+  //  Safari en iPhone no deja poner un div a pantalla completa (solo video),
+  //  asi que alli el boton no se pinta: un boton que no hace nada es peor que
+  //  no tenerlo. Se mira despues del montaje para no romper el render en
+  //  servidor.
+  const [puedeCompleta, setPuedeCompleta] = useState(false);
+  useEffect(() => {
+    setPuedeCompleta(
+      !!document.fullscreenEnabled && typeof caja.current?.requestFullscreen === 'function'
+    );
+  }, []);
+
+  const alternarPantallaCompleta = () => {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    else caja.current?.requestFullscreen().catch(() => {});
+  };
 
   useEffect(() => {
     if (!corriendo) { ultimoCuadro.current = null; return; }
@@ -595,7 +632,7 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.fillStyle = '#ffffff';
       ctx.fillText(n.texto, Xe, Ye);
     }
-  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline]);
+  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline, medida]);
 
   const reciente = useMemo(() => {
     const ventana = 45_000;
@@ -617,8 +654,73 @@ export default function ReplayMap({ timeline }: Props) {
 
   return (
     <div>
-      <div className="relative">
-        <canvas ref={lienzo} className="w-full aspect-[2/1] rounded-lg border border-dark-400 block" />
+      {/* En pantalla completa la caja pasa a ocupar todo y el lienzo deja de
+          llevar proporcion fija: el dibujado ya centra el rombo dentro de lo
+          que le den, asi que se adapta solo a cualquier pantalla. */}
+      <div
+        ref={caja}
+        className={`relative ${pantallaCompleta ? 'w-screen h-screen bg-dark-900 flex items-center justify-center' : ''}`}
+      >
+        <canvas
+          ref={lienzo}
+          className={`block ${
+            pantallaCompleta
+              ? 'w-full h-full'
+              : 'w-full aspect-[2/1] rounded-lg border border-dark-400'
+          }`}
+        />
+
+        {puedeCompleta && (
+        <button
+          onClick={alternarPantallaCompleta}
+          title={pantallaCompleta ? t('map.exitFull') : t('map.full')}
+          aria-label={pantallaCompleta ? t('map.exitFull') : t('map.full')}
+          className="absolute top-2 right-2 p-2 rounded-lg bg-dark-900/75 text-gray-300 hover:text-gold-400 border-none cursor-pointer transition-colors"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {pantallaCompleta ? (
+              <path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6" />
+            ) : (
+              <path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6" />
+            )}
+          </svg>
+        </button>
+        )}
+
+        {/* Mirar sin poder moverse por la partida no sirve de nada: en pantalla
+            completa los mandos van encima del mapa. */}
+        {pantallaCompleta && (
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-dark-900 to-transparent">
+            <div className="flex items-center gap-3 max-w-3xl mx-auto">
+              <button
+                onClick={() => { if (ahora >= duracion) setAhora(0); setCorriendo((v) => !v); }}
+                className="px-4 py-2 rounded-lg bg-gold-500/15 border border-gold-500/40 text-gold-400 text-sm font-medium cursor-pointer shrink-0"
+              >
+                {corriendo ? t('map.pause') : t('map.play')}
+              </button>
+              {/* Los mismos marcadores de edad que abajo: sin ellos la barra
+                  de pantalla completa es una linea sin referencias. */}
+              <div className="flex-1 relative">
+                <input
+                  type="range" min={0} max={duracion} value={ahora}
+                  onChange={(e) => { setCorriendo(false); setAhora(Number(e.target.value)); }}
+                  className="w-full accent-gold-400" aria-label={t('map.scrub')}
+                />
+                <div className="relative h-4 -mt-1 pointer-events-none">
+                  {hitos.map((h, i) => (
+                    <span key={i}
+                      className="absolute text-[10px] tabular-nums -translate-x-1/2"
+                      style={{ left: `${(h.t / duracion) * 100}%`, color: colorDe(h.j) }}
+                      title={reloj(h.t)}
+                    >
+                      {h.etiqueta}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="absolute top-2 left-2 text-xs tabular-nums text-gray-300 bg-dark-900/75 rounded px-2 py-1">
           {reloj(ahora)} / {reloj(duracion)}
         </div>

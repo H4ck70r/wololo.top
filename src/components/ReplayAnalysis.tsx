@@ -245,7 +245,11 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
           cambiar de pestaña no deberia hacerlo desaparecer. En pantalla ancha
           va a la izquierda con el detalle al lado; por debajo de lg se apilan,
           con el mapa primero. */}
-      <div className="grid gap-4 items-start lg:grid-cols-[minmax(0,1.3fr)_20rem] xl:grid-cols-[minmax(0,1.5fr)_24rem]">
+      {/* El reparto cambio al haber pantalla completa: antes el mapa se llevaba
+          1,5 contra 24rem y el panel de la derecha quedaba en 384px, con las
+          dos tarjetas de jugador estrujadas y las graficas sin aire. Si el mapa
+          grande esta a un clic, en linea no necesita acapararlo. */}
+      <div className="grid gap-4 items-start lg:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
         <div className="min-w-0">
           <ReplayMap timeline={timeline} />
         </div>
