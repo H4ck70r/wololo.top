@@ -82,7 +82,7 @@ export default function MatchDetailPage() {
 
         {/* Sin "Mode": repetia palabra por palabra el tipo de partida que ya
             esta ahi arriba, y en un movil eso es media pantalla de nada. */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           <InfoBox label="Map" value={match.map || 'Unknown'} />
           <InfoBox label="Duration" value={formatDuration(match.duration_seconds)} />
           <InfoBox label="Players" value={`${match.player_count}`} />

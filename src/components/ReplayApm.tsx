@@ -228,7 +228,9 @@ export default function ReplayApm({ timeline }: Props) {
       <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('apm.title')}
         <Nota>
-          {t('apm.note')}
+          {t('apm.queEs')}
+          <span className="block mt-2">{t('apm.repetidasFrase', { n: '20' })}</span>
+          <span className="block mt-2">{t('apm.note')}</span>
           <span className="block mt-2">{t('apm.limite')}</span>
         </Nota>
       </h4>
@@ -241,26 +243,39 @@ export default function ReplayApm({ timeline }: Props) {
               <span className="text-sm text-gray-200">{nombreJ(s.numero)}</span>
             </div>
 
-            {/* Una frase y no cuatro numeros sueltos: lo que importa es
-                cuantas ordenes utiles hizo por minuto, y si eso es mucho o
-                poco para su nivel. */}
-            <p className="text-[15px] text-gray-200 m-0 mb-1">
-              {t('apm.frase', { total: String(s.apm), efectivas: String(s.eapm) })}
-            </p>
-            <p className="text-xs text-gray-500 m-0 mb-1">
-              {t('apm.repetidasFrase', { n: String(s.repetido) })}
-            </p>
+            {/* El numero crudo delante, que es lo que se viene a comparar, y
+                la frase que lo explica dentro de la nota del titulo. Antes
+                estaba al reves y habia que leer para enterarse del dato. */}
             {(() => {
               const r = refDeFranja(timeline.jugadores.find((j) => j.numero === s.numero)?.rating);
-              if (!r) return null;
-              const dif = s.apm - r.apm;
+              const dif = r ? s.apm - r.apm : null;
+              const frase = r
+                ? t(dif! >= 0 ? 'apm.masQueFranja' : 'apm.menosQueFranja',
+                    { n: String(Math.abs(Math.round(dif!))), franja: r.franja, ref: String(Math.round(r.apm)) })
+                : undefined;
               return (
-                <p className="text-xs m-0 mb-3">
-                  <span className={dif >= 0 ? 'text-emerald-400/90' : 'text-red-400/90'}>
-                    {t(dif >= 0 ? 'apm.masQueFranja' : 'apm.menosQueFranja',
-                       { n: String(Math.abs(Math.round(dif))), franja: r.franja, ref: String(Math.round(r.apm)) })}
-                  </span>
-                </p>
+                <dl className="grid grid-cols-3 gap-3 m-0 mb-3">
+                  <div className="min-w-0">
+                    <dt className="text-[11px] text-gray-500 leading-tight">{t('apm.corto')}</dt>
+                    <dd className="m-0 text-2xl tabular-nums text-gray-100 leading-none mt-0.5">{s.apm}</dd>
+                    {r && (
+                      <dd className="m-0 mt-1" title={frase}>
+                        <span className={`text-[11px] tabular-nums ${dif! >= 0 ? 'text-emerald-400/90' : 'text-red-400/90'}`}>
+                          {dif! >= 0 ? '+' : '−'}{Math.abs(Math.round(dif!))}
+                        </span>
+                        <span className="text-[11px] text-gray-600"> {t('apm.vsFranja', { franja: r.franja })}</span>
+                      </dd>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <dt className="text-[11px] text-gray-500 leading-tight">{t('apm.eapmCorto')}</dt>
+                    <dd className="m-0 text-2xl tabular-nums text-gray-100 leading-none mt-0.5">{s.eapm}</dd>
+                  </div>
+                  <div className="min-w-0">
+                    <dt className="text-[11px] text-gray-500 leading-tight">{t('apm.repeCorto')}</dt>
+                    <dd className="m-0 text-2xl tabular-nums text-gray-400 leading-none mt-0.5">{s.repetido}%</dd>
+                  </div>
+                </dl>
               );
             })()}
 
