@@ -1,4 +1,5 @@
 import tabla from './nombres-juego.json';
+import taunts from './taunts.json';
 
 /**
  * Nombres de edificio, unidad y tecnología, sacados de los ficheros del propio
@@ -106,3 +107,15 @@ const RUTA = (grupo: string, f?: FichaJuego) =>
 export const iconoEdificio = (id: number) => RUTA('buildings', edificio(id));
 export const iconoUnidad = (id: number) => RUTA('units', unidad(id));
 export const iconoTecnologia = (id: number) => RUTA('techs', tecnologia(id));
+
+/**
+ * Lo que dice un taunt, sacado de los ficheros del juego.
+ *
+ * El numero que se teclea es el indice: el 11 es la risa, el 30 es "Wololo".
+ * Enseñar "taunt 14" a secas no se lo lee nadie; "Comienza a jugar ya" si.
+ */
+export const textoTaunt = (n: number, lang: string): string | null => {
+  const t = (taunts as Record<string, { en: string; es: string }>)[String(n)];
+  if (!t) return null;
+  return lang === 'es' ? t.es : t.en;
+};

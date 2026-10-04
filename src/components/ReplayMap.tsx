@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useT } from '../lib/i18n';
 import { colorDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline } from '../lib/types';
-import { nombreEdificio } from '../lib/juego';
+import { nombreEdificio, textoTaunt } from '../lib/juego';
 import { expandir, paletaDelMapa, resumenTerreno } from '../lib/terreno';
 
 interface Props {
@@ -1013,7 +1013,7 @@ export default function ReplayMap({ timeline }: Props) {
                     {m.texto}
                     {m.taunt != null && (
                       <span className="ml-1.5 text-[10px] text-gray-600">
-                        {t('chat.taunt', { n: String(m.taunt) })}
+                        {textoTaunt(m.taunt, lang) ?? t('chat.taunt', { n: String(m.taunt) })}
                       </span>
                     )}
                   </span>
