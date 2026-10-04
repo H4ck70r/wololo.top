@@ -1,6 +1,7 @@
 import tabla from './nombres-juego.json';
 import taunts from './taunts.json';
 import civsReplay from './civs-replay.json';
+import civsBonus from './civs-bonus.json';
 
 /**
  * Nombres de edificio, unidad y tecnología, sacados de los ficheros del propio
@@ -131,3 +132,18 @@ export const textoTaunt = (n: number, lang: string): string | null => {
  */
 export const civDeReplay = (id: number | null | undefined): string | null =>
   id == null ? null : ((civsReplay as Record<string, string>)[String(id)] ?? null);
+
+/**
+ * Los bonus de una civilizacion, en las palabras del propio juego.
+ *
+ * Salen del mismo sitio que los nombres y van indexados por el MISMO id que
+ * usa el replay: nombre en 10270+id, ficha en 120149+id. La primera linea es
+ * el tipo de civilizacion ("Cavalry civilization") y el resto los bonus,
+ * la unidad unica, las tecnologias unicas y el bonus de equipo.
+ */
+export const bonusDeCiv = (id: number | null | undefined, lang: string): string[] | null => {
+  if (id == null) return null;
+  const f = (civsBonus as Record<string, { en: string[]; es: string[] }>)[String(id)];
+  if (!f) return null;
+  return (lang === 'es' ? f.es : f.en) ?? f.en ?? null;
+};

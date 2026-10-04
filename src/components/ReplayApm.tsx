@@ -136,7 +136,10 @@ export default function ReplayApm({ timeline }: Props) {
 
   if (!series.length) return <p className="text-sm text-gray-500">{t('common.noData')}</p>;
 
-  const techo = Math.max(1, ...series.flatMap((x) => x.serie.map((y) => y[3] ?? 0)));
+  //  El techo sale del TOTAL de ordenes, no solo de las efectivas: las barras
+  //  se apilan y si se normaliza por las efectivas, la parte desperdiciada se
+  //  sale por arriba.
+  const techo = Math.max(1, ...series.flatMap((x) => x.serie.map((y) => (y[1] ?? 0) + (y[2] ?? 0))));
   const largo = Math.max(...series.map((x) => x.serie.length));
 
   return (
@@ -279,16 +282,28 @@ export default function ReplayApm({ timeline }: Props) {
               );
             })()}
 
-            {/* Las efectivas minuto a minuto. */}
+            {/* Minuto a minuto, apilado: la columna entera son TODAS las
+                ordenes de ese minuto y la parte solida las que hicieron algo
+                nuevo. El hueco de arriba es el clic repetido, y verlo por
+                minutos dice donde se va: no es lo mismo repartido que
+                concentrado en las peleas. Pintar solo las efectivas, como
+                estaba, escondia justo eso. */}
             <div className="flex items-end gap-px h-14">
               {Array.from({ length: largo }, (_, m) => {
                 const fila = s.serie.find((x) => x[0] === m);
-                const v = fila ? (fila[3] ?? 0) : 0;
+                const total = fila ? (fila[1] ?? 0) + (fila[2] ?? 0) : 0;
+                const util = fila ? (fila[3] ?? 0) : 0;
+                const perdidas = Math.max(0, total - util);
                 return (
                   <div key={m} className="flex-1 h-full flex flex-col justify-end"
-                       title={`${m}:00 · ${v}`}>
-                    <span className="block w-full rounded-t-[1px]"
-                          style={{ height: `${Math.max((v / techo) * 100, v ? 3 : 0)}%`,
+                       title={`${m}:00 · ${total} ${t('apm.corto')} · ${util} ${t('apm.eapmCorto')}`}>
+                    {perdidas > 0 && (
+                      <span className="block w-full rounded-t-[1px]"
+                            style={{ height: `${(perdidas / techo) * 100}%`,
+                                     background: colorDe(s.numero), opacity: 0.22 }} />
+                    )}
+                    <span className="block w-full"
+                          style={{ height: `${Math.max((util / techo) * 100, util ? 3 : 0)}%`,
                                    background: colorDe(s.numero) }} />
                   </div>
                 );
@@ -296,7 +311,7 @@ export default function ReplayApm({ timeline }: Props) {
             </div>
             <div className="flex justify-between text-[10px] text-gray-600 mt-0.5">
               <span>0:00</span>
-              <span className="text-gray-500">{t('apm.ejeY', { pico: String(s.pico) })}</span>
+              <span className="text-gray-500">{t('apm.leyendaBarras')}</span>
               <span>{largo}:00</span>
             </div>
 

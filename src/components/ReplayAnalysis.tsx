@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
-import { civDeReplay } from '../lib/juego';
+import Nota from './Nota';
+import { civDeReplay, bonusDeCiv } from '../lib/juego';
 import ReplayMap from './ReplayMap';
 import ReplayUnits from './ReplayUnits';
 import ReplayEconomy from './ReplayEconomy';
@@ -52,6 +53,27 @@ function Delta({ v, seg }: { v: { dif: number; mejor: boolean; franja: string } 
       title={t('ana.vsBracket', { b: v.franja })}
     >
       {v.mejor ? '−' : '+'}{n}
+    </span>
+  );
+}
+
+/** La civilizacion con sus bonus detras del icono, en palabras del juego. */
+function Civ({ id }: { id: number | null | undefined }) {
+  const { lang } = useT();
+  const nombre = civDeReplay(id);
+  if (!nombre) return null;
+  const lineas = bonusDeCiv(id, lang);
+  return (
+    <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
+      {nombre}
+      {lineas && lineas.length > 0 && (
+        <Nota>
+          <span className="block font-medium text-gray-300 mb-1">{nombre}</span>
+          {lineas.map((l, i) => (
+            <span key={i} className={`block ${i === 0 ? 'text-gray-500 mb-1' : ''}`}>{l}</span>
+          ))}
+        </Nota>
+      )}
     </span>
   );
 }
@@ -159,9 +181,11 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
               {celdas.map((c, k) => (
                 <th key={k} className="py-2 pl-2 text-right font-medium text-gray-300">
                   <span className="block truncate">{c.j.nombre}</span>
-                  <span className="block text-[10px] text-gray-500 font-normal truncate">
-                    {[civDeReplay(c.j.civ), c.j.es_ia ? t('up.ai') : c.j.rating]
-                      .filter(Boolean).join(' · ')}
+                  <span className="block text-[10px] text-gray-500 font-normal">
+                    <Civ id={c.j.civ} />
+                    {(c.j.es_ia || c.j.rating != null) && (
+                      <span className="ml-1">· {c.j.es_ia ? t('up.ai') : c.j.rating}</span>
+                    )}
                   </span>
                 </th>
               ))}
@@ -207,9 +231,7 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
                 <tr key={k} className="border-b border-dark-500/40">
                   <td className="py-2 pr-3 text-gray-300 whitespace-nowrap">
                     {j.nombre}
-                    {civDeReplay(j.civ) && (
-                      <span className="ml-1.5 text-[11px] text-gray-500">{civDeReplay(j.civ)}</span>
-                    )}
+                    <span className="ml-1.5"><Civ id={j.civ} /></span>
                     {j.rating != null && (
                       <span className="ml-1.5 text-[10px] text-gray-500 tabular-nums">{j.rating}</span>
                     )}
