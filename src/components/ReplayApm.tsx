@@ -1,8 +1,9 @@
+import { Fragment } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
 import Nota from './Nota';
-import { nombreEdificio } from '../lib/juego';
+import { nombreEdificio, nombreUnidad } from '../lib/juego';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline, LevelBenchmarksResponse } from '../lib/types';
 
@@ -72,7 +73,8 @@ export default function ReplayApm({ timeline }: Props) {
    */
   const RADIO_BASE = 22;       // casillas que se consideran "su base"
   const RADIO_LLEGADA = 16;
-  const RADIO_MIRADA = 14;      // cuando se da por mirado un edificio    // cuando se da por mirado un sitio
+  const RADIO_MIRADA = 14;
+  const ALDEANO = 83;      // cuando se da por mirado un edificio    // cuando se da por mirado un sitio
   const UNIDADES_ATAQUE = 6;
   const SEPARA_ATAQUES_MS = 120_000;
 
@@ -132,7 +134,10 @@ export default function ReplayApm({ timeline }: Props) {
     //  "Mirarlo" es que la camara se acerque a RADIO_MIRADA casillas. No es lo
     //  mismo que saberlo -el minimapa tambien enseña- y por eso la nota lo dice.
     const MILITARES = [12, 87, 101, 49, 82];
-    const construidos: { t: number; id: number; visto: number | null }[] = [];
+    const construidos: {
+      t: number; id: number; visto: number | null;
+      reaccion: { t: number; unidad: number } | null;
+    }[] = [];
     for (const e of timeline.eventos) {
       if (e.tipo !== 'build' || e.j === dueno) continue;
       if (e.id == null || !MILITARES.includes(e.id) || e.x == null || e.y == null) continue;
@@ -141,7 +146,23 @@ export default function ReplayApm({ timeline }: Props) {
         if (tv < e.t) continue;
         if (dist(vx, vy, { x: e.x, y: e.y }) <= RADIO_MIRADA) { visto = tv; break; }
       }
-      construidos.push({ t: e.t, id: e.id, visto });
+      //  Y lo otro medio de la cadena: tras mirarlo, la primera unidad que
+      //  pidio y que NO pedia antes. Si cambio de composicion despues de ver
+      //  algo, eso es una reaccion y se ve; si siguio igual, tambien.
+      //
+      //  Separar las dos mitades es lo que hace util esto: en una partida real
+      //  del establo del rival a los lanceros propios pasaron 10:13, pero solo
+      //  1:47 fue reaccionar y 8:26 fue no mirar. Son dos problemas distintos.
+      let reaccion: { t: number; unidad: number } | null = null;
+      if (visto != null) {
+        const antes = new Set<number>();
+        for (const q of timeline.eventos) {
+          if (q.tipo !== 'queue' || q.j !== dueno || q.id == null || q.id === ALDEANO) continue;
+          if (q.t < visto) { antes.add(q.id); continue; }
+          if (!antes.has(q.id)) { reaccion = { t: q.t, unidad: q.id }; break; }
+        }
+      }
+      construidos.push({ t: e.t, id: e.id, visto, reaccion });
     }
 
     return {
@@ -247,7 +268,8 @@ export default function ReplayApm({ timeline }: Props) {
                 {ojo.construidos.map((b, i) => {
                   const tarda = b.visto == null ? null : b.visto - b.t;
                   return (
-                    <li key={i} className="flex items-baseline gap-2 text-sm">
+                    <Fragment key={i}>
+                    <li className="flex items-baseline gap-2 text-sm">
                       <span className="tabular-nums text-gray-500 text-xs w-12 text-right shrink-0">
                         {reloj(b.t)}
                       </span>
@@ -262,6 +284,20 @@ export default function ReplayApm({ timeline }: Props) {
                         {tarda == null ? t('ojo.nunca') : t('ojo.tras', { v: seg(tarda) })}
                       </span>
                     </li>
+                    {b.visto != null && (
+                      <li className="flex items-baseline gap-2 text-xs pl-14 -mt-0.5 mb-1">
+                        <span className="text-gray-600">↳</span>
+                        <span className="text-gray-500 min-w-0">
+                          {b.reaccion
+                            ? t('ojo.reaccionUnidad', {
+                                u: nombreUnidad(b.reaccion.unidad, lang),
+                                v: seg(b.reaccion.t - b.visto!),
+                              })
+                            : t('ojo.sinReaccion')}
+                        </span>
+                      </li>
+                    )}
+                    </Fragment>
                   );
                 })}
               </ol>
