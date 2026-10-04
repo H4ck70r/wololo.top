@@ -1,5 +1,6 @@
 import tabla from './nombres-juego.json';
 import taunts from './taunts.json';
+import civsReplay from './civs-replay.json';
 
 /**
  * Nombres de edificio, unidad y tecnología, sacados de los ficheros del propio
@@ -119,3 +120,14 @@ export const textoTaunt = (n: number, lang: string): string | null => {
   if (!t) return null;
   return lang === 'es' ? t.es : t.en;
 };
+
+/**
+ * La civilizacion que dice un REPLAY.
+ *
+ * Ojo: no es la numeracion del historial oficial. En una misma partida el
+ * replay dice 1 y 24 donde el historial dice 5 y 34, y son los mismos dos
+ * jugadores -Britons y Portuguese-. Usar la tabla equivocada pinta
+ * civilizaciones que no son, asi que esta va aparte y a proposito.
+ */
+export const civDeReplay = (id: number | null | undefined): string | null =>
+  id == null ? null : ((civsReplay as Record<string, string>)[String(id)] ?? null);

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
+import { civDeReplay } from '../lib/juego';
 import ReplayMap from './ReplayMap';
 import ReplayUnits from './ReplayUnits';
 import ReplayEconomy from './ReplayEconomy';
@@ -158,8 +159,9 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
               {celdas.map((c, k) => (
                 <th key={k} className="py-2 pl-2 text-right font-medium text-gray-300">
                   <span className="block truncate">{c.j.nombre}</span>
-                  <span className="block text-[10px] text-gray-500 tabular-nums font-normal">
-                    {c.j.es_ia ? t('up.ai') : (c.j.rating ?? '')}
+                  <span className="block text-[10px] text-gray-500 font-normal truncate">
+                    {[civDeReplay(c.j.civ), c.j.es_ia ? t('up.ai') : c.j.rating]
+                      .filter(Boolean).join(' · ')}
                   </span>
                 </th>
               ))}
@@ -205,6 +207,9 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
                 <tr key={k} className="border-b border-dark-500/40">
                   <td className="py-2 pr-3 text-gray-300 whitespace-nowrap">
                     {j.nombre}
+                    {civDeReplay(j.civ) && (
+                      <span className="ml-1.5 text-[11px] text-gray-500">{civDeReplay(j.civ)}</span>
+                    )}
                     {j.rating != null && (
                       <span className="ml-1.5 text-[10px] text-gray-500 tabular-nums">{j.rating}</span>
                     )}
