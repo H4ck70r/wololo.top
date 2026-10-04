@@ -1,4 +1,6 @@
 import { useT } from '../lib/i18n';
+import Nota from '../components/Nota';
+import CompareReplayStats from '../components/CompareReplayStats';
 import { useState, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -200,19 +202,21 @@ export default function Compare() {
                 v1={p1 ? (p1.wins + p1.losses) : undefined}
                 v2={p2 ? (p2.wins + p2.losses) : undefined}
                 format="number"
+                neutro
               />
               <CompareRow
                 label={t('common.wins')}
                 v1={p1?.wins}
                 v2={p2?.wins}
                 format="number"
+                neutro
               />
               <CompareRow
                 label={t('common.losses')}
                 v1={p1?.losses}
                 v2={p2?.losses}
                 format="number"
-                lowerIsBetter
+                neutro
               />
             </div>
           </div>
@@ -289,7 +293,9 @@ export default function Compare() {
                   <p className="text-xs text-gray-500 m-0">{p1Name}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm text-gray-500 m-0">{h2h.total_games} games</p>
+                  <p className="text-sm text-gray-500 m-0">
+                    {t('h2h.gamesCount', { n: h2h.total_games })}
+                  </p>
                 </div>
                 <div className="text-left flex-1">
                   <p className="text-2xl font-bold text-blue-accent m-0">{h2h.losses}</p>
@@ -345,7 +351,9 @@ export default function Compare() {
           )}
 
           {/* Civ Stats Comparison */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <CompareReplayStats p1={p1 ?? null} p2={p2 ?? null} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <CivColumn name={p1Name} stats={p1Stats?.civ_stats || []} color="gold" />
             <CivColumn name={p2Name} stats={p2Stats?.civ_stats || []} color="blue" />
           </div>
@@ -426,18 +434,32 @@ function PlayerSelector({
   );
 }
 
+//  Por debajo de esto un porcentaje no dice nada: con dos partidas se sacan
+//  100% y 0% con igual facilidad, y puestos al lado de uno de seiscientas
+//  invitan justo a la conclusion contraria.
+const MIN_MUESTRA = 10;
+
 function CompareRow({
   label,
   v1,
   v2,
   format,
   lowerIsBetter = false,
+  neutro = false,
 }: {
   label: string;
   v1: number | undefined;
   v2: number | undefined;
   format: 'number' | 'percent' | 'rank';
   lowerIsBetter?: boolean;
+  /**
+   * Cifras de volumen: partidas, victorias, derrotas. No se marca ninguna
+   * porque "mas" no es "mejor". Marcar 4.158 partidas en verde frente a 428
+   * decia que el de 4.158 va mejor, y lo unico que dice ese numero es que
+   * lleva mas tiempo jugando; y "menos derrotas" premiaba a quien ha jugado
+   * la decima parte.
+   */
+  neutro?: boolean;
 }) {
   const fmt = (v: number | undefined) => {
     if (v == null) return '-';
@@ -448,7 +470,7 @@ function CompareRow({
 
   let p1Better = false;
   let p2Better = false;
-  if (v1 != null && v2 != null && v1 !== v2) {
+  if (!neutro && v1 != null && v2 != null && v1 !== v2) {
     if (lowerIsBetter) {
       p1Better = v1 < v2;
       p2Better = v2 < v1;
@@ -478,6 +500,7 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <h2 className="text-lg font-semibold text-gray-200 mb-3 m-0">
         <span className={textColor}>{name}</span> — Top Civs
+        <Nota>{t('compare.muestraNota', { n: String(MIN_MUESTRA) })}</Nota>
       </h2>
       {stats.length > 0 ? (
         <table className="w-full text-sm">
@@ -498,7 +521,14 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
                   </div>
                 </td>
                 <td className="py-1.5 px-1 text-right text-gray-400">{c.games}</td>
-                <td className="py-1.5 px-1 text-right text-gray-300">{c.win_rate}%</td>
+                <td
+                  className={`py-1.5 px-1 text-right ${
+                    c.games < MIN_MUESTRA ? 'text-gray-600 italic' : 'text-gray-300'
+                  }`}
+                  title={c.games < MIN_MUESTRA ? t('compare.muestraCorta') : undefined}
+                >
+                  {c.win_rate}%
+                </td>
               </tr>
             ))}
           </tbody>
@@ -517,6 +547,7 @@ function MapColumn({ name, stats, color }: { name: string; stats: any[]; color: 
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <h2 className="text-lg font-semibold text-gray-200 mb-3 m-0">
         <span className={textColor}>{name}</span> — Top Maps
+        <Nota>{t('compare.muestraNota', { n: String(MIN_MUESTRA) })}</Nota>
       </h2>
       {stats.length > 0 ? (
         <table className="w-full text-sm">
@@ -532,7 +563,14 @@ function MapColumn({ name, stats, color }: { name: string; stats: any[]; color: 
               <tr key={i} className="border-b border-dark-500/50">
                 <td className="py-1.5 px-1 text-gray-200">{m.map || cleanMapName(m.map_name)}</td>
                 <td className="py-1.5 px-1 text-right text-gray-400">{m.games}</td>
-                <td className="py-1.5 px-1 text-right text-gray-300">{m.win_rate}%</td>
+                <td
+                  className={`py-1.5 px-1 text-right ${
+                    m.games < MIN_MUESTRA ? 'text-gray-600 italic' : 'text-gray-300'
+                  }`}
+                  title={m.games < MIN_MUESTRA ? t('compare.muestraCorta') : undefined}
+                >
+                  {m.win_rate}%
+                </td>
               </tr>
             ))}
           </tbody>
