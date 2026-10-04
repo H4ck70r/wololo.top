@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
+import Nota from './Nota';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline, LevelBenchmarksResponse } from '../lib/types';
 
@@ -144,10 +145,10 @@ export default function ReplayApm({ timeline }: Props) {
           mas que cualquier numero de acciones por minuto. */}
       {ojo && (
         <div className="mb-6">
-          <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+          <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
             {t('ojo.title', { quien: ojo.nombre })}
+            <Nota>{t('ojo.nota', { quien: ojo.nombre })}</Nota>
           </h4>
-          <p className="text-xs text-gray-600 m-0 mb-3">{t('ojo.nota', { quien: ojo.nombre })}</p>
 
           <div className="flex h-2 rounded-full overflow-hidden mb-2">
             <div style={{ width: `${ojo.casa}%`, background: colorDe(ojo.dueno) }} />
@@ -172,17 +173,15 @@ export default function ReplayApm({ timeline }: Props) {
             ))}
           </dl>
 
-          <h5 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+          <h5 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
             {t('ojo.reaccion')}
             {ojo.mediana != null && (
-              <span className="ml-2 normal-case text-gray-400">
+              <span className="normal-case text-gray-400">
                 {t('ojo.mediana', { v: seg(ojo.mediana) })}
               </span>
             )}
+            <Nota>{t('ojo.reaccionNota', { quien: ojo.nombre })}</Nota>
           </h5>
-          <p className="text-xs text-gray-600 m-0 mb-2">
-            {t('ojo.reaccionNota', { quien: ojo.nombre })}
-          </p>
           {ojo.ataques.length === 0 ? (
             <p className="text-sm text-gray-500 m-0">{t('ojo.sinAtaques')}</p>
           ) : (
@@ -208,10 +207,10 @@ export default function ReplayApm({ timeline }: Props) {
       {/* Las posturas. Es una firma de habitos y por eso va al final. */}
       {timeline.posturas && Object.keys(timeline.posturas).length > 0 && (
         <div className="mb-6">
-          <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+          <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
             {t('ojo.posturas')}
+            <Nota>{t('ojo.posturasNota')}</Nota>
           </h4>
-          <p className="text-xs text-gray-600 m-0 mb-2">{t('ojo.posturasNota')}</p>
           <div className="flex flex-col gap-1">
             {Object.entries(timeline.posturas).map(([num, n]) => (
               <div key={num} className="flex items-center justify-between gap-2 text-sm">
@@ -226,8 +225,13 @@ export default function ReplayApm({ timeline }: Props) {
         </div>
       )}
 
-      <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">{t('apm.title')}</h4>
-      <p className="text-xs text-gray-600 m-0 mb-3">{t('apm.note')}</p>
+      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+        {t('apm.title')}
+        <Nota>
+          {t('apm.note')}
+          <span className="block mt-2">{t('apm.limite')}</span>
+        </Nota>
+      </h4>
 
       <div className="flex flex-col gap-3">
         {series.map((s) => (
@@ -299,7 +303,6 @@ export default function ReplayApm({ timeline }: Props) {
         ))}
       </div>
 
-      <p className="text-[11px] text-gray-600 mt-3 m-0">{t('apm.limite')}</p>
     </div>
   );
 }

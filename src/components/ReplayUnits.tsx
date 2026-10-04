@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useT } from '../lib/i18n';
+import Nota from './Nota';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import { CLASE_COLOR } from '../lib/units';
 import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia,
@@ -123,10 +124,10 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
   return (
     <div className="mt-1">
       {verUnidades && (<>
-      <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('units.title')}
+        <Nota>{t('units.note')}</Nota>
       </h4>
-      <p className="text-xs text-gray-600 m-0 mb-3">{t('units.note')}</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         {jugadores.map((j) => {
@@ -245,10 +246,10 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
 
       {verTecnologias && datos.tecnologias.size > 0 && (
         <div className="mt-5">
-          <h5 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+          <h5 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
             {t('units.techTitle')}
+            <Nota>{t('units.techNote')}</Nota>
           </h5>
-          <p className="text-xs text-gray-600 m-0 mb-2">{t('units.techNote')}</p>
           <div className="grid gap-2 sm:grid-cols-2">
             {jugadores.map((j) => {
               const d = datos.tecnologias.get(j);

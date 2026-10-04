@@ -1,4 +1,5 @@
 import { useT } from '../lib/i18n';
+import Nota from './Nota';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline } from '../lib/types';
 import { nombreTecnologia } from '../lib/juego';
@@ -116,10 +117,10 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
 
   return (
     <div>
-      <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('eco.villTitle')}
+        <Nota>{t('eco.villNote')}</Nota>
       </h4>
-      <p className="text-xs text-gray-600 m-0 mb-3">{t('eco.villNote')}</p>
       <div className="flex flex-col gap-2 mb-6">
         {timeline.jugadores.map((j) => {
           const p = players.find((x) => x.profile_id === j.perfil) ?? {};
@@ -167,10 +168,10 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
       {/* Las tomas cada 5 minutos. Una tabla y no un grafico: con dos
           jugadores lo que se quiere es restar una cifra de la otra, y para eso
           los numbers pegados ganan a dos lineas de colores. */}
-      <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('eco.curva')}
+        <Nota>{t('eco.curvaNota')}</Nota>
       </h4>
-      <p className="text-xs text-gray-600 m-0 mb-3">{t('eco.curvaNota')}</p>
       <div className="overflow-x-auto mb-6">
         <table className="w-full text-sm">
           <thead>
@@ -223,10 +224,10 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
       </div>
 
       {/* Y el minuto a minuto, que es donde se ve el hueco. */}
-      <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('eco.vilsOverTime')}
+        <Nota>{t('eco.vilsOverTimeNote')}</Nota>
       </h4>
-      <p className="text-xs text-gray-600 m-0 mb-3">{t('eco.vilsOverTimeNote')}</p>
       <div className="flex flex-col gap-3 mb-6">
         {jugadores.map((j) => {
           const fila = porMinuto.get(j) ?? [];
@@ -275,10 +276,10 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
       {/* Las mejoras. Solo se listan las que alguien pidio. */}
       {mejorasUsadas.length > 0 && (
         <>
-          <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
-            {t('eco.upgrades')}
-          </h4>
-          <p className="text-xs text-gray-600 m-0 mb-3">{t('eco.upgradesNote')}</p>
+          <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+        {t('eco.upgrades')}
+        <Nota>{t('eco.upgradesNote')}</Nota>
+      </h4>
           <div className="overflow-x-auto mb-6">
             <table className="w-full text-sm">
               <thead>
@@ -332,10 +333,13 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
         </>
       )}
 
-      <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
         {t('eco.marketTitle')}
+        <Nota>
+          {t('eco.marketNote')}
+          <span className="block mt-2">{t('eco.limite')}</span>
+        </Nota>
       </h4>
-      <p className="text-xs text-gray-600 m-0 mb-3">{t('eco.marketNote')}</p>
 
       {!hayMercado ? (
         <p className="text-sm text-gray-500 m-0 mb-5">{t('eco.noMarket')}</p>
@@ -381,7 +385,6 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
         </div>
       )}
 
-      <p className="text-[11px] text-gray-600 mt-4 m-0">{t('eco.limite')}</p>
     </div>
   );
 }

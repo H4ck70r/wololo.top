@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
+import Nota from './Nota';
 import { useSession } from '../lib/session';
 import type { LevelBenchmarksResponse, LevelBenchmark } from '../lib/types';
 
@@ -48,7 +49,15 @@ export default function LevelBenchmarks({ matchType, rating }: Props) {
 
   return (
     <div>
-      <p className="text-sm text-gray-400 m-0 mb-1">{t('bench.intro')}</p>
+      {/* La muestra se queda a la vista: un promedio sin saber sobre cuantas
+          partidas sale no es una referencia. Las advertencias van en la nota. */}
+      <p className="flex items-center gap-1.5 text-sm text-gray-400 m-0 mb-1">
+        {t('bench.intro')}
+        <Nota>
+          {t('bench.footnote')}
+          {!user && <span className="block mt-2">{t('bench.signInHint')}</span>}
+        </Nota>
+      </p>
       <p className="text-xs text-gray-600 m-0 mb-4">
         {t('bench.sample', { n: data.total_samples.toLocaleString() })}
       </p>
@@ -134,8 +143,6 @@ export default function LevelBenchmarks({ matchType, rating }: Props) {
         </table>
       </div>
 
-      <p className="text-[11px] text-gray-600 mt-3 m-0">{t('bench.footnote')}</p>
-      {!user && <p className="text-[11px] text-gray-600 mt-1 m-0">{t('bench.signInHint')}</p>}
     </div>
   );
 }

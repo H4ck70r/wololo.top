@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getLevelBenchmarks } from '../lib/api';
 import { useT } from '../lib/i18n';
+import Nota from './Nota';
 import { colorDeJugador } from '../lib/jugadores';
 import type { ReplayTimeline, LevelBenchmarksResponse } from '../lib/types';
 
@@ -169,8 +170,9 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
 
       {arreglos.length > 0 && (
         <div className="mt-3">
-          <h5 className="text-[10px] uppercase tracking-wide text-gray-500 m-0 mb-1">
+          <h5 className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-gray-500 m-0 mb-1.5">
             {t('coach.arreglar')}
+            <Nota>{t('coach.fuente')}</Nota>
           </h5>
           <ul className="list-none p-0 m-0 flex flex-col gap-1">
             {arreglos.slice(0, 2).map((a, i) => (
@@ -180,7 +182,6 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
         </div>
       )}
 
-      <p className="text-[11px] text-gray-600 mt-3 m-0">{t('coach.fuente')}</p>
     </div>
   );
 }
