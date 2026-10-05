@@ -19,6 +19,10 @@ const INVESTIGACION: Record<number, number> = {
 //  "173 segundos parado" en "siete aldeanos", que es lo que de verdad duele.
 const SEG_POR_ALDEANO = 25;
 
+//  Percentil 90 de lo que tarda la gente en poner su segundo centro urbano
+//  tras llegar a Castillos, sobre 17.482 partidas medidas.
+const P90_SEGUNDO_TC = 600_000;
+
 const mmss = (ms: number) => {
   const s = Math.round(Math.abs(ms) / 1000);
   return s >= 60 ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : `${s}s`;
@@ -146,8 +150,20 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
             ref: conRef ? String(Math.round(d.ref!.tc_idle_s!)) : '' }) });
       }
     }
-    if (d.conversion != null && d.conversion > 240_000) {
-      arreglos.push({ peso: Math.round(d.conversion / 60_000), texto:
+    //  El segundo centro urbano, con dos frenos.
+    //
+    //  El umbral estaba en 4 minutos y la MEDIANA del ladder son 3,7: saltaba
+    //  en el 45% de las partidas. Eso no es un consejo, es un saludo. Sube al
+    //  percentil 90 (17.482 partidas: p75=6,0 · p90=10,0 · p95=13,4), que es
+    //  donde la tardanza ya es rara de verdad.
+    //
+    //  Y pesa poco a proposito. Esta cifra NO separa niveles -5,3 minutos de
+    //  media en <1000 y 5,0 en 1600+, plana en todo el ladder-, asi que no
+    //  puede encabezar el veredicto por delante del centro urbano parado, que
+    //  se reduce a la mitad al subir de nivel. Antes pesaba un punto por
+    //  minuto y se comia siempre el primer puesto.
+    if (d.conversion != null && d.conversion > P90_SEGUNDO_TC) {
+      arreglos.push({ peso: (d.conversion - P90_SEGUNDO_TC) / 60_000 + 1, texto:
         t('coach.arregloConversion', { quien: d.nombre, v: mmss(d.conversion) }) });
     }
     if (d.enFeudal != null && d.enFeudal > 11 * 60_000) {
