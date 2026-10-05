@@ -856,6 +856,14 @@ export interface AssessmentResponse {
   weights_from_pairs?: number;
   metrics?: AssessmentMetric[];
   verdict?: AssessmentVerdictItem[];
+  /**
+   * No queda nada que apretar Y ademas va por delante de su tramo en lo que
+   * separa niveles. Hay que decirlo con todas las letras: inventarle un
+   * consejo a quien ya ejecuta bien es lo que hace el resto de herramientas.
+   */
+  nothing_to_tighten?: boolean;
+  /** en cuantas cifras que separan niveles va por delante de su tramo */
+  metrics_ahead_of_bracket?: number;
 }
 
 export interface BuildOrderComparison {

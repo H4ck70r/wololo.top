@@ -90,6 +90,25 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
       {/* El titular. Una tabla no es una conclusión: la mayoría de la gente
           que juega a esto no lee percentiles, lee frases. Los números van
           dentro de la frase para que no haya que buscarlos. */}
+      {/* Cuando no hay nada que apretar se DICE, y en verde. Devolver una
+          tarjeta vacia o buscarle la cifra menos buena a quien ya ejecuta bien
+          es lo que hace el resto de herramientas: siempre encuentran algo. A
+          este jugador le estuvimos señalando el segundo centro urbano hasta
+          que medimos que ese numero es plano en todo el ladder. */}
+      {data.nothing_to_tighten && (
+        <div className="bg-dark-800/60 border-l-2 border-emerald-400/60 rounded-r-lg px-4 py-3 mt-4">
+          <p className="text-[15px] leading-relaxed text-gray-200 m-0 font-medium">
+            {t('assess.nadaTitulo')}
+          </p>
+          <p className="text-sm leading-relaxed text-gray-300 mt-1.5 m-0">
+            {t('assess.nadaCuerpo', { n: String(data.metrics_ahead_of_bracket ?? 0) })}
+          </p>
+          <p className="text-sm leading-relaxed text-gray-400 mt-2 m-0">
+            {t('assess.nadaDonde')}
+          </p>
+        </div>
+      )}
+
       {(() => {
         const top = verdict[0];
         const m = top ? metrics.find((x) => x.key === top.key) : null;
@@ -121,7 +140,9 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
           {t('assess.verdictTitle')}
         </h4>
         {verdict.length === 0 ? (
-          <p className="text-sm text-gray-500 m-0">{t('assess.verdictNone')}</p>
+          //  Si ya se dijo arriba con todas las letras, no se repite aqui.
+          data.nothing_to_tighten ? null
+            : <p className="text-sm text-gray-500 m-0">{t('assess.verdictNone')}</p>
         ) : (
           <ol className="list-none p-0 m-0 flex flex-col gap-2">
             {verdict.map((v, i) => {
