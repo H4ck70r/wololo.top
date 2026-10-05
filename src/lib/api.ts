@@ -264,8 +264,19 @@ export async function analyzeReplays(ficheros: File[]): Promise<ReplayUploadResp
 
 /** La cronología de una partida para el mapa. Se baja de Relic y se parsea al
  *  vuelo, así que tarda unos segundos la primera vez. */
-export async function getMatchTimeline(matchId: number | string): Promise<MatchTimelineResponse> {
-  return apiFetch<MatchTimelineResponse>(`/api/matches/${matchId}/timeline`);
+export async function getMatchTimeline(
+  matchId: number | string,
+  /**
+   * De quién se quiere la perspectiva. Relic guarda un fichero por jugador y
+   * sólo el suyo trae SU cámara; sin esto sale la atención de quien tocara,
+   * que para "dónde mirabas tú" no vale de nada.
+   */
+  profileId?: number | null
+): Promise<MatchTimelineResponse> {
+  return apiFetch<MatchTimelineResponse>(
+    `/api/matches/${matchId}/timeline`,
+    profileId ? { profile_id: profileId } : undefined
+  );
 }
 
 export async function getMapMeta(params: {

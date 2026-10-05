@@ -177,7 +177,7 @@ export default function MatchDetailPage() {
           replay de Relic y parsearlo son unos segundos y una peticion a un
           servidor ajeno: no se hace solo porque alguien abra la ficha. */}
       <div className="mt-6">
-        <MatchReplayAnalysis matchId={match.match_id} />
+        <MatchReplayAnalysis matchId={match.match_id} perfiles={perfiles} />
       </div>
     </div>
   );

@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMatchTimeline } from '../lib/api';
 import { useT } from '../lib/i18n';
+import { useSession } from '../lib/session';
 import ReplayAnalysis from './ReplayAnalysis';
 import type { MatchTimelineResponse } from '../lib/types';
 
 interface Props {
   matchId: number | string;
+  /** los perfiles que jugaron, para saber si quien mira es uno de ellos */
+  perfiles?: number[];
 }
 
 /**
@@ -20,13 +23,21 @@ interface Props {
  * Y cuando Relic ya no lo tiene -los borra al año- se dice con todas las
  * letras, en vez de dejar un bloque cargando para siempre.
  */
-export default function MatchReplayAnalysis({ matchId }: Props) {
+export default function MatchReplayAnalysis({ matchId, perfiles = [] }: Props) {
   const { t } = useT();
+  const { user } = useSession();
   const [pedido, setPedido] = useState(false);
 
+  //  Si quien mira jugó esta partida, se pide SU fichero: es el único que trae
+  //  su cámara, y sin esto la sección de atención acaba contando dónde miraba
+  //  el rival. Si no jugó, se deja elegir al servidor como siempre.
+  const mio = user?.profile_id != null && perfiles.includes(Number(user.profile_id))
+    ? Number(user.profile_id)
+    : null;
+
   const { data, isLoading, error } = useQuery<MatchTimelineResponse>({
-    queryKey: ['matchTimeline', matchId],
-    queryFn: () => getMatchTimeline(matchId),
+    queryKey: ['matchTimeline', matchId, mio],
+    queryFn: () => getMatchTimeline(matchId, mio),
     enabled: pedido,
     staleTime: 30 * 60 * 1000,
     retry: false,
