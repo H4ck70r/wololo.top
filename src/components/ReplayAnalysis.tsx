@@ -9,14 +9,15 @@ import ReplayUnits from './ReplayUnits';
 import ReplayEconomy from './ReplayEconomy';
 import ReplayApm from './ReplayApm';
 import ReplayVerdict from './ReplayVerdict';
-import type { ReplayTimeline, TimelinePlayer, LevelBenchmarksResponse } from '../lib/types';
+import type { ReplayTimeline, TimelineInfo, LevelBenchmarksResponse } from '../lib/types';
+import type { TKey } from '../lib/i18n';
 
 interface Props {
   timeline: ReplayTimeline;
   /** las cifras por jugador que saca el parser, si las hay */
   players?: Record<string, number | string | null>[];
-  /** los jugadores de la cabecera, que incluyen a las IA */
-  info?: { jugadores?: TimelinePlayer[] } | null;
+  /** la cabecera del replay: jugadores (incluidas las IA) y de qué mapa es */
+  info?: TimelineInfo | null;
 }
 
 const reloj = (ms: number | null | undefined) => {
@@ -30,6 +31,17 @@ const reloj = (ms: number | null | undefined) => {
 const INVESTIGACION_MS = { feudal: 130_000, castle: 160_000, imperial: 190_000 };
 
 type Pestana = 'unidades' | 'economia' | 'tecnologias' | 'apm';
+
+//  Los siete tamaños con nombre del juego. Un mapa con otro lado -los hay en
+//  partidas personalizadas- se enseña en casillas en vez de traducirse, que
+//  sin esto pintaba la clave del diccionario en crudo.
+const TAMANOS = ['tiny', 'small', 'medium', 'normal', 'large', 'giant', 'maximum'];
+
+function tamanoDeMapa(valor: string | number | null | undefined, t: (k: TKey) => string) {
+  if (valor == null) return null;
+  if (typeof valor === 'number') return `${valor}\u00d7${valor}`;
+  return TAMANOS.includes(valor) ? t(`mapSize.${valor}` as TKey) : valor;
+}
 
 /**
  * El análisis de una partida, en pestañas.
@@ -166,6 +178,23 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
 
   return (
     <div>
+      {/* De qué partida es esto.
+          Faltaba: el análisis abría directo con el veredicto y nunca decía en
+          qué mapa se jugó, que es lo primero que sitúa todo lo demás —un 8:50
+          de Feudal no se lee igual en Arabia que en Arena. El id del mapa ya
+          venía en la cabecera del replay; se leía y se tiraba. */}
+      {(info?.mapa || timeline.duracion_ms) && (
+        <p className="text-xs text-gray-500 m-0 mb-3 tabular-nums">
+          {[
+            info?.mapa,
+            tamanoDeMapa(info?.mapa_tamano, t),
+            timeline.duracion_ms ? reloj(timeline.duracion_ms) : null,
+          ]
+            .filter(Boolean)
+            .join(' · ')}
+        </p>
+      )}
+
       {/* Lo primero de todo: qué pasó, escrito. Una tabla no es una
           conclusión, y el que abre esto quiere la respuesta antes que los
           datos que la sostienen. */}

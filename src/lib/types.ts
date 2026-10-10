@@ -991,10 +991,20 @@ export interface ReplayTimeline {
   }[] | null;
 }
 
+/** la cabecera del replay: velocidad, jugadores y de qué mapa se trata */
+export interface TimelineInfo {
+  velocidad?: number;
+  jugadores?: TimelinePlayer[];
+  /** el del ladder si la partida es de ahí, si no el del generador */
+  mapa?: string | null;
+  /** 'tiny', 'small'... o el lado en casillas si no es uno de los fijos */
+  mapa_tamano?: string | number | null;
+}
+
 export interface MatchTimelineResponse {
   status: string;
   match_id: number;
-  info: { velocidad?: number; jugadores?: TimelinePlayer[] } | null;
+  info: TimelineInfo | null;
   players: Record<string, unknown>[];
   timeline: ReplayTimeline | null;
   timeline_error?: string | null;
@@ -1009,7 +1019,7 @@ export interface ReplayUploadResult {
   matched: boolean;
   already_analyzed: boolean;
   stored: boolean;
-  info: { velocidad?: number; jugadores?: TimelinePlayer[] } | null;
+  info: TimelineInfo | null;
   players: Record<string, unknown>[];
   timeline: ReplayTimeline | null;
   timeline_error?: string | null;
