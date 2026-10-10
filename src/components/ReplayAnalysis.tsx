@@ -178,20 +178,20 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
 
   return (
     <div>
-      {/* De qué partida es esto.
-          Faltaba: el análisis abría directo con el veredicto y nunca decía en
-          qué mapa se jugó, que es lo primero que sitúa todo lo demás —un 8:50
-          de Feudal no se lee igual en Arabia que en Arena. El id del mapa ya
-          venía en la cabecera del replay; se leía y se tiraba. */}
-      {(info?.mapa || timeline.duracion_ms) && (
-        <p className="text-xs text-gray-500 m-0 mb-3 tabular-nums">
-          {[
-            info?.mapa,
-            tamanoDeMapa(info?.mapa_tamano, t),
-            timeline.duracion_ms ? reloj(timeline.duracion_ms) : null,
-          ]
-            .filter(Boolean)
-            .join(' · ')}
+      {/* En qué mapa se jugó.
+          Faltaba: el análisis abría directo con el veredicto y nunca lo decía,
+          y es lo primero que sitúa todo lo demás —un 8:50 de Feudal no se lee
+          igual en Arabia que en Arena. El id del mapa ya venía en la cabecera
+          del replay; se leía y se tiraba.
+
+          Sin la duración a propósito. El replay mide en tiempo de JUEGO, que
+          corre a 1,69× el real, así que al lado de la cabecera de la ficha
+          —que da el real— salían dos duraciones distintas de la misma partida:
+          34:00 y 20m 55s. El resto del análisis va en tiempo de juego y cada
+          cifra lleva su etiqueta; un número suelto aquí no la lleva. */}
+      {info?.mapa && (
+        <p className="text-xs text-gray-500 m-0 mb-3">
+          {[info.mapa, tamanoDeMapa(info.mapa_tamano, t)].filter(Boolean).join(' · ')}
         </p>
       )}
 
