@@ -663,7 +663,7 @@ export default function PlayerProfile() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-200 m-0">{t('civStats.title')}</h2>
               {stats && (
-                <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.total_matches })}</span>
+                <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.history_matches ?? stats.total_matches ?? 0 })}</span>
               )}
             </div>
             {loadingStats ? (
@@ -678,7 +678,7 @@ export default function PlayerProfile() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-200 m-0">{t('mapStats.title')}</h2>
               {stats && (
-                <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.total_matches })}</span>
+                <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.history_matches ?? stats.total_matches ?? 0 })}</span>
               )}
             </div>
             {loadingStats ? (

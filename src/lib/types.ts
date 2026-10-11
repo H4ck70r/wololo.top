@@ -81,12 +81,32 @@ export interface MapStat {
   win_rate: string | null;
 }
 
+export interface LadderTotals {
+  rating: number;
+  highest_rating: number;
+  rank: number;
+  wins: number;
+  losses: number;
+  drops: number;
+  disputes: number;
+  streak: number;
+  games: number;
+  win_rate: number | null;
+  last_match_at: string | null;
+}
+
 export interface PlayerStats {
   status: string;
   profile_id: number;
-  total_matches: number;
-  total_wins: number;
-  win_rate: number;
+  // Totales globales: los de World's Edge (suma de ladders), null si no esta en ninguno.
+  total_matches: number | null;
+  total_wins: number | null;
+  total_losses?: number | null;
+  total_drops?: number | null;
+  win_rate: number | null;
+  ladders?: { rm_1v1: LadderTotals | null; rm_team: LadderTotals | null };
+  // Partidas de nuestro historial en las que se basan civ_stats y map_stats.
+  history_matches?: number;
   civ_stats: CivStat[];
   map_stats: MapStat[];
   last_match_at: string | null;
