@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useMatch } from 'react-router-dom';
 import Layout from './components/Layout';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -14,6 +14,7 @@ const MatchDetailPage = lazy(() => import('./pages/MatchDetailPage'));
 const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const ClaimProfile = lazy(() => import('./pages/ClaimProfile'));
 const AnalyzeReplay = lazy(() => import('./pages/AnalyzeReplay'));
+const LiveOverlay = lazy(() => import('./pages/LiveOverlay'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSpinner() {
@@ -24,9 +25,16 @@ function PageSpinner() {
   );
 }
 
+function Envoltura({ desnuda, children }: { desnuda: boolean; children: React.ReactNode }) {
+  return desnuda ? <>{children}</> : <Layout>{children}</Layout>;
+}
+
 export default function App() {
+  //  El overlay va sin cabecera, pie ni anuncios: se pinta en un browser
+  //  source de OBS o en un segundo monitor, donde todo eso solo estorba.
+  const esOverlay = useMatch('/live/:profileId');
   return (
-    <Layout>
+    <Envoltura desnuda={!!esOverlay}>
       <Suspense fallback={<PageSpinner />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,6 +42,7 @@ export default function App() {
           <Route path="/h2h/:profileId/:opponentId" element={<HeadToHead />} />
           <Route path="/leaderboard" element={<LeaderboardEnhanced />} />
           <Route path="/live" element={<LiveMatches />} />
+          <Route path="/live/:profileId" element={<LiveOverlay />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/stats" element={<CivMeta />} />
           {/* El mapa es gratis y compartible a proposito: es lo que trae
@@ -47,6 +56,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-    </Layout>
+    </Envoltura>
   );
 }

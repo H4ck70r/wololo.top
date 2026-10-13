@@ -14,6 +14,19 @@ const STORAGE_KEY = 'wololo.lang';
 // overrides. A missing Spanish key falls back to English rather than showing
 // the raw key to the user.
 const EN = {
+  'ov.feudal': 'Feudal',
+  'ov.castle': 'Castle',
+  'ov.vills': "Vills at 15'",
+  'ov.tcIdle': 'TC idle',
+  'ov.apm': 'APM',
+  'ov.ended': 'match over',
+  'ov.flock': '{n} boar/deer on the map',
+  'ov.flock#one': '{n} boar/deer on the map',
+  'ov.refOpening': 'vs {n} games of this opening at {b}',
+  'ov.refBracket': 'vs all of {b} — mixes openings, take it loosely',
+  'ov.noToken': 'This link needs its token.',
+  'ov.notFound': 'No live match on this link.',
+
   'nav.search': 'Search',
   'nav.leaderboard': 'Leaderboard',
   'nav.stats': 'Stats',
@@ -681,6 +694,18 @@ const EN = {
 export type TKey = keyof typeof EN;
 
 const ES: Partial<Record<TKey, string>> = {
+  'ov.feudal': 'Feudal',
+  'ov.castle': 'Castillos',
+  'ov.vills': "Aldeanos al 15'",
+  'ov.tcIdle': 'TC parado',
+  'ov.apm': 'APM',
+  'ov.ended': 'terminada',
+  'ov.flock': '{n} jabalíes/ciervos en el mapa',
+  'ov.flock#one': '{n} jabalí/ciervo en el mapa',
+  'ov.refOpening': 'contra {n} partidas de esta apertura en {b}',
+  'ov.refBracket': 'contra {b} entera — mezcla aperturas, tómalo flojo',
+  'ov.noToken': 'A este enlace le falta su token.',
+  'ov.notFound': 'No hay partida en vivo en este enlace.',
   'nav.search': 'Buscar',
   'nav.leaderboard': 'Clasificación',
   'nav.stats': 'Estadísticas',
