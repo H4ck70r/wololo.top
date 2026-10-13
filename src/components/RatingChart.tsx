@@ -13,11 +13,14 @@ const LADDER_CONFIG = {
 
 type LadderKey = keyof typeof LADDER_CONFIG;
 
+//  'All' pedía 365 días cuando la serie empieza en 2020: el botón de "todo"
+//  no llegaba ni al año anterior. Ahora pide los 3.650 que admite la API, que
+//  es donde está el tope de verdad.
 const RANGE_OPTIONS = [
   { label: '30d', days: 30 },
-  { label: '60d', days: 60 },
   { label: '90d', days: 90 },
-  { label: 'All', days: 365 },
+  { label: '1y', days: 365 },
+  { label: 'All', days: 3650 },
 ];
 
 interface Props {
