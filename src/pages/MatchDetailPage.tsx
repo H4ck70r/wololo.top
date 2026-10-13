@@ -83,7 +83,18 @@ export default function MatchDetailPage() {
         {/* Sin "Mode": repetia palabra por palabra el tipo de partida que ya
             esta ahi arriba, y en un movil eso es media pantalla de nada. */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4">
-          <InfoBox label="Map" value={match.map || 'Unknown'} />
+          {/* El mapa que se jugó, y qué dijo Relic cuando no coinciden.
+              `mapname` miente: hay partidas etiquetadas Glade, Scandanavia,
+              Fortress e incluso Arena que se jugaron en terreno abierto. El
+              identificador que viaja en el blob `options` sí acierta —30 de 30
+              contra el terreno del replay— pero corregir en silencio sería
+              cambiar un dato equivocado por otro sin que nadie lo pueda
+              comprobar. Así que se enseña el bueno y se dice el otro. */}
+          <InfoBox
+            label={t('match.map')}
+            value={match.map || 'Unknown'}
+            nota={match.map_reported ? t('match.mapReported', { name: match.map_reported }) : null}
+          />
           <InfoBox label="Duration" value={formatDuration(match.duration_seconds)} />
           <InfoBox label="Players" value={`${match.player_count}`} />
         </div>
@@ -183,11 +194,12 @@ export default function MatchDetailPage() {
   );
 }
 
-function InfoBox({ label, value }: { label: string; value: string }) {
+function InfoBox({ label, value, nota }: { label: string; value: string; nota?: string | null }) {
   return (
     <div className="bg-dark-600 rounded-lg p-3">
       <p className="text-xs text-gray-500 m-0">{label}</p>
       <p className="text-sm font-medium text-gray-200 mt-0.5 m-0">{value}</p>
+      {nota && <p className="text-[11px] text-gray-500 mt-0.5 m-0">{nota}</p>}
     </div>
   );
 }

@@ -86,6 +86,8 @@ const EN = {
   'rivals.gamesPlayed': '{n} games played',
 
   'milestones.title': 'Rating Milestones',
+  'match.map': 'Map',
+  'match.mapReported': 'Relic labelled it {name}',
   'milestones.peak': 'Peak',
   'milestones.on': 'on {date}',
   'milestones.allTime': 'all-time',
@@ -751,6 +753,8 @@ const ES: Partial<Record<TKey, string>> = {
   'rivals.gamesPlayed': '{n} partidas jugadas',
 
   'milestones.title': 'Hitos de puntuación',
+  'match.map': 'Mapa',
+  'match.mapReported': 'Relic lo etiquetó como {name}',
   'milestones.peak': 'Máximo',
   'milestones.on': 'el {date}',
   'milestones.allTime': 'histórico',

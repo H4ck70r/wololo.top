@@ -675,7 +675,10 @@ export interface MatchDetailTeam {
 export interface MatchDetail {
   match_id: number;
   map_name: string | null;
+  /** el mapa que se jugó de verdad */
   map: string | null;
+  /** cómo lo etiquetó Relic, sólo cuando no coincide con el anterior */
+  map_reported?: string | null;
   match_type_id: number;
   match_type: string | null;
   duration_seconds: number | null;
