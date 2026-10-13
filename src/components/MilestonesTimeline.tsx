@@ -33,11 +33,13 @@ function getBracket(threshold: number): { label: string; color: string; bg: stri
 // "...000ZT00:00:00" and every date rendered as "Invalid Date". Take the
 // YYYY-MM-DD head instead, which also accepts a plain date string, and read it
 // as local midnight so the day never slides with the timezone.
-function formatDate(dateStr: string | null | undefined): string | null {
+function formatDate(dateStr: string | null | undefined, lang: string): string | null {
   if (!dateStr) return null;
   const d = new Date(`${String(dateStr).slice(0, 10)}T00:00:00`);
   if (Number.isNaN(d.getTime())) return null;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  //  Con el idioma de la página, no con 'en-US' fijo: en la versión española
+  //  salían fechas como "May 9, 2024" al lado de texto en castellano.
+  return d.toLocaleDateString(lang, { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function LadderMilestones({
@@ -55,7 +57,7 @@ function LadderMilestones({
   milestones: Milestone[];
   accentColor: string;
 }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const displayPeak = Math.max(peakRating || 0, highestRating || 0) || null;
   const peakIsFromLadder = highestRating && (!peakRating || highestRating > peakRating);
 
@@ -74,8 +76,10 @@ function LadderMilestones({
         <div className="mb-5 flex items-baseline gap-2">
           <span className="text-xs text-gray-500 uppercase tracking-wider">{t('milestones.peak')}</span>
           <span className={`text-2xl font-bold ${accentColor}`}>{displayPeak}</span>
-          {!peakIsFromLadder && formatDate(peakDate) && (
-            <span className="text-xs text-gray-500">on {formatDate(peakDate)}</span>
+          {!peakIsFromLadder && formatDate(peakDate, lang) && (
+            <span className="text-xs text-gray-500">
+              {t('milestones.on', { date: formatDate(peakDate, lang)! })}
+            </span>
           )}
           {peakIsFromLadder && (
             <span className="text-xs text-gray-500">{t('milestones.allTime')}</span>
@@ -104,8 +108,8 @@ function LadderMilestones({
                   {/* Content */}
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`text-sm font-bold ${bracket.color}`}>{m.threshold}</span>
-                    {formatDate(m.reached_at) && (
-                      <span className="text-xs text-gray-500">{formatDate(m.reached_at)}</span>
+                    {formatDate(m.reached_at, lang) && (
+                      <span className="text-xs text-gray-500">{formatDate(m.reached_at, lang)}</span>
                     )}
                   </div>
                 </div>

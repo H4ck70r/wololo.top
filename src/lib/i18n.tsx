@@ -87,6 +87,7 @@ const EN = {
 
   'milestones.title': 'Rating Milestones',
   'milestones.peak': 'Peak',
+  'milestones.on': 'on {date}',
   'milestones.allTime': 'all-time',
   'milestones.empty': 'Milestones appear as this player climbs the 1v1 RM ladder',
   'milestones.none': 'No milestone crossings in tracked history.',
@@ -751,6 +752,7 @@ const ES: Partial<Record<TKey, string>> = {
 
   'milestones.title': 'Hitos de puntuación',
   'milestones.peak': 'Máximo',
+  'milestones.on': 'el {date}',
   'milestones.allTime': 'histórico',
   'milestones.empty': 'Los hitos aparecen según este jugador sube en la clasificación 1v1 RM',
   'milestones.none': 'Sin hitos en el historial registrado.',
