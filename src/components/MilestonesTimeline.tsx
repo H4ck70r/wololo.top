@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getPlayerMilestones } from '../lib/api';
 import LadderBadge from './LadderBadge';
 import { useT } from '../lib/i18n';
-import type { MilestonesResponse, Milestone } from '../lib/types';
+import type { MilestonesResponse, Milestone, LadderKey } from '../lib/types';
 
 interface MilestonesTimelineProps {
   profileId: string;
@@ -128,6 +129,7 @@ function LadderMilestones({
 
 export default function MilestonesTimeline({ profileId }: MilestonesTimelineProps) {
   const { t } = useT();
+  const [abierta, setAbierta] = useState<LadderKey | null>(null);
   const { data, isLoading, error } = useQuery<MilestonesResponse>({
     queryKey: ['playerMilestones', profileId],
     queryFn: () => getPlayerMilestones(profileId),
@@ -168,32 +170,58 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
     );
   }
 
+  //  Con un solo ladder no hay nada que elegir: pestanas para una cosa son
+  //  ruido. Con dos o mas si, y sobre todo con seis -Hera los tiene- donde
+  //  apilados salen seis bloques de hasta once hitos cada uno.
+  //
+  //  Ademas la grafica de rating, justo encima, ya selecciona ladder con
+  //  botones. Dos componentes seguidos eligiendo lo mismo de dos formas
+  //  distintas es peor que cualquiera de las dos.
+  const unico = PRESENTES.length === 1;
+  const activa = PRESENTES.find((l) => l.clave === abierta) ?? PRESENTES[0];
+  const datos = data.ladders[activa.clave]!;
+
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-      <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">{t('milestones.title')}</h3>
+      <h3 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('milestones.title')}</h3>
 
-      <div className="flex flex-col gap-6">
-        {PRESENTES.map((l) => {
-          const d = data.ladders[l.clave]!;
-          return (
-            <div key={l.clave} className="border-t border-dark-400 first:border-0 pt-5 first:pt-0">
-              {/* La etiqueta va pegada al bloque, no en la cabecera: con dos
-                  o más ladders, una cabecera única no dice de cuál es cada
-                  número. */}
-              <div className="mb-4">
-                <LadderBadge label={l.etiqueta} title={t('ladder.onlyRm')} />
-              </div>
-              <LadderMilestones
-                peakRating={d.peak_rating}
-                peakDate={d.peak_date}
-                highestRating={d.highest_rating}
-                milestones={d.milestones}
-                accentColor={l.color}
-              />
-            </div>
-          );
-        })}
-      </div>
+      {unico ? (
+        <div className="mb-4">
+          <LadderBadge label={activa.etiqueta} title={t('ladder.onlyRm')} />
+        </div>
+      ) : (
+        //  La pestana activa ES la etiqueta: va justo encima del numero, que
+        //  es donde tiene que estar para que nadie lea un pico de equipos
+        //  como su elo de 1v1.
+        <div className="flex flex-wrap gap-1.5 mb-5" role="tablist">
+          {PRESENTES.map((l) => {
+            const sel = l.clave === activa.clave;
+            return (
+              <button
+                key={l.clave}
+                role="tab"
+                aria-selected={sel}
+                onClick={() => setAbierta(l.clave)}
+                className={`text-[11px] font-medium uppercase tracking-wider rounded px-2 py-1 border transition-colors ${
+                  sel
+                    ? `${l.color} bg-dark-500 border-dark-300`
+                    : 'text-gray-500 bg-transparent border-dark-400 hover:text-gray-300'
+                }`}
+              >
+                {l.etiqueta}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <LadderMilestones
+        peakRating={datos.peak_rating}
+        peakDate={datos.peak_date}
+        highestRating={datos.highest_rating}
+        milestones={datos.milestones}
+        accentColor={activa.color}
+      />
     </div>
   );
 }
