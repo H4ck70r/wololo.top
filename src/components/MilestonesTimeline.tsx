@@ -8,6 +8,18 @@ interface MilestonesTimelineProps {
   profileId: string;
 }
 
+//  El orden en que se enseñan y cómo se llama cada uno. Individual antes que
+//  equipos dentro de cada modo, y RM primero porque es el que casi todo el
+//  mundo juega.
+const LADDER_ORDEN = [
+  { clave: 'rm' as const,      etiqueta: '1v1 RM',   color: 'text-gold-400' },
+  { clave: 'team_rm' as const, etiqueta: 'Team RM',  color: 'text-blue-400' },
+  { clave: 'ew' as const,      etiqueta: '1v1 EW',   color: 'text-emerald-400' },
+  { clave: 'team_ew' as const, etiqueta: 'Team EW',  color: 'text-emerald-300' },
+  { clave: 'dm' as const,      etiqueta: '1v1 DM',   color: 'text-rose-400' },
+  { clave: 'team_dm' as const, etiqueta: 'Team DM',  color: 'text-rose-300' },
+];
+
 function getBracket(threshold: number): { label: string; color: string; bg: string; border: string } {
   if (threshold < 1200) return { label: 'Bronze', color: 'text-amber-600', bg: 'bg-amber-600/20', border: 'border-amber-600/40' };
   if (threshold < 1600) return { label: 'Silver', color: 'text-gray-300', bg: 'bg-gray-300/20', border: 'border-gray-300/40' };
@@ -130,17 +142,23 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
 
   if (error || !data) return null;
 
-  // Milestones are a 1v1 Ranked RM achievement: data.ladders.team_rm is
-  // deliberately ignored so a team-ladder peak cannot pose as a solo one.
-  const rm = data.ladders.rm;
+  //  Todos los ladders que este jugador tenga, no solo 1v1.
+  //
+  //  Esto enseñaba únicamente `rm`, y tiraba `team_rm` para que un pico de
+  //  equipos no se hiciera pasar por uno de individual. El riesgo era real
+  //  —pasó: 1411 de Team RM leído como elo de 1v1, y lo leyó así el propio
+  //  dueño del perfil, que jugó esas partidas—. Pero el arreglo no es
+  //  esconder un ladder, es que cada bloque diga de cuál es. Y mientras
+  //  tanto, quien juega Empire Wars o Death Match no veía sus hitos.
+  const PRESENTES = LADDER_ORDEN.filter((l) => {
+    const d = data.ladders[l.clave];
+    return d && (d.peak_rating || d.highest_rating || d.milestones.length);
+  });
 
-  if (!rm) {
+  if (!PRESENTES.length) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <div className="flex items-center gap-2 mb-5">
-          <h3 className="text-lg font-semibold text-gray-200 m-0">{t('milestones.title')}</h3>
-          <LadderBadge />
-        </div>
+        <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">{t('milestones.title')}</h3>
         <p className="text-gray-500 text-sm text-center py-8 m-0">{t('milestones.empty')}</p>
       </div>
     );
@@ -148,18 +166,30 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-      <div className="flex items-center gap-2 mb-5">
-        <h3 className="text-lg font-semibold text-gray-200 m-0">{t('milestones.title')}</h3>
-        <LadderBadge />
-      </div>
+      <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">{t('milestones.title')}</h3>
 
-      <LadderMilestones
-        peakRating={rm.peak_rating}
-        peakDate={rm.peak_date}
-        highestRating={rm.highest_rating}
-        milestones={rm.milestones}
-        accentColor="text-gold-400"
-      />
+      <div className="flex flex-col gap-6">
+        {PRESENTES.map((l) => {
+          const d = data.ladders[l.clave]!;
+          return (
+            <div key={l.clave} className="border-t border-dark-400 first:border-0 pt-5 first:pt-0">
+              {/* La etiqueta va pegada al bloque, no en la cabecera: con dos
+                  o más ladders, una cabecera única no dice de cuál es cada
+                  número. */}
+              <div className="mb-4">
+                <LadderBadge label={l.etiqueta} title={t('ladder.onlyRm')} />
+              </div>
+              <LadderMilestones
+                peakRating={d.peak_rating}
+                peakDate={d.peak_date}
+                highestRating={d.highest_rating}
+                milestones={d.milestones}
+                accentColor={l.color}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

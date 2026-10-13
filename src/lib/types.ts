@@ -514,13 +514,14 @@ export interface MilestoneLadder {
   milestones: Milestone[];
 }
 
+/** los seis ladders que el juego lleva por separado */
+export type LadderKey = 'rm' | 'team_rm' | 'ew' | 'team_ew' | 'dm' | 'team_dm';
+
 export interface MilestonesResponse {
   status: string;
   profile_id: number;
-  ladders: {
-    rm?: MilestoneLadder;
-    team_rm?: MilestoneLadder;
-  };
+  /** sólo vienen los que ese jugador tenga */
+  ladders: Partial<Record<LadderKey, MilestoneLadder>>;
 }
 
 // WLT-6: Activity Patterns
