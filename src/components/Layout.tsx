@@ -15,6 +15,7 @@ const NAV_LINKS: { path: string; key: TKey }[] = [
   { path: '/analyze', key: 'nav.analyze' },
   { path: '/compare', key: 'nav.compare' },
   { path: '/live', key: 'nav.live' },
+  { path: '/overlay', key: 'nav.overlay' },
 ];
 
 export default function Layout({ children }: { children: ReactNode }) {

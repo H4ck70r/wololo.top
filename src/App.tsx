@@ -15,6 +15,7 @@ const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const ClaimProfile = lazy(() => import('./pages/ClaimProfile'));
 const AnalyzeReplay = lazy(() => import('./pages/AnalyzeReplay'));
 const LiveOverlay = lazy(() => import('./pages/LiveOverlay'));
+const Overlay = lazy(() => import('./pages/Overlay'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageSpinner() {
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/leaderboard" element={<LeaderboardEnhanced />} />
           <Route path="/live" element={<LiveMatches />} />
           <Route path="/live/:profileId" element={<LiveOverlay />} />
+          <Route path="/overlay" element={<Overlay />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/stats" element={<CivMeta />} />
           {/* El mapa es gratis y compartible a proposito: es lo que trae
