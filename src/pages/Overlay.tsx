@@ -70,6 +70,12 @@ export default function Overlay() {
         </Paso>
       </ol>
 
+      <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.winTitle')}</h2>
+      <p className="mt-2 text-sm text-stone-400">{t('ovp.winBody')}</p>
+      <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
+        wololo-vivo --ventana
+      </pre>
+
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.fairTitle')}</h2>
       <p className="mt-2 text-sm text-stone-400">{t('ovp.fairBody')}</p>
 
