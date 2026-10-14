@@ -174,9 +174,6 @@ export default function Overlay() {
         </Paso>
         <Paso n={3} titulo={t('ovp.s3')}>
           {t('ovp.s3body')}
-          <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-            https://wololo.top/live/TU_ID?t=TU_TOKEN&amp;bg=none
-          </pre>
           {/*
             El binario enseña las cifras en consola sin cuenta ninguna; lo que
             necesita clave es publicarlas como pagina, y hoy las claves las
