@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useT } from '../lib/i18n';
+import { COLORES_JUGADOR } from '../lib/jugadores';
+import CIVS from '../lib/civs-replay.json';
 
 //  Mismo criterio que el resto del sitio: el replay guarda el CLIC y lo que
 //  la gente compara es cuando la edad CAE, asi que se le suma la investigacion,
@@ -26,6 +28,17 @@ type Cifras = {
   tc_idle_ms: number | null;
   apm: number | null;
   first_stable_ms: number | null;
+  units: Record<string, number> | null;
+};
+
+type Jugador = {
+  name: string | null;
+  civ: number | null;
+  color: number | null;
+  team: number | null;
+  profile_id: number | null;
+  is_ai: boolean;
+  avatar?: string | null;
 };
 
 type Referencia = {
@@ -45,7 +58,7 @@ type Respuesta = {
   data: {
     map_size: string | null;
     flock_count: number | null;
-    players: { name: string | null; civ: number | null }[];
+      players: Jugador[];
     me: Cifras;
     reference: Referencia;
     at: string;
@@ -85,6 +98,54 @@ function Delta({
       {r}
       {sufijo}
     </span>
+  );
+}
+
+/** El color que el juego le dio a ese jugador. */
+function colorDe(j: Jugador) {
+  const i = j.color ?? 0;
+  return COLORES_JUGADOR[((i % COLORES_JUGADOR.length) + COLORES_JUGADOR.length) %
+    COLORES_JUGADOR.length];
+}
+
+const civDe = (id: number | null) =>
+  (id != null && (CIVS as Record<string, string>)[String(id)]) || null;
+
+/**
+ * Un jugador: avatar, nombre en su color del juego y civilizacion.
+ *
+ * Se pintan los dos lados porque eso ya se ve en el lobby antes de empezar.
+ * Las cifras, en cambio, son solo del que publica: lo que el rival esta
+ * haciendo mientras se juega no se enseña.
+ */
+function Jugador({ j, destacado }: { j: Jugador; destacado: boolean }) {
+  const color = colorDe(j);
+  const civ = civDe(j.civ);
+  return (
+    <div className={`flex items-center gap-2 ${destacado ? '' : 'opacity-70'}`}>
+      {j.avatar ? (
+        <img
+          src={j.avatar}
+          alt=""
+          className="h-7 w-7 flex-none rounded"
+          style={{ outline: `2px solid ${color}`, outlineOffset: '-1px' }}
+          onError={(e) => ((e.target as HTMLImageElement).style.visibility = 'hidden')}
+        />
+      ) : (
+        <span
+          className="flex h-7 w-7 flex-none items-center justify-center rounded text-xs font-semibold text-stone-950"
+          style={{ background: color }}
+        >
+          {(j.name || '?').charAt(0).toUpperCase()}
+        </span>
+      )}
+      <span className="min-w-0">
+        <span className="block truncate text-sm font-medium" style={{ color }}>
+          {j.name || '—'}
+        </span>
+        {civ && <span className="block truncate text-xs text-stone-500">{civ}</span>}
+      </span>
+    </div>
   );
 }
 
@@ -189,31 +250,44 @@ export default function LiveOverlay() {
   }
 
   const { me, reference: ref, players, map_size, flock_count } = res.data;
+  const yo = players.find((p) => p.profile_id === me.profile_id);
+  const otros = players.filter((p) => p !== yo);
+  const unidades = Object.entries(me.units || {}).filter(([, v]) => v > 0);
 
   return (
     <div className={`${fondo} min-h-screen p-3`}>
-      <div className="max-w-xs rounded-lg border border-stone-800 bg-stone-900/90 p-3 backdrop-blur">
-        <div className="flex items-center justify-between gap-2 border-b border-stone-800 pb-2">
-          <span className="flex items-center gap-2 text-sm font-medium text-stone-100">
+      <div className="w-72 overflow-hidden rounded-xl border border-stone-800 bg-stone-900/90 backdrop-blur">
+        {/* Quien juega: los dos lados, con su color del juego y su civ. */}
+        <div className="flex items-center justify-between gap-2 px-3 pt-3">
+          <span className="flex items-center gap-1.5 text-xs text-stone-500">
             <span
-              className={`inline-block h-2 w-2 rounded-full ${
+              className={`inline-block h-1.5 w-1.5 rounded-full ${
                 res.live ? 'animate-pulse bg-emerald-400' : 'bg-stone-600'
               }`}
             />
-            {me.name || `#${me.profile_id}`}
-            {me.rating != null && (
-              <span className="font-mono text-xs text-stone-400">{me.rating}</span>
-            )}
+            {res.live ? t('ov.liveNow') : t('ov.ended')}
           </span>
-          {!res.live && <span className="text-xs text-stone-500">{t('ov.ended')}</span>}
+          {me.rating != null && (
+            <span className="font-mono text-xs text-stone-400">
+              {me.rating}
+              {me.bracket && <span className="ml-1 text-stone-600">{me.bracket}</span>}
+            </span>
+          )}
+        </div>
+
+        <div className="space-y-2 px-3 py-2">
+          {yo && <Jugador j={yo} destacado />}
+          {otros.map((j, i) => (
+            <Jugador key={i} j={j} destacado={false} />
+          ))}
         </div>
 
         {/*
-          La apertura y contra que se compara, juntas y arriba: sin saber de
-          que esta hecha la referencia los numeros de abajo no dicen nada.
+          La apertura y contra que se compara, juntas: sin saber de que esta
+          hecha la referencia los numeros de abajo no dicen nada.
         */}
-        <div className="pt-2 pb-1">
-          <p className="text-sm text-gold-400">{me.opening || '—'}</p>
+        <div className="border-t border-stone-800 bg-stone-950/40 px-3 py-2">
+          <p className="text-sm font-medium text-gold-400">{me.opening || '—'}</p>
           {ref && (
             <p className="text-xs text-stone-500">
               {ref.scope === 'opening'
@@ -223,7 +297,7 @@ export default function LiveOverlay() {
           )}
         </div>
 
-        <div className="border-t border-stone-800 pt-1">
+        <div className="px-3 py-1.5">
           <Fila
             etiqueta={t('ov.feudal')}
             valor={me.feudal_ms == null ? '—' : reloj(me.feudal_ms + INVESTIGACION_MS.feudal)}
@@ -244,7 +318,10 @@ export default function LiveOverlay() {
               sufijo="s"
             />
           </Fila>
-          <Fila etiqueta={t('ov.vills')} valor={me.villagers_15m == null ? '—' : String(me.villagers_15m)}>
+          <Fila
+            etiqueta={t('ov.vills')}
+            valor={me.villagers_15m == null ? '—' : String(me.villagers_15m)}
+          >
             <Delta valor={me.villagers_15m} referencia={ref?.villagers_15m} menorEsMejor={false} />
           </Fila>
           <Fila etiqueta={t('ov.tcIdle')} valor={reloj(me.tc_idle_ms)} />
@@ -253,12 +330,32 @@ export default function LiveOverlay() {
           </Fila>
         </div>
 
-        <div className="mt-2 flex flex-wrap items-center gap-x-2 border-t border-stone-800 pt-2 text-xs text-stone-500">
+        {/*
+          Producido, no vivo. El replay guarda ordenes, no estado: no sabe de
+          bajas, asi que restarlas es imposible y decir "vivos" seria mentir.
+        */}
+        {unidades.length > 0 && (
+          <div className="border-t border-stone-800 px-3 py-2">
+            <p className="mb-1 text-[10px] uppercase tracking-wide text-stone-600">
+              {t('ov.trained')}
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {unidades.map(([clave, n]) => (
+                <span
+                  key={clave}
+                  className="rounded bg-stone-800 px-1.5 py-0.5 text-xs text-stone-300"
+                >
+                  {t(`ov.u.${clave}` as never)}{' '}
+                  <span className="font-mono text-stone-100">{n}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-wrap items-center gap-x-2 border-t border-stone-800 px-3 py-2 text-xs text-stone-600">
           {map_size && <span>{map_size}</span>}
           {flock_count != null && <span>· {t('ov.flock', { n: String(flock_count) })}</span>}
-          {players.length > 1 && (
-            <span className="truncate">· {players.map((p) => p.name).join(' / ')}</span>
-          )}
         </div>
       </div>
     </div>
