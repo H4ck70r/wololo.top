@@ -119,9 +119,11 @@ const civDe = (id: number | null) =>
  * Las cifras, en cambio, son solo del que publica: lo que el rival esta
  * haciendo mientras se juega no se enseña.
  */
-function Jugador({ j, destacado }: { j: Jugador; destacado: boolean }) {
+function Jugador({ j, destacado, verCiv = true }: {
+  j: Jugador; destacado: boolean; verCiv?: boolean;
+}) {
   const color = colorDe(j);
-  const civ = civDe(j.civ);
+  const civ = verCiv ? civDe(j.civ) : null;
   return (
     <div className={`flex items-center gap-2 ${destacado ? '' : 'opacity-70'}`}>
       {j.avatar ? (
@@ -223,6 +225,24 @@ export default function LiveOverlay() {
   //  la captura y un panel opaco taparia la partida.
   const transparente = params.get('bg') === 'none';
 
+  /*
+    Que se enseña, por parametros del enlace.
+
+    Va asi y no en una pantalla de ajustes porque el que lo monta esta en OBS
+    pegando una URL: una casilla que marcar en otra pagina es un paso mas y
+    otro sitio donde se queda la configuracion de la semana pasada.
+
+      ?ocultar=civ,elo,apm,unidades,referencia,rival
+      ?titulo=NACHO%20vs%20RIVALES
+      ?marcador=5-2
+
+    Sin parametros se enseña todo, que es lo que ya habia.
+  */
+  const ocultar = new Set((params.get('ocultar') || '').split(',').map((x) => x.trim()));
+  const ver = (k: string) => !ocultar.has(k);
+  const titulo = params.get('titulo');
+  const marcador = params.get('marcador');
+
   //  Con ?bg=none no basta con no pintar fondo aqui: el body de la app lleva
   //  el suyo y en un browser source de OBS taparia la escena entera. Se apaga
   //  mientras esta la pagina y se devuelve al salir, que la vuelta al sitio
@@ -309,6 +329,18 @@ export default function LiveOverlay() {
     <div className={`${fondo} min-h-screen p-3`}>
       <div className="w-72 overflow-hidden rounded-xl border border-stone-800 bg-stone-900/90 backdrop-blur">
         {/* Quien juega: los dos lados, con su color del juego y su civ. */}
+        {/* El titulo y el marcador los pone el que monta el enlace: son su
+            sesion, no algo que el replay sepa. */}
+        {(titulo || marcador) && (
+          <div className="flex items-center justify-between gap-2 border-b border-stone-800 bg-stone-950/60 px-3 py-2">
+            {titulo && (
+              <span className="truncate text-sm font-semibold text-stone-100">{titulo}</span>
+            )}
+            {marcador && (
+              <span className="font-mono text-sm text-gold-400">{marcador}</span>
+            )}
+          </div>
+        )}
         <div className="flex items-center justify-between gap-2 px-3 pt-3">
           <span className="flex items-center gap-1.5 text-xs text-stone-500">
             <span
@@ -318,7 +350,7 @@ export default function LiveOverlay() {
             />
             {res.live ? t('ov.liveNow') : t('ov.ended')}
           </span>
-          {me.rating != null && (
+          {ver('elo') && me.rating != null && (
             <span className="font-mono text-xs text-stone-400">
               {me.rating}
               {me.bracket && <span className="ml-1 text-stone-600">{me.bracket}</span>}
@@ -327,9 +359,9 @@ export default function LiveOverlay() {
         </div>
 
         <div className="space-y-2 px-3 py-2">
-          {yo && <Jugador j={yo} destacado />}
+          {yo && <Jugador j={yo} destacado verCiv={ver('civ')} />}
           {soloNombre.map((j, i) => (
-            <Jugador key={i} j={j} destacado={false} />
+            <Jugador key={i} j={j} destacado={false} verCiv={ver('civ')} />
           ))}
         </div>
 
@@ -339,7 +371,7 @@ export default function LiveOverlay() {
         */}
         <div className="border-t border-stone-800 bg-stone-950/40 px-3 py-2">
           <p className="text-sm font-medium text-gold-400">{me.opening || '—'}</p>
-          {ref && (
+          {ref && ver('referencia') && (
             <p className="text-xs text-stone-500">
               {ref.scope === 'opening'
                 ? t('ov.refOpening', { n: String(ref.samples ?? '?'), b: me.bracket || '' })
@@ -376,16 +408,18 @@ export default function LiveOverlay() {
             <Delta valor={me.villagers_15m} referencia={ref?.villagers_15m} menorEsMejor={false} />
           </Fila>
           <Fila etiqueta={t('ov.tcIdle')} valor={reloj(me.tc_idle_ms)} />
-          <Fila etiqueta={t('ov.apm')} valor={me.apm == null ? '—' : String(me.apm)}>
-            <Delta valor={me.apm} referencia={ref?.apm} menorEsMejor={false} decimales={1} />
-          </Fila>
+          {ver('apm') && (
+            <Fila etiqueta={t('ov.apm')} valor={me.apm == null ? '—' : String(me.apm)}>
+              <Delta valor={me.apm} referencia={ref?.apm} menorEsMejor={false} decimales={1} />
+            </Fila>
+          )}
         </div>
 
         {/*
           Producido, no vivo. El replay guarda ordenes, no estado: no sabe de
           bajas, asi que restarlas es imposible y decir "vivos" seria mentir.
         */}
-        {unidades.length > 0 && (
+        {ver('unidades') && unidades.length > 0 && (
           <div className="border-t border-stone-800 px-3 py-2">
             <p className="mb-1 text-[10px] uppercase tracking-wide text-stone-600">
               {t('ov.trained')}
@@ -404,7 +438,7 @@ export default function LiveOverlay() {
           </div>
         )}
 
-        {others.map((c, i) => (
+        {ver('rival') && others.map((c, i) => (
           <Rival key={i} c={c} j={players.find((p) => p.profile_id === c.profile_id)} />
         ))}
 

@@ -148,9 +148,25 @@ export default function Overlay() {
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.winTitle')}</h2>
       <p className="mt-2 text-sm text-stone-400">{t('ovp.winBody')}</p>
+      {/*
+        La orden entera y no solo la bandera: sin --publicar no sube nada a la
+        web, y sin la clave no hay comparacion contra la franja. Enseñar
+        'wololo-vivo --ventana' a secas mandaba a la gente a un panel mudo.
+      */}
       <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-        wololo-vivo --ventana
+        wololo-vivo --ventana --compacto --publicar --clave TU_CLAVE
       </pre>
+      <p className="mt-2 text-xs text-stone-500">{t('ovp.winFlags')}</p>
+
+      <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.cfgTitle')}</h2>
+      <p className="mt-2 text-sm text-stone-400">{t('ovp.cfgBody')}</p>
+      <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
+        {`?titulo=NACHO vs RIVALES   ← cabecera propia
+?marcador=5-2              ← tu contador de la sesion
+?ocultar=civ,apm,unidades  ← quita lo que no quieras
+?bg=none                   ← fondo transparente para OBS`}
+      </pre>
+      <p className="mt-2 text-xs text-stone-500">{t('ovp.cfgNote')}</p>
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.fairTitle')}</h2>
       <p className="mt-2 text-sm text-stone-400">{t('ovp.fairBody')}</p>
