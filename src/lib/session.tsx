@@ -47,7 +47,10 @@ function writeToken(token: string | null) {
   }
 }
 
-async function authFetch(path: string, init?: RequestInit) {
+// Exportada para las paginas que piden cosas atadas a la sesion, como la
+// clave del overlay: la alternativa seria que cada una releyera el token de
+// localStorage por su cuenta.
+export async function authFetch(path: string, init?: RequestInit) {
   const token = readToken();
   return fetch(`${BASE_URL}${path}`, {
     ...init,

@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useT } from '../lib/i18n';
+import { authFetch, useSession } from '../lib/session';
 
 const DESCARGAS = {
   windows: '/descargas/wololo-vivo-windows.exe',
@@ -16,6 +19,75 @@ function Paso({ n, titulo, children }: { n: number; titulo: string; children: Re
         <div className="mt-1 text-sm text-stone-400">{children}</div>
       </div>
     </li>
+  );
+}
+
+/**
+ * La clave con la que el vigilante publica.
+ *
+ * El servidor guarda el hash, asi que se enseña una vez y ya: en vez de dejar
+ * el secreto suelto para que cada uno vea donde lo pega, se enseña la orden
+ * entera, que es lo que de verdad hace falta.
+ */
+function Clave() {
+  const { t } = useT();
+  const { user, signIn } = useSession();
+  const [clave, setClave] = useState<string | null>(null);
+  const [pidiendo, setPidiendo] = useState(false);
+  const [fallo, setFallo] = useState<string | null>(null);
+
+  if (!user) {
+    return (
+      <button onClick={signIn} className="rounded-lg border border-stone-700 px-4 py-2 text-sm text-stone-200 hover:border-stone-500">
+        {t('ovp.signIn')}
+      </button>
+    );
+  }
+  if (!user.profile_id) {
+    return (
+      <p className="text-sm text-stone-400">
+        {t('ovp.needClaim')}{' '}
+        <Link to="/auth/claim" className="text-gold-400 hover:underline">
+          {t('ovp.claimLink')}
+        </Link>
+      </p>
+    );
+  }
+
+  const generar = async () => {
+    setPidiendo(true);
+    setFallo(null);
+    try {
+      const r = await authFetch('/api/overlay/clave', { method: 'POST' });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d?.message || String(r.status));
+      setClave(d.key);
+    } catch (e) {
+      setFallo(e instanceof Error ? e.message : String(e));
+    } finally {
+      setPidiendo(false);
+    }
+  };
+
+  return (
+    <div>
+      <button
+        onClick={generar}
+        disabled={pidiendo}
+        className="rounded-lg border border-stone-700 px-4 py-2 text-sm text-stone-200 hover:border-stone-500 disabled:opacity-50"
+      >
+        {clave ? t('ovp.keyAgain') : t('ovp.keyGet')}
+      </button>
+      {fallo && <p className="mt-2 text-sm text-red-400">{fallo}</p>}
+      {clave && (
+        <>
+          <pre className="mt-3 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
+            wololo-vivo --publicar --clave {clave}
+          </pre>
+          <p className="mt-2 text-xs text-stone-500">{t('ovp.keyOnce')}</p>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -69,6 +141,10 @@ export default function Overlay() {
           <p className="mt-2 text-xs text-stone-500">{t('ovp.s3key')}</p>
         </Paso>
       </ol>
+
+      <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.keyTitle')}</h2>
+      <p className="mb-3 mt-2 text-sm text-stone-400">{t('ovp.keyBody')}</p>
+      <Clave />
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.winTitle')}</h2>
       <p className="mt-2 text-sm text-stone-400">{t('ovp.winBody')}</p>
