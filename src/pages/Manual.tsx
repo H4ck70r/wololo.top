@@ -16,7 +16,7 @@ import { useT } from '../lib/i18n';
 //  La version en la URL: si una captura se rehace, el que ya visito la pagina
 //  seguiria viendo la vieja de su cache. Se sube el numero y se acabo.
 const IMG = '/imagenes/manual';
-const V = '?v=2';
+const V = '?v=3';
 
 function Paso({ n, titulo, children }: { n: number; titulo: string; children: React.ReactNode }) {
   return (
