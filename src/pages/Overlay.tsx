@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useT } from '../lib/i18n';
 import { authFetch, useSession } from '../lib/session';
+import ConfiguradorOverlay from '../components/ConfiguradorOverlay';
 
 const DESCARGAS = {
   windows: '/descargas/wololo-vivo-windows.exe',
@@ -82,12 +83,39 @@ function Clave() {
       {clave && (
         <>
           <pre className="mt-3 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-            wololo-vivo --publicar --clave {clave}
+            wololo-vivo --publish --key {clave}
           </pre>
           <p className="mt-2 text-xs text-stone-500">{t('ovp.keyOnce')}</p>
         </>
       )}
     </div>
+  );
+}
+
+/** Trae de la sesion el perfil y el token del enlace, y monta el configurador. */
+function Configurador() {
+  const { user } = useSession();
+  const [datos, setDatos] = useState<{ profile_id: number | null; live_token: string | null } | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    let vivo = true;
+    authFetch('/api/overlay/clave')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (vivo && d) setDatos({ profile_id: d.profile_id, live_token: d.live_token });
+      })
+      .catch(() => {});
+    return () => {
+      vivo = false;
+    };
+  }, [user]);
+
+  return (
+    <ConfiguradorOverlay
+      profileId={datos?.profile_id ?? user?.profile_id ?? null}
+      token={datos?.live_token ?? null}
+    />
   );
 }
 
@@ -154,19 +182,13 @@ export default function Overlay() {
         'wololo-vivo --ventana' a secas mandaba a la gente a un panel mudo.
       */}
       <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-        wololo-vivo --ventana --compacto --publicar --clave TU_CLAVE
+        wololo-vivo --window --compact --publish --key YOUR_KEY
       </pre>
       <p className="mt-2 text-xs text-stone-500">{t('ovp.winFlags')}</p>
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.cfgTitle')}</h2>
-      <p className="mt-2 text-sm text-stone-400">{t('ovp.cfgBody')}</p>
-      <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-        {`?titulo=NACHO vs RIVALES   ← cabecera propia
-?marcador=5-2              ← tu contador de la sesion
-?ocultar=civ,apm,unidades  ← quita lo que no quieras
-?bg=none                   ← fondo transparente para OBS`}
-      </pre>
-      <p className="mt-2 text-xs text-stone-500">{t('ovp.cfgNote')}</p>
+      <p className="mb-3 mt-2 text-sm text-stone-400">{t('ovp.cfgBody')}</p>
+      <Configurador />
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.fairTitle')}</h2>
       <p className="mt-2 text-sm text-stone-400">{t('ovp.fairBody')}</p>

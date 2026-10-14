@@ -232,16 +232,27 @@ export default function LiveOverlay() {
     pegando una URL: una casilla que marcar en otra pagina es un paso mas y
     otro sitio donde se queda la configuracion de la semana pasada.
 
-      ?ocultar=civ,elo,apm,unidades,referencia,rival
-      ?titulo=NACHO%20vs%20RIVALES
-      ?marcador=5-2
+      ?hide=civ,elo,apm,units,reference,opponent
+      ?title=NACHO%20vs%20RIVALES
+      ?score=5-2
 
     Sin parametros se enseña todo, que es lo que ya habia.
+
+    En ingles como las banderas del vigilante, por lo mismo: esto lo monta
+    gente que no habla castellano. Los nombres viejos en español se siguen
+    leyendo, que ya hay enlaces por ahi con ellos.
   */
-  const ocultar = new Set((params.get('ocultar') || '').split(',').map((x) => x.trim()));
+  const ocultar = new Set(
+    (params.get('hide') || params.get('ocultar') || '').split(',').map((x) => x.trim())
+  );
+  //  Los nombres de pieza tambien cambiaron; se acepta el viejo al lado.
+  const EQUIV: Record<string, string> = {
+    unidades: 'units', referencia: 'reference', rival: 'opponent',
+  };
+  for (const v of [...ocultar]) if (EQUIV[v]) ocultar.add(EQUIV[v]);
   const ver = (k: string) => !ocultar.has(k);
-  const titulo = params.get('titulo');
-  const marcador = params.get('marcador');
+  const titulo = params.get('title') || params.get('titulo');
+  const marcador = params.get('score') || params.get('marcador');
 
   //  Con ?bg=none no basta con no pintar fondo aqui: el body de la app lleva
   //  el suyo y en un browser source de OBS taparia la escena entera. Se apaga
@@ -371,7 +382,7 @@ export default function LiveOverlay() {
         */}
         <div className="border-t border-stone-800 bg-stone-950/40 px-3 py-2">
           <p className="text-sm font-medium text-gold-400">{me.opening || '—'}</p>
-          {ref && ver('referencia') && (
+          {ref && ver('reference') && (
             <p className="text-xs text-stone-500">
               {ref.scope === 'opening'
                 ? t('ov.refOpening', { n: String(ref.samples ?? '?'), b: me.bracket || '' })
@@ -419,7 +430,7 @@ export default function LiveOverlay() {
           Producido, no vivo. El replay guarda ordenes, no estado: no sabe de
           bajas, asi que restarlas es imposible y decir "vivos" seria mentir.
         */}
-        {ver('unidades') && unidades.length > 0 && (
+        {ver('units') && unidades.length > 0 && (
           <div className="border-t border-stone-800 px-3 py-2">
             <p className="mb-1 text-[10px] uppercase tracking-wide text-stone-600">
               {t('ov.trained')}
@@ -438,7 +449,7 @@ export default function LiveOverlay() {
           </div>
         )}
 
-        {ver('rival') && others.map((c, i) => (
+        {ver('opponent') && others.map((c, i) => (
           <Rival key={i} c={c} j={players.find((p) => p.profile_id === c.profile_id)} />
         ))}
 
