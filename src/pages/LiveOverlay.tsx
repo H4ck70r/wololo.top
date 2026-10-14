@@ -60,6 +60,7 @@ type Respuesta = {
     flock_count: number | null;
       players: Jugador[];
     me: Cifras;
+    others: Cifras[];
     reference: Referencia;
     at: string;
   };
@@ -169,6 +170,50 @@ function Fila({
   );
 }
 
+/**
+ * El otro lado, en corto.
+ *
+ * Va sin comparacion contra la franja: su rating y su apertura se comparan
+ * con SU franja, no con la de quien publica, y mezclarlas daria un numero
+ * que no significa nada.
+ */
+function Rival({ c, j }: { c: Cifras; j?: Jugador }) {
+  const { t } = useT();
+  const u = Object.entries(c.units || {}).filter(([, v]) => v > 0);
+  return (
+    <div className="border-t border-stone-800 px-3 py-2">
+      {j && <Jugador j={j} destacado={false} />}
+      <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-stone-400">
+        <span className="text-gold-500/80">{c.opening || '—'}</span>
+        <span>
+          {t('ov.feudal')}{' '}
+          <span className="font-mono text-stone-200">
+            {c.feudal_ms == null ? '—' : reloj(c.feudal_ms + INVESTIGACION_MS.feudal)}
+          </span>
+        </span>
+        <span>
+          {t('ov.castle')}{' '}
+          <span className="font-mono text-stone-200">
+            {c.castle_ms == null ? '—' : reloj(c.castle_ms + INVESTIGACION_MS.castle)}
+          </span>
+        </span>
+        <span>
+          {t('ov.apm')} <span className="font-mono text-stone-200">{c.apm ?? '—'}</span>
+        </span>
+      </div>
+      {u.length > 0 && (
+        <div className="mt-1 flex flex-wrap gap-1">
+          {u.map(([k, n]) => (
+            <span key={k} className="rounded bg-stone-800/70 px-1.5 py-0.5 text-xs text-stone-400">
+              {t(`ov.u.${k}` as never)} <span className="font-mono text-stone-200">{n}</span>
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function LiveOverlay() {
   const { t } = useT();
   const { profileId } = useParams();
@@ -250,8 +295,14 @@ export default function LiveOverlay() {
   }
 
   const { me, reference: ref, players, map_size, flock_count } = res.data;
+  const others = res.data.others || [];
   const yo = players.find((p) => p.profile_id === me.profile_id);
-  const otros = players.filter((p) => p !== yo);
+  //  Los que no tienen cifras -las IA, que no entran en las medias- se quedan
+  //  arriba como nombre y civ, que es lo que el lobby ya enseñaba.
+  const conCifras = new Set(others.map((o) => o.profile_id));
+  const soloNombre = players.filter(
+    (p) => p !== yo && !(p.profile_id && conCifras.has(p.profile_id))
+  );
   const unidades = Object.entries(me.units || {}).filter(([, v]) => v > 0);
 
   return (
@@ -277,7 +328,7 @@ export default function LiveOverlay() {
 
         <div className="space-y-2 px-3 py-2">
           {yo && <Jugador j={yo} destacado />}
-          {otros.map((j, i) => (
+          {soloNombre.map((j, i) => (
             <Jugador key={i} j={j} destacado={false} />
           ))}
         </div>
@@ -352,6 +403,10 @@ export default function LiveOverlay() {
             </div>
           </div>
         )}
+
+        {others.map((c, i) => (
+          <Rival key={i} c={c} j={players.find((p) => p.profile_id === c.profile_id)} />
+        ))}
 
         <div className="flex flex-wrap items-center gap-x-2 border-t border-stone-800 px-3 py-2 text-xs text-stone-600">
           {map_size && <span>{map_size}</span>}
