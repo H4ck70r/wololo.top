@@ -148,6 +148,22 @@ export default function Overlay() {
       */}
       <p className="mt-3 text-xs text-stone-500">{t('ovp.unsigned')}</p>
 
+      {/*
+        El manual, arriba y no al pie: el que acaba de darle a descargar es
+        exactamente el que va a necesitarlo, y si queda enterrado al final se
+        lo salta.
+      */}
+      <Link
+        to="/manual"
+        className="mt-6 flex items-center justify-between gap-3 rounded-lg border border-stone-700 bg-stone-900/50 p-4 no-underline transition-colors hover:border-gold-500/50"
+      >
+        <span>
+          <span className="block font-medium text-stone-100">{t('ovp.manualTitle')}</span>
+          <span className="mt-0.5 block text-sm text-stone-400">{t('ovp.manualBody')}</span>
+        </span>
+        <span className="flex-none text-gold-400" aria-hidden="true">&rarr;</span>
+      </Link>
+
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.howTitle')}</h2>
       <ol className="mt-3 space-y-4">
         <Paso n={1} titulo={t('ovp.s1')}>

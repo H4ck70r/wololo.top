@@ -6,29 +6,71 @@ import { useSession } from '../lib/session';
 import SteamButton from './SteamButton';
 import type { TKey } from '../lib/i18n';
 
-const NAV_LINKS: { path: string; key: TKey }[] = [
-  { path: '/', key: 'nav.search' },
-  { path: '/leaderboard', key: 'nav.leaderboard' },
+type Enlace = { path: string; key: TKey };
+type Grupo = { grupo: TKey; enlaces: Enlace[] };
+type Entrada = Enlace | Grupo;
+
+const esGrupo = (e: Entrada): e is Grupo => 'grupo' in e;
+
+/*
+  El menu, por temas y no en fila.
+
+  Eran ocho enlaces sueltos y ya no cabian en una barra: a esa altura el que
+  llega no lee el menu, lo barre. Agrupados son cuatro cosas, y cada una dice
+  de que va sin tener que entrar.
+
+  El manual sale de aqui a proposito. No es una seccion del sitio, es la ayuda
+  de una herramienta concreta, asi que vive dentro de su pagina; quien busca el
+  manual viene de haberla descargado, no del menu.
+*/
+const NAV: Entrada[] = [
+  {
+    grupo: 'nav.g.players',
+    enlaces: [
+      { path: '/', key: 'nav.search' },
+      { path: '/leaderboard', key: 'nav.leaderboard' },
+      { path: '/compare', key: 'nav.compare' },
+    ],
+  },
+  {
+    grupo: 'nav.g.matches',
+    enlaces: [
+      { path: '/live', key: 'nav.live' },
+      //  El analizador se queda arriba del todo de su grupo: es la puerta de
+      //  entrada para quien llega sin cuenta y sin saber que existimos.
+      { path: '/analyze', key: 'nav.analyze' },
+    ],
+  },
   { path: '/stats', key: 'nav.stats' },
-  //  El analizador va en la barra y no escondido: es la puerta de entrada
-  //  para quien llega sin cuenta y sin saber que existimos.
-  { path: '/analyze', key: 'nav.analyze' },
-  { path: '/compare', key: 'nav.compare' },
-  { path: '/live', key: 'nav.live' },
   { path: '/overlay', key: 'nav.overlay' },
-  { path: '/manual', key: 'nav.manual' },
 ];
 
 export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [abierto, setAbierto] = useState<string | null>(null);
   const { t, lang, setLang } = useT();
   const { user, loading: sessionLoading, signIn, signOut } = useSession();
 
   // Close the drawer on navigation, otherwise it stays over the new page.
   useEffect(() => {
     setMenuOpen(false);
+    setAbierto(null);
   }, [location.pathname]);
+
+  //  Un desplegable abierto tiene que cerrarse al pulsar fuera y con Escape, o
+  //  se queda tapando la pagina hasta que alguien acierte a darle otra vez.
+  useEffect(() => {
+    if (!abierto) return;
+    const fuera = () => setAbierto(null);
+    const tecla = (e: KeyboardEvent) => e.key === 'Escape' && setAbierto(null);
+    document.addEventListener('click', fuera);
+    document.addEventListener('keydown', tecla);
+    return () => {
+      document.removeEventListener('click', fuera);
+      document.removeEventListener('keydown', tecla);
+    };
+  }, [abierto]);
 
   const linkClasses = (path: string, block = false) =>
     `${block ? 'block w-full py-3' : 'py-2'} px-3 lg:px-4 rounded-lg text-sm font-medium transition-colors no-underline whitespace-nowrap ${
@@ -53,11 +95,68 @@ export default function Layout({ children }: { children: ReactNode }) {
                 horizontal scroller inside the header, which hid Compare and Live
                 behind a swipe nobody would guess was there. */}
             <nav className="hidden md:flex items-center gap-1">
-              {NAV_LINKS.map((link) => (
-                <Link key={link.path} to={link.path} className={linkClasses(link.path)}>
-                  {t(link.key)}
-                </Link>
-              ))}
+              {NAV.map((entrada) => {
+                if (!esGrupo(entrada)) {
+                  return (
+                    <Link
+                      key={entrada.path}
+                      to={entrada.path}
+                      className={linkClasses(entrada.path)}
+                    >
+                      {t(entrada.key)}
+                    </Link>
+                  );
+                }
+                const activo = entrada.enlaces.some((l) => l.path === location.pathname);
+                const open = abierto === entrada.grupo;
+                return (
+                  <div key={entrada.grupo} className="relative">
+                    <button
+                      type="button"
+                      aria-expanded={open}
+                      aria-haspopup="true"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setAbierto(open ? null : entrada.grupo);
+                      }}
+                      className={`flex items-center gap-1 py-2 px-3 lg:px-4 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                        activo || open
+                          ? 'bg-dark-500 text-gold-400'
+                          : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
+                      }`}
+                    >
+                      {t(entrada.grupo)}
+                      <svg
+                        className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {open && (
+                      <div className="absolute left-0 top-full z-50 mt-1 min-w-44 overflow-hidden rounded-lg border border-dark-400 bg-dark-800 py-1 shadow-xl">
+                        {entrada.enlaces.map((l) => (
+                          <Link
+                            key={l.path}
+                            to={l.path}
+                            className={`block px-4 py-2 text-sm no-underline transition-colors ${
+                              location.pathname === l.path
+                                ? 'bg-dark-500 text-gold-400'
+                                : 'text-gray-300 hover:bg-dark-600 hover:text-gray-100'
+                            }`}
+                          >
+                            {t(l.key)}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </nav>
 
             <div className="hidden md:flex items-center gap-1 ml-2 pl-2 border-l border-dark-400">
@@ -106,11 +205,30 @@ export default function Layout({ children }: { children: ReactNode }) {
 
           {menuOpen && (
             <nav id="mobile-nav" className="md:hidden pb-3 flex flex-col gap-1">
-              {NAV_LINKS.map((link) => (
-                <Link key={link.path} to={link.path} className={linkClasses(link.path, true)}>
-                  {t(link.key)}
-                </Link>
-              ))}
+              {/*  En el cajon no hacen falta desplegables: hay sitio de sobra
+                   y un titulo por grupo basta para orientarse. */}
+              {NAV.map((entrada) =>
+                esGrupo(entrada) ? (
+                  <div key={entrada.grupo} className="pt-2 first:pt-0">
+                    <p className="px-3 pb-1 text-xs uppercase tracking-wider text-gray-600">
+                      {t(entrada.grupo)}
+                    </p>
+                    {entrada.enlaces.map((l) => (
+                      <Link key={l.path} to={l.path} className={linkClasses(l.path, true)}>
+                        {t(l.key)}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <Link
+                    key={entrada.path}
+                    to={entrada.path}
+                    className={linkClasses(entrada.path, true)}
+                  >
+                    {t(entrada.key)}
+                  </Link>
+                )
+              )}
               <div className="pt-2 mt-1 border-t border-dark-400">
                 <SteamButton
                   user={user}

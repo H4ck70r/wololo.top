@@ -49,6 +49,10 @@ const EN = {
   'ov.noToken': 'This link needs its token.',
   'ov.notFound': 'No live match on this link.',
 
+  "nav.g.players": "Players",
+  "nav.g.matches": "Matches",
+  "ovp.manualTitle": "Read the manual",
+  "ovp.manualBody": "Every view with its screenshot, what each number means, and what to do when something does not work.",
   "nav.manual": "Manual",
   "man.title": "How to use wololo-live",
   "man.lead": "It tells you, while you play, whether your opening is going faster or slower than the people at your rating doing the same thing.",
@@ -815,6 +819,10 @@ const EN = {
 export type TKey = keyof typeof EN;
 
 const ES: Partial<Record<TKey, string>> = {
+  "nav.g.players": "Jugadores",
+  "nav.g.matches": "Partidas",
+  "ovp.manualTitle": "Leer el manual",
+  "ovp.manualBody": "Cada vista con su captura, qué significa cada número y qué hacer cuando algo no sale.",
   "nav.manual": "Manual",
   "man.title": "Cómo se usa wololo-live",
   "man.lead": "Te dice, mientras juegas, si tu apertura va más rápida o más lenta que la de la gente de tu rating que está haciendo lo mismo.",
