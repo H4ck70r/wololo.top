@@ -5,8 +5,8 @@ import { authFetch, useSession } from '../lib/session';
 import ConfiguradorOverlay from '../components/ConfiguradorOverlay';
 
 const DESCARGAS = {
-  windows: '/descargas/wololo-vivo-windows.exe',
-  linux: '/descargas/wololo-vivo-linux',
+  windows: '/descargas/wololo-live-windows.exe',
+  linux: '/descargas/wololo-live-linux',
 };
 
 function Paso({ n, titulo, children }: { n: number; titulo: string; children: React.ReactNode }) {
@@ -83,7 +83,7 @@ function Clave() {
       {clave && (
         <>
           <pre className="mt-3 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-            wololo-vivo --publish --key {clave}
+            wololo-live --publish --key {clave}
           </pre>
           <p className="mt-2 text-xs text-stone-500">{t('ovp.keyOnce')}</p>
         </>
@@ -182,16 +182,13 @@ export default function Overlay() {
         'wololo-vivo --ventana' a secas mandaba a la gente a un panel mudo.
       */}
       <pre className="mt-2 overflow-x-auto rounded bg-stone-900 p-2 font-mono text-xs text-stone-300">
-        wololo-vivo --window --compact --publish --key YOUR_KEY
+        wololo-live --window --compact --publish --key YOUR_KEY
       </pre>
       <p className="mt-2 text-xs text-stone-500">{t('ovp.winFlags')}</p>
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.cfgTitle')}</h2>
       <p className="mb-3 mt-2 text-sm text-stone-400">{t('ovp.cfgBody')}</p>
       <Configurador />
-
-      <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.fairTitle')}</h2>
-      <p className="mt-2 text-sm text-stone-400">{t('ovp.fairBody')}</p>
 
       <h2 className="mt-8 text-lg font-medium text-stone-100">{t('ovp.whatTitle')}</h2>
       <p className="mt-2 text-sm text-stone-400">{t('ovp.whatBody')}</p>
