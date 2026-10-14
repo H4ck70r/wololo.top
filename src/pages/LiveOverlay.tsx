@@ -47,6 +47,7 @@ type Referencia = {
   samples: number | null;
   feudal_s: number | null;
   castle_s: number | null;
+  imperial_s: number | null;
   villagers_15m: number | null;
   apm: number | null;
 } | null;
@@ -199,6 +200,14 @@ function Rival({ c, j }: { c: Cifras; j?: Jugador }) {
             {c.castle_ms == null ? '—' : reloj(c.castle_ms + INVESTIGACION_MS.castle)}
           </span>
         </span>
+        {c.imperial_ms != null && (
+          <span>
+            {t('ov.imperial')}{' '}
+            <span className="font-mono text-stone-200">
+              {reloj(c.imperial_ms + INVESTIGACION_MS.imperial)}
+            </span>
+          </span>
+        )}
         <span>
           {t('ov.apm')} <span className="font-mono text-stone-200">{c.apm ?? '—'}</span>
         </span>
@@ -409,6 +418,16 @@ export default function LiveOverlay() {
             <Delta
               valor={me.castle_ms == null ? null : me.castle_ms / 1000}
               referencia={ref?.castle_s}
+              sufijo="s"
+            />
+          </Fila>
+          <Fila
+            etiqueta={t('ov.imperial')}
+            valor={me.imperial_ms == null ? '—' : reloj(me.imperial_ms + INVESTIGACION_MS.imperial)}
+          >
+            <Delta
+              valor={me.imperial_ms == null ? null : me.imperial_ms / 1000}
+              referencia={ref?.imperial_s}
               sufijo="s"
             />
           </Fila>

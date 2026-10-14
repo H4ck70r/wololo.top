@@ -16,7 +16,7 @@ import { useT } from '../lib/i18n';
 //  La version en la URL: si una captura se rehace, el que ya visito la pagina
 //  seguiria viendo la vieja de su cache. Se sube el numero y se acabo.
 const IMG = '/imagenes/manual';
-const V = '?v=3';
+const V = '?v=4';
 
 function Paso({ n, titulo, children }: { n: number; titulo: string; children: React.ReactNode }) {
   return (
@@ -32,14 +32,34 @@ function Paso({ n, titulo, children }: { n: number; titulo: string; children: Re
   );
 }
 
-function Pantalla({ src, alt, pie }: { src: string; alt: string; pie: string }) {
+/**
+ * Una captura a su tamaño real.
+ *
+ * Estaban a lo ancho de la columna, asi que un panel de 237 pixeles se veia a
+ * casi el triple: borroso y, peor, mintiendo sobre lo que ocupa en pantalla.
+ * El que mira el manual esta decidiendo si le cabe encima del juego, asi que
+ * la captura tiene que medir lo que medira. Solo encoge si no cabe.
+ */
+function Pantalla({
+  src,
+  alt,
+  ancho,
+  pie,
+}: {
+  src: string;
+  alt: string;
+  ancho: number;
+  pie: string;
+}) {
   return (
     <figure className="mt-4">
       <img
         src={src}
         alt={alt}
+        width={ancho}
         loading="lazy"
-        className="w-full rounded-lg border border-stone-800 bg-stone-900 p-3"
+        className="h-auto max-w-full rounded border border-stone-800"
+        style={{ width: ancho }}
       />
       <figcaption className="mt-2 text-xs text-stone-500">{pie}</figcaption>
     </figure>
@@ -83,8 +103,8 @@ export default function Manual() {
       <div className="mt-10 space-y-10">
         <Seccion id="ves" titulo={t('man.seeTitle')}>
           <p>{t('man.seeBody')}</p>
-          <Pantalla src={`${IMG}/tira.png${V}`} alt={t('man.stripAlt')} pie={t('man.stripCaption')} />
-          <Pantalla src={`${IMG}/panel.png${V}`} alt={t('man.panelAlt')} pie={t('man.panelCaption')} />
+          <Pantalla src={`${IMG}/tira.png${V}`} ancho={335} alt={t('man.stripAlt')} pie={t('man.stripCaption')} />
+          <Pantalla src={`${IMG}/panel.png${V}`} ancho={237} alt={t('man.panelAlt')} pie={t('man.panelCaption')} />
         </Seccion>
 
         <Seccion id="empezar" titulo={t('man.startTitle')}>
@@ -119,6 +139,7 @@ export default function Manual() {
               ['man.nOpening', 'man.nOpeningB'],
               ['man.nFeudal', 'man.nFeudalB'],
               ['man.nCastle', 'man.nCastleB'],
+              ['man.nImperial', 'man.nImperialB'],
               ['man.nVills', 'man.nVillsB'],
               ['man.nIdle', 'man.nIdleB'],
               ['man.nApm', 'man.nApmB'],
@@ -137,13 +158,13 @@ export default function Manual() {
 
         <Seccion id="stream" titulo={t('man.streamTitle')}>
           <p>{t('man.streamLead')}</p>
-          <Pantalla src={`${IMG}/vivo.png${V}`} alt={t('man.liveAlt')} pie={t('man.liveCaption')} />
+          <Pantalla src={`${IMG}/vivo.png${V}`} ancho={320} alt={t('man.liveAlt')} pie={t('man.liveCaption')} />
           <ol className="mt-4 space-y-5">
             <Paso n={1} titulo={t('man.o1')}>{t('man.o1b')}</Paso>
             <Paso n={2} titulo={t('man.o2')}>{t('man.o2b')}</Paso>
             <Paso n={3} titulo={t('man.o3')}>{t('man.o3b')}</Paso>
           </ol>
-          <Pantalla src={`${IMG}/configurador.png${V}`} alt={t('man.cfgAlt')} pie={t('man.cfgCaption')} />
+          <Pantalla src={`${IMG}/configurador.png${V}`} ancho={482} alt={t('man.cfgAlt')} pie={t('man.cfgCaption')} />
         </Seccion>
 
         <Seccion id="problemas" titulo={t('man.helpTitle')}>
