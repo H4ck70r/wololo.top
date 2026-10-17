@@ -64,8 +64,21 @@ export async function searchPlayers(query: string): Promise<PlayerSearchResponse
   return apiFetch<PlayerSearchResponse>('/api/players/search', { q: query });
 }
 
-export async function getPlayer(profileId: number | string): Promise<PlayerProfileResponse> {
-  return apiFetch<PlayerProfileResponse>(`/api/players/${profileId}`);
+/*
+  La poblacion contra la que se mide el ladder: cuentas con partida en los
+  ultimos N dias, o todas (0). Por defecto 90: la tabla guarda toda cuenta que
+  alguna vez jugo (~215k en 1v1 RM, ~81k sin jugar hace mas de un año) y
+  contra ese total la media salia en 962, cuando la de quien juega hoy ronda
+  los 1000 y la del rival tipico de una partida, 1074.
+*/
+export type Actividad = 0 | 30 | 90;
+export const ACTIVIDAD_DEFECTO: Actividad = 90;
+
+export async function getPlayer(
+  profileId: number | string,
+  active: Actividad = ACTIVIDAD_DEFECTO
+): Promise<PlayerProfileResponse> {
+  return apiFetch<PlayerProfileResponse>(`/api/players/${profileId}`, active ? { active } : undefined);
 }
 
 export async function getPlayerStats(profileId: number | string): Promise<PlayerStats> {
@@ -116,9 +129,10 @@ export async function getLadderDistributionHistory(params?: {
 
 export async function getLadderDistribution(
   type: 'solo' | 'team' = 'solo',
-  bucket = 50
+  bucket = 50,
+  active: Actividad = ACTIVIDAD_DEFECTO
 ): Promise<LadderDistribution> {
-  return apiFetch<LadderDistribution>('/api/ladder/distribution', { type, bucket });
+  return apiFetch<LadderDistribution>('/api/ladder/distribution', active ? { type, bucket, active } : { type, bucket });
 }
 
 export async function getLeaderboard(
@@ -172,6 +186,7 @@ export async function getLadderRangeStats(params: {
   top?: number;
   rating?: number;
   profile_id?: number | string;
+  active?: Actividad;
 }): Promise<LadderRangeStats> {
   return apiFetch<LadderRangeStats>('/api/ladder/range-stats', params as Record<string, string | number>);
 }

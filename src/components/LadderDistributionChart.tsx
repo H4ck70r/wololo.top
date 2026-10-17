@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Area, AreaChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { getEnhancedLeaderboard, getLadderDistribution, getLadderRangeStats, getLeaderboard } from '../lib/api';
+import { ACTIVIDAD_DEFECTO, getEnhancedLeaderboard, getLadderDistribution, getLadderRangeStats, getLeaderboard } from '../lib/api';
+import type { Actividad } from '../lib/api';
 
 import { useT } from '../lib/i18n';
 import type { TKey } from '../lib/i18n';
@@ -77,6 +78,9 @@ export default function LadderDistributionChart({
   showPlayers = true,
 }: Props) {
   const { t } = useT();
+  //  Contra quien se mide: por defecto, quien jugo en los ultimos 90 dias.
+  //  "Todas" incluye las ~81k cuentas que no juegan desde hace mas de un año.
+  const [poblacion, setPoblacion] = useState<Actividad>(ACTIVIDAD_DEFECTO);
   const [ownRange, setOwnRange] = useState<Band | null>(null);
   const controlled = onRangeChange != null;
   const range = controlled ? controlledRange ?? null : ownRange;
@@ -90,8 +94,8 @@ export default function LadderDistributionChart({
   useEffect(() => { setPage(1); }, [range?.from, range?.to]);
 
   const { data, isLoading } = useQuery<LadderDistribution>({
-    queryKey: ['ladderDistribution', ladder],
-    queryFn: () => getLadderDistribution(ladder, 50),
+    queryKey: ['ladderDistribution', ladder, poblacion],
+    queryFn: () => getLadderDistribution(ladder, 50, poblacion),
     staleTime: 30 * 60 * 1000,
   });
 
@@ -105,7 +109,7 @@ export default function LadderDistributionChart({
   // Without a range this measures the whole ladder, which also turns the
   // position into an exact place instead of the start of the tie group.
   const { data: rangeStats } = useQuery<LadderRangeStats>({
-    queryKey: ['ladderRangeStats', ladder, range?.from, range?.to, range?.top, rating, profileId],
+    queryKey: ['ladderRangeStats', ladder, range?.from, range?.to, range?.top, rating, profileId, poblacion],
     queryFn: () =>
       getLadderRangeStats({
         type: ladder,
@@ -113,6 +117,7 @@ export default function LadderDistributionChart({
         ...(range?.top ? { top: range.top } : { from: range?.from, to: range?.to }),
         rating,
         profile_id: profileId,
+        active: poblacion,
       }),
     enabled: rating != null || range != null,
     staleTime: 30 * 60 * 1000,
@@ -222,6 +227,15 @@ export default function LadderDistributionChart({
   // position comes from the profile's own exact count rather than from the
   // buckets; with a range it is whatever the range endpoint measured.
   const whole = data.stats;
+  //  El "top X%" que llega del perfil esta medido con la poblacion por
+  //  defecto. Si aqui se elige otra, la posicion sale de la misma consulta que
+  //  la curva, para que el numero y el dibujo hablen del mismo universo.
+  const propia = !range && rangeStats?.your_position != null && rangeStats.players
+    ? { above: rangeStats.your_position - 1, total: rangeStats.players, top: Math.max(0.1, Math.round((rangeStats.your_position / rangeStats.players) * 1000) / 10) }
+    : null;
+  const arriba = propia?.above ?? (poblacion === ACTIVIDAD_DEFECTO ? playersAbove : null);
+  const topPct = propia?.top ?? (poblacion === ACTIVIDAD_DEFECTO ? topPercent : null);
+  const etiquetaPoblacion = poblacion === 0 ? t('dist.popAll') : t('dist.popActive', { n: poblacion });
   const scope: Scope | undefined = rangeStats
     ? rangeStats
     : !range && whole
@@ -232,7 +246,7 @@ export default function LadderDistributionChart({
           min: whole.min,
           max: whole.max,
           stddev: whole.stddev,
-          your_position: playersAbove != null ? playersAbove + 1 : undefined,
+          your_position: arriba != null ? arriba + 1 : undefined,
         }
       : undefined;
 
@@ -297,24 +311,24 @@ export default function LadderDistributionChart({
         <h2 className="titulo text-[15px] m-0">
           {rating == null ? t('dist.titleLadder') : who ? t('dist.titleOther', { who }) : t('dist.title')}
         </h2>
-        {topPercent != null && (
-          <span className="text-sm font-medium text-gold-400">{t('common.topPercent')} {topPercent}%</span>
+        {topPct != null && (
+          <span className="cifra text-base text-gray-100">{t('common.topPercent')} {topPct}%</span>
         )}
+        <div className="seg ml-auto" role="group" aria-label={t('dist.popLabel')}>
+          {([30, 90, 0] as Actividad[]).map((d) => (
+            <button key={d} type="button" aria-pressed={poblacion === d} onClick={() => setPoblacion(d)} className={poblacion === d ? 'sel-activo' : ''}>
+              {d === 0 ? t('dist.popAllShort') : t('dist.popActiveShort', { n: d })}
+            </button>
+          ))}
+        </div>
       </div>
-      {playersAbove != null && (
-        <p className="text-xs text-gray-500 m-0">
-          {who
-            ? t('dist.subtitleOther', {
-                who,
-                above: playersAbove.toLocaleString(),
-                total: data.total_players.toLocaleString(),
-              })
-            : t('dist.subtitle', {
-                above: playersAbove.toLocaleString(),
-                total: data.total_players.toLocaleString(),
-              })}
-        </p>
-      )}
+      <p className="text-xs text-gray-400 mt-1 mb-0 first-letter:uppercase">
+        {arriba != null
+          ? who
+            ? t('dist.subtitleOther', { who, above: arriba.toLocaleString(), total: data.total_players.toLocaleString(), pop: etiquetaPoblacion })
+            : t('dist.subtitle', { above: arriba.toLocaleString(), total: data.total_players.toLocaleString(), pop: etiquetaPoblacion })
+          : t('dist.popOnly', { total: data.total_players.toLocaleString(), pop: etiquetaPoblacion })}
+      </p>
 
       <div className="seg mt-3 mb-2">
         <button type="button" onClick={() => setRange(null)} aria-pressed={range === null} className={range === null ? 'sel-activo' : ''}>
@@ -453,8 +467,8 @@ export default function LadderDistributionChart({
       {scope && tiles.length > 0 && (
         <div className="mt-4 pt-4 border-t border-dark-500/60">
           <div className="flex items-baseline gap-2 flex-wrap mb-2">
-            <h3 className="text-sm font-semibold text-gray-300 m-0">
-              {range ? t('dist.statsRange') : t('dist.statsWhole')}
+            <h3 className="text-sm font-semibold text-gray-300 m-0 first-letter:uppercase">
+              {range ? t('dist.statsRange') : etiquetaPoblacion}
             </h3>
             <span className="text-xs text-gray-500 tabular-nums">
               {scope.players.toLocaleString()} {t('dist.statPlayers')}
