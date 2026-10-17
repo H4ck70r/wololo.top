@@ -2,6 +2,7 @@ import { useT } from '../lib/i18n';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getFavorites, removeFavorite, type FavoritePlayer } from '../lib/favorites';
+import Bandera from './Bandera';
 
 export default function FavoritesBar() {
   const { t } = useT();
@@ -30,9 +31,7 @@ export default function FavoritesBar() {
             to={`/player/${player.profileId}`}
             className="flex items-center gap-2 pl-3 pr-2 py-1.5 bg-dark-700 border border-dark-400 rounded-sm hover:border-gold-500/50 transition-colors shrink-0 group no-underline"
           >
-            {player.country && (
-              <span className="font-mono text-xs text-gray-500">{player.country.toUpperCase()}</span>
-            )}
+            <Bandera code={player.country} />
             <span className="text-sm text-gray-100 font-semibold">{player.alias}</span>
             {player.rating != null && (
               <span className="cifra text-[15px] text-gray-300">{player.rating}</span>

@@ -1,8 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { searchPlayers } from '../lib/api';
-import { countryFlag } from '../lib/constants';
+
 import type { PlayerSearchResult } from '../lib/types';
+import Bandera from './Bandera';
 
 interface Props {
   onSelect: (player: PlayerSearchResult) => void;
@@ -124,7 +125,7 @@ export default function PlayerSearchInput({ onSelect, placeholder, className = '
             >
               <div className="flex-1 min-w-0">
                 <p className="font-medium truncate m-0 text-sm">
-                  {player.country && <span className="font-mono text-xs font-medium text-gray-500 mr-1">{countryFlag(player.country)}</span>}
+                  <Bandera code={player.country} className="mr-1.5" />
                   {player.alias}
                 </p>
               </div>

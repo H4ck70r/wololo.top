@@ -6,7 +6,7 @@ import { useT } from '../lib/i18n';
 import { getLiveMatches } from '../lib/api';
 import { cleanMapName, formatDuration } from '../lib/constants';
 import type { LiveMatch } from '../lib/types';
-import MarcaEdad, { LeyendaEdades } from '../components/MarcaEdad';
+import MarcaEdad from '../components/MarcaEdad';
 
 /*
   Lo que se esta jugando ahora, ordenado por quien lo juega.
@@ -109,8 +109,6 @@ export default function LiveMatches() {
           </div>
         </div>
       </div>
-
-      <LeyendaEdades className="mb-5" />
 
       {error && <p className="text-loss border border-loss/30 bg-loss/5 rounded-sm px-4 py-3">{t('live.failed')}</p>}
 

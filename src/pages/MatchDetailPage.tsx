@@ -2,11 +2,12 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getMatchDetail, getSignalFlags } from '../lib/api';
-import { getCivName, getCivIcon, formatDuration, countryFlag } from '../lib/constants';
+import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
 import { outcomeOf } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
 import MatchReplayAnalysis from '../components/MatchReplayAnalysis';
 import SharedCopyBadge from '../components/SharedCopyBadge';
+import Bandera from '../components/Bandera';
 
 export default function MatchDetailPage() {
   const { t, lang } = useT();
@@ -194,7 +195,7 @@ function Bando({
                   <SharedCopyBadge flag={flags[String(player.profile_id)]} />
                 </div>
                 <p className="m-0 mt-0.5 text-sm text-gray-400 truncate">
-                  {player.country && <span className="font-mono text-xs font-medium text-gray-500">{countryFlag(player.country)} · </span>}
+                  {player.country && <><Bandera code={player.country} className="mr-1.5" /><span className="text-gray-600">· </span></>}
                   {civ}
                 </p>
                 {player.new_rating != null && (

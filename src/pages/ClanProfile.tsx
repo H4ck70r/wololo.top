@@ -2,9 +2,10 @@ import { useT } from '../lib/i18n';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { countryFlag } from '../lib/constants';
+
 import type { LeaderboardPlayer } from '../lib/types';
 import { avatarReal } from '../lib/avatar';
+import Bandera from '../components/Bandera';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 const API_KEY = import.meta.env.VITE_API_KEY || '';
@@ -137,7 +138,7 @@ export default function ClanProfile() {
                           to={`/player/${p.profile_id}`}
                           className="text-gray-200 hover:text-gold-400 no-underline font-medium truncate"
                         >
-                          {p.country && <span className="font-mono text-xs font-medium text-gray-500 mr-1">{countryFlag(p.country)}</span>}
+                          <Bandera code={p.country} className="mr-1.5" />
                           {p.alias || p.name || `Player ${p.profile_id}`}
                         </Link>
                       </div>

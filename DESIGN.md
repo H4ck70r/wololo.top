@@ -189,6 +189,8 @@ A warm, low-chroma ink-and-bone ground carrying a small heraldic set of tincture
 
 **The Ages Rule.** Rating tiers are always the five ages on the bronze ramp, never a MOBA rainbow (cyan "Diamond", purple "Legend"), and the ramp never borrows Imperial Gold.
 
+**The Tinctures Rule (ladder distribution).** The percentile bands of the ladder distribution chart (top 50%, 25%, 10%, 1%, top 100, elite) are a different job from the ages: they must be told apart at a glance, so each takes a heraldic tincture muted to the page (OKLCH L 0.52–0.67, C 0.10–0.13), in this fixed order: sinople #549864, azure #4576b4, tenné #c17938, purpure #875093, or #ac942f, gules #b14d51. The "average" bulk band stays bone-neutral #a39a86. Validated with the dataviz validator against #14120e (CVD and normal-vision separation, contrast: all pass). Bands are shaded at 17% opacity behind the curve; the legend is the band selector itself (a swatch per segment).
+
 ## Typography
 
 **Display Font:** Cinzel (with Trajan Pro, serif), weights 600 and 700
@@ -208,14 +210,14 @@ All four are self-hosted (Fontsource, latin subsets).
 - **Title** (Barlow 600, 16px): player names and civilization names in rows.
 - **Body** (Barlow 400, 16px, 1.5): reading text; taglines step to 18-20px at max 36ch.
 - **Label** (Barlow 500, 14-15px): nav links, tabs, segments, buttons.
-- **Meta** (JetBrains Mono 400, 12px, tabular): measured strings: match type, map, duration, ids, country codes, data-cell captions, small qualifiers.
+- **Meta** (JetBrains Mono 400, 12px, tabular): measured strings: match type, map, duration, ids, data-cell captions, small qualifiers.
 
 ### Named Rules
 **The No Figures In Cinzel Rule.** Cinzel has no real figures ("1v1" reads "IVI"). Digits never go in Cinzel headings: numbers go in Barlow Condensed, and a numeric qualifier beside a heading goes in mono.
 
 **The Twelve Pixel Floor.** No text under 12px. The sole exception is the chromeless OBS overlay route (/live/:id), sized for stream scenes.
 
-**The Measured Meta Rule.** Anything that is measured or identified (type, map, duration, ids, country) is set in mono, joined with a middle dot.
+**The Measured Meta Rule.** Anything that is measured or identified (type, map, duration, ids) is set in mono, joined with a middle dot. Country is shown as its flag (see Flags).
 
 ## Layout
 
@@ -275,7 +277,10 @@ Exactly two selection controls exist, plus one active state.
 - **Mobile:** a drawer of block links; the active item takes a 2px gold left edge on ink-surface.
 
 ### Age Token and Legend (signature)
-An 8px rotated square filled with the age color of a rating, set before the score with the age name as its accessible label. Wherever scores are listed, a visible legend lists the five ages with their mono thresholds (`<1000`, `1000+`, `1400+`, `1800+`, `2200+`) so color is never the only carrier.
+An 8px rotated square filled with the age color of a rating, set before the score, with the age name as its title and accessible label. No visible legend block on the ladder, home or live: the owner rejected it as clutter (2026-10-17); the age is read on hover and named in full on the player profile (rating card and milestones). `LeyendaEdades` remains in the code, unused.
+
+### Flags
+Country is the real flag as a self-hosted SVG (`public/banderas/<cc>.svg`, from flag-icons, MIT) rendered by `Bandera`: 20×15, 1px radius, a dark hairline ring, the country name as alt/title; it hides itself if a code has no flag. Never flag emoji (they do not render on Windows) and never a third-party flag CDN.
 
 ### Map Rule (signature)
 A full-width hairline with tick marks and mono grid letters A to H, as on the frame of a campaign map. It divides bands of the page. Map coordinates live here, on the divider, never as a label above a heading.
@@ -288,12 +293,12 @@ A player's ladder: a 10px square marker (gold for 1v1, azure for Team) beside a 
 ### Do:
 - **Do** keep Imperial Gold (#e3b341) to the brand, rank #1 and the active state; ranks #2 and below, scores, links and buttons are bone.
 - **Do** use azure for Team ladders and the opposing side, as the wordmark's second tincture.
-- **Do** show ratings with the age token and, wherever scores are listed, the visible ages legend.
+- **Do** show ratings with the age token (no legend block; the age name lives in its title).
 - **Do** set every number that matters in Barlow Condensed (tabular), and measured meta strings in JetBrains Mono.
 - **Do** use bone-min (#8f8673) as the lowest text tone; anything dimmer is decoration.
 - **Do** use the tabs for switching views and the segmented filter for filtering, with the single gold active state.
 - **Do** divide data with hairlines and keep plaques rare.
-- **Do** draw icons and arrows as inline SVG; use the building icon images in public/iconos/buildings for the replay map; show country as a mono code.
+- **Do** draw icons and arrows as inline SVG; use the building icon images in public/iconos/buildings for the replay map; show country as its SVG flag (`Bandera`).
 - **Do** keep official game art (civ emblems, building icons) in a supporting, replaceable role.
 - **Do** pair victory and defeat colors with a letter, sign or glyph.
 

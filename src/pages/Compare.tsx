@@ -9,11 +9,12 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend,
 } from 'recharts';
 import { getPlayer, getPlayerStats, getHeadToHead, getRatingHistory } from '../lib/api';
-import { getCivName, getCivIcon, countryFlag, cleanMapName, formatDuration } from '../lib/constants';
+import { getCivName, getCivIcon, cleanMapName, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_CHIP } from '../lib/matchResult';
 import PlayerSearchInput from '../components/PlayerSearchInput';
 import type { PlayerSearchResult } from '../lib/types';
 import { avatarReal } from '../lib/avatar';
+import Bandera from '../components/Bandera';
 
 export default function Compare() {
   const { t } = useT();
@@ -404,7 +405,7 @@ function PlayerSelector({
           )}
           <div className="flex-1 min-w-0">
             <Link to={`/player/${player.profile_id}`} className={`font-bold text-lg ${textColor} no-underline hover:underline m-0 block truncate`}>
-              {player.country && <span className="font-mono text-xs font-medium text-gray-500 mr-1.5">{countryFlag(player.country)}</span>}
+              <Bandera code={player.country} className="mr-1.5" />
               {player.alias}
             </Link>
             <p className="text-xs text-gray-500 m-0">

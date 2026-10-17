@@ -4,8 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import PlayerSearchInput from '../components/PlayerSearchInput';
 import { useSession } from '../lib/session';
 import { useT } from '../lib/i18n';
-import { countryFlag } from '../lib/constants';
+
 import type { PlayerSearchResult } from '../lib/types';
+import Bandera from '../components/Bandera';
 
 /**
  * The fallback for Steam accounts that steam_profiles has never seen. Picking
@@ -44,7 +45,7 @@ export default function ClaimProfile() {
       {picked && (
         <div className="mt-5 bg-dark-700 border border-dark-400 rounded-xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <span>{countryFlag(picked.country)}</span>
+            <Bandera code={picked.country} />
             <span className="text-gray-100 font-semibold">{picked.alias}</span>
             <span className="ml-auto text-xs text-gray-500 tabular-nums">#{picked.profile_id}</span>
           </div>

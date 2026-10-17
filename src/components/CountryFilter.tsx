@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { countryFlag, countryName, foldText } from '../lib/constants';
+import { countryName, foldText } from '../lib/constants';
 import { useT } from '../lib/i18n';
+import Bandera from './Bandera';
 
 interface Props {
   value: string;
@@ -79,7 +80,7 @@ export default function CountryFilter({ value, countries, onChange }: Props) {
     <div ref={wrapperRef} className="relative">
       <input
         type="text"
-        value={open ? query : selected ? `${countryFlag(selected.country)} ${selected.name}` : ''}
+        value={open ? query : selected ? selected.name : ''}
         onChange={(e) => { setQuery(e.target.value); setCursor(-1); setOpen(true); }}
         onFocus={() => { setOpen(true); setQuery(''); }}
         onKeyDown={onKeyDown}
@@ -87,8 +88,13 @@ export default function CountryFilter({ value, countries, onChange }: Props) {
         role="combobox"
         aria-expanded={open}
         aria-controls="country-options"
-        className="w-full px-3 py-2 pr-8 rounded-lg bg-dark-600 border border-dark-400 text-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500/50 transition-colors"
+        className={`w-full ${selected && !open ? 'pl-10' : 'pl-3'} pr-8 py-2 rounded-lg bg-dark-600 border border-dark-400 text-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500/50 transition-colors`}
       />
+      {selected && !open && (
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none flex">
+          <Bandera code={selected.country} />
+        </span>
+      )}
 
       {value && !open && (
         <button
@@ -126,7 +132,7 @@ export default function CountryFilter({ value, countries, onChange }: Props) {
                   i === cursor ? 'bg-dark-500 text-white' : 'text-gray-300 bg-transparent hover:bg-dark-600'
                 } ${o.country === value ? 'text-gold-400' : ''}`}
               >
-                <span className="font-mono text-xs font-medium text-gray-500 shrink-0">{countryFlag(o.country)}</span>
+                <Bandera code={o.country} />
                 <span className="truncate min-w-0">{o.name}</span>
                 <span className="ml-auto shrink-0 text-xs text-gray-500 tabular-nums">
                   {o.player_count.toLocaleString()}

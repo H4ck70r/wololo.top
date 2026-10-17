@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { getLeaderboard } from '../lib/api';
-import { countryFlag } from '../lib/constants';
+
 import { avatarReal } from '../lib/avatar';
+import Bandera from '../components/Bandera';
 
 const PAGE_SIZE = 50;
 
@@ -106,7 +107,7 @@ export default function Leaderboard() {
                           {avatarReal(entry.avatar) && (
                             <img src={avatarReal(entry.avatar) ?? undefined} alt="" className="w-7 h-7 rounded-md object-cover" />
                           )}
-                          <span className="font-mono text-xs font-medium text-gray-500 ">{countryFlag(entry.country)}</span>
+                          <Bandera code={entry.country} />
                           <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate">
                             {entry.alias}
                           </span>

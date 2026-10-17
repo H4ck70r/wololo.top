@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches, getPlayerSignals, getSignalFlags } from '../lib/api';
-import { countryFlag, MATCH_FILTERS } from '../lib/constants';
+import { MATCH_FILTERS } from '../lib/constants';
 import { isFavorite, addFavorite, removeFavorite } from '../lib/favorites';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_CHIP } from '../lib/matchResult';
 import PreviousAliases from '../components/PreviousAliases';
@@ -28,6 +28,7 @@ import SearchBar from '../components/SearchBar';
 import SharedAccountCard from '../components/SharedAccountCard';
 import AccountFactsLine from '../components/AccountFactsLine';
 import { avatarReal } from '../lib/avatar';
+import Bandera from '../components/Bandera';
 
 const MATCHES_PER_PAGE = 50;
 
@@ -275,11 +276,7 @@ export default function PlayerProfile() {
                   {t('auth.thisIsYou')}
                 </span>
               )}
-              {player.country && (
-                <span className="font-mono text-sm font-medium text-gray-400 border border-dark-300 px-1.5 rounded-sm" title={player.country.toUpperCase()}>
-                  {countryFlag(player.country)}
-                </span>
-              )}
+              <Bandera code={player.country} className="!w-7 !h-[21px]" />
               <button
                 onClick={toggleFavorite}
                 title={starred ? t('favorites.remove') : t('favorites.add')}

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { searchPlayers } from '../lib/api';
 import { useT } from '../lib/i18n';
 import type { PlayerSearchResult } from '../lib/types';
+import Bandera from './Bandera';
 
 interface SearchBarProps {
   large?: boolean;
@@ -164,10 +165,11 @@ export default function SearchBar({ large = false, className = '' }: SearchBarPr
               }`}
             >
               <div className="flex-1 min-w-0">
-                <p className="font-semibold truncate m-0">{player.alias}</p>
-                <p className="font-mono text-xs text-gray-500 m-0">
-                  {player.country ? `${player.country.toUpperCase()} · ` : ''}#{player.profile_id}
+                <p className="font-semibold truncate m-0 flex items-center gap-2">
+                  <Bandera code={player.country} />
+                  <span className="truncate">{player.alias}</span>
                 </p>
+                <p className="font-mono text-xs text-gray-500 m-0">#{player.profile_id}</p>
               </div>
               <div className="text-right shrink-0">
                 <p className="cifra text-lg text-gray-50 m-0">{player.rating}</p>

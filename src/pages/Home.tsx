@@ -8,8 +8,9 @@ import { getLeaderboard, getLiveMatches, getCivMeta } from '../lib/api';
 import { cleanMapName, formatDuration, getCivIcon, getCivName } from '../lib/constants';
 import type { LeaderboardPlayer, LiveMatch } from '../lib/types';
 import { avatarReal } from '../lib/avatar';
-import MarcaEdad, { LeyendaEdades } from '../components/MarcaEdad';
+import MarcaEdad from '../components/MarcaEdad';
 import ReglaMapa from '../components/ReglaMapa';
+import Bandera from '../components/Bandera';
 
 /*
   La portada es el estado del frente, no una pagina de presentacion.
@@ -100,7 +101,6 @@ function ElFrente() {
             : jugadores.map((p) => <FilaJugador key={p.profile_id} p={p} />)}
         </ol>
       )}
-      <LeyendaEdades className="mt-3 !text-[12px] gap-x-3" />
       {vivo && (
         <Link to="/live" className="mt-4 pt-3 border-t border-dark-400 flex items-center gap-2 text-sm text-gray-300 hover:text-gray-50 no-underline">
           <span className="relative flex h-2 w-2" aria-hidden="true">
@@ -127,13 +127,11 @@ function FilaJugador({ p }: { p: LeaderboardPlayer }) {
           {p.rank}
         </span>
         <Retrato src={avatarReal(p.avatar)} nombre={p.alias} destacado={primero} />
-        <span className="min-w-0">
-          <span className="block truncate font-semibold text-gray-100 group-hover:text-gold-400 transition-colors">
+        <span className="min-w-0 flex items-center gap-2">
+          <Bandera code={p.country} />
+          <span className="truncate font-semibold text-gray-100 group-hover:text-gold-400 transition-colors">
             {p.alias}
           </span>
-          {p.country && (
-            <span className="block font-mono text-xs text-gray-500 leading-tight">{p.country.toUpperCase()}</span>
-          )}
         </span>
         <span className="flex items-center gap-2">
           <MarcaEdad rating={p.rating} />

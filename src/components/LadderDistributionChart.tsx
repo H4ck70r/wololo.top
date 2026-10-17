@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Area, AreaChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { getEnhancedLeaderboard, getLadderDistribution, getLadderRangeStats, getLeaderboard } from '../lib/api';
-import { countryFlag } from '../lib/constants';
+
 import { useT } from '../lib/i18n';
 import type { TKey } from '../lib/i18n';
 import type {
@@ -13,6 +13,7 @@ import type {
   LeaderboardResponse,
 } from '../lib/types';
 import TablePagination from './TablePagination';
+import Bandera from './Bandera';
 
 interface Props {
   /** undefined on pages with no single player: the curve renders unmarked */
@@ -165,13 +166,19 @@ export default function LadderDistributionChart({
   // Each tier means "everyone from here up", which is what the words say.
   // They used to be adjacent slices, so "top 100" started where "elite" ended
   // and a Spaniard ranked 7th in the world vanished from "top 100 + Spain".
+  //  Los esmaltes de la heraldica, apagados a la luz de la pagina (OKLCH
+  //  L 0.52-0.67, C 0.10-0.13): sinople, azur, tenne, purpura, oro y gules.
+  //  Cada franja tiene que distinguirse de la de al lado a simple vista; con
+  //  la escala de bronce eran seis marrones casi iguales. Validada con el
+  //  script de dataviz contra el fondo #14120e: separacion para daltonismo
+  //  y vision normal y contraste, todo en verde.
   const tiers = [
-    { key: 'dist.band50' as TKey, fill: '#8f6136', cutoff: marks.median },
-    { key: 'dist.band25' as TKey, fill: '#b8814a', cutoff: marks.top_25 },
-    { key: 'dist.band10' as TKey, fill: '#c9954d', cutoff: marks.top_10 },
-    { key: 'dist.band1' as TKey, fill: '#d9b06a', cutoff: marks.top_1 },
-    { key: 'dist.band100' as TKey, fill: '#e3b341', cutoff: marks.top_100_cutoff, top: 100 },
-    { key: 'dist.bandElite' as TKey, fill: '#f5e6c8', cutoff: marks.elite_cutoff, top: 16 },
+    { key: 'dist.band50' as TKey, fill: '#549864', cutoff: marks.median },
+    { key: 'dist.band25' as TKey, fill: '#4576b4', cutoff: marks.top_25 },
+    { key: 'dist.band10' as TKey, fill: '#c17938', cutoff: marks.top_10 },
+    { key: 'dist.band1' as TKey, fill: '#875093', cutoff: marks.top_1 },
+    { key: 'dist.band100' as TKey, fill: '#ac942f', cutoff: marks.top_100_cutoff, top: 100 },
+    { key: 'dist.bandElite' as TKey, fill: '#b14d51', cutoff: marks.elite_cutoff, top: 16 },
   ].filter((tier) => tier.cutoff != null) as
     { key: TKey; fill: string; cutoff: number; top?: number }[];
 
@@ -270,7 +277,7 @@ export default function LadderDistributionChart({
         >
           {pos}
         </span>
-        <span className="font-mono text-xs font-medium text-gray-500 shrink-0">{countryFlag(p.country)}</span>
+        <Bandera code={p.country} />
         <Link
           to={`/player/${p.profile_id}`}
           className={`no-underline truncate min-w-0 ${
@@ -408,7 +415,7 @@ export default function LadderDistributionChart({
                 x1={Math.max(seg.from, from)}
                 x2={seg.to}
                 fill={seg.fill}
-                fillOpacity={0.06}
+                fillOpacity={0.17}
                 stroke="none"
               />
             ))}

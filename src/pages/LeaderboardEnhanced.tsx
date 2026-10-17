@@ -8,10 +8,11 @@ import LadderDistributionChart from '../components/LadderDistributionChart';
 import EloInflationChart from '../components/EloInflationChart';
 import { useSession } from '../lib/session';
 import CountryFilter from '../components/CountryFilter';
-import { countryFlag, countryName } from '../lib/constants';
+import { countryName } from '../lib/constants';
 import type { EnhancedLeaderboardResponse, CountryStatsResponse } from '../lib/types';
 import { avatarReal } from '../lib/avatar';
-import MarcaEdad, { LeyendaEdades } from '../components/MarcaEdad';
+import MarcaEdad from '../components/MarcaEdad';
+import Bandera from '../components/Bandera';
 
 const PAGE_SIZE = 50;
 
@@ -341,7 +342,7 @@ export default function LeaderboardEnhanced() {
             </button>
             {country && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-dark-500 text-xs text-gray-300">
-                {countryFlag(country)} {countryName(country, lang) || country.toUpperCase()}
+                <Bandera code={country} /> {countryName(country, lang) || country.toUpperCase()}
                 <button
                   onClick={() => { setCountry(''); resetPage(); }}
                   className="ml-1 text-gray-500 hover:text-gray-200 bg-transparent border-none cursor-pointer text-xs"
@@ -375,8 +376,6 @@ export default function LeaderboardEnhanced() {
           </div>
         )}
       </div>
-
-      <LeyendaEdades className="mb-3" />
 
       {/* Table */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
@@ -457,9 +456,7 @@ export default function LeaderboardEnhanced() {
                               {entry.alias.slice(0, 1).toUpperCase()}
                             </span>
                           )}
-                          <span className="font-mono text-xs font-medium text-gray-500 flex-shrink-0">
-                            {countryFlag(entry.country)}
-                          </span>
+                          <Bandera code={entry.country} />
                           <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate min-w-0">
                             {entry.alias}
                           </span>

@@ -257,13 +257,3 @@ export function foldText(value: string): string {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
-/*
-  El pais como su codigo (MX, ES, FI) y no como bandera emoji. Las banderas no
-  se dibujan en Windows -salen dos letras sueltas en otra fuente- y eran el
-  unico color sin significado en las filas de datos. El codigo se lee igual en
-  todos los sistemas y alinea en columna.
-*/
-export function countryFlag(code: string | undefined | null): string {
-  if (!code || code.length !== 2) return '';
-  return code.toUpperCase();
-}
