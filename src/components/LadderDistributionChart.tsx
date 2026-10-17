@@ -417,6 +417,11 @@ export default function LadderDistributionChart({
                 fill={seg.fill}
                 fillOpacity={0.17}
                 stroke="none"
+                //  La franja de arriba termina en la puntuacion maxima, que
+                //  suele quedar mas alla del ultimo tramo de la curva. Por
+                //  defecto recharts DESCARTA un area que se sale del eje en
+                //  vez de recortarla: la elite no se pintaba nunca.
+                ifOverflow="hidden"
               />
             ))}
 
