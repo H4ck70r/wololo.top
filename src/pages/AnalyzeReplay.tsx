@@ -50,7 +50,7 @@ export default function AnalyzeReplay() {
         <title>{t('up.title')} · wololo.top</title>
       </Helmet>
 
-      <h1 className="text-2xl font-semibold text-gray-100 m-0 mb-1">{t('up.title')}</h1>
+      <h1 className="titulo text-2xl m-0 mb-1">{t('up.title')}</h1>
       <p className="text-sm text-gray-400 m-0 mb-5">{t('up.intro')}</p>
 
       {resultados.length === 0 && (
@@ -77,17 +77,17 @@ export default function AnalyzeReplay() {
             </summary>
             <div className="mt-2 flex flex-col gap-2">
               <div>
-                <p className="text-[11px] text-gray-500 m-0 mb-1">Windows</p>
-                <code className="block text-[11px] text-gray-400 bg-dark-800 border border-dark-500 rounded px-2 py-1.5 overflow-x-auto whitespace-pre">
+                <p className="text-xs text-gray-500 m-0 mb-1">Windows</p>
+                <code className="block text-xs text-gray-400 bg-dark-800 border border-dark-500 rounded px-2 py-1.5 overflow-x-auto whitespace-pre">
                   Documentos\My Games\Age of Empires 2 DE\&lt;steam id&gt;\SaveGame
                 </code>
               </div>
               <div>
-                <p className="text-[11px] text-gray-500 m-0 mb-1">Linux · Steam Deck</p>
-                <code className="block text-[11px] text-gray-400 bg-dark-800 border border-dark-500 rounded px-2 py-1.5 overflow-x-auto whitespace-pre">
+                <p className="text-xs text-gray-500 m-0 mb-1">Linux · Steam Deck</p>
+                <code className="block text-xs text-gray-400 bg-dark-800 border border-dark-500 rounded px-2 py-1.5 overflow-x-auto whitespace-pre">
                   ~/.local/share/Steam/steamapps/compatdata/813780/pfx/drive_c/users/steamuser/Games/Age of Empires 2 DE/&lt;steam id&gt;/savegame
                 </code>
-                <p className="text-[11px] text-gray-600 m-0 mt-1">{t('up.whereLinux')}</p>
+                <p className="text-xs text-gray-600 m-0 mt-1">{t('up.whereLinux')}</p>
               </div>
             </div>
           </details>
@@ -99,7 +99,7 @@ export default function AnalyzeReplay() {
             className="hidden"
             onChange={(e) => subir(e.target.files)}
           />
-          <p className="text-[11px] text-gray-600 mt-3 m-0">{t('up.privacy')}</p>
+          <p className="text-xs text-gray-600 mt-3 m-0">{t('up.privacy')}</p>
         </>
       )}
 
@@ -124,7 +124,7 @@ export default function AnalyzeReplay() {
             <p className="text-sm text-red-300 m-0 mt-2">{t('up.failed')}: {r.error}</p>
           ) : (
             <>
-              <p className="text-[11px] text-gray-500 m-0 mt-1">
+              <p className="text-xs text-gray-500 m-0 mt-1">
                 {!r.matched && t('up.unmatched')}
                 {r.matched && r.already_analyzed && !r.stored && t('up.already')}
                 {r.stored && t('up.stored')}
@@ -140,7 +140,7 @@ export default function AnalyzeReplay() {
                 </div>
               )}
               {r.timeline_error && (
-                <p className="text-[11px] text-gray-600 mt-2 m-0">{r.timeline_error}</p>
+                <p className="text-xs text-gray-600 mt-2 m-0">{r.timeline_error}</p>
               )}
             </>
           )}

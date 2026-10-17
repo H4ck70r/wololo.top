@@ -117,7 +117,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
 
   return (
     <div>
-      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+      <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('eco.villTitle')}
         <Nota>{t('eco.villNote')}</Nota>
       </h4>
@@ -168,7 +168,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
       {/* Las tomas cada 5 minutos. Una tabla y no un grafico: con dos
           jugadores lo que se quiere es restar una cifra de la otra, y para eso
           los numbers pegados ganan a dos lineas de colores. */}
-      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+      <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('eco.curva')}
         <Nota>{t('eco.curvaNota')}</Nota>
       </h4>
@@ -224,7 +224,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
       </div>
 
       {/* Y el minuto a minuto, que es donde se ve el hueco. */}
-      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+      <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('eco.vilsOverTime')}
         <Nota>{t('eco.vilsOverTimeNote')}</Nota>
       </h4>
@@ -259,7 +259,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
                   {edades.map((e, i) => (
                     <span
                       key={i}
-                      className="absolute text-[9px] -translate-x-1/2 tabular-nums"
+                      className="absolute text-xs -translate-x-1/2 tabular-nums"
                       style={{ left: `${(e.t / timeline.duracion_ms) * 100}%`, color: colorDe(j) }}
                       title={reloj(e.t)}
                     >
@@ -276,7 +276,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
       {/* Las mejoras. Solo se listan las que alguien pidio. */}
       {mejorasUsadas.length > 0 && (
         <>
-          <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+          <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('eco.upgrades')}
         <Nota>{t('eco.upgradesNote')}</Nota>
       </h4>
@@ -319,7 +319,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
                       <td key={j} className="py-2 pl-2 text-right tabular-nums text-gray-200">
                         {g.length}
                         {g.length > 0 && (
-                          <span className="block text-[10px] text-gray-600">
+                          <span className="block text-xs text-gray-600">
                             {t('eco.firstFarm', { v: reloj(g[0]) })}
                           </span>
                         )}
@@ -333,7 +333,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
         </>
       )}
 
-      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+      <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('eco.marketTitle')}
         <Nota>
           {t('eco.marketNote')}
@@ -378,7 +378,7 @@ export default function ReplayEconomy({ timeline, players = [] }: Props) {
               </div>
             );
           })}
-          <div className="flex gap-2 text-[10px] text-gray-600 justify-end pr-3">
+          <div className="flex gap-2 text-xs text-gray-600 justify-end pr-3">
             <span className="text-emerald-400/70">{t('eco.bought')}</span>
             <span className="text-red-400/70">{t('eco.sold')}</span>
           </div>

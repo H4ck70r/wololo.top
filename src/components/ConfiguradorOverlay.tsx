@@ -100,7 +100,7 @@ export default function ConfiguradorOverlay({
               aria-pressed={on}
               className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                 on
-                  ? 'border-gold-500/60 bg-gold-500/15 text-gold-300'
+                  ? 'sel-activo border border-dark-300'
                   : 'border-stone-700 text-stone-500 hover:border-stone-600'
               }`}
             >
@@ -136,7 +136,7 @@ export default function ConfiguradorOverlay({
           {t('cfg.open')}
         </a>
       </div>
-      <pre className="mt-3 overflow-x-auto rounded bg-stone-950 p-2 font-mono text-[11px] leading-relaxed text-stone-400">
+      <pre className="mt-3 overflow-x-auto rounded bg-stone-950 p-2 font-mono text-xs leading-relaxed text-stone-400">
         {enlace}
       </pre>
       {!token && <p className="mt-2 text-xs text-stone-500">{t('cfg.needKey')}</p>}

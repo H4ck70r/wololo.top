@@ -43,7 +43,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
   if (isLoading) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('activity.title')}</h2>
+        <h2 className="titulo text-[15px] m-0 mb-4">{t('activity.title')}</h2>
         <div className="flex justify-center py-8">
           <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
         </div>
@@ -54,7 +54,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
   if (!data || data.heatmap.length === 0) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('activity.title')}</h2>
+        <h2 className="titulo text-[15px] m-0 mb-4">{t('activity.title')}</h2>
         <p className="text-gray-500 text-sm text-center py-8 m-0">Activity data will appear after playing some matches</p>
       </div>
     );
@@ -77,7 +77,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('activity.title')}</h2>
+        <h2 className="titulo text-[15px] m-0">{t('activity.title')}</h2>
         <span className="text-xs text-gray-500">{t('activity.tracked', { n: data.total_tracked.toLocaleString() })}</span>
       </div>
 
@@ -89,7 +89,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
             {Array.from({ length: 24 }, (_, h) => (
               <div key={h} className="flex-1 text-center">
                 {HOUR_LABELS.includes(h) ? (
-                  <span className="text-[10px] text-gray-500">{h}</span>
+                  <span className="text-xs text-gray-500">{h}</span>
                 ) : null}
               </div>
             ))}
@@ -98,7 +98,7 @@ export default function ActivityHeatmap({ profileId }: Props) {
           {/* Rows */}
           {grid.map((row, rowIdx) => (
             <div key={rowIdx} className="flex items-center gap-0 mb-[2px]">
-              <span className="w-8 sm:w-10 text-[10px] sm:text-xs text-gray-500 text-right pr-1.5 sm:pr-2 shrink-0">
+              <span className="w-8 sm:w-10 text-xs sm:text-xs text-gray-500 text-right pr-1.5 sm:pr-2 shrink-0">
                 {DAY_LABELS[rowIdx]}
               </span>
               {row.map((cell, hour) => {

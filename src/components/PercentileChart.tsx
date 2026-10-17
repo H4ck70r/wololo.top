@@ -28,7 +28,7 @@ import type { PercentilePoint, PercentileSeries } from '../lib/types';
  */
 
 const LADDER_CONFIG = {
-  rm: { label: 'Solo RM', color: '#d4a843' },
+  rm: { label: 'Solo RM', color: '#e3b341' },
   team_rm: { label: 'Team RM', color: '#60a5fa' },
 } as const;
 
@@ -137,11 +137,11 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
   const tile = (label: string, p: PercentilePoint | undefined) =>
     p ? (
       <div key={label} className="bg-dark-600/60 border border-dark-500/60 rounded-lg px-2.5 py-1.5">
-        <div className="text-[10px] uppercase tracking-wide text-gray-600">{label}</div>
+        <div className="text-xs uppercase tracking-wide text-gray-600">{label}</div>
         <div className="text-sm font-semibold text-gray-200 tabular-nums">
           {t('common.topPercent')} {p.top_percent}%
         </div>
-        <div className="text-[10px] text-gray-500 tabular-nums">
+        <div className="text-xs text-gray-500 tabular-nums">
           {fmtDate(p.date)} · {p.rating}
         </div>
       </div>
@@ -150,25 +150,28 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-start justify-between mb-1 flex-wrap gap-2">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">
+        <h2 className="titulo text-[15px] m-0">
           {who ? t('pct.titleOther', { who }) : t('pct.title')}
         </h2>
         <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="seg">
           {available.map((key) => (
             <button
               key={key}
               onClick={() => toggleLadder(key)}
-              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
-                visible.includes(key)
-                  ? 'border-transparent text-dark-900'
-                  : 'border-dark-400 text-gray-500 hover:text-gray-300'
-              }`}
-              style={visible.includes(key) ? { backgroundColor: LADDER_CONFIG[key].color } : undefined}
+              aria-pressed={visible.includes(key)}
+              className={`inline-flex items-center gap-1.5 ${visible.includes(key) ? 'sel-activo' : ''}`}
             >
+              <span
+                className="w-2.5 h-2.5"
+                style={{ backgroundColor: visible.includes(key) ? LADDER_CONFIG[key].color : 'transparent', boxShadow: `inset 0 0 0 1px ${LADDER_CONFIG[key].color}` }}
+                aria-hidden="true"
+              />
               {LADDER_CONFIG[key].label}
             </button>
           ))}
-          <div className="w-px h-5 bg-dark-400 mx-0.5" />
+          </div>
+          <div className="seg">
           {RANGE_OPTIONS.map((opt) => (
             <button
               key={opt.days}
@@ -177,9 +180,10 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
                 days === opt.days ? 'bg-dark-500 text-gray-200' : 'text-gray-500 hover:text-gray-300'
               }`}
             >
-              {opt.label}
+              {opt.label === 'All' ? t('meta.allTime') : opt.label === '1y' ? t('common.oneYear') : opt.label}
             </button>
           ))}
+          </div>
         </div>
       </div>
       <p className="text-xs text-gray-500 m-0">{t('pct.why')}</p>
@@ -193,7 +197,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
       ) : (
         <>
           <div className="flex items-center justify-between gap-2 mt-3 mb-1 flex-wrap">
-            <span className="text-[11px] text-gold-400/80 flex items-center gap-1">
+            <span className="text-xs text-gold-400/80 flex items-center gap-1">
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 19V5m0 0l-6 6m6-6l6 6" />
               </svg>
@@ -201,7 +205,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
             </span>
             <button
               onClick={() => setShowRating((v) => !v)}
-              className={`px-2 py-0.5 rounded text-[11px] font-medium border transition-colors ${
+              className={`px-2 py-0.5 rounded text-xs font-medium border transition-colors ${
                 showRating
                   ? 'border-gray-600 text-gray-300'
                   : 'border-dark-400 text-gray-600 hover:text-gray-400'
@@ -213,15 +217,15 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
 
           <ResponsiveContainer width="100%" height={260}>
             <LineChart data={chartData} margin={{ top: 5, right: showRating ? 4 : 10, left: 0, bottom: 5 }}>
-              <CartesianGrid stroke="#2e3345" strokeDasharray="3 3" />
+              <CartesianGrid stroke="#2e2a21" strokeDasharray="3 3" />
               <XAxis
                 dataKey="date"
                 tickFormatter={(d: string) => {
                   const [, m, day] = d.split('-');
                   return `${parseInt(m)}/${parseInt(day)}`;
                 }}
-                tick={{ fill: '#6b7280', fontSize: 11 }}
-                axisLine={{ stroke: '#2e3345' }}
+                tick={{ fill: '#8f8673', fontSize: 12 }}
+                axisLine={{ stroke: '#2e2a21' }}
                 tickLine={false}
                 minTickGap={40}
               />
@@ -230,7 +234,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
                 yAxisId="pct"
                 reversed
                 domain={pctDomain}
-                tick={{ fill: '#6b7280', fontSize: 11 }}
+                tick={{ fill: '#8f8673', fontSize: 12 }}
                 tickFormatter={(v: number) => `${v}%`}
                 axisLine={false}
                 tickLine={false}
@@ -241,7 +245,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
                   yAxisId="rating"
                   orientation="right"
                   domain={ratingDomain}
-                  tick={{ fill: '#4b5563', fontSize: 10 }}
+                  tick={{ fill: '#8f8673', fontSize: 12 }}
                   axisLine={false}
                   tickLine={false}
                   width={38}
@@ -249,12 +253,12 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
               )}
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1a1d28',
-                  border: '1px solid #2e3345',
+                  backgroundColor: '#1a1712',
+                  border: '1px solid #2e2a21',
                   borderRadius: '8px',
                   fontSize: '13px',
                 }}
-                labelStyle={{ color: '#e2e8f0' }}
+                labelStyle={{ color: '#ece4d2' }}
                 labelFormatter={(d) =>
                   new Date(`${String(d)}T12:00:00`).toLocaleDateString(locale, {
                     month: 'short',
@@ -285,7 +289,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
               {GUIDES.filter((g) => g > pctDomain[0] && g < pctDomain[1]).map((g) => (
                 // Sin etiqueta: el eje ya rotula el porcentaje y las dos se
                 // pisaban justo en el borde izquierdo.
-                <ReferenceLine key={g} yAxisId="pct" y={g} stroke="#3d4358" strokeDasharray="2 4" />
+                <ReferenceLine key={g} yAxisId="pct" y={g} stroke="#3d372b" strokeDasharray="2 4" />
               ))}
 
               {showRating &&
@@ -354,7 +358,7 @@ export default function PercentileChart({ profileId, playerName, isSelf = false 
             </div>
           )}
 
-          <p className="text-[11px] text-gray-600 mt-3 m-0">{t('pct.footnote')}</p>
+          <p className="text-xs text-gray-600 mt-3 m-0">{t('pct.footnote')}</p>
         </>
       )}
     </div>

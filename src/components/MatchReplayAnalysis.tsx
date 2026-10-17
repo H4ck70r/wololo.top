@@ -50,7 +50,7 @@ export default function MatchReplayAnalysis({ matchId, perfiles = [] }: Props) {
         <p className="text-sm text-gray-400 m-0 mb-3">{t('matchMap.intro')}</p>
         <button
           onClick={() => setPedido(true)}
-          className="px-3 py-1.5 text-sm font-medium rounded-lg bg-gold-500/20 text-gold-300 border border-gold-500/30 hover:bg-gold-500/30"
+          className="px-3 py-1.5 text-sm font-medium rounded-sm bg-dark-600 text-gray-50 border border-dark-300 hover:border-gray-500"
         >
           {t('matchMap.load')}
         </button>

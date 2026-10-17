@@ -124,7 +124,7 @@ export default function PlayerSearchInput({ onSelect, placeholder, className = '
             >
               <div className="flex-1 min-w-0">
                 <p className="font-medium truncate m-0 text-sm">
-                  {player.country && <span className="mr-1">{countryFlag(player.country)}</span>}
+                  {player.country && <span className="font-mono text-xs font-medium text-gray-500 mr-1">{countryFlag(player.country)}</span>}
                   {player.alias}
                 </p>
               </div>

@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { useT, LANGS } from '../lib/i18n';
 import { useSession } from '../lib/session';
 import SteamButton from './SteamButton';
+import Wordmark from './Wordmark';
 import type { TKey } from '../lib/i18n';
 
 type Enlace = { path: string; key: TKey };
@@ -73,28 +74,31 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, [abierto]);
 
   const linkClasses = (path: string, block = false) =>
-    `${block ? 'block w-full py-3' : 'py-2'} px-3 lg:px-4 rounded-lg text-sm font-medium transition-colors no-underline whitespace-nowrap ${
-      location.pathname === path
-        ? 'bg-dark-500 text-gold-400'
-        : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
-    }`;
+    block
+      ? `block w-full py-3 px-3 text-[15px] font-medium no-underline border-l-2 transition-colors ${
+          location.pathname === path
+            ? 'border-gold-400 text-gray-50 bg-dark-700'
+            : 'border-transparent text-gray-300 hover:text-gray-50'
+        }`
+      : `relative flex items-center h-16 px-3 lg:px-4 text-[15px] font-medium no-underline whitespace-nowrap transition-colors after:absolute after:left-3 after:right-3 lg:after:left-4 lg:after:right-4 after:bottom-0 after:h-[2px] ${
+          location.pathname === path
+            ? 'text-gray-50 after:bg-gold-400'
+            : 'text-gray-400 hover:text-gray-50 after:bg-transparent hover:after:bg-dark-300'
+        }`;
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-dark-800 border-b border-dark-400">
+      <header className="bg-dark-900 border-b border-dark-400 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-2 no-underline shrink-0">
-              <span className="text-2xl font-black tracking-wider text-gold-400" style={{ fontVariant: 'small-caps' }}>
-                WOLOLO
-              </span>
-              <span className="text-sm text-gray-400">.top</span>
+            <Link to="/" className="flex items-center no-underline shrink-0" aria-label="wololo.top">
+              <Wordmark />
             </Link>
 
             {/* The five links need ~330px of their own; below md they went into a
                 horizontal scroller inside the header, which hid Compare and Live
                 behind a swipe nobody would guess was there. */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-stretch ml-auto">
               {NAV.map((entrada) => {
                 if (!esGrupo(entrada)) {
                   return (
@@ -119,10 +123,12 @@ export default function Layout({ children }: { children: ReactNode }) {
                         e.stopPropagation();
                         setAbierto(open ? null : entrada.grupo);
                       }}
-                      className={`flex items-center gap-1 py-2 px-3 lg:px-4 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
-                        activo || open
-                          ? 'bg-dark-500 text-gold-400'
-                          : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
+                      className={`relative flex items-center gap-1 h-16 px-3 lg:px-4 text-[15px] font-medium transition-colors whitespace-nowrap after:absolute after:left-3 after:right-3 lg:after:left-4 lg:after:right-4 after:bottom-0 after:h-[2px] ${
+                        activo
+                          ? 'text-gray-50 after:bg-gold-400'
+                          : open
+                            ? 'text-gray-50 after:bg-dark-300'
+                            : 'text-gray-400 hover:text-gray-50 after:bg-transparent hover:after:bg-dark-300'
                       }`}
                     >
                       {t(entrada.grupo)}
@@ -138,15 +144,15 @@ export default function Layout({ children }: { children: ReactNode }) {
                       </svg>
                     </button>
                     {open && (
-                      <div className="absolute left-0 top-full z-50 mt-1 min-w-44 overflow-hidden rounded-lg border border-dark-400 bg-dark-800 py-1 shadow-xl">
+                      <div className="absolute left-0 top-full z-50 min-w-48 border border-dark-400 border-t-gold-400/70 bg-dark-800 py-1 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.7)]">
                         {entrada.enlaces.map((l) => (
                           <Link
                             key={l.path}
                             to={l.path}
-                            className={`block px-4 py-2 text-sm no-underline transition-colors ${
+                            className={`block px-4 py-2.5 text-[15px] no-underline transition-colors ${
                               location.pathname === l.path
-                                ? 'bg-dark-500 text-gold-400'
-                                : 'text-gray-300 hover:bg-dark-600 hover:text-gray-100'
+                                ? 'bg-dark-600 text-gold-400'
+                                : 'text-gray-300 hover:bg-dark-700 hover:text-gray-50'
                             }`}
                           >
                             {t(l.key)}
@@ -159,7 +165,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               })}
             </nav>
 
-            <div className="hidden md:flex items-center gap-1 ml-2 pl-2 border-l border-dark-400">
+            <div className="hidden md:flex items-center ml-3 pl-3 border-l border-dark-400 h-6 font-mono text-xs">
               {LANGS.map((l) => (
                 <button
                   key={l.id}
@@ -167,16 +173,16 @@ export default function Layout({ children }: { children: ReactNode }) {
                   onClick={() => setLang(l.id)}
                   aria-label={`${t('nav.language')}: ${l.label}`}
                   aria-pressed={lang === l.id}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
-                    lang === l.id ? 'bg-dark-500 text-gold-400' : 'text-gray-500 hover:text-gray-300'
+                  className={`px-1.5 py-1 transition-colors ${
+                    lang === l.id ? 'text-gold-400' : 'text-gray-500 hover:text-gray-200'
                   }`}
                 >
-                  {l.flag} {l.id.toUpperCase()}
+                  {l.id.toUpperCase()}
                 </button>
               ))}
             </div>
 
-            <div className="hidden md:flex items-center ml-2 pl-2 border-l border-dark-400">
+            <div className="hidden md:flex items-center ml-3 pl-3 border-l border-dark-400 h-6">
               <SteamButton
                 user={user}
                 loading={sessionLoading}
@@ -191,7 +197,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               aria-label={menuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
-              className="md:hidden -mr-2 p-2.5 rounded-lg text-gray-300 hover:text-gold-400 hover:bg-dark-600 transition-colors"
+              className="md:hidden -mr-2 p-2.5 text-gray-200 hover:text-gold-400 transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 {menuOpen ? (
@@ -204,13 +210,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
 
           {menuOpen && (
-            <nav id="mobile-nav" className="md:hidden pb-3 flex flex-col gap-1">
+            <nav id="mobile-nav" className="md:hidden pb-4 flex flex-col">
               {/*  En el cajon no hacen falta desplegables: hay sitio de sobra
                    y un titulo por grupo basta para orientarse. */}
               {NAV.map((entrada) =>
                 esGrupo(entrada) ? (
                   <div key={entrada.grupo} className="pt-2 first:pt-0">
-                    <p className="px-3 pb-1 text-xs uppercase tracking-wider text-gray-600">
+                    <p className="px-3 pt-1 pb-1.5 font-display text-xs font-semibold tracking-[0.14em] uppercase text-gray-500">
                       {t(entrada.grupo)}
                     </p>
                     {entrada.enlaces.map((l) => (
@@ -240,18 +246,18 @@ export default function Layout({ children }: { children: ReactNode }) {
                 />
               </div>
               <div className="flex items-center gap-2 pt-2 mt-1 border-t border-dark-400">
-                <span className="px-3 text-xs uppercase tracking-wider text-gray-600">{t('nav.language')}</span>
+                <span className="px-3 font-display text-xs font-semibold tracking-[0.14em] uppercase text-gray-500">{t('nav.language')}</span>
                 {LANGS.map((l) => (
                   <button
                     key={l.id}
                     type="button"
                     onClick={() => { setLang(l.id); setMenuOpen(false); }}
                     aria-pressed={lang === l.id}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      lang === l.id ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200'
+                    className={`px-3 py-2 text-[15px] font-medium transition-colors ${
+                      lang === l.id ? 'text-gold-400' : 'text-gray-400 hover:text-gray-50'
                     }`}
                   >
-                    {l.flag} {l.label}
+                    {l.label}
                   </button>
                 ))}
               </div>
@@ -262,48 +268,34 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="bg-dark-800 border-t border-dark-400 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-black tracking-wider text-gold-400" style={{ fontVariant: 'small-caps' }}>
-                WOLOLO
-              </span>
-              <span className="text-xs text-gray-500">.top</span>
-            </div>
-            <p className="text-sm text-gray-500 text-center sm:text-right m-0">
-              {t('footer.tagline')}
-            </p>
+      <footer className="border-t border-dark-400 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid gap-8 md:grid-cols-[1fr_auto_auto] md:items-start">
+          <div>
+            <Wordmark />
+            <p className="text-sm text-gray-500 mt-3 mb-0 max-w-sm">{t('footer.tagline')}</p>
           </div>
 
           {/* Las otras dos herramientas, recomendadas por lo que HACEN y no por
               de quién son: a nadie le sirve saber quién las escribió, le sirve
               saber si resuelven su problema. En el pie y no en un banner: el
               que llega aquí viene a mirar datos, no a que le interrumpan. */}
-          <div className="grid gap-4 sm:grid-cols-2 mt-6 pt-5 border-t border-dark-500/60">
+          {[
+            { href: 'https://smurfs.wololo.top', title: t('promo.smurfsTitle'), what: t('promo.smurfsWhat') },
+            { href: 'https://kontra.gg', title: t('promo.kontraTitle'), what: t('promo.kontraWhat') },
+          ].map((p) => (
             <a
-              href="https://smurfs.wololo.top"
-              className="group no-underline"
+              key={p.href}
+              href={p.href}
+              className="group no-underline md:max-w-64 md:border-l md:border-dark-400 md:pl-6"
               target="_blank"
               rel="noopener"
             >
-              <span className="block text-sm font-medium text-gray-300 group-hover:text-gold-400 transition-colors">
-                {t('promo.smurfsTitle')} →
+              <span className="block text-[15px] font-semibold text-gray-200 group-hover:text-gold-400 transition-colors">
+                {p.title} <span aria-hidden="true">→</span>
               </span>
-              <span className="block text-xs text-gray-500 mt-0.5">{t('promo.smurfsWhat')}</span>
+              <span className="block text-sm text-gray-500 mt-1">{p.what}</span>
             </a>
-            <a
-              href="https://kontra.gg"
-              className="group no-underline"
-              target="_blank"
-              rel="noopener"
-            >
-              <span className="block text-sm font-medium text-gray-300 group-hover:text-gold-400 transition-colors">
-                {t('promo.kontraTitle')} →
-              </span>
-              <span className="block text-xs text-gray-500 mt-0.5">{t('promo.kontraWhat')}</span>
-            </a>
-          </div>
+          ))}
         </div>
       </footer>
     </div>

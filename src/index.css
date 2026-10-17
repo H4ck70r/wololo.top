@@ -1,27 +1,98 @@
 @import "tailwindcss";
 
+/*
+  El mundo de wololo.top: el mapa de campana del jugador de ladder.
+
+  Tinta quemada en vez del gris azulado de plantilla, hueso en vez de los
+  grises de Tailwind, y el oro reservado para la marca, el #1 y lo activo.
+  Las escalas de Tailwind (gray, emerald, red, amber, blue) se redefinen aqui
+  a proposito: asi las paginas que aun no se han rehecho a mano heredan el
+  mundo nuevo en lugar de quedarse en el viejo, y nadie puede volver a
+  escribir `text-gray-500` y obtener un gris que no pasa contraste.
+*/
 @theme {
-  --color-dark-900: #0a0c12;
-  --color-dark-800: #0f1117;
-  --color-dark-700: #151821;
-  --color-dark-600: #1a1d28;
-  --color-dark-500: #242836;
-  --color-dark-400: #2e3345;
-  --color-dark-300: #3d4358;
-  --color-gold-400: #f0c040;
-  --color-gold-500: #d4a843;
-  --color-gold-600: #b8922e;
-  --color-blue-accent: #4a7cff;
-  --color-win: #22c55e;
-  --color-loss: #ef4444;
-  --color-pending: #94a3b8;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* Tinta: el suelo. Del mas profundo al mas elevado. */
+  --color-dark-900: #0b0a08;
+  --color-dark-800: #100e0b;
+  --color-dark-700: #14120e;
+  --color-dark-600: #1a1712;
+  --color-dark-500: #221e17;
+  --color-dark-400: #2e2a21;
+  --color-dark-300: #3d372b;
+
+  /* Hueso: el texto. 600 es el minimo que pasa AA sobre cualquier tinta. */
+  --color-gray-50: #faf6ec;
+  --color-gray-100: #f3ecdc;
+  --color-gray-200: #ece4d2;
+  --color-gray-300: #d6ccb6;
+  --color-gray-400: #b8ad96;
+  --color-gray-500: #a39a86;
+  --color-gray-600: #8f8673;
+  --color-gray-700: #5c5446;
+  --color-gray-800: #2e2a21;
+  --color-gray-900: #1a1712;
+
+  /* Oro imperial: marca, rango #1, estado activo. Poco. */
+  --color-gold-300: #f0cf73;
+  --color-gold-400: #e3b341;
+  --color-gold-500: #c99a2e;
+  --color-gold-600: #a37b22;
+
+  /* Victoria y derrota, heraldicas. Nunca solas: siempre con letra o glifo. */
+  --color-win: #3fae6a;
+  --color-loss: #e0604f;
+  --color-pending: #a39a86;
+  --color-emerald-300: #7fcf9c;
+  --color-emerald-400: #3fae6a;
+  --color-emerald-500: #2f9457;
+  --color-emerald-600: #257745;
+  --color-emerald-700: #1c5a35;
+  --color-emerald-900: #10301d;
+  --color-green-400: #3fae6a;
+  --color-red-300: #f09a8c;
+  --color-red-400: #e0604f;
+  --color-red-500: #c8463b;
+
+  /* En directo: solo para lo que esta pasando ahora. */
+  --color-live: #ff4a3d;
+
+  /* Bronce: la escala de las edades, de la Alta Edad Media al Imperial. */
+  --color-amber-100: #f5e6c8;
+  --color-amber-200: #e9cf9a;
+  --color-amber-300: #d9b06a;
+  --color-amber-400: #c9954d;
+  --color-amber-500: #b8814a;
+  --color-amber-600: #8f6136;
+
+  /* Azur heraldico: el equipo y el bando azul del wololo. */
+  --color-blue-accent: #5b8fd6;
+  --color-blue-300: #9dbde8;
+  --color-blue-400: #5b8fd6;
+  --color-blue-500: #3f74bd;
+
+  /* Formas: cortes rectos. Las pildoras solo para puntos y avatares. */
+  --radius-sm: 1px;
+  --radius: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 4px;
+
+  /* Letra con voz: inscripcion para la marca, condensada para el marcador,
+     Barlow para leer, mono tabular para las tablas. */
+  --font-sans: 'Barlow', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Cinzel', 'Trajan Pro', serif;
+  --font-score: 'Barlow Condensed', 'Barlow', ui-sans-serif, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 html {
   background-color: var(--color-dark-900);
-  color: #e2e8f0;
+  color: var(--color-gray-200);
   font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -29,9 +100,41 @@ body {
   min-height: 100vh;
 }
 
-/* Custom scrollbar */
+/* Las cifras siempre alineadas: en una web de puntuaciones no hay otra forma. */
+table,
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-gold-400) 35%, transparent);
+  color: var(--color-gray-50);
+}
+
+input,
+textarea {
+  caret-color: var(--color-gold-400);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-400);
+  outline-offset: 2px;
+}
+
+a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* Barra de desplazamiento del mismo material que el suelo. */
+* {
+  scrollbar-color: var(--color-dark-300) var(--color-dark-800);
+  scrollbar-width: thin;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -39,10 +142,118 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-dark-400);
-  border-radius: 4px;
+  background: var(--color-dark-300);
+  border-radius: 1px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-dark-300);
+  background: var(--color-gray-700);
+}
+
+@layer components {
+  /* Titulo de seccion: inscripcion en mayusculas espaciadas. */
+  .titulo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gray-100);
+  }
+
+  /* El numero que importa: condensado, apretado, tabular. */
+  .cifra {
+    font-family: var(--font-score);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  /* Placa: el unico contenedor con caracter. Una esquina cortada. */
+  .placa {
+    background: var(--color-dark-700);
+    border: 1px solid var(--color-dark-400);
+    border-radius: 2px;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  }
+
+  /* Selector activo: uno solo para pestanas, filtros y conmutadores. Antes
+     convivian cinco (pildora dorada rellena, subrayado, chip con borde,
+     conmutador oro/azul, pestana tipo caja) y cada pagina parecia otra web. */
+  .sel-activo {
+    background: var(--color-dark-600);
+    color: var(--color-gold-400) !important;
+    box-shadow: inset 0 -2px 0 var(--color-gold-400);
+  }
+
+  /* Los dos unicos controles de seleccion del sitio.
+     .tabs/.tab: cambia de vista (perfil, meta, escaleras del ladder).
+     .seg: filtra la vista actual (modo, nivel, periodo, franja). */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--color-dark-400);
+  }
+  .tab {
+    flex-shrink: 0;
+    padding: 0.625rem 1rem;
+    margin-bottom: -1px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--color-gray-400);
+    cursor: pointer;
+    transition: color 120ms, border-color 120ms;
+  }
+  .tab:hover { color: var(--color-gray-50); border-bottom-color: var(--color-dark-300); }
+  .tab.activa { color: var(--color-gray-50); border-bottom-color: var(--color-gold-400); }
+
+  .seg {
+    display: inline-flex;
+    flex-wrap: wrap;
+    border: 1px solid var(--color-dark-400);
+    border-radius: 2px;
+  }
+  .seg > button {
+    padding: 0.375rem 0.75rem;
+    border: 0;
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-400);
+    cursor: pointer;
+    transition: color 120ms, background-color 120ms;
+  }
+  .seg > button:hover { color: var(--color-gray-50); }
+
+  /* Regla de mapa: hairline con marcas de cuadricula en los extremos. */
+  .regla {
+    position: relative;
+    height: 1px;
+    background: var(--color-dark-400);
+  }
+  .regla::before,
+  .regla::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 1px;
+    height: 7px;
+    background: var(--color-gray-700);
+  }
+  .regla::before { left: 0; }
+  .regla::after { right: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

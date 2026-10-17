@@ -3,6 +3,7 @@ import TablePagination from './TablePagination';
 import { useT } from '../lib/i18n';
 import { cleanMapName } from '../lib/constants';
 import type { MapStat } from '../lib/types';
+import Flecha from './Flecha';
 
 interface MapStatsTableProps {
   stats: MapStat[];
@@ -54,8 +55,8 @@ export default function MapStatsTable({ stats }: MapStatsTableProps) {
   const visible = sorted.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   const SortIcon = ({ col }: { col: SortKey }) => (
-    <span className="ml-1 text-gray-600">
-      {sortKey === col ? (sortDir === 'asc' ? '▲' : '▼') : '▼'}
+    <span className={`ml-1 ${sortKey === col ? 'text-gold-400' : 'text-gray-600'}`}>
+      <Flecha arriba={sortKey === col && sortDir === 'asc'} className="w-2 h-2 align-[0.05em]" />
     </span>
   );
 

@@ -126,7 +126,7 @@ export default function CountryFilter({ value, countries, onChange }: Props) {
                   i === cursor ? 'bg-dark-500 text-white' : 'text-gray-300 bg-transparent hover:bg-dark-600'
                 } ${o.country === value ? 'text-gold-400' : ''}`}
               >
-                <span className="shrink-0">{countryFlag(o.country)}</span>
+                <span className="font-mono text-xs font-medium text-gray-500 shrink-0">{countryFlag(o.country)}</span>
                 <span className="truncate min-w-0">{o.name}</span>
                 <span className="ml-auto shrink-0 text-xs text-gray-500 tabular-nums">
                   {o.player_count.toLocaleString()}

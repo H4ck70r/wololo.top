@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { fijarIdiomaCivs } from './constants';
 import type { ReactNode } from 'react';
 
 export type Lang = 'en' | 'es';
@@ -166,7 +167,18 @@ const EN = {
   'nav.language': 'Language',
 
   'footer.tagline': 'Age of Empires II player statistics and analytics. Not affiliated with Xbox Game Studios.',
-  'home.tagline': 'Age of Empires II player statistics, match history, and head-to-head analysis.',
+  'home.tagline': 'Your rating, your games and what separates your wins from your losses in Age of Empires II, read from the data and nothing more.',
+  'home.frontTitle': 'Top of the ladder',
+  'home.fullLadder': 'Full ladder',
+  'home.liveTitle': 'On the field now',
+  'home.liveCount': '{n} ranked games in progress',
+  'home.liveNone': 'No ranked games above 1500 right now.',
+  'home.liveAll': 'All live games',
+  'home.metaTitle': 'Strongest civs this week',
+  'home.metaNote': '1v1 RM · 1800+ · last 7 days · at least {n} games',
+  'home.metaAll': 'Full civ meta',
+  'home.games': '{n} games',
+  'home.failed': 'Could not load this right now.',
   'search.placeholder': 'Search player name, profile ID, or Steam ID...',
 
   'common.loading': 'Loading',
@@ -226,6 +238,31 @@ const EN = {
   'rivals.empty': 'Not enough 1v1 RM matches yet to work out rivals',
   'rivals.gamesPlayed': '{n} games played',
 
+  'age.dark': 'Dark Age',
+  'age.feudal': 'Feudal Age',
+  'age.castle': 'Castle Age',
+  'age.imperial': 'Imperial Age',
+  'age.legend': 'Legend',
+  'profile.worldRank': 'World',
+  'profile.enriching': 'Updating matches…',
+  'profile.overall': 'Overall',
+  'profile.noGames': 'No games played',
+  'favorites.add': 'Add to favorites',
+  'trends.peak': 'Peak',
+  'trends.games7d': '{n} games in 7d',
+  'trends.historical': 'All-time',
+  'trends.bestStreak': 'Best streak',
+  'trends.worstStreak': 'Worst streak',
+  'share.copied': 'Copied',
+  'share.copy': 'Copy link',
+  'share.x': 'Share on X',
+  'share.whatsapp': 'Share on WhatsApp',
+  'res.win': 'W',
+  'res.loss': 'L',
+  'res.pending': '?',
+  'common.oneYear': '1y',
+  'lb.eg': 'e.g. {n}',
+  'live.unranked': 'Unranked',
   'milestones.title': 'Rating Milestones',
   'match.map': 'Map',
   'match.mapReported': 'Relic labelled it {name}',
@@ -245,6 +282,7 @@ const EN = {
 
   'ladder.onlyRm': 'Only ranked 1v1 Random Map matches count toward this',
 
+  'match.notFound': 'Match not found',
   'match.victory': 'VICTORY',
   'match.defeat': 'DEFEAT',
   'match.undecided': 'UNDECIDED',
@@ -281,6 +319,10 @@ const EN = {
   'meta.eloBracket': 'ELO Bracket',
   'meta.timeRange': 'Time Range',
   'meta.loadingMatchups': 'Working out the matchup matrix…',
+  'meta.allTime': 'All time',
+  'meta.vsAverage': 'vs the average civ ({avg}%)',
+  'meta.tierTitle': 'Tier list',
+  'meta.tierNote': 'S +3 pts · A +1 · B ±1 · C −1 · D −3, against the average civ ({avg}%)',
   'meta.tabCivs': 'Civilizations',
   'meta.tabMaps': 'Maps',
   'meta.tabLevels': 'Levels',
@@ -332,6 +374,13 @@ const EN = {
   'clan.totalWins': 'Total Wins',
   'clan.totalLosses': 'Total Losses',
 
+  'live.mode.label': 'Mode',
+  'live.mode.all': 'All',
+  'live.mode.other': 'Other mode',
+  'live.level.label': 'Rating',
+  'live.level.any': 'Any',
+  'live.featured': 'Featured · {n}+',
+  'live.noneFiltered': 'No live games match these filters right now.',
   'live.title': 'Live Matches',
   'live.none': 'No live matches detected',
   'live.autoRefresh': 'The data will refresh automatically.',
@@ -773,9 +822,9 @@ const EN = {
   'coach.arregloFeudalLargo': '{quien}: spent {v} inside Feudal. Arriving early is worth nothing if leaving takes that long.',
   'coach.fuente': 'Every line comes from a measured difference between the two players, in units that matter: villagers rather than seconds, minutes of lead rather than percentages. When a difference is small enough to be noise, it is not written. Bracket averages come from thousands of recorded games at that rating.',
   'promo.smurfsTitle': 'Check if an account is a smurf',
-  'promo.smurfsWhat': 'Paste a profile and it looks for the signs of a second account: a rating that climbs far faster than the games played justify, a Steam account younger than the skill, shared ownership between profiles.',
+  'promo.smurfsWhat': 'Shows which accounts play on someone else\'s Steam library, and with whom.',
   'promo.kontraTitle': 'Running a tournament?',
-  'promo.kontraWhat': 'kontra.gg handles the part that eats your evening: sign-ups, single and double elimination brackets, winners advancing on their own, finals reset, and a chat per tournament so nobody has to chase anyone on Discord.',
+  'promo.kontraWhat': 'Sign-ups, brackets and results for your community\'s tournaments.',
 
   // Singulares. El helper usa estas cuando el contador vale 1; sin hermana
   // `#one` una clave se queda con su forma plural de siempre.
@@ -973,7 +1022,18 @@ const ES: Partial<Record<TKey, string>> = {
   'nav.language': 'Idioma',
 
   'footer.tagline': 'Estadísticas y análisis de jugadores de Age of Empires II. Sin afiliación con Xbox Game Studios.',
-  'home.tagline': 'Estadísticas de jugadores de Age of Empires II, historial de partidas y análisis cara a cara.',
+  'home.tagline': 'Tu puntuación, tus partidas y lo que separa tus victorias de tus derrotas en Age of Empires II, leído de los datos y nada más.',
+  'home.frontTitle': 'La cima del ladder',
+  'home.fullLadder': 'Ladder completo',
+  'home.liveTitle': 'En el campo ahora',
+  'home.liveCount': '{n} partidas clasificatorias en curso',
+  'home.liveNone': 'Ahora mismo no hay partidas clasificatorias por encima de 1500.',
+  'home.liveAll': 'Todas las partidas en vivo',
+  'home.metaTitle': 'Las civs más fuertes de la semana',
+  'home.metaNote': '1v1 RM · 1800+ · últimos 7 días · al menos {n} partidas',
+  'home.metaAll': 'Meta completo',
+  'home.games': '{n} partidas',
+  'home.failed': 'No se pudo cargar ahora mismo.',
   'search.placeholder': 'Busca por nombre, ID de perfil o ID de Steam...',
 
   'common.loading': 'Cargando',
@@ -1033,6 +1093,31 @@ const ES: Partial<Record<TKey, string>> = {
   'rivals.empty': 'Aún no hay suficientes partidas 1v1 RM para sacar rivales',
   'rivals.gamesPlayed': '{n} partidas jugadas',
 
+  'age.dark': 'Alta Edad Media',
+  'age.feudal': 'Edad Feudal',
+  'age.castle': 'Edad de los Castillos',
+  'age.imperial': 'Edad Imperial',
+  'age.legend': 'Leyenda',
+  'profile.worldRank': 'Mundial',
+  'profile.enriching': 'Actualizando partidas…',
+  'profile.overall': 'Balance global',
+  'profile.noGames': 'Sin partidas jugadas',
+  'favorites.add': 'Añadir a favoritos',
+  'trends.peak': 'Máximo',
+  'trends.games7d': '{n} partidas en 7 días',
+  'trends.historical': 'Histórico',
+  'trends.bestStreak': 'Mejor racha',
+  'trends.worstStreak': 'Peor racha',
+  'share.copied': 'Copiado',
+  'share.copy': 'Copiar enlace',
+  'share.x': 'Compartir en X',
+  'share.whatsapp': 'Compartir por WhatsApp',
+  'res.win': 'V',
+  'res.loss': 'D',
+  'res.pending': '?',
+  'common.oneYear': '1a',
+  'lb.eg': 'p. ej. {n}',
+  'live.unranked': 'Sin clasificar',
   'milestones.title': 'Hitos de puntuación',
   'match.map': 'Mapa',
   'match.mapReported': 'Relic lo etiquetó como {name}',
@@ -1052,6 +1137,7 @@ const ES: Partial<Record<TKey, string>> = {
 
   'ladder.onlyRm': 'Solo cuentan las partidas clasificatorias 1v1 de mapa aleatorio',
 
+  'match.notFound': 'Partida no encontrada',
   'match.victory': 'VICTORIA',
   'match.defeat': 'DERROTA',
   'match.undecided': 'SIN RESOLVER',
@@ -1088,6 +1174,10 @@ const ES: Partial<Record<TKey, string>> = {
   'meta.eloBracket': 'Rango de ELO',
   'meta.timeRange': 'Periodo',
   'meta.loadingMatchups': 'Calculando la matriz de enfrentamientos…',
+  'meta.allTime': 'Todo',
+  'meta.vsAverage': 'frente a la civ media ({avg}%)',
+  'meta.tierTitle': 'Tier list',
+  'meta.tierNote': 'S +3 pts · A +1 · B ±1 · C −1 · D −3, frente a la civ media ({avg}%)',
   'meta.tabCivs': 'Civilizaciones',
   'meta.tabMaps': 'Mapas',
   'meta.tabLevels': 'Niveles',
@@ -1139,6 +1229,13 @@ const ES: Partial<Record<TKey, string>> = {
   'clan.totalWins': 'Victorias totales',
   'clan.totalLosses': 'Derrotas totales',
 
+  'live.mode.label': 'Modo',
+  'live.mode.all': 'Todas',
+  'live.mode.other': 'Otro modo',
+  'live.level.label': 'Nivel',
+  'live.level.any': 'Todos',
+  'live.featured': 'Destacadas · {n}+',
+  'live.noneFiltered': 'Ahora mismo no hay partidas con estos filtros.',
   'live.title': 'Partidas en vivo',
   'live.none': 'No hay partidas en vivo',
   'live.autoRefresh': 'Los datos se actualizan solos.',
@@ -1576,9 +1673,9 @@ const ES: Partial<Record<TKey, string>> = {
   'coach.arregloFeudalLargo': '{quien}: se quedó {v} dentro de Feudal. Llegar pronto no vale nada si salir cuesta eso.',
   'coach.fuente': 'Cada frase sale de una diferencia medida entre los dos jugadores, en unidades que importan: aldeanos en vez de segundos, minutos de ventaja en vez de porcentajes. Cuando una diferencia es lo bastante pequeña para ser ruido, no se escribe. Las medias de franja salen de miles de partidas grabadas a ese nivel.',
   'promo.smurfsTitle': 'Comprobar si una cuenta es un smurf',
-  'promo.smurfsWhat': 'Pegas un perfil y busca las señales de una segunda cuenta: un rating que sube mucho más rápido de lo que justifican las partidas jugadas, una cuenta de Steam más joven que su nivel de juego, propiedad compartida entre perfiles.',
+  'promo.smurfsWhat': 'Muestra qué cuentas juegan con la biblioteca de Steam de otra persona, y con cuál.',
   'promo.kontraTitle': '¿Organizas un torneo?',
-  'promo.kontraWhat': 'kontra.gg se encarga de lo que te come la tarde: inscripciones, brackets de eliminación simple y doble, ganadores que avanzan solos, reset de finales y un chat por torneo para no andar persiguiendo a nadie por Discord.',
+  'promo.kontraWhat': 'Inscripciones, cuadros y resultados para los torneos de tu comunidad.',
 
   // Los mismos singulares en espanol. Ojo: aqui el genero importa, no basta
   // con quitar la ese.
@@ -1643,13 +1740,18 @@ interface I18n {
 const I18nContext = createContext<I18n | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => readStored());
+  const [lang, setLangState] = useState<Lang>(() => {
+    const l = readStored();
+    fijarIdiomaCivs(l);
+    return l;
+  });
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
   const setLang = useCallback((l: Lang) => {
+    fijarIdiomaCivs(l);
     setLangState(l);
     try {
       localStorage.setItem(STORAGE_KEY, l);

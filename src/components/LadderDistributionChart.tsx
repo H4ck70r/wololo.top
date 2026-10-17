@@ -166,19 +166,19 @@ export default function LadderDistributionChart({
   // They used to be adjacent slices, so "top 100" started where "elite" ended
   // and a Spaniard ranked 7th in the world vanished from "top 100 + Spain".
   const tiers = [
-    { key: 'dist.band50' as TKey, fill: '#4a7cff', cutoff: marks.median },
-    { key: 'dist.band25' as TKey, fill: '#22c55e', cutoff: marks.top_25 },
-    { key: 'dist.band10' as TKey, fill: '#f0c040', cutoff: marks.top_10 },
-    { key: 'dist.band1' as TKey, fill: '#a855f7', cutoff: marks.top_1 },
-    { key: 'dist.band100' as TKey, fill: '#ec4899', cutoff: marks.top_100_cutoff, top: 100 },
-    { key: 'dist.bandElite' as TKey, fill: '#f43f5e', cutoff: marks.elite_cutoff, top: 16 },
+    { key: 'dist.band50' as TKey, fill: '#8f6136', cutoff: marks.median },
+    { key: 'dist.band25' as TKey, fill: '#b8814a', cutoff: marks.top_25 },
+    { key: 'dist.band10' as TKey, fill: '#c9954d', cutoff: marks.top_10 },
+    { key: 'dist.band1' as TKey, fill: '#d9b06a', cutoff: marks.top_1 },
+    { key: 'dist.band100' as TKey, fill: '#e3b341', cutoff: marks.top_100_cutoff, top: 100 },
+    { key: 'dist.bandElite' as TKey, fill: '#f5e6c8', cutoff: marks.elite_cutoff, top: 16 },
   ].filter((tier) => tier.cutoff != null) as
     { key: TKey; fill: string; cutoff: number; top?: number }[];
 
   // The one band that is genuinely a middle: it says "average", not "top X".
   const bulk =
     marks.bulk_from != null && marks.bulk_to != null
-      ? { from: marks.bulk_from, to: marks.bulk_to, key: 'dist.bulk' as TKey, fill: '#9ca3af' }
+      ? { from: marks.bulk_from, to: marks.bulk_to, key: 'dist.bulk' as TKey, fill: '#a39a86' }
       : null;
 
   // What a chip selects: nested, from its cutoff to the very top.
@@ -270,11 +270,11 @@ export default function LadderDistributionChart({
         >
           {pos}
         </span>
-        <span className="shrink-0">{countryFlag(p.country)}</span>
+        <span className="font-mono text-xs font-medium text-gray-500 shrink-0">{countryFlag(p.country)}</span>
         <Link
           to={`/player/${p.profile_id}`}
           className={`no-underline truncate min-w-0 ${
-            mine ? 'text-gold-400 font-semibold' : 'text-blue-accent hover:text-blue-400'
+            mine ? 'text-gold-400 font-semibold' : 'text-gray-200 hover:text-gold-400'
           }`}
         >
           {p.alias || p.name}
@@ -287,7 +287,7 @@ export default function LadderDistributionChart({
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-baseline gap-2 mb-1 flex-wrap">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">
+        <h2 className="titulo text-[15px] m-0">
           {rating == null ? t('dist.titleLadder') : who ? t('dist.titleOther', { who }) : t('dist.title')}
         </h2>
         {topPercent != null && (
@@ -309,16 +309,8 @@ export default function LadderDistributionChart({
         </p>
       )}
 
-      <div className="flex items-center gap-1.5 mt-3 mb-2 flex-wrap">
-        <button
-          type="button"
-          onClick={() => setRange(null)}
-          className={`px-2 py-1 rounded text-xs font-medium border transition-colors ${
-            range === null
-              ? 'bg-dark-500 text-gold-400 border-gold-500/40'
-              : 'text-gray-500 border-dark-400 hover:text-gray-300'
-          }`}
-        >
+      <div className="seg mt-3 mb-2">
+        <button type="button" onClick={() => setRange(null)} aria-pressed={range === null} className={range === null ? 'sel-activo' : ''}>
           {t('dist.zoomAll')}
         </button>
         {ranges.map((r) => {
@@ -327,21 +319,19 @@ export default function LadderDistributionChart({
             <button
               key={r.key}
               type="button"
+              aria-pressed={active}
               onClick={() => setRange(active ? null : { from: r.from, to: r.to, top: r.top })}
               title={`${r.from} - ${r.to}`}
-              className="px-2 py-1 rounded text-xs font-medium border transition-colors"
-              style={{
-                color: r.fill,
-                borderColor: active ? r.fill : 'transparent',
-                background: active ? `${r.fill}1f` : `${r.fill}12`,
-              }}
+              className={`inline-flex items-center gap-1.5 ${active ? 'sel-activo' : ''}`}
             >
+              {/* La franja tiene su color en la curva: la muestra es la leyenda. */}
+              <span className="w-2.5 h-2.5" style={{ backgroundColor: r.fill }} aria-hidden="true" />
               {t(r.key)}
             </button>
           );
         })}
       </div>
-      <p className="text-[11px] text-gray-600 m-0 mb-1">{t('dist.rangeHint')}</p>
+      <p className="text-xs text-gray-600 m-0 mb-1">{t('dist.rangeHint')}</p>
 
       <div className="h-56 -ml-2">
         <ResponsiveContainer width="100%" height="100%">
@@ -368,23 +358,23 @@ export default function LadderDistributionChart({
           >
             <defs>
               <linearGradient id="distFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#4a7cff" stopOpacity={0.45} />
-                <stop offset="100%" stopColor="#4a7cff" stopOpacity={0.03} />
+                <stop offset="0%" stopColor="#a39a86" stopOpacity={0.35} />
+                <stop offset="100%" stopColor="#a39a86" stopOpacity={0.02} />
               </linearGradient>
             </defs>
             <XAxis
               dataKey="rating"
               type="number"
               domain={['dataMin', 'dataMax']}
-              stroke="#3d4358"
-              tick={{ fill: '#6b7280', fontSize: 11 }}
+              stroke="#3d372b"
+              tick={{ fill: '#8f8673', fontSize: 12 }}
               tickFormatter={(v: number) => String(v)}
               minTickGap={40}
             />
             <YAxis hide domain={[0, peak * 1.1]} />
             <Tooltip
-              contentStyle={{ background: '#151821', border: '1px solid #2e3345', borderRadius: 8, fontSize: 12 }}
-              labelStyle={{ color: '#e2e8f0' }}
+              contentStyle={{ background: '#14120e', border: '1px solid #2e2a21', borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: '#ece4d2' }}
               // The series has no meaningful name here, and recharts renders
               // "name: value"; an empty separator avoids a stray leading ": ".
               separator=""
@@ -404,9 +394,9 @@ export default function LadderDistributionChart({
               <ReferenceArea
                 x1={bulk.from}
                 x2={bulk.to}
-                fill="#9ca3af"
+                fill="#a39a86"
                 fillOpacity={0.12}
-                stroke="#9ca3af"
+                stroke="#a39a86"
                 strokeOpacity={0.4}
                 strokeDasharray="2 2"
               />
@@ -423,28 +413,28 @@ export default function LadderDistributionChart({
               />
             ))}
 
-            <Area type="monotone" dataKey="players" stroke="#4a7cff" strokeWidth={1.5} fill="url(#distFill)" />
+            <Area type="monotone" dataKey="players" stroke="#b8ad96" strokeWidth={1.5} fill="url(#distFill)" />
 
-            {within(marks.median) && <ReferenceLine x={marks.median} stroke="#3d4358" strokeDasharray="3 3" />}
-            {within(marks.top_25) && <ReferenceLine x={marks.top_25} stroke="#3d4358" strokeDasharray="3 3" />}
-            {within(marks.top_10) && <ReferenceLine x={marks.top_10} stroke="#3d4358" strokeDasharray="3 3" />}
-            {within(marks.top_1) && <ReferenceLine x={marks.top_1} stroke="#3d4358" strokeDasharray="3 3" />}
+            {within(marks.median) && <ReferenceLine x={marks.median} stroke="#3d372b" strokeDasharray="3 3" />}
+            {within(marks.top_25) && <ReferenceLine x={marks.top_25} stroke="#3d372b" strokeDasharray="3 3" />}
+            {within(marks.top_10) && <ReferenceLine x={marks.top_10} stroke="#3d372b" strokeDasharray="3 3" />}
+            {within(marks.top_1) && <ReferenceLine x={marks.top_1} stroke="#3d372b" strokeDasharray="3 3" />}
             {within(marks.top_100_cutoff) && (
-              <ReferenceLine x={marks.top_100_cutoff} stroke="#a855f7" strokeDasharray="3 3" />
+              <ReferenceLine x={marks.top_100_cutoff} stroke="#e3b341" strokeDasharray="3 3" />
             )}
             {within(rating) && (
               <ReferenceLine
                 x={rating}
-                stroke="#f0c040"
+                stroke="#e3b341"
                 strokeWidth={2}
-                label={{ value: whoShort ?? t('dist.you'), position: 'top', fill: '#f0c040', fontSize: 10 }}
+                label={{ value: whoShort ?? t('dist.you'), position: 'top', fill: '#e3b341', fontSize: 12 }}
               />
             )}
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
-      <p className="text-[11px] text-gray-600 mt-3 m-0">{t('dist.footnote')}</p>
+      <p className="text-xs text-gray-600 mt-3 m-0">{t('dist.footnote')}</p>
 
       {/* The fixed numbers behind whatever is selected. They follow the
           selection, so the heading states which universe they describe. */}
@@ -460,19 +450,20 @@ export default function LadderDistributionChart({
                 ` · ${t('dist.statShare', { share: scope.share < 0.1 ? '<0.1' : scope.share })}`}
             </span>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+          {/* Una fila de cifras separadas por lineas, no cinco cajitas. */}
+          <dl className="grid grid-cols-3 sm:grid-cols-5 border-y border-dark-400 divide-x divide-dark-400 m-0">
             {tiles.map((tile) => (
-              <div key={tile.key} className="bg-dark-600/60 border border-dark-500/60 rounded-lg px-2.5 py-1.5">
-                <div className="text-[10px] uppercase tracking-wide text-gray-600">{t(tile.key)}</div>
-                <div className="text-sm font-semibold text-gray-200 tabular-nums">
+              <div key={tile.key} className="px-3 py-2 first:pl-0">
+                <dt className="font-mono text-xs uppercase text-gray-500">{t(tile.key)}</dt>
+                <dd className="cifra text-xl text-gray-100 m-0 mt-1">
                   {tile.value.toLocaleString()}
-                  <span className="text-[10px] font-normal text-gray-500 ml-1">ELO</span>
-                </div>
+                  <span className="font-mono text-xs font-normal text-gray-500 ml-1">ELO</span>
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
           {scope.your_position != null && (
-            <p className="text-xs text-gold-400/90 mt-2 m-0">
+            <p className="text-xs text-gray-300 mt-2 m-0">
               {t(who ? 'dist.theirPlace' : 'dist.yourPlace', {
                 who: who ?? '',
                 position: scope.your_position.toLocaleString(),

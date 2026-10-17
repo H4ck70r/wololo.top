@@ -194,7 +194,7 @@ export default function ReplayApm({ timeline }: Props) {
           mas que cualquier numero de acciones por minuto. */}
       {ojo && (
         <div className="mb-6">
-          <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+          <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
             {t('ojo.title', { quien: ojo.nombre })}
             <Nota>{t('ojo.nota', { quien: ojo.nombre })}</Nota>
           </h4>
@@ -213,7 +213,7 @@ export default function ReplayApm({ timeline }: Props) {
               <div key={x.et} className="min-w-0">
                 {/* Sin truncar: a 390px "The rest of the map" se quedaba en
                     "The rest of the m", que parece un fallo. Mejor dos lineas. */}
-                <dt className="flex items-start gap-1.5 text-[11px] text-gray-500 leading-tight">
+                <dt className="flex items-start gap-1.5 text-xs text-gray-500 leading-tight">
                   <span className="w-2 h-2 rounded-sm shrink-0 mt-0.5" style={{ background: x.c }} />
                   <span className="min-w-0">{x.et}</span>
                 </dt>
@@ -222,7 +222,7 @@ export default function ReplayApm({ timeline }: Props) {
             ))}
           </dl>
 
-          <h5 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
+          <h5 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-2">
             {t('ojo.reaccion')}
             {ojo.mediana != null && (
               <span className="normal-case text-gray-400">
@@ -260,7 +260,7 @@ export default function ReplayApm({ timeline }: Props) {
               lo unico de todo el panel que habla de decisiones y no de manos. */}
           {ojo && ojo.construidos.length > 0 && (
             <div className="mb-6">
-              <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
+              <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-2">
                 {t('ojo.edificios', { quien: ojo.nombre })}
                 <Nota>{t('ojo.edificiosNota')}</Nota>
               </h4>
@@ -304,7 +304,7 @@ export default function ReplayApm({ timeline }: Props) {
             </div>
           )}
 
-          <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
+          <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-2">
             {t('ojo.posturas')}
             <Nota>{t('ojo.posturasNota')}</Nota>
           </h4>
@@ -322,7 +322,7 @@ export default function ReplayApm({ timeline }: Props) {
         </div>
       )}
 
-      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+      <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('apm.title')}
         <Nota>
           {t('apm.queEs')}
@@ -353,23 +353,23 @@ export default function ReplayApm({ timeline }: Props) {
               return (
                 <dl className="grid grid-cols-3 gap-3 m-0 mb-3">
                   <div className="min-w-0">
-                    <dt className="text-[11px] text-gray-500 leading-tight">{t('apm.corto')}</dt>
+                    <dt className="text-xs text-gray-500 leading-tight">{t('apm.corto')}</dt>
                     <dd className="m-0 text-2xl tabular-nums text-gray-100 leading-none mt-0.5">{s.apm}</dd>
                     {r && (
                       <dd className="m-0 mt-1" title={frase}>
-                        <span className={`text-[11px] tabular-nums ${dif! >= 0 ? 'text-emerald-400/90' : 'text-red-400/90'}`}>
+                        <span className={`text-xs tabular-nums ${dif! >= 0 ? 'text-emerald-400/90' : 'text-red-400/90'}`}>
                           {dif! >= 0 ? '+' : '−'}{Math.abs(Math.round(dif!))}
                         </span>
-                        <span className="text-[11px] text-gray-600"> {t('apm.vsFranja', { franja: r.franja })}</span>
+                        <span className="text-xs text-gray-600"> {t('apm.vsFranja', { franja: r.franja })}</span>
                       </dd>
                     )}
                   </div>
                   <div className="min-w-0">
-                    <dt className="text-[11px] text-gray-500 leading-tight">{t('apm.eapmCorto')}</dt>
+                    <dt className="text-xs text-gray-500 leading-tight">{t('apm.eapmCorto')}</dt>
                     <dd className="m-0 text-2xl tabular-nums text-gray-100 leading-none mt-0.5">{s.eapm}</dd>
                   </div>
                   <div className="min-w-0">
-                    <dt className="text-[11px] text-gray-500 leading-tight">{t('apm.repeCorto')}</dt>
+                    <dt className="text-xs text-gray-500 leading-tight">{t('apm.repeCorto')}</dt>
                     <dd className="m-0 text-2xl tabular-nums text-gray-400 leading-none mt-0.5">{s.repetido}%</dd>
                   </div>
                 </dl>
@@ -403,7 +403,7 @@ export default function ReplayApm({ timeline }: Props) {
                 );
               })}
             </div>
-            <div className="flex justify-between text-[10px] text-gray-600 mt-0.5">
+            <div className="flex justify-between text-xs text-gray-600 mt-0.5">
               <span>0:00</span>
               <span className="text-gray-500">{t('apm.leyendaBarras')}</span>
               <span>{largo}:00</span>

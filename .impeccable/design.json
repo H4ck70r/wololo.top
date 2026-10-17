@@ -1,0 +1,710 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T09:05:05+00:00",
+  "title": "Design System: wololo.top",
+  "extensions": {
+    "colorMeta": {
+      "ink-deep": {
+        "role": "neutral",
+        "displayName": "Burnt Ink",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Page ground."
+      },
+      "ink-800": {
+        "role": "neutral",
+        "displayName": "Burnt Ink 800",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Header, menus, suggestion lists."
+      },
+      "ink-surface": {
+        "role": "neutral",
+        "displayName": "Ink Surface",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Plaques and inputs."
+      },
+      "ink-raised": {
+        "role": "neutral",
+        "displayName": "Ink Raised",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Raised and active fills."
+      },
+      "ink-500": {
+        "role": "neutral",
+        "displayName": "Ink 500",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Row rules, avatar placeholders, skeletons."
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Every divider and panel border."
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "tonalRamp": [
+          "#0b0a08",
+          "#100e0b",
+          "#14120e",
+          "#1a1712",
+          "#221e17",
+          "#2e2a21",
+          "#3d372b",
+          "#5c5446"
+        ],
+        "purpose": "Control outlines, hover underlines."
+      },
+      "bone-50": {
+        "role": "neutral",
+        "displayName": "Bone Bright",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Emphasis, big numbers, hover text."
+      },
+      "bone-100": {
+        "role": "neutral",
+        "displayName": "Bone 100",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Inscription titles, row names."
+      },
+      "bone": {
+        "role": "neutral",
+        "displayName": "Bone",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Body text."
+      },
+      "bone-300": {
+        "role": "neutral",
+        "displayName": "Bone 300",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Taglines, links, ghost buttons."
+      },
+      "bone-400": {
+        "role": "neutral",
+        "displayName": "Bone 400",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Idle tabs, segments, nav links."
+      },
+      "bone-dim": {
+        "role": "neutral",
+        "displayName": "Bone Dim",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Secondary text and meta."
+      },
+      "bone-min": {
+        "role": "neutral",
+        "displayName": "Bone Floor",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Minimum text tone; AA on every ink surface."
+      },
+      "bone-faint": {
+        "role": "neutral",
+        "displayName": "Bone Faint",
+        "tonalRamp": [
+          "#5c5446",
+          "#8f8673",
+          "#a39a86",
+          "#b8ad96",
+          "#d6ccb6",
+          "#ece4d2",
+          "#f3ecdc",
+          "#faf6ec"
+        ],
+        "purpose": "Decoration only: map-rule ticks and letters."
+      },
+      "imperial-gold": {
+        "role": "primary",
+        "displayName": "Imperial Gold",
+        "tonalRamp": [
+          "#3d2f0e",
+          "#6e5317",
+          "#a37b22",
+          "#c99a2e",
+          "#e3b341",
+          "#f0cf73",
+          "#f6e1a6",
+          "#fbf1d6"
+        ],
+        "purpose": "Brand, rank #1, active state only."
+      },
+      "imperial-gold-light": {
+        "role": "primary",
+        "displayName": "Imperial Gold Light",
+        "tonalRamp": [
+          "#3d2f0e",
+          "#6e5317",
+          "#a37b22",
+          "#c99a2e",
+          "#e3b341",
+          "#f0cf73",
+          "#f6e1a6",
+          "#fbf1d6"
+        ]
+      },
+      "imperial-gold-deep": {
+        "role": "primary",
+        "displayName": "Imperial Gold Deep",
+        "tonalRamp": [
+          "#3d2f0e",
+          "#6e5317",
+          "#a37b22",
+          "#c99a2e",
+          "#e3b341",
+          "#f0cf73",
+          "#f6e1a6",
+          "#fbf1d6"
+        ]
+      },
+      "azure": {
+        "role": "secondary",
+        "displayName": "Heraldic Azure",
+        "tonalRamp": [
+          "#13243d",
+          "#22406b",
+          "#3f74bd",
+          "#5b8fd6",
+          "#7ca6e0",
+          "#9dbde8",
+          "#c3d6f1",
+          "#e6eef9"
+        ],
+        "purpose": "Team ladders and the opposing side; never links."
+      },
+      "azure-light": {
+        "role": "secondary",
+        "displayName": "Azure Light",
+        "tonalRamp": [
+          "#13243d",
+          "#22406b",
+          "#3f74bd",
+          "#5b8fd6",
+          "#7ca6e0",
+          "#9dbde8",
+          "#c3d6f1",
+          "#e6eef9"
+        ]
+      },
+      "azure-deep": {
+        "role": "secondary",
+        "displayName": "Azure Deep",
+        "tonalRamp": [
+          "#13243d",
+          "#22406b",
+          "#3f74bd",
+          "#5b8fd6",
+          "#7ca6e0",
+          "#9dbde8",
+          "#c3d6f1",
+          "#e6eef9"
+        ],
+        "purpose": "Wordmark shield, azur half."
+      },
+      "victory": {
+        "role": "semantic",
+        "displayName": "Victory",
+        "tonalRamp": [
+          "#10301d",
+          "#1c5a35",
+          "#257745",
+          "#2f9457",
+          "#3fae6a",
+          "#7fcf9c",
+          "#b5e4c6",
+          "#e3f5ea"
+        ],
+        "purpose": "Wins, positive streaks, win rates; always with a letter or sign."
+      },
+      "victory-light": {
+        "role": "semantic",
+        "displayName": "Victory Light",
+        "tonalRamp": [
+          "#10301d",
+          "#1c5a35",
+          "#257745",
+          "#2f9457",
+          "#3fae6a",
+          "#7fcf9c",
+          "#b5e4c6",
+          "#e3f5ea"
+        ]
+      },
+      "defeat": {
+        "role": "semantic",
+        "displayName": "Defeat",
+        "tonalRamp": [
+          "#3d1410",
+          "#6e241d",
+          "#a0352b",
+          "#c8463b",
+          "#e0604f",
+          "#f09a8c",
+          "#f6c4bb",
+          "#fbe7e3"
+        ],
+        "purpose": "Losses, negative streaks; always with a letter or sign."
+      },
+      "defeat-light": {
+        "role": "semantic",
+        "displayName": "Defeat Light",
+        "tonalRamp": [
+          "#3d1410",
+          "#6e241d",
+          "#a0352b",
+          "#c8463b",
+          "#e0604f",
+          "#f09a8c",
+          "#f6c4bb",
+          "#fbe7e3"
+        ]
+      },
+      "gules": {
+        "role": "semantic",
+        "displayName": "Gules",
+        "tonalRamp": [
+          "#3d1410",
+          "#6e241d",
+          "#a0352b",
+          "#c8463b",
+          "#e0604f",
+          "#f09a8c",
+          "#f6c4bb",
+          "#fbe7e3"
+        ],
+        "purpose": "Wordmark shield, gules half."
+      },
+      "live": {
+        "role": "semantic",
+        "displayName": "On Air",
+        "purpose": "Only what is happening now."
+      },
+      "bronze": {
+        "role": "tertiary",
+        "displayName": "Bronze",
+        "tonalRamp": [
+          "#4a3119",
+          "#8f6136",
+          "#b8814a",
+          "#c9954d",
+          "#d9b06a",
+          "#e9cf9a",
+          "#f5e6c8",
+          "#fbf4e6"
+        ],
+        "purpose": "Material of the ages ramp (amber scale)."
+      },
+      "age-dark": {
+        "role": "tertiary",
+        "displayName": "Dark Age (0+)",
+        "tonalRamp": [
+          "#8f6136",
+          "#a8743f",
+          "#bf8f55",
+          "#d2ac74",
+          "#ecd9ac"
+        ]
+      },
+      "age-feudal": {
+        "role": "tertiary",
+        "displayName": "Feudal Age (1000+)",
+        "tonalRamp": [
+          "#8f6136",
+          "#a8743f",
+          "#bf8f55",
+          "#d2ac74",
+          "#ecd9ac"
+        ]
+      },
+      "age-castle": {
+        "role": "tertiary",
+        "displayName": "Castle Age (1400+)",
+        "tonalRamp": [
+          "#8f6136",
+          "#a8743f",
+          "#bf8f55",
+          "#d2ac74",
+          "#ecd9ac"
+        ]
+      },
+      "age-imperial": {
+        "role": "tertiary",
+        "displayName": "Imperial Age (1800+)",
+        "tonalRamp": [
+          "#8f6136",
+          "#a8743f",
+          "#bf8f55",
+          "#d2ac74",
+          "#ecd9ac"
+        ]
+      },
+      "age-legend": {
+        "role": "tertiary",
+        "displayName": "Legend (2200+)",
+        "tonalRamp": [
+          "#8f6136",
+          "#a8743f",
+          "#bf8f55",
+          "#d2ac74",
+          "#ecd9ac"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The WOLOLO wordmark at hero scale."
+      },
+      "headline": {
+        "displayName": "Inscription",
+        "purpose": "Section titles in tracked Cinzel capitals; never digits."
+      },
+      "score-display": {
+        "displayName": "Score Display",
+        "purpose": "Headline rating on a player's ladder."
+      },
+      "score": {
+        "displayName": "Score",
+        "purpose": "Ranks, ratings, percentages, records."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Player and civilization names in rows."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav, tabs, segments, buttons."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Measured strings: type, map, duration, ids, country codes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "dropdown",
+        "value": "0 12px 32px -8px rgba(0,0,0,0.7)",
+        "purpose": "Nav group menus floating over content."
+      },
+      {
+        "name": "search-results",
+        "value": "0 16px 40px -12px rgba(0,0,0,0.8)",
+        "purpose": "Search suggestion list."
+      },
+      {
+        "name": "active-inset",
+        "value": "inset 0 -2px 0 #e3b341",
+        "purpose": "The single active-state underline (not elevation)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-state",
+        "value": "120ms",
+        "purpose": "Color and border transitions on tabs and segments."
+      },
+      {
+        "name": "link-state",
+        "value": "150ms (Tailwind transition-colors default)",
+        "purpose": "Links, nav, inputs."
+      },
+      {
+        "name": "live-ping",
+        "value": "Tailwind animate-ping on the live dot",
+        "purpose": "Only motion that loops; on-air signal."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "durations collapse to 0.01ms under prefers-reduced-motion",
+        "purpose": "Global accessibility guard."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "container",
+        "value": "1280px"
+      }
+    ],
+    "openDecisions": [
+      "No grid coordinates on section headings: declined under the craft-floor kicker ban; coordinates stay on the map rule.",
+      "No civilization emblem on ladder tokens: deferred, the API returns no main civ.",
+      "Map names stay untranslated: they are the game's proper names.",
+      "Match detail below the scoreboard stays behind the replay button: the replay downloads from Relic on demand.",
+      "Siege workshop and town centre have no building icon yet: drawn as a ring until art exists."
+    ]
+  },
+  "components": [
+    {
+      "name": "Tabs",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Switches the view; gold underline marks the active tab.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab-on\">Perfil</button><button class=\"ds-tab\">Partidas</button><button class=\"ds-tab\">Civs</button></div>",
+      "css": ".ds-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--color-dark-400,#2e2a21);font-family:Barlow,system-ui,sans-serif}.ds-tab{padding:10px 16px;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:transparent;font-size:15px;font-weight:500;color:var(--color-gray-400,#b8ad96);cursor:pointer;transition:color 120ms,border-color 120ms}.ds-tab:hover{color:var(--color-gray-50,#faf6ec);border-bottom-color:var(--color-dark-300,#3d372b)}.ds-tab-on{color:var(--color-gray-50,#faf6ec);border-bottom-color:var(--color-gold-400,#e3b341)}.ds-tab:focus-visible{outline:2px solid var(--color-gold-400,#e3b341);outline-offset:2px}"
+    },
+    {
+      "name": "Segmented Filter",
+      "kind": "chip",
+      "refersTo": "seg-button",
+      "description": "Filters the current view; the single active state is ink fill, gold text, gold inset underline.",
+      "html": "<div class=\"ds-seg\"><button class=\"ds-seg-on\">1v1 RM</button><button>Team RM</button><button>EW</button></div>",
+      "css": ".ds-seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--color-dark-400,#2e2a21);border-radius:2px;font-family:Barlow,system-ui,sans-serif}.ds-seg>button{padding:6px 12px;border:0;background:transparent;font-size:14px;font-weight:500;color:var(--color-gray-400,#b8ad96);cursor:pointer;transition:color 120ms,background-color 120ms}.ds-seg>button:hover{color:var(--color-gray-50,#faf6ec)}.ds-seg>button.ds-seg-on{background:var(--color-dark-600,#1a1712);color:var(--color-gold-400,#e3b341);box-shadow:inset 0 -2px 0 var(--color-gold-400,#e3b341)}.ds-seg>button:focus-visible{outline:2px solid var(--color-gold-400,#e3b341);outline-offset:2px}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "The site's primary action; bottom edge turns gold on focus.",
+      "html": "<label class=\"ds-search\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg><input placeholder=\"Busca por nombre, ID de perfil o ID de Steam...\"><kbd>/</kbd></label>",
+      "css": ".ds-search{position:relative;display:flex;align-items:center;gap:12px;padding:0 16px;height:56px;background:var(--color-dark-700,#14120e);border:1px solid var(--color-dark-400,#2e2a21);border-bottom-color:var(--color-gray-700,#5c5446);border-radius:1px;color:var(--color-gray-500,#a39a86);transition:background-color 150ms,border-color 150ms;font-family:Barlow,system-ui,sans-serif}.ds-search input{flex:1;background:transparent;border:0;outline:0;font:inherit;font-size:17px;color:var(--color-gray-50,#faf6ec);caret-color:var(--color-gold-400,#e3b341)}.ds-search input::placeholder{color:var(--color-gray-600,#8f8673)}.ds-search kbd{font-family:'JetBrains Mono',monospace;font-size:12px;padding:2px 6px;border:1px solid var(--color-dark-300,#3d372b);border-radius:1px}.ds-search:focus-within{background:var(--color-dark-600,#1a1712);border-color:var(--color-dark-300,#3d372b);border-bottom-color:var(--color-gold-400,#e3b341)}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "The default button: bone text, hairline outline, squared.",
+      "html": "<button class=\"ds-btn-ghost\"><svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M8 2v8m-3.5-3.5L8 10l3.5-3.5M3 13h10\"/></svg>Analizar replay</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--color-dark-400,#2e2a21);border-radius:3px;background:transparent;color:var(--color-gray-300,#d6ccb6);font:500 14px Barlow,system-ui,sans-serif;cursor:pointer;transition:color 150ms,border-color 150ms}.ds-btn-ghost:hover{color:var(--color-gray-50,#faf6ec);border-color:var(--color-gray-500,#a39a86)}.ds-btn-ghost:focus-visible{outline:2px solid var(--color-gold-400,#e3b341);outline-offset:2px}"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky 64px bar: wordmark left, grouped links right, gold underline for the active link.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-mark\"><svg viewBox=\"0 0 20 24\" width=\"18\" height=\"22\" aria-hidden=\"true\"><path d=\"M1 1h18v15l-9 7-9-7z\" fill=\"#3f74bd\"/><path d=\"M10 1h9v15l-9 7z\" fill=\"#c8463b\"/><path d=\"M1 1h18v15l-9 7-9-7z\" fill=\"none\" stroke=\"#e3b341\" stroke-width=\"1.5\"/></svg>WOLOLO<small>.top</small></span><a class=\"ds-nav-on\" href=\"#\">Jugadores</a><a href=\"#\">Partidas</a><a href=\"#\">Estadisticas</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:stretch;height:64px;padding:0 16px;background:var(--color-dark-900,#0b0a08);border-bottom:1px solid var(--color-dark-400,#2e2a21)}.ds-mark{display:inline-flex;align-items:center;gap:10px;margin-right:auto;font:700 1.35rem Cinzel,serif;letter-spacing:.12em;color:var(--color-gray-50,#faf6ec)}.ds-mark small{font:600 .62em Barlow,sans-serif;letter-spacing:.02em;color:var(--color-gold-400,#e3b341)}.ds-nav a{position:relative;display:flex;align-items:center;padding:0 16px;font:500 15px Barlow,system-ui,sans-serif;color:var(--color-gray-400,#b8ad96);text-decoration:none;transition:color 150ms}.ds-nav a::after{content:'';position:absolute;left:16px;right:16px;bottom:0;height:2px;background:transparent}.ds-nav a:hover{color:var(--color-gray-50,#faf6ec)}.ds-nav a:hover::after{background:var(--color-dark-300,#3d372b)}.ds-nav a.ds-nav-on{color:var(--color-gray-50,#faf6ec)}.ds-nav a.ds-nav-on::after{background:var(--color-gold-400,#e3b341)}.ds-nav a:focus-visible{outline:2px solid var(--color-gold-400,#e3b341);outline-offset:2px}"
+    },
+    {
+      "name": "Plaque",
+      "kind": "card",
+      "refersTo": "plaque",
+      "description": "The only container with character: one chamfered corner. Rare.",
+      "html": "<section class=\"ds-placa\"><h2 class=\"ds-titulo\">La cima del ladder <span>1v1 RM</span></h2><ol class=\"ds-rows\"><li><b class=\"ds-rank ds-first\">1</b><span>VIT Liereyy<em>AT</em></span><b class=\"ds-cifra ds-first\">3040</b></li><li><b class=\"ds-rank\">2</b><span>wR.Lucho<em>AR</em></span><b class=\"ds-cifra\">3000</b></li></ol></section>",
+      "css": ".ds-placa{max-width:420px;padding:24px;background:var(--color-dark-700,#14120e);border:1px solid var(--color-dark-400,#2e2a21);border-radius:2px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);font-family:Barlow,system-ui,sans-serif}.ds-titulo{margin:0;font:600 15px Cinzel,serif;letter-spacing:.08em;text-transform:uppercase;color:var(--color-gray-100,#f3ecdc)}.ds-titulo span{margin-left:8px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:0;text-transform:none;color:var(--color-gray-500,#a39a86)}.ds-rows{list-style:none;margin:16px 0 0;padding:0}.ds-rows li{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-dark-500,#221e17)}.ds-rows li:last-child{border-bottom:0}.ds-rows span{font-weight:600;color:var(--color-gray-100,#f3ecdc)}.ds-rows em{display:block;font:normal 12px 'JetBrains Mono',monospace;color:var(--color-gray-500,#a39a86)}.ds-rank,.ds-cifra{font-family:'Barlow Condensed',Barlow,sans-serif;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}.ds-rank{font-size:1.25rem;text-align:right;color:var(--color-gray-500,#a39a86)}.ds-cifra{font-size:1.6rem;color:var(--color-gray-50,#faf6ec)}.ds-first{color:var(--color-gold-400,#e3b341)}"
+    },
+    {
+      "name": "Age Token and Legend",
+      "kind": "custom",
+      "refersTo": "age-token",
+      "description": "Rating tiers as the game's ages: a rotated-square token plus a visible legend wherever scores are listed.",
+      "html": "<p class=\"ds-leyenda\"><span><i style=\"background:#8f6136\"></i>Alta Edad Media <code>&lt;1000</code></span><span><i style=\"background:#a8743f\"></i>Feudal <code>1000+</code></span><span><i style=\"background:#bf8f55\"></i>Castillos <code>1400+</code></span><span><i style=\"background:#d2ac74\"></i>Imperial <code>1800+</code></span><span><i style=\"background:#ecd9ac\"></i>Leyenda <code>2200+</code></span></p><p class=\"ds-score\"><i style=\"background:#d2ac74\" role=\"img\" aria-label=\"Imperial\"></i>1863</p>",
+      "css": ".ds-leyenda{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0;font:12px Barlow,sans-serif;color:var(--color-gray-400,#b8ad96)}.ds-leyenda span{display:inline-flex;align-items:center;gap:6px}.ds-leyenda i,.ds-score i{display:inline-block;width:8px;height:8px;transform:rotate(45deg)}.ds-leyenda code{font:12px 'JetBrains Mono',monospace;color:var(--color-gray-500,#a39a86)}.ds-score{display:inline-flex;align-items:center;gap:6px;margin:12px 0 0;font:700 1.125rem 'Barlow Condensed',sans-serif;font-variant-numeric:tabular-nums;color:var(--color-gray-200,#ece4d2)}"
+    },
+    {
+      "name": "Map Rule",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Hairline divider with end ticks and A-H grid letters; where map coordinates live.",
+      "html": "<div class=\"ds-regla\" aria-hidden=\"true\"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span></span></div>",
+      "css": ".ds-regla{display:flex;justify-content:space-between;height:20px;border-top:1px solid var(--color-dark-400,#2e2a21)}.ds-regla span{position:relative;width:1px;font:12px 'JetBrains Mono',monospace;color:var(--color-gray-700,#5c5446)}.ds-regla span::before{content:'';position:absolute;left:0;top:-4px;width:1px;height:7px;background:var(--color-gray-700,#5c5446)}.ds-regla span{text-indent:8px;line-height:24px;white-space:nowrap}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Campaign Map",
+    "overview": "**Creative North Star: \"The Campaign Map\"**\n\nwololo.top is the ranked player's campaign map. The ground is warm burnt ink, the text is bone, and the ladder is drawn as territory: players are heraldic tokens, results are a front line, and the page edges carry a map frame's grid ruling. The world refuses the dark-SaaS dashboard of glowing rounded cards, gray-on-gray text and a centered hero with three feature tiles.\n\nDensity is true data density. Tables and rows stay tabular and are divided by hairlines, not boxed into cards; the one container with character is the plaque, and it is rare. Rank is carried by weight, case and reversal before size. Numbers are the protagonists and get their own condensed, tabular voice; titles are inscriptions in tracked capitals.\n\nOfficial game art (civilization emblems, building icons) appears only in support of data and must stay replaceable, because monetization is planned: the brand is the wordmark and the palette, never the game's art.",
+    "keyCharacteristics": [
+      "Warm ink ground, bone text, gold rationed to brand, rank #1 and the active state.",
+      "Heraldic pair: azure and gules from the wordmark's party-per-pale shield.",
+      "ELO tiers expressed as the game's ages on one bronze-to-pale-gold ramp.",
+      "Squared forms (1-4px), one chamfered corner on plaques, hairline-divided data strips.",
+      "Cinzel inscriptions, Barlow Condensed figures, Barlow UI, JetBrains Mono meta."
+    ],
+    "rules": [
+      {
+        "name": "The Rationed Gold Rule",
+        "body": "Imperial Gold marks the brand, rank #1 and the active state only. Ranks #2 and below, scores, links and buttons are bone. Gold may appear as a transient focus or hover signal (focus ring, link underline decoration), never as a resting color on a link or button.",
+        "section": "colors"
+      },
+      {
+        "name": "The Inherited World Rule",
+        "body": "Tailwind's gray, emerald, green, red, amber and blue scales are redefined in the theme on purpose, so any page not yet rewritten by hand inherits bone, heraldic green and red, bronze and azure instead of stock Tailwind. Writing `gray-600` yields the AA floor, not a failing gray. Do not reintroduce unredefined scales (stone, slate, zinc, neutral) on new surfaces.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Tinctures Rule",
+        "body": "Gold and azure are the only side colors: gold for 1v1 and the player's own side, azure for Team and the opposition. No third team color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ages Rule",
+        "body": "Rating tiers are always the five ages on the bronze ramp, never a MOBA rainbow (cyan \"Diamond\", purple \"Legend\"), and the ramp never borrows Imperial Gold.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Figures In Cinzel Rule",
+        "body": "Cinzel has no real figures (\"1v1\" reads \"IVI\"). Digits never go in Cinzel headings: numbers go in Barlow Condensed, and a numeric qualifier beside a heading goes in mono.",
+        "section": "typography"
+      },
+      {
+        "name": "The Twelve Pixel Floor",
+        "body": "No text under 12px. The sole exception is the chromeless OBS overlay route (/live/:id), sized for stream scenes.",
+        "section": "typography"
+      },
+      {
+        "name": "The Measured Meta Rule",
+        "body": "Anything that is measured or identified (type, map, duration, ids, country) is set in mono, joined with a middle dot.",
+        "section": "typography"
+      },
+      {
+        "name": "The Floating-Only Shadow Rule",
+        "body": "A shadow means the element floats over content (menus, suggestions). Resting surfaces never cast one, and nothing glows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep Imperial Gold (#e3b341) to the brand, rank #1 and the active state; ranks #2 and below, scores, links and buttons are bone.",
+      "**Do** use azure for Team ladders and the opposing side, as the wordmark's second tincture.",
+      "**Do** show ratings with the age token and, wherever scores are listed, the visible ages legend.",
+      "**Do** set every number that matters in Barlow Condensed (tabular), and measured meta strings in JetBrains Mono.",
+      "**Do** use bone-min (#8f8673) as the lowest text tone; anything dimmer is decoration.",
+      "**Do** use the tabs for switching views and the segmented filter for filtering, with the single gold active state.",
+      "**Do** divide data with hairlines and keep plaques rare.",
+      "**Do** draw icons and arrows as inline SVG; use the building icon images in public/iconos/buildings for the replay map; show country as a mono code.",
+      "**Do** keep official game art (civ emblems, building icons) in a supporting, replaceable role.",
+      "**Do** pair victory and defeat colors with a letter, sign or glyph."
+    ],
+    "donts": [
+      "**Don't** put digits in Cinzel headings.",
+      "**Don't** set text under 12px outside the /live/:id OBS overlay.",
+      "**Don't** place kickers or eyebrows above headings; map coordinates belong on the map rule.",
+      "**Don't** use emoji or Unicode glyphs as icons (no flag emoji, no ▲▼ or ⚔ characters).",
+      "**Don't** put an accent border on a rounded piece; accent edges belong to squared pieces only.",
+      "**Don't** wrap rows and columns into cards, add glows, or cast shadows on resting surfaces.",
+      "**Don't** use gold for links, buttons, scores or ranks below #1, and don't use azure for links.",
+      "**Don't** add a third selection control or another active-state style.",
+      "**Don't** use the ages ramp's colors with Imperial Gold or a MOBA-style rank rainbow.",
+      "**Don't** make game art the brand; the wordmark and palette are the identity."
+    ]
+  }
+}

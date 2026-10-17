@@ -10,9 +10,10 @@ import {
 } from 'recharts';
 import { getPlayer, getPlayerStats, getHeadToHead, getRatingHistory } from '../lib/api';
 import { getCivName, getCivIcon, countryFlag, cleanMapName, formatDuration } from '../lib/constants';
-import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
+import { outcomeOf, OUTCOME_LABEL, OUTCOME_CHIP } from '../lib/matchResult';
 import PlayerSearchInput from '../components/PlayerSearchInput';
 import type { PlayerSearchResult } from '../lib/types';
+import { avatarReal } from '../lib/avatar';
 
 export default function Compare() {
   const { t } = useT();
@@ -125,7 +126,7 @@ export default function Compare() {
         <link rel="canonical" href={hasBoth ? `https://wololo.top/compare?p1=${p1Id}&p2=${p2Id}` : 'https://wololo.top/compare'} />
       </Helmet>
 
-      <h1 className="text-3xl font-bold text-gray-100 mb-6 m-0">{t('compare.title')}</h1>
+      <h1 className="titulo text-2xl sm:text-3xl mb-6 m-0">{t('compare.title')}</h1>
 
       {/* Player selectors */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -163,7 +164,7 @@ export default function Compare() {
         <>
           {/* Ratings comparison */}
           <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
-            <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('compare.ratings')}</h2>
+            <h2 className="titulo text-[15px] mb-4 m-0">{t('compare.ratings')}</h2>
             <div className="space-y-3">
               <CompareRow
                 label={t('compare.soloRating')}
@@ -224,27 +225,27 @@ export default function Compare() {
           {/* Rating History Chart */}
           {ratingChartData.length > 0 && (
             <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
-              <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">Rating History (90 days)</h2>
+              <h2 className="titulo text-[15px] mb-4 m-0">Rating History (90 days)</h2>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={ratingChartData} margin={{ top: 5, right: 20, bottom: 5, left: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2a2a3a" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#1e1b15" />
                   <XAxis
                     dataKey="date"
-                    tick={{ fill: '#9ca3af', fontSize: 11 }}
+                    tick={{ fill: '#a39a86', fontSize: 12 }}
                     tickFormatter={(v: string) => {
                       const d = new Date(v);
                       return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                     }}
-                    stroke="#4a4a5a"
+                    stroke="#3d372b"
                   />
                   <YAxis
-                    tick={{ fill: '#9ca3af', fontSize: 11 }}
-                    stroke="#4a4a5a"
+                    tick={{ fill: '#a39a86', fontSize: 12 }}
+                    stroke="#3d372b"
                     domain={['dataMin - 50', 'dataMax + 50']}
                   />
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#1e1e2e', border: '1px solid #3a3a4a', borderRadius: '8px' }}
-                    labelStyle={{ color: '#9ca3af' }}
+                    contentStyle={{ backgroundColor: '#14120e', border: '1px solid #2e2a21', borderRadius: '8px' }}
+                    labelStyle={{ color: '#a39a86' }}
                     labelFormatter={(v) => {
                       const d = new Date(String(v));
                       return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -255,7 +256,7 @@ export default function Compare() {
                     type="monotone"
                     dataKey="p1Rating"
                     name={p1Name}
-                    stroke="#f0c040"
+                    stroke="#e3b341"
                     strokeWidth={2}
                     dot={false}
                     connectNulls
@@ -264,7 +265,7 @@ export default function Compare() {
                     type="monotone"
                     dataKey="p2Rating"
                     name={p2Name}
-                    stroke="#4a7cff"
+                    stroke="#5b8fd6"
                     strokeWidth={2}
                     dot={false}
                     connectNulls
@@ -278,7 +279,7 @@ export default function Compare() {
           {h2h && h2h.total_games > 0 && (
             <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-200 m-0">{t('compare.headToHead')}</h2>
+                <h2 className="titulo text-[15px] m-0">{t('compare.headToHead')}</h2>
                 <Link
                   to={`/h2h/${p1Id}/${p2Id}`}
                   className="text-xs text-gold-400 hover:text-gold-300 no-underline"
@@ -324,10 +325,10 @@ export default function Compare() {
                       return (
                         <div key={m.match_id} className="flex items-center gap-2 text-xs">
                           <span
-                            className={`w-5 h-5 rounded flex items-center justify-center font-bold text-[10px] ${OUTCOME_CHIP[outcome]}`}
+                            className={`w-5 h-5 rounded flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
                             title={OUTCOME_LABEL[outcome]}
                           >
-                            {OUTCOME_BADGE[outcome]}
+                            {t(`res.${outcome}`)}
                           </span>
                           <span className="text-gold-400 flex items-center gap-1">
                             {getCivIcon(m.player_civ) && <img src={getCivIcon(m.player_civ)!} alt="" className="w-3.5 h-3.5 rounded" />}
@@ -394,8 +395,8 @@ function PlayerSelector({
     return (
       <div className={`bg-dark-700 border ${borderColor} rounded-xl p-4`}>
         <div className="flex items-center gap-3">
-          {player.avatar ? (
-            <img src={player.avatar} alt={player.alias} className="w-12 h-12 rounded-lg object-cover border border-dark-400" />
+          {avatarReal(player.avatar) ? (
+            <img src={avatarReal(player.avatar) ?? undefined} alt={player.alias} className="w-12 h-12 rounded-lg object-cover border border-dark-400" />
           ) : (
             <div className={`w-12 h-12 rounded-lg bg-dark-500 flex items-center justify-center text-lg font-bold ${textColor}`}>
               {player.alias.charAt(0).toUpperCase()}
@@ -403,7 +404,7 @@ function PlayerSelector({
           )}
           <div className="flex-1 min-w-0">
             <Link to={`/player/${player.profile_id}`} className={`font-bold text-lg ${textColor} no-underline hover:underline m-0 block truncate`}>
-              {player.country && <span className="mr-1.5">{countryFlag(player.country)}</span>}
+              {player.country && <span className="font-mono text-xs font-medium text-gray-500 mr-1.5">{countryFlag(player.country)}</span>}
               {player.alias}
             </Link>
             <p className="text-xs text-gray-500 m-0">
@@ -498,7 +499,7 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
   const textColor = color === 'gold' ? 'text-gold-400' : 'text-blue-accent';
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-      <h2 className="text-lg font-semibold text-gray-200 mb-3 m-0">
+      <h2 className="titulo text-[15px] mb-3 m-0">
         <span className={textColor}>{name}</span> — Top Civs
         <Nota>{t('compare.muestraNota', { n: String(MIN_MUESTRA) })}</Nota>
       </h2>
@@ -517,7 +518,7 @@ function CivColumn({ name, stats, color }: { name: string; stats: any[]; color: 
                 <td className="py-1.5 px-1 text-gray-200">
                   <div className="flex items-center gap-1.5">
                     {getCivIcon(c.civ_id) && <img src={getCivIcon(c.civ_id)!} alt="" className="w-4 h-4 rounded object-cover" />}
-                    {c.civilization || getCivName(c.civ_id)}
+                    {c.civ_id != null ? getCivName(c.civ_id) : c.civilization}
                   </div>
                 </td>
                 <td className="py-1.5 px-1 text-right text-gray-400">{c.games}</td>
@@ -545,7 +546,7 @@ function MapColumn({ name, stats, color }: { name: string; stats: any[]; color: 
   const textColor = color === 'gold' ? 'text-gold-400' : 'text-blue-accent';
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-      <h2 className="text-lg font-semibold text-gray-200 mb-3 m-0">
+      <h2 className="titulo text-[15px] mb-3 m-0">
         <span className={textColor}>{name}</span> — Top Maps
         <Nota>{t('compare.muestraNota', { n: String(MIN_MUESTRA) })}</Nota>
       </h2>

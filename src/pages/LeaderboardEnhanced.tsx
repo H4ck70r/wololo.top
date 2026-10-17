@@ -10,6 +10,8 @@ import { useSession } from '../lib/session';
 import CountryFilter from '../components/CountryFilter';
 import { countryFlag, countryName } from '../lib/constants';
 import type { EnhancedLeaderboardResponse, CountryStatsResponse } from '../lib/types';
+import { avatarReal } from '../lib/avatar';
+import MarcaEdad, { LeyendaEdades } from '../components/MarcaEdad';
 
 const PAGE_SIZE = 50;
 
@@ -162,7 +164,7 @@ export default function LeaderboardEnhanced() {
       <div className="flex flex-col gap-4 mb-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-100 m-0">{t('lb.title')}</h1>
+            <h1 className="titulo text-2xl sm:text-3xl m-0">{t('lb.title')}</h1>
             {pagination && (
               <p className="text-sm text-gray-500 mt-1 m-0">
                 {t('lb.playersFound', { n: pagination.total.toLocaleString() })}
@@ -172,16 +174,14 @@ export default function LeaderboardEnhanced() {
         </div>
 
         {/* Ladder type tabs */}
-        <div className="flex flex-wrap bg-dark-600 rounded-xl p-1 border border-dark-400 gap-0.5">
+        <div className="tabs" role="tablist">
           {LADDER_TYPES.map((lb) => (
             <button
               key={lb.id}
               onClick={() => handleTypeChange(lb.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-none cursor-pointer ${
-                ladderType === lb.id
-                  ? 'bg-gold-500 text-dark-900 shadow-lg'
-                  : 'text-gray-400 hover:text-gray-200 bg-transparent'
-              }`}
+              role="tab"
+              aria-selected={ladderType === lb.id}
+              className={`tab ${ladderType === lb.id ? 'activa' : ''}`}
             >
               {lb.label}
             </button>
@@ -224,7 +224,6 @@ export default function LeaderboardEnhanced() {
                 showPlayers={false}
               />
             </div>
-            <EloInflationChart ladder={distLadder} rating={myRating} />
           </div>
         </div>
       )}
@@ -256,7 +255,7 @@ export default function LeaderboardEnhanced() {
               {filtrosAbiertos ? t('lb.hideFilters') : t('lb.moreFilters')}
             </span>
             {filtrosAvanzados > 0 && (
-              <span className="inline-flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-gold-500/20 text-gold-400 text-[10px] font-semibold">
+              <span className="inline-flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-gold-500/20 text-gold-400 text-xs font-semibold">
                 {filtrosAvanzados}
               </span>
             )}
@@ -305,7 +304,7 @@ export default function LeaderboardEnhanced() {
             <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.minRating')}</label>
             <input
               type="number"
-              placeholder="e.g. 1000"
+              placeholder={t('lb.eg', { n: 1000 })}
               value={minRating}
               onChange={(e) => {
                 setMinRating(e.target.value);
@@ -320,7 +319,7 @@ export default function LeaderboardEnhanced() {
             <label className="block text-xs text-gray-500 mb-1 font-medium">{t('lb.maxRating')}</label>
             <input
               type="number"
-              placeholder="e.g. 2500"
+              placeholder={t('lb.eg', { n: 2500 })}
               value={maxRating}
               onChange={(e) => {
                 setMaxRating(e.target.value);
@@ -377,6 +376,8 @@ export default function LeaderboardEnhanced() {
         )}
       </div>
 
+      <LeyendaEdades className="mb-3" />
+
       {/* Table */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
         {isLoading ? (
@@ -429,11 +430,11 @@ export default function LeaderboardEnhanced() {
                     >
                       <td className="py-3 px-1.5 sm:px-4">
                         <span
-                          className={`font-medium ${
-                            entry.rank <= 3
+                          className={`cifra text-lg ${
+                            entry.rank === 1
                               ? 'text-gold-400'
                               : entry.rank <= 10
-                              ? 'text-gray-300'
+                              ? 'text-gray-200'
                               : 'text-gray-500'
                           }`}
                         >
@@ -445,14 +446,18 @@ export default function LeaderboardEnhanced() {
                           to={`/player/${entry.profile_id}`}
                           className="flex items-center gap-1.5 sm:gap-2 no-underline group min-w-0"
                         >
-                          {entry.avatar && (
+                          {avatarReal(entry.avatar) ? (
                             <img
-                              src={entry.avatar}
+                              src={avatarReal(entry.avatar) ?? undefined}
                               alt=""
-                              className="hidden sm:block w-7 h-7 rounded-md object-cover flex-shrink-0"
+                              className="hidden sm:block w-7 h-7 rounded-sm object-cover flex-shrink-0"
                             />
+                          ) : (
+                            <span className="hidden sm:grid w-7 h-7 rounded-sm bg-dark-500 place-items-center font-display text-xs text-gray-300 flex-shrink-0" aria-hidden="true">
+                              {entry.alias.slice(0, 1).toUpperCase()}
+                            </span>
                           )}
-                          <span className="text-base flex-shrink-0">
+                          <span className="font-mono text-xs font-medium text-gray-500 flex-shrink-0">
                             {countryFlag(entry.country)}
                           </span>
                           <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate min-w-0">
@@ -470,7 +475,10 @@ export default function LeaderboardEnhanced() {
                         </Link>
                       </td>
                       <td className="py-3 px-1.5 sm:px-4 text-right">
-                        <span className="font-bold text-gold-400">{entry.rating}</span>
+                        <span className="inline-flex items-center gap-2 justify-end">
+                          <MarcaEdad rating={entry.rating} />
+                          <span className={`cifra text-lg ${entry.rank === 1 ? 'text-gold-400' : 'text-gray-50'}`}>{entry.rating}</span>
+                        </span>
                       </td>
                       <td className="py-3 px-1.5 sm:px-4 text-right hidden sm:table-cell">
                         <span className="text-gray-400">{entry.highestrating}</span>
@@ -570,6 +578,14 @@ export default function LeaderboardEnhanced() {
           </div>
         )}
       </div>
+      {/* La inflacion va despues de la tabla: es analisis, no filtro. Quien
+          llega al ladder viene a ver el ladder; el ensayo sobre si la misma
+          puntuacion vale hoy menos que hace seis meses espera debajo. */}
+      {distLadder && (
+        <div className="mt-8">
+          <EloInflationChart ladder={distLadder} rating={myRating} />
+        </div>
+      )}
     </div>
   );
 }

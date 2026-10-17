@@ -34,7 +34,7 @@ export default function SharedCopyBadge({
       title={tooltip}
       aria-label={tooltip}
       className={`inline-flex items-center gap-1 rounded border border-amber-500/40 bg-amber-500/10 text-amber-300 shrink-0 ${
-        compact ? 'px-1 py-0 text-[9px]' : 'px-1.5 py-0.5 text-[10px]'
+        compact ? 'px-1 py-0 text-xs' : 'px-1.5 py-0.5 text-xs'
       }`}
     >
       <svg className={compact ? 'w-2.5 h-2.5' : 'w-3 h-3'} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>

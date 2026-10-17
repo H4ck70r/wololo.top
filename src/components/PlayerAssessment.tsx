@@ -96,7 +96,7 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
           este jugador le estuvimos señalando el segundo centro urbano hasta
           que medimos que ese numero es plano en todo el ladder. */}
       {data.nothing_to_tighten && (
-        <div className="bg-dark-800/60 border-l-2 border-emerald-400/60 rounded-r-lg px-4 py-3 mt-4">
+        <div className="bg-dark-800/60 border border-dark-400 border-t-2 border-t-emerald-400/70 rounded-none px-4 py-3 mt-4">
           <p className="text-[15px] leading-relaxed text-gray-200 m-0 font-medium">
             {t('assess.nadaTitulo')}
           </p>
@@ -118,7 +118,7 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
           : null;
         const separa = brecha != null && brecha >= (m.unit === 's' ? 20 : 2);
         return (
-          <p className="text-[15px] leading-relaxed text-gray-200 bg-dark-800/60 border-l-2 border-red-400/60 rounded-r-lg px-4 py-3 mt-4 m-0">
+          <p className="text-[15px] leading-relaxed text-gray-200 bg-dark-800/60 border border-dark-400 border-t-2 border-t-red-400/70 rounded-none px-4 py-3 mt-4 m-0">
             {separa
               ? t('assess.headlineSplit', {
                   metric: nombre(m.key),
@@ -136,7 +136,7 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
 
       {/* El detalle del veredicto, ya con la frase leída. */}
       <div className="mt-4">
-        <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-2">
+        <h4 className="font-mono text-xs uppercase text-gray-500 m-0 mb-2">
           {t('assess.verdictTitle')}
         </h4>
         {verdict.length === 0 ? (
@@ -208,7 +208,7 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
                     {/* El clic va debajo y pequeno: es lo que el jugador
                         controla, pero no es lo que se compara con una guia. */}
                     {pedida(m, m.you) && (
-                      <span className="block text-[10px] text-gray-600">
+                      <span className="block text-xs text-gray-600">
                         {t('assess.requested')} {pedida(m, m.you)}
                       </span>
                     )}
@@ -253,14 +253,14 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
 
       {/* El control propio del jugador: mismo jugador, mismo nivel. */}
       <div className="mt-5">
-        <h4 className="text-xs uppercase tracking-wide text-gray-500 m-0 mb-1">
+        <h4 className="font-mono text-xs uppercase text-gray-500 m-0 mb-1">
           {t('assess.splitTitle')}
         </h4>
         <p className="text-xs text-gray-600 m-0 mb-2">
           {t('assess.splitNote')}
           {data.wins_measured != null && data.losses_measured != null && (
             <span className="ml-1 tabular-nums">
-              ({data.wins_measured}W / {data.losses_measured}L)
+              ({data.wins_measured}{t('res.win')} / {data.losses_measured}{t('res.loss')})
             </span>
           )}
         </p>
@@ -324,12 +324,12 @@ export default function PlayerAssessment({ profileId, matchType = '6' }: Props) 
             un numero en verde es "lo haces mejor cuando ganas" tanto si la
             cifra sube como si baja. Sin decirlo, un +19s de centro urbano
             parado se lee como 19 segundos MAS parado. */}
-        <p className="text-[11px] text-gray-600 mt-2 m-0">{t('assess.gapNote')}</p>
+        <p className="text-xs text-gray-600 mt-2 m-0">{t('assess.gapNote')}</p>
       </div>
 
-      <p className="text-[11px] text-gray-600 mt-4 m-0">{t('assess.ageNote')}</p>
+      <p className="text-xs text-gray-600 mt-4 m-0">{t('assess.ageNote')}</p>
       {data.weights_from_pairs != null && (
-        <p className="text-[11px] text-gray-600 mt-1 m-0">
+        <p className="text-xs text-gray-600 mt-1 m-0">
           {t('assess.weights', { n: data.weights_from_pairs.toLocaleString() })}
         </p>
       )}

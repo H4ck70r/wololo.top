@@ -69,7 +69,7 @@ export default function Nota({ children }: Props) {
         onMouseLeave={() => setSitio(null)}
         aria-expanded={!!sitio}
         aria-describedby={sitio ? id : undefined}
-        className={`w-4 h-4 shrink-0 inline-flex items-center justify-center rounded-full border text-[10px] leading-none cursor-pointer transition-colors bg-transparent ${
+        className={`w-4 h-4 shrink-0 inline-flex items-center justify-center rounded-full border text-xs leading-none cursor-pointer transition-colors bg-transparent ${
           sitio
             ? 'border-gold-500/60 text-gold-400'
             : 'border-dark-400 text-gray-600 hover:text-gray-300 hover:border-gray-500'

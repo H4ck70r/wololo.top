@@ -124,7 +124,7 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
   return (
     <div className="mt-1">
       {verUnidades && (<>
-      <h4 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+      <h4 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
         {t('units.title')}
         <Nota>
           {t('units.note')}
@@ -255,14 +255,14 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
           );
         })}
       </div>
-      <div className="flex justify-between text-[10px] text-gray-600 mt-1">
+      <div className="flex justify-between text-xs text-gray-600 mt-1">
         <span>0:00</span>
         <span>{reloj(timeline.duracion_ms)}</span>
       </div>
       {/* Sin leyenda las barras de colores son adorno. */}
       <div className="flex gap-x-3 gap-y-1 mt-2 flex-wrap">
         {(['inf', 'tiro', 'cab', 'asedio', 'otros'] as const).map((cl) => (
-          <span key={cl} className="flex items-center gap-1 text-[11px] text-gray-500">
+          <span key={cl} className="flex items-center gap-1 text-xs text-gray-500">
             <span className="w-2 h-2 rounded-sm" style={{ background: CLASE_COLOR[cl] }} />
             {t(`units.class.${cl}` as never)}
           </span>
@@ -272,7 +272,7 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
 
       {verTecnologias && datos.tecnologias.size > 0 && (
         <div className="mt-5">
-          <h5 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-3">
+          <h5 className="flex items-center gap-1.5 font-mono text-xs uppercase text-gray-500 m-0 mb-3">
             {t('units.techTitle')}
             <Nota>{t('units.techNote')}</Nota>
           </h5>
@@ -312,7 +312,7 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
                             {nombreTecnologia(x.id, lang)}
                           </span>
                           {f?.unique && (
-                            <span className="text-[10px] text-gray-600">{f.civ ?? ''}</span>
+                            <span className="text-xs text-gray-600">{f.civ ?? ''}</span>
                           )}
                         </div>
                       );

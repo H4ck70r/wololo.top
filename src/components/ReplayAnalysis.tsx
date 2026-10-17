@@ -61,7 +61,7 @@ function Delta({ v, seg }: { v: { dif: number; mejor: boolean; franja: string } 
   const n = seg ? `${Math.abs(Math.round(v.dif))}s` : Math.abs(v.dif).toFixed(1);
   return (
     <span
-      className={`block text-[10px] tabular-nums ${v.mejor ? 'text-emerald-400/80' : 'text-red-400/80'}`}
+      className={`block text-xs tabular-nums ${v.mejor ? 'text-emerald-400/80' : 'text-red-400/80'}`}
       title={t('ana.vsBracket', { b: v.franja })}
     >
       {v.mejor ? '−' : '+'}{n}
@@ -76,7 +76,7 @@ function Civ({ id }: { id: number | null | undefined }) {
   if (!nombre) return null;
   const lineas = bonusDeCiv(id, lang);
   return (
-    <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
+    <span className="inline-flex items-center gap-1 text-xs text-gray-500">
       {nombre}
       {lineas && lineas.length > 0 && (
         <Nota>
@@ -210,7 +210,7 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
               {celdas.map((c, k) => (
                 <th key={k} className="py-2 pl-2 text-right font-medium text-gray-300">
                   <span className="block truncate">{c.j.nombre}</span>
-                  <span className="block text-[10px] text-gray-500 font-normal">
+                  <span className="block text-xs text-gray-500 font-normal">
                     <Civ id={c.j.civ} />
                     {(c.j.es_ia || c.j.rating != null) && (
                       <span className="ml-1">· {c.j.es_ia ? t('up.ai') : c.j.rating}</span>
@@ -262,10 +262,10 @@ export default function ReplayAnalysis({ timeline, players = [], info }: Props) 
                     {j.nombre}
                     <span className="ml-1.5"><Civ id={j.civ} /></span>
                     {j.rating != null && (
-                      <span className="ml-1.5 text-[10px] text-gray-500 tabular-nums">{j.rating}</span>
+                      <span className="ml-1.5 text-xs text-gray-500 tabular-nums">{j.rating}</span>
                     )}
                     {j.es_ia && (
-                      <span className="ml-1.5 text-[10px] text-gray-500 border border-dark-400 rounded px-1">
+                      <span className="ml-1.5 text-xs text-gray-500 border border-dark-400 rounded px-1">
                         {t('up.ai')}
                       </span>
                     )}

@@ -2,7 +2,6 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { searchPlayers } from '../lib/api';
-import { countryFlag } from '../lib/constants';
 import { useT } from '../lib/i18n';
 import type { PlayerSearchResult } from '../lib/types';
 
@@ -83,6 +82,22 @@ export default function SearchBar({ large = false, className = '' }: SearchBarPr
     }
   }, [debouncedQuery, uniqueResults.length]);
 
+  //  "/" lleva al buscador desde cualquier sitio, como en cualquier herramienta
+  //  que se usa a diario. Solo cuando no se esta escribiendo ya en otro campo.
+  useEffect(() => {
+    if (!large) return;
+    function atajo(e: KeyboardEvent) {
+      const el = e.target as HTMLElement | null;
+      const escribiendo = el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+      if (e.key === '/' && !escribiendo && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    }
+    document.addEventListener('keydown', atajo);
+    return () => document.removeEventListener('keydown', atajo);
+  }, [large]);
+
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
@@ -97,7 +112,8 @@ export default function SearchBar({ large = false, className = '' }: SearchBarPr
     <div ref={wrapperRef} className={`relative ${className}`}>
       <div className="relative">
         <svg
-          className={`absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 ${large ? 'w-6 h-6' : 'w-5 h-5'}`}
+          className={`absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none ${large ? 'w-5 h-5' : 'w-4.5 h-4.5'}`}
+          aria-hidden="true"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -119,39 +135,43 @@ export default function SearchBar({ large = false, className = '' }: SearchBarPr
             if (uniqueResults.length > 0 && query.length >= 2) setIsOpen(true);
           }}
           placeholder={t('search.placeholder')}
-          className={`w-full bg-dark-600 border border-dark-400 rounded-xl text-gray-200 placeholder-gray-500 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30 transition-all ${
-            large ? 'pl-14 pr-4 py-4 text-lg' : 'pl-12 pr-4 py-3 text-base'
+          aria-label={t('search.placeholder')}
+          className={`w-full bg-dark-700 border border-dark-400 border-b-gray-700 rounded-sm text-gray-50 placeholder-gray-600 focus:outline-none focus:border-dark-300 focus:border-b-gold-400 focus:bg-dark-600 transition-colors ${
+            large ? 'pl-12 pr-14 py-4 text-lg' : 'pl-11 pr-4 py-3 text-base'
           }`}
         />
-        {isFetching && (
-          <div className="absolute right-4 top-1/2 -translate-y-1/2">
-            <div className="w-5 h-5 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+        {isFetching ? (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2" role="status" aria-label={t('common.loading')}>
+            <div className="w-4 h-4 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
           </div>
-        )}
+        ) : large && !query ? (
+          <kbd className="absolute right-4 top-1/2 -translate-y-1/2 hidden sm:block px-1.5 py-0.5 font-mono text-xs text-gray-500 border border-dark-300 rounded-sm">
+            /
+          </kbd>
+        ) : null}
       </div>
 
       {isOpen && uniqueResults.length > 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-dark-700 border border-dark-400 rounded-xl shadow-2xl overflow-hidden max-h-96 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-1 bg-dark-800 border border-dark-400 border-t-gold-400/60 rounded-sm shadow-[0_16px_40px_-12px_rgba(0,0,0,0.8)] overflow-hidden max-h-96 overflow-y-auto">
           {uniqueResults.slice(0, 15).map((player, index) => (
             <button
               key={`${player.profile_id}-${player.ladder_type}`}
               onClick={() => goToPlayer(player)}
-              className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors border-none cursor-pointer ${
+              className={`w-full text-left px-4 py-2.5 flex items-center gap-3 transition-colors border-0 border-b border-dark-500 last:border-b-0 cursor-pointer ${
                 index === selectedIndex
-                  ? 'bg-dark-500 text-white'
-                  : 'text-gray-300 hover:bg-dark-600'
+                  ? 'bg-dark-600 text-gray-50'
+                  : 'bg-transparent text-gray-200 hover:bg-dark-700'
               }`}
             >
               <div className="flex-1 min-w-0">
-                <p className="font-medium truncate m-0">
-                  {player.country && <span className="mr-1.5">{countryFlag(player.country)}</span>}
-                  {player.alias}
+                <p className="font-semibold truncate m-0">{player.alias}</p>
+                <p className="font-mono text-xs text-gray-500 m-0">
+                  {player.country ? `${player.country.toUpperCase()} · ` : ''}#{player.profile_id}
                 </p>
-                <p className="text-xs text-gray-500 m-0">ID: {player.profile_id}</p>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-sm font-medium text-gold-400 m-0">{player.rating}</p>
-                <p className="text-xs text-gray-500 m-0">{player.ladder_type === 'solo' ? 'Solo RM' : 'Team RM'}</p>
+                <p className="cifra text-lg text-gray-50 m-0">{player.rating}</p>
+                <p className="font-mono text-xs uppercase text-gray-500 m-0">{player.ladder_type === 'solo' ? '1v1 RM' : 'Team RM'}</p>
               </div>
             </button>
           ))}

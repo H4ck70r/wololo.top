@@ -15,7 +15,7 @@ export default function LadderBadge({
   return (
     <span
       title={hint}
-      className="text-[10px] font-medium uppercase tracking-wider text-gold-400/80 bg-gold-500/10 border border-gold-500/25 rounded px-1.5 py-0.5 whitespace-nowrap"
+      className="text-xs font-medium uppercase tracking-wider text-gold-400/80 bg-gold-500/10 border border-gold-500/25 rounded px-1.5 py-0.5 whitespace-nowrap"
     >
       {label}
     </span>

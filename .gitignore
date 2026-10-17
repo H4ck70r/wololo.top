@@ -28,3 +28,6 @@ wololo.top.code-workspace
 # wololo-live se publican desde CI, no desde aqui.
 *.exe
 *.msi
+
+# Capturas de revision del diseno: se regeneran, no se versionan.
+.impeccable/review/

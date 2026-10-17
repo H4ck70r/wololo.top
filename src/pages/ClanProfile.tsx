@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { countryFlag } from '../lib/constants';
 import type { LeaderboardPlayer } from '../lib/types';
+import { avatarReal } from '../lib/avatar';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 const API_KEY = import.meta.env.VITE_API_KEY || '';
@@ -57,7 +58,7 @@ export default function ClanProfile() {
   if (error || !data || players.length === 0) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12 text-center">
-        <h2 className="text-2xl font-bold text-gray-300 mb-4">{t('clan.notFound')}</h2>
+        <h2 className="titulo text-xl mb-4">{t('clan.notFound')}</h2>
         <p className="text-gray-500 mb-6">{t('clan.noPlayers', { tag: clanName ?? '' })}</p>
         <Link to="/leaderboard" className="text-gold-400 hover:text-gold-300 no-underline">
           Back to Leaderboard
@@ -81,7 +82,7 @@ export default function ClanProfile() {
             {clanName!.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-100 m-0">[{clanName}]</h1>
+            <h1 className="titulo text-2xl sm:text-3xl m-0">[{clanName}]</h1>
             <p className="text-sm text-gray-500 mt-1 m-0">
               {t('clan.membersCount', { n: totalMembers })}
               {countries.length > 0 && ` · ${t('clan.countriesCount', { n: countries.length })}`}
@@ -101,7 +102,7 @@ export default function ClanProfile() {
       {/* Members list */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
         <div className="px-5 py-4 border-b border-dark-400">
-          <h2 className="text-lg font-semibold text-gray-200 m-0">{t('clan.members')}</h2>
+          <h2 className="titulo text-[15px] m-0">{t('clan.members')}</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -125,8 +126,8 @@ export default function ClanProfile() {
                     <td className="py-2.5 px-4 text-gray-500 text-xs">{i + 1}</td>
                     <td className="py-2.5 px-3">
                       <div className="flex items-center gap-2">
-                        {p.avatar ? (
-                          <img src={p.avatar} alt="" className="w-7 h-7 rounded object-cover shrink-0" />
+                        {avatarReal(p.avatar) ? (
+                          <img src={avatarReal(p.avatar) ?? undefined} alt="" className="w-7 h-7 rounded object-cover shrink-0" />
                         ) : (
                           <div className="w-7 h-7 rounded bg-dark-500 flex items-center justify-center text-xs font-bold text-gray-400 shrink-0">
                             {(p.alias || p.name || '?').charAt(0).toUpperCase()}
@@ -136,7 +137,7 @@ export default function ClanProfile() {
                           to={`/player/${p.profile_id}`}
                           className="text-gray-200 hover:text-gold-400 no-underline font-medium truncate"
                         >
-                          {p.country && <span className="mr-1">{countryFlag(p.country)}</span>}
+                          {p.country && <span className="font-mono text-xs font-medium text-gray-500 mr-1">{countryFlag(p.country)}</span>}
                           {p.alias || p.name || `Player ${p.profile_id}`}
                         </Link>
                       </div>

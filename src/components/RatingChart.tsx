@@ -7,7 +7,7 @@ import {
 import { getRatingHistory } from '../lib/api';
 
 const LADDER_CONFIG = {
-  rm: { label: 'Solo RM', color: '#d4a843' },
+  rm: { label: 'Solo RM', color: '#e3b341' },
   team_rm: { label: 'Team RM', color: '#60a5fa' },
 } as const;
 
@@ -88,36 +88,38 @@ export default function RatingChart({ profileId }: Props) {
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('chart.title')}</h2>
-        <div className="flex items-center gap-2">
+        <h2 className="titulo text-[15px] m-0">{t('chart.title')}</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="seg">
           {availableLadders.map((key) => (
             <button
               key={key}
               onClick={() => toggleLadder(key)}
-              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
-                activeLadders.has(key)
-                  ? 'border-transparent text-dark-900'
-                  : 'border-dark-400 text-gray-500 hover:text-gray-300'
-              }`}
-              style={activeLadders.has(key) ? { backgroundColor: LADDER_CONFIG[key].color } : undefined}
+              aria-pressed={activeLadders.has(key)}
+              className={`inline-flex items-center gap-1.5 ${activeLadders.has(key) ? 'sel-activo' : ''}`}
             >
+              {/* El color es la leyenda de la linea: muestra, no relleno. */}
+              <span
+                className="w-2.5 h-2.5"
+                style={{ backgroundColor: activeLadders.has(key) ? LADDER_CONFIG[key].color : 'transparent', boxShadow: `inset 0 0 0 1px ${LADDER_CONFIG[key].color}` }}
+                aria-hidden="true"
+              />
               {LADDER_CONFIG[key].label}
             </button>
           ))}
-          <div className="w-px h-5 bg-dark-400 mx-1" />
+          </div>
+          <div className="seg">
           {RANGE_OPTIONS.map((opt) => (
             <button
               key={opt.days}
               onClick={() => setDays(opt.days)}
-              className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
-                days === opt.days
-                  ? 'bg-dark-500 text-gray-200'
-                  : 'text-gray-500 hover:text-gray-300'
-              }`}
+              aria-pressed={days === opt.days}
+              className={days === opt.days ? 'sel-activo' : ''}
             >
-              {opt.label}
+              {opt.label === 'All' ? t('meta.allTime') : opt.label === '1y' ? t('common.oneYear') : opt.label}
             </button>
           ))}
+          </div>
         </div>
       </div>
 
@@ -130,29 +132,29 @@ export default function RatingChart({ profileId }: Props) {
       ) : (
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-            <CartesianGrid stroke="#2e3345" strokeDasharray="3 3" />
+            <CartesianGrid stroke="#2e2a21" strokeDasharray="3 3" />
             <XAxis
               dataKey="date"
               tickFormatter={(d: string) => {
                 const [, m, day] = d.split('-');
                 return `${parseInt(m)}/${parseInt(day)}`;
               }}
-              tick={{ fill: '#6b7280', fontSize: 11 }}
-              axisLine={{ stroke: '#2e3345' }}
+              tick={{ fill: '#8f8673', fontSize: 12 }}
+              axisLine={{ stroke: '#2e2a21' }}
               tickLine={false}
               minTickGap={40}
             />
             <YAxis
               domain={domain}
-              tick={{ fill: '#6b7280', fontSize: 11 }}
+              tick={{ fill: '#8f8673', fontSize: 12 }}
               axisLine={false}
               tickLine={false}
               width={45}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#1a1d28',
-                border: '1px solid #2e3345',
+                backgroundColor: '#1a1712',
+                border: '1px solid #2e2a21',
                 borderRadius: '8px',
                 fontSize: '13px',
               }}

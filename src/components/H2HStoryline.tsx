@@ -80,7 +80,7 @@ export default function H2HStoryline({ summary, byMatchType, unresolved }: Props
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
       <div className="flex items-baseline gap-2 flex-wrap mb-3">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('h2h.storyline')}</h2>
+        <h2 className="titulo text-[15px] m-0">{t('h2h.storyline')}</h2>
         {summary.first_meeting && (
           <span className="text-xs text-gray-500">
             {t('h2h.firstMet', { date: date(summary.first_meeting) ?? '' })}
@@ -92,9 +92,9 @@ export default function H2HStoryline({ summary, byMatchType, unresolved }: Props
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {tiles.map((tile) => (
           <div key={tile.label} className="bg-dark-600/60 border border-dark-500/60 rounded-lg px-3 py-2.5">
-            <div className="text-[10px] uppercase tracking-wide text-gray-600">{tile.label}</div>
+            <div className="text-xs uppercase tracking-wide text-gray-600">{tile.label}</div>
             <div className={`text-base font-semibold ${toneClass(tile.tone)}`}>{tile.value}</div>
-            {tile.note && <div className="text-[11px] text-gray-500 mt-0.5">{tile.note}</div>}
+            {tile.note && <div className="text-xs text-gray-500 mt-0.5">{tile.note}</div>}
           </div>
         ))}
       </div>
@@ -113,7 +113,7 @@ export default function H2HStoryline({ summary, byMatchType, unresolved }: Props
       )}
 
       {(unresolved > 0 || summary.truncated) && (
-        <p className="text-[11px] text-gray-600 mt-3 m-0">
+        <p className="text-xs text-gray-600 mt-3 m-0">
           {unresolved > 0 && t('h2h.unresolved', { n: unresolved })}
           {unresolved > 0 && summary.truncated && ' '}
           {summary.truncated && t('h2h.truncated')}

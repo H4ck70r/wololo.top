@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { getLeaderboard } from '../lib/api';
 import { countryFlag } from '../lib/constants';
+import { avatarReal } from '../lib/avatar';
 
 const PAGE_SIZE = 50;
 
@@ -31,7 +32,7 @@ export default function Leaderboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-100 m-0">{t('lb.title')}</h1>
+          <h1 className="titulo text-2xl sm:text-3xl m-0">{t('lb.title')}</h1>
           {pagination && (
             <p className="text-sm text-gray-500 mt-1 m-0">{pagination.total.toLocaleString()} players ranked</p>
           )}
@@ -47,7 +48,7 @@ export default function Leaderboard() {
               }}
               className={`px-5 py-2 rounded-lg text-sm font-medium transition-all border-none cursor-pointer ${
                 ladderType === lb.id
-                  ? 'bg-gold-500 text-dark-900 shadow-lg'
+                  ? 'sel-activo'
                   : 'text-gray-400 hover:text-gray-200 bg-transparent'
               }`}
             >
@@ -102,10 +103,10 @@ export default function Leaderboard() {
                           to={`/player/${entry.profile_id}`}
                           className="flex items-center gap-2 no-underline group"
                         >
-                          {entry.avatar && (
-                            <img src={entry.avatar} alt="" className="w-7 h-7 rounded-md object-cover" />
+                          {avatarReal(entry.avatar) && (
+                            <img src={avatarReal(entry.avatar) ?? undefined} alt="" className="w-7 h-7 rounded-md object-cover" />
                           )}
-                          <span className="text-base">{countryFlag(entry.country)}</span>
+                          <span className="font-mono text-xs font-medium text-gray-500 ">{countryFlag(entry.country)}</span>
                           <span className="font-medium text-gray-200 group-hover:text-gold-400 transition-colors truncate">
                             {entry.alias}
                           </span>

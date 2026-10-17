@@ -28,7 +28,7 @@ const DAYS_OPTIONS = [
   { label: '30d', value: 30 },
   { label: '90d', value: 90 },
   { label: '180d', value: 180 },
-  { label: 'All time', value: 3650 },
+  { label: 'all', value: 3650 },
 ];
 
 export default function CivMeta() {
@@ -72,7 +72,15 @@ export default function CivMeta() {
     staleTime: 60_000,
   });
 
-  const civs = civData?.civilizations || [];
+  //  La API manda win_rate y wins como texto ("55.91"). Sumarlos concatenaba
+  //  cadenas, la media salia NaN y la columna de desviacion se quedaba vacia
+  //  en produccion: una rayita vertical y nada mas. Se pasan a numero aqui,
+  //  una vez, para todo lo que viene despues.
+  const civs = (civData?.civilizations || []).map((c) => ({
+    ...c,
+    win_rate: Number(c.win_rate),
+    wins: Number(c.wins),
+  }));
   const avgWinRate = civs.length > 0 ? civs.reduce((s, c) => s + c.win_rate, 0) / civs.length : 50;
 
   return (
@@ -83,7 +91,7 @@ export default function CivMeta() {
         <link rel="canonical" href="https://wololo.top/stats" />
       </Helmet>
 
-      <h1 className="text-3xl font-bold text-gray-100 mb-2 m-0">{t('meta.title')}</h1>
+      <h1 className="titulo text-2xl sm:text-3xl mb-2 m-0">{t('meta.title')}</h1>
       <p className="text-sm text-gray-500 mb-6 m-0">
         {t('meta.winRatesAcross', { n: civData ? civData.total_matches.toLocaleString() : '...' })}
       </p>
@@ -94,16 +102,13 @@ export default function CivMeta() {
           {/* Match type */}
           <div>
             <p className="text-xs text-gray-500 mb-1.5 m-0">{t('meta.matchType')}</p>
-            <div className="flex items-center gap-1 flex-wrap">
+            <div className="seg">
               {MATCH_TYPE_OPTIONS.map(opt => (
                 <button
                   key={opt.value}
                   onClick={() => setMatchType(opt.value)}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
-                    matchType === opt.value
-                      ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
-                      : 'text-gray-500 hover:text-gray-300 border border-transparent'
-                  }`}
+                  aria-pressed={matchType === opt.value}
+                  className={matchType === opt.value ? 'sel-activo' : ''}
                 >
                   {opt.label}
                 </button>
@@ -113,18 +118,15 @@ export default function CivMeta() {
           {/* ELO bracket */}
           <div>
             <p className="text-xs text-gray-500 mb-1.5 m-0">{t('meta.eloBracket')}</p>
-            <div className="flex items-center gap-1 flex-wrap">
+            <div className="seg">
               {ELO_BRACKETS.map((b, i) => (
                 <button
                   key={i}
                   onClick={() => setEloBracket(i)}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
-                    eloBracket === i
-                      ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
-                      : 'text-gray-500 hover:text-gray-300 border border-transparent'
-                  }`}
+                  aria-pressed={eloBracket === i}
+                  className={eloBracket === i ? 'sel-activo' : ''}
                 >
-                  {b.label}
+                  {b.label === 'All' ? t('live.mode.all') : b.label}
                 </button>
               ))}
             </div>
@@ -132,18 +134,15 @@ export default function CivMeta() {
           {/* Time range */}
           <div>
             <p className="text-xs text-gray-500 mb-1.5 m-0">{t('meta.timeRange')}</p>
-            <div className="flex items-center gap-1 flex-wrap">
+            <div className="seg">
               {DAYS_OPTIONS.map(opt => (
                 <button
                   key={opt.value}
                   onClick={() => setDays(opt.value)}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
-                    days === opt.value
-                      ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
-                      : 'text-gray-500 hover:text-gray-300 border border-transparent'
-                  }`}
+                  aria-pressed={days === opt.value}
+                  className={days === opt.value ? 'sel-activo' : ''}
                 >
-                  {opt.label}
+                  {opt.value === 3650 ? t('meta.allTime') : opt.label}
                 </button>
               ))}
             </div>
@@ -152,28 +151,28 @@ export default function CivMeta() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 mb-6">
+      <div className="tabs mb-6" role="tablist">
         <button
           onClick={() => setTab('civs')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            tab === 'civs' ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
-          }`}
+          role="tab"
+          aria-selected={tab === 'civs'}
+          className={`tab ${tab === 'civs' ? 'activa' : ''}`}
         >
           {t('meta.tabCivs')}
         </button>
         <button
           onClick={() => setTab('levels')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            tab === 'levels' ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
-          }`}
+          role="tab"
+          aria-selected={tab === 'levels'}
+          className={`tab ${tab === 'levels' ? 'activa' : ''}`}
         >
           {t('meta.tabLevels')}
         </button>
         <button
           onClick={() => setTab('maps')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            tab === 'maps' ? 'bg-dark-500 text-gold-400' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-600'
-          }`}
+          role="tab"
+          aria-selected={tab === 'maps'}
+          className={`tab ${tab === 'maps' ? 'activa' : ''}`}
         >
           {t('meta.tabMaps')}
         </button>
@@ -190,7 +189,9 @@ export default function CivMeta() {
               <p className="text-gray-400 m-0">{t('meta.noData')}</p>
             </div>
           ) : (
-            <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-x-auto">
+            <>
+            <TierList civs={civs} media={avgWinRate} />
+            <div className="bg-dark-700 border border-dark-400 rounded-sm overflow-x-auto">
               <table className="w-full text-sm sm:min-w-100">
                 <thead>
                   <tr className="border-b border-dark-400 bg-dark-800/50">
@@ -198,7 +199,9 @@ export default function CivMeta() {
                     <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.civilization')}</th>
                     <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.games')}</th>
                     <th className="text-right py-3 px-2 sm:px-3 text-gray-400 font-medium">{t('common.winRate')}</th>
-                    <th className="text-left py-3 px-2 sm:px-3 text-gray-400 font-medium hidden sm:table-cell" style={{ width: '40%' }}></th>
+                    <th className="text-center py-3 px-2 sm:px-3 text-gray-400 font-medium hidden sm:table-cell" style={{ width: '40%' }}>
+                      {t('meta.vsAverage', { avg: avgWinRate.toFixed(1) })}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -219,14 +222,14 @@ export default function CivMeta() {
                         <td className={`py-2.5 px-2 sm:px-3 text-right font-medium ${
                           civ.win_rate >= 52 ? 'text-win' : civ.win_rate <= 48 ? 'text-loss' : 'text-gray-300'
                         }`}>
-                          {civ.win_rate}%
+                          {civ.win_rate.toFixed(2)}%
                         </td>
                         <td className="py-2.5 px-2 sm:px-3 hidden sm:table-cell">
                           <div className="flex items-center h-4">
                             <div className="w-1/2 flex justify-end">
                               {!isAbove && (
                                 <div
-                                  className="h-3 rounded-l bg-loss/40"
+                                  className="h-2.5 bg-loss/70"
                                   style={{ width: `${barWidth}%` }}
                                 />
                               )}
@@ -235,7 +238,7 @@ export default function CivMeta() {
                             <div className="w-1/2">
                               {isAbove && (
                                 <div
-                                  className="h-3 rounded-r bg-win/40"
+                                  className="h-2.5 bg-win/70"
                                   style={{ width: `${barWidth}%` }}
                                 />
                               )}
@@ -248,6 +251,7 @@ export default function CivMeta() {
                 </tbody>
               </table>
             </div>
+            </>
           )}
 
           {/* Matchups grid */}
@@ -256,7 +260,7 @@ export default function CivMeta() {
           )}
           {matchupData?.matchups && matchupData.matchups.length > 0 && (
             <div className="mt-6">
-              <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('meta.topMatchups')}</h2>
+              <h2 className="titulo text-[15px] mb-4 m-0">{t('meta.topMatchups')}</h2>
               <div className="bg-dark-700 border border-dark-400 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
@@ -339,5 +343,57 @@ export default function CivMeta() {
         </>
       )}
     </div>
+  );
+}
+
+/*
+  La tier list: lo que la gente cita y comparte del meta. Los cortes son
+  puntos de porcentaje sobre la media de este mismo filtro, no un numero
+  magico: S es ganar tres puntos mas que la civ media, D perder tres.
+*/
+const TIERS = [
+  { clave: 'S', min: 3, color: '#e3b341' },
+  { clave: 'A', min: 1, color: '#d9b06a' },
+  { clave: 'B', min: -1, color: '#b8ad96' },
+  { clave: 'C', min: -3, color: '#b8814a' },
+  { clave: 'D', min: -Infinity, color: '#e0604f' },
+];
+
+function TierList({ civs, media }: { civs: { civ_id: number; win_rate: number; games: number }[]; media: number }) {
+  const { t } = useT();
+  if (civs.length === 0) return null;
+  return (
+    <section aria-labelledby="tiers" className="mb-6 border border-dark-400 rounded-sm bg-dark-700">
+      <div className="flex items-baseline justify-between gap-4 px-4 py-3 border-b border-dark-400">
+        <h2 id="tiers" className="titulo text-[14px] m-0">{t('meta.tierTitle')}</h2>
+        <span className="font-mono text-xs text-gray-500">{t('meta.tierNote', { avg: media.toFixed(1) })}</span>
+      </div>
+      {TIERS.map((tier, i) => {
+        const max = i === 0 ? Infinity : TIERS[i - 1].min;
+        const fila = civs.filter((c) => c.win_rate - media >= tier.min && c.win_rate - media < max);
+        if (fila.length === 0) return null;
+        return (
+          <div key={tier.clave} className="grid grid-cols-[3rem_minmax(0,1fr)] border-b border-dark-500 last:border-b-0">
+            <div className="grid place-items-center border-r border-dark-500 font-display text-2xl font-bold" style={{ color: tier.color }}>
+              {tier.clave}
+            </div>
+            <ul className="list-none m-0 p-2.5 flex flex-wrap gap-1.5">
+              {fila.map((c) => {
+                const icono = getCivIcon(c.civ_id);
+                return (
+                  <li key={c.civ_id} title={`${getCivName(c.civ_id)} · ${c.win_rate.toFixed(1)}% · ${c.games.toLocaleString()}`}>
+                    <span className="flex items-center gap-1.5 pl-1 pr-2 py-1 bg-dark-800 border border-dark-400 rounded-sm">
+                      {icono && <img src={icono} alt="" className="w-7 h-7 object-contain" loading="lazy" />}
+                      <span className="text-sm font-medium text-gray-100">{getCivName(c.civ_id)}</span>
+                      <span className="cifra text-sm text-gray-400">{c.win_rate.toFixed(1)}</span>
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
+    </section>
   );
 }

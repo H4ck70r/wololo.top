@@ -31,7 +31,7 @@ export const OUTCOME_CHIP: Record<MatchOutcome, string> = {
 };
 
 export const OUTCOME_CARD: Record<MatchOutcome, string> = {
-  win: 'bg-win/5 border-win/20 hover:border-win/40 border-l-green-500',
-  loss: 'bg-loss/5 border-loss/20 hover:border-loss/40 border-l-red-500',
-  pending: 'bg-pending/5 border-pending/20 hover:border-pending/40 border-l-slate-400',
+  win: 'bg-win/[0.04] border-win/25 hover:border-win/50',
+  loss: 'bg-loss/[0.04] border-loss/25 hover:border-loss/50',
+  pending: 'bg-pending/[0.04] border-pending/25 hover:border-pending/50',
 };

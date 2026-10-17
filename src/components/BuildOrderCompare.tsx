@@ -51,7 +51,7 @@ export default function BuildOrderCompare({ profileId, matchType = '6' }: Props)
             <div className="flex items-baseline justify-between gap-3 flex-wrap">
               <span className="text-sm font-medium text-gray-200">{o.opening}</span>
               <span className="text-xs text-gray-500 tabular-nums">
-                {t('bo.games', { n: String(o.games) })} · {o.wins}W
+                {t('bo.games', { n: String(o.games) })} · {o.wins}{t('res.win')}
               </span>
             </div>
             <p className="text-xs text-gold-400/80 m-0 mt-0.5">{o.build_order.name}</p>
@@ -80,7 +80,7 @@ export default function BuildOrderCompare({ profileId, matchType = '6' }: Props)
                       {c.delta_s > 0 ? '+' : ''}{c.delta_s}s
                     </span>
                     {c.target_vils != null && (
-                      <span className="text-[10px] text-gray-600 ml-auto">{c.target_vils} vils</span>
+                      <span className="text-xs text-gray-600 ml-auto">{c.target_vils} vils</span>
                     )}
                   </div>
                 );
@@ -89,7 +89,7 @@ export default function BuildOrderCompare({ profileId, matchType = '6' }: Props)
 
             {/* El hueco es de la guía, no nuestro: se dice. */}
             {o.ages_not_specified.length > 0 && (
-              <p className="text-[11px] text-gray-600 m-0 mt-2">
+              <p className="text-xs text-gray-600 m-0 mt-2">
                 {t('bo.notSpecified', {
                   ages: o.ages_not_specified.map((a) => t(`bo.${a}` as never)).join(' / '),
                 })}
@@ -100,7 +100,7 @@ export default function BuildOrderCompare({ profileId, matchType = '6' }: Props)
       </div>
 
       {data.openings_without_build.length > 0 && (
-        <p className="text-[11px] text-gray-600 mt-3 m-0">
+        <p className="text-xs text-gray-600 mt-3 m-0">
           {t('bo.noBuild', {
             list: data.openings_without_build
               .map((x) => `${x.opening} (${x.games})`)
@@ -108,7 +108,7 @@ export default function BuildOrderCompare({ profileId, matchType = '6' }: Props)
           })}
         </p>
       )}
-      <p className="text-[11px] text-gray-600 mt-1 m-0">{t('bo.mapping')}</p>
+      <p className="text-xs text-gray-600 mt-1 m-0">{t('bo.mapping')}</p>
     </div>
   );
 }

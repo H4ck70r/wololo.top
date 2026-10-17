@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
-import { outcomeOf, OUTCOME_BADGE, OUTCOME_CHIP, OUTCOME_CARD } from '../lib/matchResult';
+import { outcomeOf, OUTCOME_CHIP, OUTCOME_CARD } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
 import type { MatchRecord, MatchPlayer, SignalFlag, MatchReplayState } from '../lib/types';
 import SharedCopyBadge from './SharedCopyBadge';
@@ -29,7 +29,7 @@ function CivBadge({ civId, size = 'md' }: { civId: number | null | undefined; si
   }
 
   return (
-    <div className={`${px} rounded bg-dark-500 flex items-center justify-center text-[10px] font-bold text-gray-400`} title={getCivName(civId)}>
+    <div className={`${px} rounded bg-dark-500 flex items-center justify-center text-xs font-bold text-gray-400`} title={getCivName(civId)}>
       {getCivName(civId).charAt(0)}
     </div>
   );
@@ -53,7 +53,7 @@ function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
   if (replay.analyzed) {
     return (
       <span
-        className="inline-flex items-center gap-1 whitespace-nowrap text-[10px] text-emerald-300/90 bg-emerald-500/10 border border-emerald-500/25 rounded px-1.5 py-0.5"
+        className="inline-flex items-center gap-1 whitespace-nowrap text-xs text-emerald-300/90 bg-emerald-500/10 border border-emerald-500/25 rounded px-1.5 py-0.5"
         title={t('replayBadge.analyzedHint')}
       >
         ▶ {replay.opening || t('replayBadge.analyzed')}
@@ -63,7 +63,7 @@ function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
   if (replay.unavailable) {
     return (
       <span
-        className="text-[10px] text-gray-600 border border-dark-400 rounded px-1.5 py-0.5 whitespace-nowrap"
+        className="text-xs text-gray-600 border border-dark-400 rounded px-1.5 py-0.5 whitespace-nowrap"
         title={t('replayBadge.goneHint')}
       >
         {t('replayBadge.gone')}
@@ -73,7 +73,7 @@ function ReplayBadge({ replay }: { replay?: MatchReplayState }) {
   if (replay.queue_status === 'pending') {
     return (
       <span
-        className="text-[10px] text-gray-500 border border-dark-400 rounded px-1.5 py-0.5 whitespace-nowrap"
+        className="text-xs text-gray-500 border border-dark-400 rounded px-1.5 py-0.5 whitespace-nowrap"
         title={t('replayBadge.queuedHint')}
       >
         {t('replayBadge.queued')}
@@ -113,11 +113,11 @@ function PlayerLine({
       </Link>
       <SharedCopyBadge flag={flag} compact />
       {ratingStr && (
-        <span className="text-[11px] text-gray-500 ml-auto tabular-nums">{ratingStr}</span>
+        <span className="text-xs text-gray-500 ml-auto tabular-nums">{ratingStr}</span>
       )}
       {diffStr && (
         <span
-          className={`text-[10px] tabular-nums ${
+          className={`text-xs tabular-nums ${
             player.rating_diff! > 0 ? 'text-win' : player.rating_diff! < 0 ? 'text-loss' : 'text-gray-500'
           }`}
         >
@@ -153,7 +153,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
 
   return (
     <div
-      className={`rounded-lg border border-l-4 transition-colors ${OUTCOME_CARD[outcome]}`}
+      className={`rounded-sm border transition-colors ${OUTCOME_CARD[outcome]}`}
     >
       <div
         className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 select-none ${isTeamGame ? 'cursor-pointer' : ''}`}
@@ -164,7 +164,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
           className={`shrink-0 w-7 h-7 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
           title={outcomeLabel[outcome]}
         >
-          {OUTCOME_BADGE[outcome]}
+          {t(`res.${outcome}`)}
         </div>
 
         {/* Player civ */}
@@ -177,7 +177,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
               nombre, que se recorta. */}
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
             <span className="font-medium text-gold-400 text-sm truncate">
-              {match.civilization || getCivName(match.civilization_id)}
+              {match.civilization_id != null ? getCivName(match.civilization_id) : match.civilization}
             </span>
 
             {!isTeamGame && enemyTeams.length > 0 && enemyTeams[0].players.length > 0 ? (
@@ -261,7 +261,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
             {/* My team */}
             {myTeam && (
               <div>
-                <p className={`text-[10px] uppercase tracking-wider mb-1 m-0 ${
+                <p className={`text-xs uppercase tracking-wider mb-1 m-0 ${
                   outcome === 'win' ? 'text-win/70' : outcome === 'loss' ? 'text-loss/70' : 'text-pending/70'
                 }`}>
                   {outcome === 'pending' ? t('match.undecidedTeam') : isWin ? t('match.winners') : t('match.losers')} &middot; Team {myTeam.team_id}
@@ -275,7 +275,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
             {/* Enemy teams */}
             {enemyTeams.map((team) => (
               <div key={team.team_id}>
-                <p className={`text-[10px] uppercase tracking-wider mb-1 m-0 ${
+                <p className={`text-xs uppercase tracking-wider mb-1 m-0 ${
                   outcome === 'pending' ? 'text-pending/70' : !isWin ? 'text-win/70' : 'text-loss/70'
                 }`}>
                   {outcome === 'pending' ? t('match.undecidedTeam') : !isWin ? t('match.winners') : t('match.losers')} &middot; Team {team.team_id}

@@ -75,9 +75,89 @@ export function normalizeCivId(civId: number): number {
   return HISTORIC_CIV_IDS[civId] ?? civId;
 }
 
+/*
+  Los nombres en castellano, los del juego en su version en espanol. Antes la
+  pagina en castellano decia "Romans" y "Magyars" al lado de texto en
+  espanol. El icono sigue saliendo del nombre ingles (es el nombre del fichero).
+*/
+const CIVILIZACIONES_ES: Record<number, string> = {
+  0: 'Armenios',
+  1: 'Aztecas',
+  2: 'Bengalíes',
+  3: 'Bereberes',
+  4: 'Bohemios',
+  5: 'Britanos',
+  6: 'Búlgaros',
+  7: 'Borgoñones',
+  8: 'Birmanos',
+  9: 'Bizantinos',
+  10: 'Celtas',
+  11: 'Chinos',
+  12: 'Cumanos',
+  13: 'Drávidas',
+  14: 'Etíopes',
+  15: 'Francos',
+  16: 'Georgianos',
+  17: 'Godos',
+  18: 'Gurjaras',
+  19: 'Hunos',
+  20: 'Incas',
+  21: 'Indostaníes',
+  22: 'Italianos',
+  23: 'Japoneses',
+  24: 'Jemeres',
+  25: 'Coreanos',
+  26: 'Lituanos',
+  27: 'Magiares',
+  28: 'Malayos',
+  29: 'Malíes',
+  30: 'Mayas',
+  31: 'Mongoles',
+  32: 'Persas',
+  33: 'Polacos',
+  34: 'Portugueses',
+  35: 'Romanos',
+  36: 'Sarracenos',
+  37: 'Sicilianos',
+  38: 'Eslavos',
+  39: 'Españoles',
+  40: 'Tártaros',
+  41: 'Teutones',
+  42: 'Turcos',
+  43: 'Vietnamitas',
+  44: 'Vikingos',
+  45: 'Aqueménidas',
+  46: 'Atenienses',
+  47: 'Espartanos',
+  48: 'Shu',
+  49: 'Wu',
+  50: 'Wei',
+  51: 'Yurchen',
+  52: 'Kitán',
+  55: 'Macedonios',
+  56: 'Tracios',
+  57: 'Puru',
+  58: 'Muiscas',
+  59: 'Mapuches',
+  60: 'Tupís',
+  61: 'Sajones',
+  62: 'Varegos',
+  63: 'Daneses',
+};
+
+//  El idioma en el que se nombran las civs. Lo fija el proveedor de i18n en el
+//  mismo momento en que se elige, antes de pintar, para que no haya un primer
+//  render en ingles.
+let idiomaCivs: 'en' | 'es' = 'en';
+export function fijarIdiomaCivs(l: 'en' | 'es') {
+  idiomaCivs = l;
+}
+
 export function getCivName(civId: number | undefined | null): string {
   if (civId == null) return 'Unknown';
-  return CIVILIZATIONS[normalizeCivId(civId)] ?? `Civ ${civId}`;
+  const id = normalizeCivId(civId);
+  if (idiomaCivs === 'es' && CIVILIZACIONES_ES[id]) return CIVILIZACIONES_ES[id];
+  return CIVILIZATIONS[id] ?? `Civ ${civId}`;
 }
 
 export function getCivIcon(civId: number | undefined | null): string | null {
@@ -177,11 +257,13 @@ export function foldText(value: string): string {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
+/*
+  El pais como su codigo (MX, ES, FI) y no como bandera emoji. Las banderas no
+  se dibujan en Windows -salen dos letras sueltas en otra fuente- y eran el
+  unico color sin significado en las filas de datos. El codigo se lee igual en
+  todos los sistemas y alinea en columna.
+*/
 export function countryFlag(code: string | undefined | null): string {
   if (!code || code.length !== 2) return '';
-  return code
-    .toUpperCase()
-    .split('')
-    .map((c) => String.fromCodePoint(0x1f1e6 + c.charCodeAt(0) - 65))
-    .join('');
+  return code.toUpperCase();
 }

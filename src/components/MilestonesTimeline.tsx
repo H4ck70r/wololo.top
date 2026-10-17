@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPlayerMilestones } from '../lib/api';
 import LadderBadge from './LadderBadge';
 import { useT } from '../lib/i18n';
+import { edadDe } from '../lib/paleta';
 import type { MilestonesResponse, Milestone, LadderKey } from '../lib/types';
 
 interface MilestonesTimelineProps {
@@ -21,13 +22,6 @@ const LADDER_ORDEN = [
   { clave: 'team_dm' as const, etiqueta: 'Team DM',  color: 'text-rose-300' },
 ];
 
-function getBracket(threshold: number): { label: string; color: string; bg: string; border: string } {
-  if (threshold < 1200) return { label: 'Bronze', color: 'text-amber-600', bg: 'bg-amber-600/20', border: 'border-amber-600/40' };
-  if (threshold < 1600) return { label: 'Silver', color: 'text-gray-300', bg: 'bg-gray-300/20', border: 'border-gray-300/40' };
-  if (threshold < 2000) return { label: 'Gold', color: 'text-gold-400', bg: 'bg-gold-400/20', border: 'border-gold-400/40' };
-  if (threshold < 2400) return { label: 'Diamond', color: 'text-cyan-400', bg: 'bg-cyan-400/20', border: 'border-cyan-400/40' };
-  return { label: 'Legend', color: 'text-purple-400', bg: 'bg-purple-400/20', border: 'border-purple-400/40' };
-}
 
 // The API serialises these dates as a full ISO timestamp
 // ("2026-03-01T06:00:00.000Z"), so appending 'T00:00:00' produced
@@ -96,21 +90,26 @@ function LadderMilestones({
 
           <div className="flex flex-col gap-3">
             {milestones.map((m) => {
-              const bracket = getBracket(m.threshold);
+              //  Los tramos son las edades del juego, en una sola escala de
+              //  bronce a oro: el arcoiris de rangos de MOBA no significa nada aqui.
+              const edad = edadDe(m.threshold);
               return (
                 <div key={m.threshold} className="relative flex items-center gap-3">
-                  {/* Dot */}
                   <div
-                    className={`absolute -left-6 w-[18px] h-[18px] rounded-full ${bracket.bg} ${bracket.border} border-2 flex items-center justify-center`}
+                    className="absolute -left-6 w-[18px] h-[18px] rotate-45 border-2 bg-dark-700 flex items-center justify-center"
+                    style={{ borderColor: edad.color }}
+                    aria-hidden="true"
                   >
-                    <div className={`w-2 h-2 rounded-full ${bracket.bg.replace('/20', '')}`} />
+                    <div className="w-1.5 h-1.5" style={{ backgroundColor: edad.color }} />
                   </div>
 
-                  {/* Content */}
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className={`text-sm font-bold ${bracket.color}`}>{m.threshold}</span>
+                  <div className="flex items-baseline gap-2.5 flex-wrap">
+                    <span className="cifra text-lg" style={{ color: edad.color }}>{m.threshold}</span>
+                    <span className="font-display text-xs font-semibold tracking-[0.12em] uppercase text-gray-400">
+                      {t(`age.${edad.clave}`)}
+                    </span>
                     {formatDate(m.reached_at, lang) && (
-                      <span className="text-xs text-gray-500">{formatDate(m.reached_at, lang)}</span>
+                      <span className="font-mono text-xs text-gray-500">{formatDate(m.reached_at, lang)}</span>
                     )}
                   </div>
                 </div>
@@ -164,7 +163,7 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
   if (!PRESENTES.length) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h3 className="text-lg font-semibold text-gray-200 m-0 mb-5">{t('milestones.title')}</h3>
+        <h3 className="titulo text-[15px] m-0 mb-5">{t('milestones.title')}</h3>
         <p className="text-gray-500 text-sm text-center py-8 m-0">{t('milestones.empty')}</p>
       </div>
     );
@@ -183,7 +182,7 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-      <h3 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('milestones.title')}</h3>
+      <h3 className="titulo text-[15px] m-0 mb-4">{t('milestones.title')}</h3>
 
       {unico ? (
         <div className="mb-4">
@@ -193,7 +192,7 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
         //  La pestana activa ES la etiqueta: va justo encima del numero, que
         //  es donde tiene que estar para que nadie lea un pico de equipos
         //  como su elo de 1v1.
-        <div className="flex flex-wrap gap-1.5 mb-5" role="tablist">
+        <div className="seg mb-5" role="tablist">
           {PRESENTES.map((l) => {
             const sel = l.clave === activa.clave;
             return (
@@ -202,11 +201,7 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
                 role="tab"
                 aria-selected={sel}
                 onClick={() => setAbierta(l.clave)}
-                className={`text-[11px] font-medium uppercase tracking-wider rounded px-2 py-1 border transition-colors ${
-                  sel
-                    ? `${l.color} bg-dark-500 border-dark-300`
-                    : 'text-gray-500 bg-transparent border-dark-400 hover:text-gray-300'
-                }`}
+                className={`font-mono !text-xs ${sel ? 'sel-activo' : ''}`}
               >
                 {l.etiqueta}
               </button>

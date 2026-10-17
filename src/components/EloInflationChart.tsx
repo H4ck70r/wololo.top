@@ -27,8 +27,8 @@ import type { DistributionHistoryResponse } from '../lib/types';
 
 const MONTH_OPTIONS = [1, 3, 6, 12];
 
-const BEFORE = '#6b7280';
-const AFTER = '#4a7cff';
+const BEFORE = '#8f8673';
+const AFTER = '#5b8fd6';
 
 interface Props {
   ladder?: 'solo' | 'team';
@@ -115,7 +115,7 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
       <div className="flex items-start justify-between gap-2 mb-1 flex-wrap">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('infl.title')}</h2>
+        <h2 className="titulo text-[15px] m-0">{t('infl.title')}</h2>
         <div className="flex items-center gap-1 flex-wrap">
           {MONTH_OPTIONS.map((m) => (
             <button
@@ -141,17 +141,17 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
                 <stop offset="100%" stopColor={AFTER} stopOpacity={0.02} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#2e3345" strokeDasharray="3 3" />
+            <CartesianGrid stroke="#2e2a21" strokeDasharray="3 3" />
             <XAxis
               dataKey="rating"
               type="number"
               domain={['dataMin', 'dataMax']}
-              stroke="#3d4358"
-              tick={{ fill: '#6b7280', fontSize: 11 }}
+              stroke="#3d372b"
+              tick={{ fill: '#8f8673', fontSize: 12 }}
               minTickGap={40}
             />
             <YAxis
-              tick={{ fill: '#6b7280', fontSize: 10 }}
+              tick={{ fill: '#8f8673', fontSize: 12 }}
               tickFormatter={(v: number) => `${v}%`}
               axisLine={false}
               tickLine={false}
@@ -159,12 +159,12 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
             />
             <Tooltip
               contentStyle={{
-                background: '#151821',
-                border: '1px solid #2e3345',
+                background: '#14120e',
+                border: '1px solid #2e2a21',
                 borderRadius: 8,
                 fontSize: 12,
               }}
-              labelStyle={{ color: '#e2e8f0' }}
+              labelStyle={{ color: '#ece4d2' }}
               labelFormatter={(v) => `${v} - ${Number(v) + data.bucket_size - 1}`}
               formatter={(value, name) => [`${Number(value).toFixed(2)}%`, labels[String(name)] ?? String(name)]}
             />
@@ -172,7 +172,7 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
               verticalAlign="top"
               height={24}
               iconType="plainline"
-              wrapperStyle={{ fontSize: 11, color: '#9ca3af' }}
+              wrapperStyle={{ fontSize: 12, color: '#a39a86' }}
               formatter={(name) => labels[String(name)] ?? String(name)}
             />
 
@@ -180,7 +180,7 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
                 inflacion, mas legible que comparar las jorobas a ojo. */}
             <ReferenceLine x={data.before.median} stroke={BEFORE} strokeDasharray="4 3" />
             <ReferenceLine x={data.after.median} stroke={AFTER} strokeDasharray="4 3" />
-            {rating != null && <ReferenceLine x={rating} stroke="#f0c040" strokeWidth={2} />}
+            {rating != null && <ReferenceLine x={rating} stroke="#e3b341" strokeWidth={2} />}
 
             <Area
               type="monotone"
@@ -197,24 +197,24 @@ export default function EloInflationChart({ ladder = 'solo', rating }: Props) {
 
       <p className="text-sm text-gray-300 mt-3 m-0 mb-3">{verdict}</p>
 
-      <div className="mb-1 text-[10px] uppercase tracking-wide text-gray-600">{t('infl.shiftTitle')}</div>
+      <div className="mb-1 text-xs uppercase tracking-wide text-gray-600">{t('infl.shiftTitle')}</div>
       <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
         {cuts.map((c) => (
           <div key={c.key} className="bg-dark-600/60 border border-dark-500/60 rounded-lg px-2.5 py-1.5">
-            <div className="text-[10px] uppercase tracking-wide text-gray-600">{t(c.key)}</div>
+            <div className="text-xs uppercase tracking-wide text-gray-600">{t(c.key)}</div>
             <div
               className={`text-sm font-semibold tabular-nums ${
                 c.value > 0 ? 'text-loss' : c.value < 0 ? 'text-win' : 'text-gray-300'
               }`}
             >
               {sign(c.value)}
-              <span className="text-[10px] font-normal text-gray-500 ml-1">ELO</span>
+              <span className="text-xs font-normal text-gray-500 ml-1">ELO</span>
             </div>
           </div>
         ))}
       </div>
 
-      <p className="text-[11px] text-gray-600 mt-3 m-0">
+      <p className="text-xs text-gray-600 mt-3 m-0">
         {t('infl.footnote', { n: shift.players.toLocaleString(locale) })}
       </p>
     </div>

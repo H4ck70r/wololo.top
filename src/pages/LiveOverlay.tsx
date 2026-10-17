@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useT } from '../lib/i18n';
 import { COLORES_JUGADOR } from '../lib/jugadores';
 import CIVS from '../lib/civs-replay.json';
+import { avatarReal } from '../lib/avatar';
 
 //  Mismo criterio que el resto del sitio: el replay guarda el CLIC y lo que
 //  la gente compara es cuando la edad CAE, asi que se le suma la investigacion,
@@ -127,9 +128,9 @@ function Jugador({ j, destacado, verCiv = true }: {
   const civ = verCiv ? civDe(j.civ) : null;
   return (
     <div className={`flex items-center gap-2 ${destacado ? '' : 'opacity-70'}`}>
-      {j.avatar ? (
+      {avatarReal(j.avatar) ? (
         <img
-          src={j.avatar}
+          src={avatarReal(j.avatar) ?? undefined}
           alt=""
           className="h-7 w-7 flex-none rounded"
           style={{ outline: `2px solid ${color}`, outlineOffset: '-1px' }}

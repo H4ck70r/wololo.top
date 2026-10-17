@@ -95,7 +95,7 @@ export default function SharedAccountCard({
                 </p>
               )}
 
-              <div className="flex items-center gap-2 flex-wrap text-[11px]">
+              <div className="flex items-center gap-2 flex-wrap text-xs">
                 <span className="px-2 py-0.5 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 font-medium tabular-nums">
                   {t('signals.shared.confidence', { n: d.confidence })}
                 </span>
@@ -111,7 +111,7 @@ export default function SharedAccountCard({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider text-gray-600 m-0 mb-1">
+                  <p className="text-xs uppercase tracking-wider text-gray-600 m-0 mb-1">
                     {t('signals.shared.basis')}
                   </p>
                   <EvidenceRow labelKey="signals.shared.sameCountry" state={d.evidence.country} />
@@ -135,7 +135,7 @@ export default function SharedAccountCard({
         })}
       </div>
 
-      <p className="text-[11px] text-gray-600 mt-4 mb-0 leading-relaxed">
+      <p className="text-xs text-gray-600 mt-4 mb-0 leading-relaxed">
         {t('signals.shared.howScored')} {t('signals.shared.note')}
       </p>
     </div>

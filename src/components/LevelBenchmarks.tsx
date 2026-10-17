@@ -79,9 +79,9 @@ export default function LevelBenchmarks({ matchType, rating }: Props) {
               <div className="flex items-baseline justify-between gap-2 mb-2">
                 <span className={`font-medium ${mio ? 'text-gold-400' : 'text-gray-200'}`}>
                   {b.bracket}
-                  {mio && <span className="ml-2 text-[10px] text-gold-400/80">{t('bench.you')}</span>}
+                  {mio && <span className="ml-2 text-xs text-gold-400/80">{t('bench.you')}</span>}
                 </span>
-                <span className="text-[11px] text-gray-500 tabular-nums shrink-0">
+                <span className="text-xs text-gray-500 tabular-nums shrink-0">
                   {t('bench.games', { n: b.samples.toLocaleString() })}
                   {b.thin && <span className="ml-1 text-gray-600">{t('bench.thin')}</span>}
                 </span>
@@ -124,7 +124,7 @@ export default function LevelBenchmarks({ matchType, rating }: Props) {
                 }`}>
                   <td className="py-2.5 px-4 font-medium">
                     <span className={mio ? 'text-gold-400' : 'text-gray-200'}>{b.bracket}</span>
-                    {mio && <span className="ml-2 text-[10px] text-gold-400/80">{t('bench.you')}</span>}
+                    {mio && <span className="ml-2 text-xs text-gold-400/80">{t('bench.you')}</span>}
                   </td>
                   {columnas.map((c) => (
                     <td key={String(c.clave)} className="py-2.5 px-3 text-right tabular-nums text-gray-300">

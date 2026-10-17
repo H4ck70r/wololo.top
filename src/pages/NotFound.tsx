@@ -12,7 +12,7 @@ export default function NotFound() {
       </Helmet>
 
       <p className="text-8xl font-bold text-gold-400 m-0 mb-2">404</p>
-      <h1 className="text-2xl font-bold text-gray-200 m-0 mb-3">{t('notFound.title')}</h1>
+      <h1 className="titulo text-2xl m-0 mb-3">{t('notFound.title')}</h1>
       <p className="text-gray-500 mb-8 m-0">
         {t('notFound.body')}
       </p>

@@ -176,7 +176,7 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
   if (!frases.length && !arreglos.length) return null;
 
   return (
-    <div className="bg-dark-800/60 border-l-2 border-gold-400/60 rounded-r-lg px-4 py-3 mb-4">
+    <div className="bg-dark-800/60 border border-dark-400 border-t-2 border-t-gold-400/70 rounded-none px-4 py-3 mb-4">
       <p className="text-[15px] leading-relaxed text-gray-200 m-0">
         <span className="font-medium" style={{ color: gana.color }}>
           {t('coach.gano', { ganador: gana.nombre })}{' '}
@@ -186,7 +186,7 @@ export default function ReplayVerdict({ timeline, players = [] }: Props) {
 
       {arreglos.length > 0 && (
         <div className="mt-3">
-          <h5 className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-gray-500 m-0 mb-1.5">
+          <h5 className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-gray-500 m-0 mb-1.5">
             {t('coach.arreglar')}
             <Nota>{t('coach.fuente')}</Nota>
           </h5>

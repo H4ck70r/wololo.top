@@ -5,10 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { getHeadToHead, getPlayer, getSignalFlags } from '../lib/api';
 import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
-import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
+import { outcomeOf, OUTCOME_LABEL, OUTCOME_CHIP } from '../lib/matchResult';
 import SearchBar from '../components/SearchBar';
 import H2HStoryline from '../components/H2HStoryline';
 import SharedCopyBadge from '../components/SharedCopyBadge';
+import { avatarReal } from '../lib/avatar';
 
 export default function HeadToHead() {
   const { t } = useT();
@@ -57,7 +58,7 @@ export default function HeadToHead() {
   if (error || !data) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12 text-center">
-        <h2 className="text-2xl font-bold text-gray-300 mb-4">{t('h2h.notFound')}</h2>
+        <h2 className="titulo text-xl mb-4">{t('h2h.notFound')}</h2>
         <p className="text-gray-500 mb-6">{t('h2h.noMatches')}</p>
         <SearchBar className="max-w-lg mx-auto" />
       </div>
@@ -89,8 +90,8 @@ export default function HeadToHead() {
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-6 mb-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-3">
-            {player?.avatar ? (
-              <img src={player.avatar} alt={playerName} className="w-14 h-14 rounded-xl object-cover border-2 border-dark-400" />
+            {avatarReal(player?.avatar) ? (
+              <img src={avatarReal(player?.avatar) ?? undefined} alt={playerName} className="w-14 h-14 rounded-xl object-cover border-2 border-dark-400" />
             ) : (
               <div className="w-14 h-14 rounded-xl bg-dark-500 flex items-center justify-center text-xl font-bold text-gold-400">
                 {playerName.charAt(0).toUpperCase()}
@@ -111,8 +112,8 @@ export default function HeadToHead() {
           </div>
 
           <div className="flex items-center gap-3 flex-row-reverse">
-            {opponent?.avatar ? (
-              <img src={opponent.avatar} alt={opponentName} className="w-14 h-14 rounded-xl object-cover border-2 border-dark-400" />
+            {avatarReal(opponent?.avatar) ? (
+              <img src={avatarReal(opponent?.avatar) ?? undefined} alt={opponentName} className="w-14 h-14 rounded-xl object-cover border-2 border-dark-400" />
             ) : (
               <div className="w-14 h-14 rounded-xl bg-dark-500 flex items-center justify-center text-xl font-bold text-blue-accent">
                 {opponentName.charAt(0).toUpperCase()}
@@ -155,7 +156,7 @@ export default function HeadToHead() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
           <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
-            <h2 className="text-lg font-semibold text-gray-200 m-0">{t('h2h.civMatchups')}</h2>
+            <h2 className="titulo text-[15px] m-0">{t('h2h.civMatchups')}</h2>
             <div className="flex items-center gap-1">
               {(['opponent', 'pair'] as const).map((view) => (
                 <button
@@ -164,7 +165,7 @@ export default function HeadToHead() {
                   onClick={() => setCivView(view)}
                   className={`px-2 py-1 rounded text-xs font-medium border transition-colors cursor-pointer ${
                     civView === view
-                      ? 'bg-dark-500 text-gold-400 border-gold-500/40'
+                      ? 'sel-activo border border-dark-300'
                       : 'text-gray-500 border-dark-400 bg-transparent hover:text-gray-300'
                   }`}
                 >
@@ -195,7 +196,7 @@ export default function HeadToHead() {
                             {c.civ_name || getCivName(c.civ)}
                             {/* A 0-1 and a 0-14 are not the same finding. */}
                             {c.thin && someCivIsSolid && (
-                              <span className="ml-1.5 text-[10px] text-gray-600">{t('h2h.thinSample')}</span>
+                              <span className="ml-1.5 text-xs text-gray-600">{t('h2h.thinSample')}</span>
                             )}
                           </div>
                         </td>
@@ -210,7 +211,7 @@ export default function HeadToHead() {
                   </tbody>
                 </table>
                 {!someCivIsSolid && (
-                  <p className="text-[11px] text-gray-600 mt-2 m-0">{t('h2h.allThin')}</p>
+                  <p className="text-xs text-gray-600 mt-2 m-0">{t('h2h.allThin')}</p>
                 )}
               </div>
             ) : (
@@ -257,7 +258,7 @@ export default function HeadToHead() {
         </div>
 
         <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('h2h.mapStats')}</h2>
+          <h2 className="titulo text-[15px] mb-4 m-0">{t('h2h.mapStats')}</h2>
           {map_stats && map_stats.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-xs sm:text-sm">
@@ -293,7 +294,7 @@ export default function HeadToHead() {
 
       {/* Recent matches */}
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 mb-4 m-0">{t('profile.recentMatches')}</h2>
+        <h2 className="titulo text-[15px] mb-4 m-0">{t('profile.recentMatches')}</h2>
         {recent_matches && recent_matches.length > 0 ? (
           <div className="flex flex-col gap-2">
             {recent_matches.map((match) => {
@@ -319,7 +320,7 @@ export default function HeadToHead() {
                     className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center font-bold text-xs ${OUTCOME_CHIP[outcome]}`}
                     title={OUTCOME_LABEL[outcome]}
                   >
-                    {OUTCOME_BADGE[outcome]}
+                    {t(`res.${outcome}`)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 text-sm flex-wrap">

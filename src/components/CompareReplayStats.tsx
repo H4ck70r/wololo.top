@@ -71,20 +71,20 @@ export default function CompareReplayStats({ p1, p2 }: Props) {
     <div className="min-w-0">
       <p className={`m-0 text-sm font-semibold truncate ${color}`}>{nombre}</p>
       {d?.sample ? (
-        <p className={`m-0 text-[11px] ${corta(d) ? 'text-amber-400/80' : 'text-gray-600'}`}>
+        <p className={`m-0 text-xs ${corta(d) ? 'text-amber-400/80' : 'text-gray-600'}`}>
           {corta(d)
             ? t('vs.muestraCorta', { n: d.sample })
             : t('vs.muestra', { n: d.sample })}
         </p>
       ) : (
-        <p className="m-0 text-[11px] text-gray-600">—</p>
+        <p className="m-0 text-xs text-gray-600">—</p>
       )}
     </div>
   );
 
   return (
     <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 mb-6">
-      <h2 className="flex items-center gap-1.5 text-lg font-semibold text-gray-200 mb-1 m-0">
+      <h2 className="flex items-center gap-1.5 titulo text-[15px] mb-1 m-0">
         {t('vs.title')}
         <Nota>{t('vs.nota')}</Nota>
       </h2>
@@ -128,9 +128,9 @@ export default function CompareReplayStats({ p1, p2 }: Props) {
                   {pinta(m1, v1)}
                 </span>
                 <span className="text-center">
-                  <span className="block text-[11px] text-gray-500 whitespace-nowrap">{etiqueta(clave)}</span>
+                  <span className="block text-xs text-gray-500 whitespace-nowrap">{etiqueta(clave)}</span>
                   {ref.bracket_median != null && (
-                    <span className="block text-[10px] text-gray-600 tabular-nums">
+                    <span className="block text-xs text-gray-600 tabular-nums">
                       {pinta(ref, ref.bracket_median)}
                     </span>
                   )}

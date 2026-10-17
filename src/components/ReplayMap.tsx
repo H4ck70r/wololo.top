@@ -21,24 +21,24 @@ interface Props {
  * `peso` ordena el dibujado: lo importante se pinta al final para que no
  * quede debajo de una granja.
  */
-type Edificio = { es: string; en: string; icono: string; r: number; peso: number };
+type Edificio = { es: string; en: string; icono: boolean; r: number; peso: number };
 const EDIFICIOS: Record<number, Edificio> = {
-  70:  { es: 'Casa', en: 'House', icono: '', r: 1.3, peso: 0 },
-  50:  { es: 'Granja', en: 'Farm', icono: '', r: 1.3, peso: 0 },
-  68:  { es: 'Molino', en: 'Mill', icono: '', r: 1.8, peso: 1 },
-  562: { es: 'Camp. madera', en: 'Lumber camp', icono: '', r: 1.8, peso: 1 },
-  584: { es: 'Camp. minero', en: 'Mining camp', icono: '', r: 1.8, peso: 1 },
-  103: { es: 'Herrería', en: 'Blacksmith', icono: '', r: 2, peso: 2 },
-  84:  { es: 'Mercado', en: 'Market', icono: '', r: 2, peso: 2 },
-  209: { es: 'Universidad', en: 'University', icono: '', r: 2, peso: 2 },
-  104: { es: 'Monasterio', en: 'Monastery', icono: '✝', r: 4.5, peso: 3 },
-  12:  { es: 'Cuartel', en: 'Barracks', icono: '⚔', r: 5.5, peso: 4 },
-  87:  { es: 'Galería', en: 'Archery range', icono: '➹', r: 5.5, peso: 4 },
-  101: { es: 'Establo', en: 'Stable', icono: '♞', r: 5.5, peso: 4 },
-  49:  { es: 'Asedio', en: 'Siege workshop', icono: '⚙', r: 5.5, peso: 4 },
-  79:  { es: 'Torre', en: 'Tower', icono: '▲', r: 4, peso: 4 },
-  82:  { es: 'Castillo', en: 'Castle', icono: '♜', r: 8, peso: 6 },
-  621: { es: 'Centro urbano', en: 'Town centre', icono: '⌂', r: 8, peso: 5 },
+  70:  { es: 'Casa', en: 'House', icono: false, r: 1.3, peso: 0 },
+  50:  { es: 'Granja', en: 'Farm', icono: false, r: 1.3, peso: 0 },
+  68:  { es: 'Molino', en: 'Mill', icono: false, r: 1.8, peso: 1 },
+  562: { es: 'Camp. madera', en: 'Lumber camp', icono: false, r: 1.8, peso: 1 },
+  584: { es: 'Camp. minero', en: 'Mining camp', icono: false, r: 1.8, peso: 1 },
+  103: { es: 'Herrería', en: 'Blacksmith', icono: false, r: 2, peso: 2 },
+  84:  { es: 'Mercado', en: 'Market', icono: false, r: 2, peso: 2 },
+  209: { es: 'Universidad', en: 'University', icono: false, r: 2, peso: 2 },
+  104: { es: 'Monasterio', en: 'Monastery', icono: true, r: 4.5, peso: 3 },
+  12:  { es: 'Cuartel', en: 'Barracks', icono: true, r: 5.5, peso: 4 },
+  87:  { es: 'Galería', en: 'Archery range', icono: true, r: 5.5, peso: 4 },
+  101: { es: 'Establo', en: 'Stable', icono: true, r: 5.5, peso: 4 },
+  49:  { es: 'Asedio', en: 'Siege workshop', icono: true, r: 5.5, peso: 4 },
+  79:  { es: 'Torre', en: 'Tower', icono: true, r: 4, peso: 4 },
+  82:  { es: 'Castillo', en: 'Castle', icono: true, r: 8, peso: 6 },
+  621: { es: 'Centro urbano', en: 'Town centre', icono: true, r: 8, peso: 5 },
 };
 //  Los que salen en la leyenda: los que cuentan una historia.
 const EN_LEYENDA = [621, 82, 12, 87, 101, 49, 79, 104];
@@ -71,6 +71,37 @@ const reloj = (ms: number) => {
   return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 };
 
+/*
+  Los iconos de edificio se pintan con su imagen real (public/iconos/buildings)
+  y no con simbolos Unicode (⚔ ♞ ✝), que cambiaban de forma y de grosor segun
+  la fuente de cada sistema. Se cargan una vez para toda la pagina; mientras no
+  han llegado, o si el edificio no tiene icono, se pinta un aro.
+*/
+const SIN_ICONO = new Set([49, 621]);
+
+//  La rendicion en la linea de tiempo: una X dibujada, no el caracter ✕.
+const RENDICION = 'rendicion';
+function MarcaRendicion() {
+  return (
+    <svg viewBox="0 0 10 10" className="inline-block w-2.5 h-2.5" aria-label="resign">
+      <path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+const iconos = new Map<number, HTMLImageElement>();
+function iconoDe(id: number, alCargar: () => void): HTMLImageElement | null {
+  if (SIN_ICONO.has(id)) return null;
+  let img = iconos.get(id);
+  if (!img) {
+    img = new Image();
+    img.decoding = 'async';
+    img.onload = alCargar;
+    img.src = `/iconos/buildings/${id}.webp`;
+    iconos.set(id, img);
+  }
+  return img.complete && img.naturalWidth > 0 ? img : null;
+}
+
 export default function ReplayMap({ timeline }: Props) {
   const { t, lang } = useT();
   const colorDe = (numero: number) => colorDeJugador(timeline.jugadores, numero);
@@ -86,6 +117,8 @@ export default function ReplayMap({ timeline }: Props) {
   //  La capa de atencion va apagada: es informacion de otro orden y encendida
   //  siempre taparia el mapa, que es lo que se viene a ver.
   const [verCalor, setVerCalor] = useState(false);
+  //  Sube cuando llega un icono de edificio, para volver a pintar el mapa con el.
+  const [iconosListos, setIconosListos] = useState(0);
   const ultimoCuadro = useRef<number | null>(null);
 
   const duracion = timeline.duracion_ms || 1;
@@ -192,7 +225,7 @@ export default function ReplayMap({ timeline }: Props) {
         puesta.add(clave);
         out.push({ t: e.t, etiqueta: TEC_EDAD[e.id], j: e.j });
       } else if (e.tipo === 'resign') {
-        out.push({ t: e.t, etiqueta: '✕', j: e.j });
+        out.push({ t: e.t, etiqueta: RENDICION, j: e.j });
       }
     }
     return out;
@@ -586,16 +619,13 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.strokeStyle = 'rgba(0,0,0,0.7)';
       ctx.lineWidth = 1.5;
       ctx.stroke();
-      const tam = Math.round(r * 1.35);
-      ctx.font = `${tam}px system-ui, "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.strokeStyle = 'rgba(0,0,0,0.85)';
-      ctx.lineWidth = 3;
-      ctx.lineJoin = 'round';
-      ctx.strokeText('⌂', X, Y + tam * 0.06);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('⌂', X, Y + tam * 0.06);
+      //  El centro urbano no tiene icono propio en public/iconos: un aro claro
+      //  dentro de la ficha en vez del simbolo Unicode ⌂.
+      ctx.strokeStyle = 'rgba(236,228,210,0.9)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(X, Y, r * 0.5, 0, Math.PI * 2);
+      ctx.stroke();
 
       //  Con el nombre encima no hay que deducir quién está dónde. Se apunta
       //  y se pinta al final: aquí lo tapaban los árboles y los edificios, que
@@ -658,18 +688,25 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      const tam = Math.round(r * 1.35);
-      if (tam >= 8) {
-        ctx.font = `${tam}px system-ui, "Segoe UI Symbol", "Noto Sans Symbols 2", sans-serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        //  Halo oscuro para que el blanco se lea sobre cualquier color.
-        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
-        ctx.lineWidth = 3;
-        ctx.lineJoin = 'round';
-        ctx.strokeText(def.icono, X, Y + tam * 0.06);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(def.icono, X, Y + tam * 0.06);
+      //  El icono real del edificio, recortado al circulo de su ficha; si no
+      //  hay icono (o aun no ha llegado), un aro claro.
+      if (r >= 5) {
+        const img = e.id != null ? iconoDe(e.id, () => setIconosListos((n) => n + 1)) : null;
+        if (img) {
+          const lado = r * 1.55;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(X, Y, r * 0.82, 0, Math.PI * 2);
+          ctx.clip();
+          ctx.drawImage(img, X - lado / 2, Y - lado / 2, lado, lado);
+          ctx.restore();
+        } else {
+          ctx.strokeStyle = 'rgba(236,228,210,0.85)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(X, Y, r * 0.5, 0, Math.PI * 2);
+          ctx.stroke();
+        }
       }
     }
 
@@ -750,7 +787,7 @@ export default function ReplayMap({ timeline }: Props) {
       ctx.fillStyle = '#ffffff';
       ctx.fillText(n.texto, Xe, Ye);
     }
-  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline, medida, verCalor, calor, vista]);
+  }, [ahora, eventos, ejercito, lado, inicios, suelo, timeline, medida, verCalor, calor, vista, iconosListos]);
 
   const reciente = useMemo(() => {
     const ventana = 45_000;
@@ -842,11 +879,11 @@ export default function ReplayMap({ timeline }: Props) {
                 <div className="relative h-4 -mt-1 pointer-events-none">
                   {hitos.map((h, i) => (
                     <span key={i}
-                      className="absolute text-[10px] tabular-nums -translate-x-1/2"
+                      className="absolute text-xs tabular-nums -translate-x-1/2"
                       style={{ left: `${(h.t / duracion) * 100}%`, color: colorDe(h.j) }}
                       title={reloj(h.t)}
                     >
-                      {h.etiqueta}
+                      {h.etiqueta === RENDICION ? <MarcaRendicion /> : h.etiqueta}
                     </span>
                   ))}
                 </div>
@@ -860,7 +897,7 @@ export default function ReplayMap({ timeline }: Props) {
         {reciente.length > 0 && (
           <div className="absolute bottom-2 left-2 flex flex-col gap-0.5">
             {reciente.map((r, i) => (
-              <span key={i} className="text-[10px] text-gray-300 bg-dark-900/75 rounded px-1.5 py-0.5">
+              <span key={i} className="text-xs text-gray-300 bg-dark-900/75 rounded px-1.5 py-0.5">
                 {r}
               </span>
             ))}
@@ -889,7 +926,7 @@ export default function ReplayMap({ timeline }: Props) {
             </button>
           ))}
         </div>
-        <span className="text-[11px] text-gray-600 ml-auto">
+        <span className="text-xs text-gray-600 ml-auto">
           {t('map.speedNote', { s: String(Math.round(duracion / 1000 / velocidad)) })}
         </span>
       </div>
@@ -903,11 +940,11 @@ export default function ReplayMap({ timeline }: Props) {
         <div className="relative h-4 -mt-1 pointer-events-none">
           {hitos.map((h, i) => (
             <span key={i}
-              className="absolute text-[9px] tabular-nums -translate-x-1/2"
+              className="absolute text-xs tabular-nums -translate-x-1/2"
               style={{ left: `${(h.t / duracion) * 100}%`, color: colorDe(h.j) }}
               title={reloj(h.t)}
             >
-              {h.etiqueta}
+              {h.etiqueta === RENDICION ? <MarcaRendicion /> : h.etiqueta}
             </span>
           ))}
         </div>
@@ -948,7 +985,7 @@ export default function ReplayMap({ timeline }: Props) {
             <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">
               {t('mom.title')}
             </span>
-            <span className="text-[11px] text-gray-600">{t('mom.hint')}</span>
+            <span className="text-xs text-gray-600">{t('mom.hint')}</span>
           </div>
           <ol className="m-0 p-0 list-none max-h-44 overflow-y-auto flex flex-col gap-px pr-1">
             {momentos.map((m, i) => {
@@ -962,7 +999,7 @@ export default function ReplayMap({ timeline }: Props) {
                       actual ? 'bg-gold-500/15' : 'bg-transparent hover:bg-dark-600'
                     }`}
                   >
-                    <span className={`text-[11px] tabular-nums shrink-0 ${
+                    <span className={`text-xs tabular-nums shrink-0 ${
                       actual ? 'text-gold-400' : 'text-gray-500'
                     }`}>
                       {reloj(m.t)}
@@ -991,7 +1028,7 @@ export default function ReplayMap({ timeline }: Props) {
       {(timeline.chat?.length ?? 0) > 0 && (
         <details className="mt-2">
           <summary className="text-xs text-gray-500 cursor-pointer inline-block select-none">
-            {t('chat.title')} ({timeline.chat!.length}) ▸
+            {t('chat.title')} ({timeline.chat!.length}) <svg viewBox="0 0 10 10" className="inline-block w-2.5 h-2.5" aria-hidden="true"><path d="M3 1.5 7.5 5 3 8.5z" fill="currentColor" /></svg>
           </summary>
           <ol className="m-0 mt-2 p-0 list-none flex flex-col gap-1">
             {[...timeline.chat!]
@@ -1012,7 +1049,7 @@ export default function ReplayMap({ timeline }: Props) {
                   <span className="text-gray-300 min-w-0 break-words">
                     {m.texto}
                     {m.taunt != null && (
-                      <span className="ml-1.5 text-[10px] text-gray-600">
+                      <span className="ml-1.5 text-xs text-gray-600">
                         {textoTaunt(m.taunt, lang) ?? t('chat.taunt', { n: String(m.taunt) })}
                       </span>
                     )}
@@ -1021,7 +1058,7 @@ export default function ReplayMap({ timeline }: Props) {
               ))}
           </ol>
           {timeline.chat!.some((m) => m.sin_hora) && (
-            <p className="text-[11px] text-gray-600 mt-2 m-0">{t('chat.sinHoraNota')}</p>
+            <p className="text-xs text-gray-600 mt-2 m-0">{t('chat.sinHoraNota')}</p>
           )}
         </details>
       )}
@@ -1032,8 +1069,8 @@ export default function ReplayMap({ timeline }: Props) {
       <details className="mt-2 group relative">
         {/* inline-block y sin marcador: como caja a todo lo ancho reservaba
             una fila entera aunque estuviese plegada. */}
-        <summary className="inline-block text-[11px] text-gray-500 cursor-pointer hover:text-gray-300 list-none select-none marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none">
-          {t('map.legend')} <span className="group-open:hidden">▸</span><span className="hidden group-open:inline">▾</span>
+        <summary className="inline-block text-xs text-gray-500 cursor-pointer hover:text-gray-300 list-none select-none marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none">
+          {t('map.legend')} <svg viewBox="0 0 10 10" className="inline-block w-2.5 h-2.5 transition-transform group-open:rotate-90" aria-hidden="true"><path d="M3 1.5 7.5 5 3 8.5z" fill="currentColor" /></svg>
         </summary>
         {/* Flotante: desplegada empujaba todo lo de abajo y la tarjeta
             entera cambiaba de alto. Asi se abre encima y no mueve nada. */}
@@ -1044,22 +1081,23 @@ export default function ReplayMap({ timeline }: Props) {
           {EN_LEYENDA.map((id) => {
             const d = EDIFICIOS[id];
             return (
-              <span key={id} className="flex items-center gap-1.5 text-[11px] text-gray-400">
-                <span
-                  className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
-                  style={{ background: '#6b7280' }}
-                >
-                  {d.icono}
-                </span>
+              <span key={id} className="flex items-center gap-1.5 text-xs text-gray-400">
+                {SIN_ICONO.has(id) ? (
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-black/60" style={{ background: '#8f8673' }}>
+                    <span className="w-2 h-2 rounded-full border-2 border-gray-100" />
+                  </span>
+                ) : (
+                  <img src={`/iconos/buildings/${id}.webp`} alt="" className="w-5 h-5 rounded-full object-cover border border-black/60" loading="lazy" />
+                )}
                 {lang === 'es' ? d.es : d.en}
               </span>
             );
           })}
-          <span className="flex items-center gap-1.5 text-[11px] text-gray-500">
+          <span className="flex items-center gap-1.5 text-xs text-gray-500">
             <span className="w-2.5 h-2.5 rounded-sm bg-gray-500/60" />
             {t('map.filler')}
           </span>
-          <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.reunionNota')}>
+          <span className="flex items-center gap-1.5 text-xs text-gray-500" title={t('map.reunionNota')}>
             {/* El mismo banderin que se pinta en el lienzo. */}
             <svg className="w-4 h-4 text-gray-400" viewBox="0 0 16 16" aria-hidden>
               <path d="M5 14V2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
@@ -1067,9 +1105,10 @@ export default function ReplayMap({ timeline }: Props) {
             </svg>
             {t('map.reunion')}
           </span>
-          <span className="flex items-center gap-1.5 text-[11px] text-gray-500" title={t('map.startHint')}>
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-white text-[11px] leading-none border border-black/60"
-                  style={{ background: '#6b7280' }}>⌂</span>
+          <span className="flex items-center gap-1.5 text-xs text-gray-500" title={t('map.startHint')}>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-black/60" style={{ background: '#8f8673' }}>
+              <span className="w-2 h-2 rounded-full border-2 border-gray-100" />
+            </span>
             {t('map.start')}
           </span>
         </div>
@@ -1080,7 +1119,7 @@ export default function ReplayMap({ timeline }: Props) {
               const n = (timeline.recursos ?? []).filter((r) => r.t === k).length;
               if (!n) return null;
               return (
-                <span key={k} className="flex items-center gap-1.5 text-[11px] text-gray-400">
+                <span key={k} className="flex items-center gap-1.5 text-xs text-gray-400">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: COLOR_RECURSO[k] }} />
                   {t(`map.res.${k}` as never)} {n}
                 </span>
@@ -1092,7 +1131,7 @@ export default function ReplayMap({ timeline }: Props) {
         {suelo && (
           <div className="flex items-center gap-x-3 gap-y-1 mt-2 flex-wrap">
             {suelo.resumen.slice(0, 6).map((r) => (
-              <span key={r.id} className="flex items-center gap-1.5 text-[11px] text-gray-500"
+              <span key={r.id} className="flex items-center gap-1.5 text-xs text-gray-500"
                     title={t('map.terrainHint')}>
                 <span className="w-2.5 h-2.5 rounded-sm" style={{ background: r.color }} />
                 {t('map.terrainId', { id: String(r.id) })} {r.pct.toFixed(0)}%
@@ -1102,7 +1141,7 @@ export default function ReplayMap({ timeline }: Props) {
         )}
 
 
-        <p className="text-[11px] text-gray-600 mt-3 m-0">{t('map.note')}</p>
+        <p className="text-xs text-gray-600 mt-3 m-0">{t('map.note')}</p>
         </div>
       </details>
 

@@ -4,6 +4,7 @@ import { getOpponentAnalysis } from '../lib/api';
 import LadderBadge from './LadderBadge';
 import { useT } from '../lib/i18n';
 import type { OpponentAnalysisResponse, OpponentEntry } from '../lib/types';
+import { avatarReal } from '../lib/avatar';
 
 interface RivalsSectionProps {
   profileId: string;
@@ -56,9 +57,9 @@ function HighlightCard({
       </div>
 
       <div className="flex items-center gap-3 mb-3">
-        {opponent.avatar ? (
+        {avatarReal(opponent.avatar) ? (
           <img
-            src={opponent.avatar}
+            src={avatarReal(opponent.avatar) ?? undefined}
             alt={opponent.alias || 'Unknown'}
             className="w-10 h-10 rounded-lg object-cover border border-dark-400"
           />
@@ -82,9 +83,9 @@ function HighlightCard({
         <div>
           <p className="text-xs text-gray-500 m-0">{t('common.record')}</p>
           <p className="text-sm font-medium m-0">
-            <span className="text-win">{opponent.wins}W</span>
+            <span className="text-win">{opponent.wins}{t('res.win')}</span>
             {' / '}
-            <span className="text-loss">{opponent.losses}L</span>
+            <span className="text-loss">{opponent.losses}{t('res.loss')}</span>
           </p>
         </div>
         <div>
@@ -96,7 +97,7 @@ function HighlightCard({
         <div className="text-right">
           <Link
             to={`/h2h/${profileId}/${opponent.profile_id}`}
-            className="inline-block mt-1 text-xs text-blue-accent hover:text-blue-400 transition-colors no-underline"
+            className="inline-block mt-1 text-xs text-gray-200 hover:text-gold-400 transition-colors no-underline"
           >
             H2H
           </Link>
@@ -131,7 +132,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   if (isLoading) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('rivals.title')}</h2>
+        <h2 className="titulo text-[15px] m-0 mb-4">{t('rivals.title')}</h2>
         <div className="flex justify-center py-8">
           <div className="w-6 h-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
         </div>
@@ -142,7 +143,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   if (!data || data.total_opponents === 0) {
     return (
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
-        <h2 className="text-lg font-semibold text-gray-200 m-0 mb-4">{t('rivals.title')}</h2>
+        <h2 className="titulo text-[15px] m-0 mb-4">{t('rivals.title')}</h2>
         <p className="text-gray-500 text-sm text-center py-8 m-0">{t('rivals.empty')}</p>
       </div>
     );
@@ -153,7 +154,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-3">
-        <h2 className="text-lg font-semibold text-gray-200 m-0">{t('rivals.title')}</h2>
+        <h2 className="titulo text-[15px] m-0">{t('rivals.title')}</h2>
         <LadderBadge label={data.filters?.label} />
       </div>
 
@@ -186,7 +187,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
       <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-gray-200 m-0">{t('rivals.topOpponents')}</h2>
+            <h2 className="titulo text-[15px] m-0">{t('rivals.topOpponents')}</h2>
             <LadderBadge label={data.filters?.label} />
           </div>
           <span className="text-xs text-gray-500">{t('rivals.uniqueOpponents', { n: data.total_opponents })}</span>
@@ -215,7 +216,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
                     <td className="py-2.5 px-2 sm:px-3 max-w-[9rem] sm:max-w-none truncate">
                       <Link
                         to={`/player/${opp.profile_id}`}
-                        className="font-medium text-blue-accent hover:text-blue-400 transition-colors no-underline"
+                        className="font-medium text-gray-200 hover:text-gold-400 transition-colors no-underline"
                       >
                         {opp.alias || `Player ${opp.profile_id}`}
                       </Link>
@@ -245,7 +246,7 @@ export default function RivalsSection({ profileId }: RivalsSectionProps) {
                     <td className="py-2.5 px-2 sm:px-3 text-right">
                       <Link
                         to={`/h2h/${profileId}/${opp.profile_id}`}
-                        className="text-xs text-gray-500 hover:text-blue-accent transition-colors no-underline"
+                        className="text-xs text-gray-500 hover:text-gold-400 transition-colors no-underline"
                       >
                         H2H
                       </Link>

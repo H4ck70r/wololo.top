@@ -36,7 +36,7 @@ export default function ClaimProfile() {
   return (
     <div className="max-w-lg mx-auto py-10">
       <Helmet><title>{t('auth.claimTitle')} - wololo.top</title></Helmet>
-      <h1 className="text-2xl font-bold text-gray-100 m-0 mb-2">{t('auth.claimTitle')}</h1>
+      <h1 className="titulo text-2xl m-0 mb-2">{t('auth.claimTitle')}</h1>
       <p className="text-sm text-gray-400 m-0 mb-5">{t('auth.claimBody')}</p>
 
       <PlayerSearchInput onSelect={setPicked} placeholder={t('auth.claimSearch')} />

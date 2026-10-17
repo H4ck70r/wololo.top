@@ -2,11 +2,10 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { getPlayer, getPlayerStats, getPlayerMatches, getEnrichmentStatus, enrichPlayerMatches, getPlayerSignals, getSignalFlags } from '../lib/api';
 import { countryFlag, MATCH_FILTERS } from '../lib/constants';
 import { isFavorite, addFavorite, removeFavorite } from '../lib/favorites';
-import { outcomeOf, OUTCOME_LABEL, OUTCOME_BADGE, OUTCOME_CHIP } from '../lib/matchResult';
+import { outcomeOf, OUTCOME_LABEL, OUTCOME_CHIP } from '../lib/matchResult';
 import PreviousAliases from '../components/PreviousAliases';
 import { useT } from '../lib/i18n';
 import type { TKey } from '../lib/i18n';
@@ -28,6 +27,7 @@ import MatchRow from '../components/MatchRow';
 import SearchBar from '../components/SearchBar';
 import SharedAccountCard from '../components/SharedAccountCard';
 import AccountFactsLine from '../components/AccountFactsLine';
+import { avatarReal } from '../lib/avatar';
 
 const MATCHES_PER_PAGE = 50;
 
@@ -181,7 +181,7 @@ export default function PlayerProfile() {
   if (playerError || !player) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12 text-center">
-        <h2 className="text-2xl font-bold text-gray-300 mb-4">Player Not Found</h2>
+        <h2 className="titulo text-xl mb-4">Player Not Found</h2>
         <p className="text-gray-500 mb-6">Could not find a player with profile ID: {profileId}</p>
         <SearchBar className="max-w-lg mx-auto" />
       </div>
@@ -196,11 +196,6 @@ export default function PlayerProfile() {
   const totalGames = totalWins + totalLosses;
   const overallWinRate = player.winrate ? parseFloat(player.winrate) : 0;
 
-  const donutData = [
-    { name: 'Wins', value: totalWins },
-    { name: 'Losses', value: totalLosses },
-  ];
-  const DONUT_COLORS = ['#22c55e', '#ef4444'];
 
   const matches = matchesData?.matches || [];
   const totalMatches = matchesData?.total || 0;
@@ -247,44 +242,49 @@ export default function PlayerProfile() {
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDesc} />
         <meta property="og:url" content={`https://wololo.top/player/${profileId}`} />
-        {player?.avatar && <meta property="og:image" content={player.avatar} />}
+        {avatarReal(player?.avatar) && <meta property="og:image" content={avatarReal(player.avatar) ?? undefined} />}
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDesc} />
         <link rel="canonical" href={`https://wololo.top/player/${profileId}`} />
       </Helmet>
       {/* Player header */}
-      <div className="bg-dark-700 border border-dark-400 rounded-xl p-4 sm:p-6 mb-6">
+      {/* La placa del jugador: quien es y donde esta. Si esta entre los mil
+          primeros del mundo lleva su estandarte; ser el numero uno no puede
+          tener el mismo tratamiento que estar en el puesto noventa mil. */}
+      <div className="placa p-4 sm:p-7 mb-6">
         {/* items-start: con items-center el avatar quedaba flotando a media
             altura de una columna de texto que en movil crece a cuatro lineas. */}
-        <div className="flex items-start gap-3 sm:gap-4">
-          {player.avatar ? (
+        <div className="flex items-start gap-3 sm:gap-5">
+          {avatarReal(player.avatar) ? (
             <img
-              src={player.avatar}
+              src={avatarReal(player.avatar) ?? undefined}
               alt={player.alias}
-              className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-xl object-cover border-2 border-dark-400"
+              className="w-14 h-14 sm:w-20 sm:h-20 shrink-0 rounded-sm object-cover ring-1 ring-dark-300"
             />
           ) : (
-            <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-xl bg-dark-500 flex items-center justify-center text-2xl font-bold text-gold-400">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 shrink-0 rounded-sm bg-dark-500 ring-1 ring-dark-300 flex items-center justify-center font-display text-2xl sm:text-3xl font-bold text-gold-400">
               {player.alias.charAt(0).toUpperCase()}
             </div>
           )}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <h1 className="text-xl sm:text-3xl font-bold text-gray-100 m-0 min-w-0 truncate">{player.alias}</h1>
+              <h1 className="font-score text-3xl sm:text-5xl font-bold text-gray-50 m-0 min-w-0 truncate leading-none">{player.alias}</h1>
               {viewingOwnProfile && (
-                <span className="px-2 py-0.5 rounded-full text-[11px] font-medium bg-gold-500/15 text-gold-400 border border-gold-500/40 whitespace-nowrap">
+                <span className="px-2 py-0.5 rounded-sm font-mono text-xs uppercase bg-gold-500/10 text-gold-400 border border-gold-500/40 whitespace-nowrap">
                   {t('auth.thisIsYou')}
                 </span>
               )}
               {player.country && (
-                <span className="text-2xl" title={player.country.toUpperCase()}>
+                <span className="font-mono text-sm font-medium text-gray-400 border border-dark-300 px-1.5 rounded-sm" title={player.country.toUpperCase()}>
                   {countryFlag(player.country)}
                 </span>
               )}
               <button
                 onClick={toggleFavorite}
-                title={starred ? 'Remove from favorites' : 'Add to favorites'}
+                title={starred ? t('favorites.remove') : t('favorites.add')}
+                aria-label={starred ? t('favorites.remove') : t('favorites.add')}
+                aria-pressed={starred}
                 className="p-1 transition-colors"
               >
                 {starred ? (
@@ -298,7 +298,7 @@ export default function PlayerProfile() {
                 )}
               </button>
             </div>
-            <p className="text-sm text-gray-500 mt-1 m-0">{t('profile.profileId')}: {player.profile_id}</p>
+            <p className="font-mono text-xs text-gray-500 mt-2 m-0">#{player.profile_id}</p>
             <PreviousAliases aliases={player.previous_aliases} />
             <AccountFactsLine
               account={signals?.account}
@@ -306,6 +306,20 @@ export default function PlayerProfile() {
               renameCount={signals?.aliases.recorded_changes ?? 0}
             />
           </div>
+          {soloLadder?.rank != null && soloLadder.rank <= 1000 && (
+            <div
+              className={`hidden sm:flex shrink-0 flex-col items-center justify-start px-4 pt-3 pb-5 -mt-7 border-x border-b ${
+                soloLadder.rank <= 10 ? 'bg-gold-400/10 border-gold-400/50' : 'bg-dark-600 border-dark-300'
+              }`}
+              style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%)' }}
+            >
+              <span className={`cifra text-5xl ${soloLadder.rank <= 10 ? 'text-gold-400' : 'text-gray-50'}`}>#{soloLadder.rank}</span>
+              <span className="mt-1.5 font-display text-xs font-semibold tracking-[0.14em] uppercase text-gray-400 text-center leading-tight">
+                {t('profile.worldRank')}
+                <span className="block font-mono tracking-normal normal-case text-xs text-gray-500">1v1 RM</span>
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Acciones. En movil cuelgan debajo de la identidad en vez de pelearse
@@ -325,7 +339,7 @@ export default function PlayerProfile() {
             {enriching && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-gold-500/10 border border-gold-500/20 rounded-lg">
                 <div className="w-3 h-3 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-                <span className="text-xs text-gold-400">Enriching...</span>
+                <span className="text-xs text-gold-400">{t('profile.enriching')}</span>
               </div>
             )}
             <div className="flex items-center gap-1">
@@ -336,7 +350,8 @@ export default function PlayerProfile() {
                   setTimeout(() => setCopied(false), 2000);
                 }}
                 className="p-2 sm:p-1.5 rounded-lg bg-dark-500 hover:bg-dark-400 text-gray-400 hover:text-gray-200 transition-colors"
-                title={copied ? 'Copied!' : 'Copy link'}
+                title={copied ? t('share.copied') : t('share.copy')}
+                aria-label={copied ? t('share.copied') : t('share.copy')}
               >
                 {copied ? (
                   <svg className="w-4 h-4 text-win" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -353,7 +368,8 @@ export default function PlayerProfile() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 sm:p-1.5 rounded-lg bg-dark-500 hover:bg-dark-400 text-gray-400 hover:text-gray-200 transition-colors"
-                title="Share on X"
+                title={t('share.x')}
+                aria-label={t('share.x')}
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -364,7 +380,8 @@ export default function PlayerProfile() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 sm:p-1.5 rounded-lg bg-dark-500 hover:bg-dark-400 text-gray-400 hover:text-gray-200 transition-colors"
-                title="Share on WhatsApp"
+                title={t('share.whatsapp')}
+                aria-label={t('share.whatsapp')}
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -381,21 +398,22 @@ export default function PlayerProfile() {
 
       {/* Recent form */}
       {matches.length > 0 && (
-        <div className="bg-dark-700 border border-dark-400 rounded-xl px-5 py-3 mb-6 flex items-center gap-3 flex-wrap">
-          <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">{t('profile.recentForm')}</span>
+        <div className="border-y border-dark-400 px-1 py-3 mb-6 flex items-center gap-3 flex-wrap">
+          <span className="titulo text-[12px]">{t('profile.recentForm')}</span>
           <div className="flex items-center gap-1">
             {matches.slice(0, 10).map((m, i) => (
               <span
                 key={i}
-                className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold ${OUTCOME_CHIP[outcomeOf(m.result)]}`}
+                className={`w-6 h-7 flex items-start justify-center pt-1 font-score text-xs font-bold ${OUTCOME_CHIP[outcomeOf(m.result)]}`}
+                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%)' }}
                 title={`${OUTCOME_LABEL[outcomeOf(m.result)]} — ${m.civilization || ''} on ${m.map || m.map_name || ''}`}
               >
-                {OUTCOME_BADGE[outcomeOf(m.result)]}
+                {t(`res.${outcomeOf(m.result)}`)}
               </span>
             ))}
           </div>
-          <span className="text-xs text-gray-500 ml-auto">
-            {matches.slice(0, 10).filter(m => m.result === 1).length}W {matches.slice(0, 10).filter(m => m.result === 0).length}L
+          <span className="font-mono text-xs text-gray-400 ml-auto">
+            {matches.slice(0, 10).filter(m => m.result === 1).length}{t('res.win')} {matches.slice(0, 10).filter(m => m.result === 0).length}{t('res.loss')}
             {matches.slice(0, 10).some(m => outcomeOf(m.result) === 'pending') &&
               ` · ${matches.slice(0, 10).filter(m => outcomeOf(m.result) === 'pending').length} pending`}
           </span>
@@ -403,7 +421,7 @@ export default function PlayerProfile() {
       )}
 
       {/* Rating cards + win rate donut */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 border-y border-dark-400 divide-y md:divide-y-0 md:divide-x divide-dark-400 mb-6">
         <RatingCard
           label={t('profile.soloRanked')}
           rating={soloLadder?.rating}
@@ -429,57 +447,42 @@ export default function PlayerProfile() {
           color="blue"
         />
 
-        <div className="bg-dark-700 border border-dark-400 rounded-xl p-5 flex flex-col items-center justify-center">
-          <p className="text-sm text-gray-400 uppercase tracking-wider font-medium m-0 mb-3">Overall Win Rate</p>
-          {totalGames > 0 ? (
-            <div className="relative w-32 h-32">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={donutData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={38}
-                    outerRadius={55}
-                    paddingAngle={3}
-                    dataKey="value"
-                    strokeWidth={0}
-                  >
-                    {donutData.map((_, index) => (
-                      <Cell key={index} fill={DONUT_COLORS[index]} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{ backgroundColor: '#1a1d28', border: '1px solid #2e3345', borderRadius: '8px' }}
-                    itemStyle={{ color: '#e2e8f0' }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-gray-200">{overallWinRate}%</span>
-              </div>
-            </div>
-          ) : (
-            <p className="text-gray-500 text-sm">No games played</p>
-          )}
-          <p className="text-xs text-gray-500 mt-2 m-0">
-            {totalWins}W / {totalLosses}L ({totalGames} games)
+        {/* El balance de todas las escaleras juntas. Era un donut de dos
+            colores que repetia con un dibujo lo que ya decia el numero. */}
+        <div className="py-5 md:px-6">
+          <p className="titulo text-[13px] m-0 flex items-center gap-2">
+            <span className="w-2.5 h-2.5 bg-gray-500" aria-hidden="true" />
+            {t('profile.overall')}
           </p>
+          {totalGames > 0 ? (
+            <>
+              <p className="cifra text-[2.6rem] text-gray-50 mt-3 mb-0">
+                {overallWinRate}<span className="text-2xl text-gray-500">%</span>
+              </p>
+              <div className="mt-4 h-1.5 flex bg-dark-500" aria-hidden="true">
+                <span className="bg-win" style={{ width: `${(totalWins / totalGames) * 100}%` }} />
+                <span className="bg-loss flex-1" />
+              </div>
+              <p className="mt-3 mb-0 font-mono text-xs text-gray-400">
+                <span className="text-win">{totalWins.toLocaleString()}{t('res.win')}</span> · <span className="text-loss">{totalLosses.toLocaleString()}{t('res.loss')}</span> · {t('home.games', { n: totalGames.toLocaleString() })}
+              </p>
+            </>
+          ) : (
+            <p className="text-gray-500 text-sm mt-3">{t('profile.noGames')}</p>
+          )}
         </div>
       </div>
 
       {/* The profile was one 18-screen scroll on mobile. Tabs also mean each
           section only fetches its data when you actually open it. */}
-      <div className="flex items-center gap-1 mb-6 border-b border-dark-400 overflow-x-auto">
+      <div className="tabs mb-6" role="tablist">
         {PROFILE_TABS.filter((tab) => !('soloPropio' in tab && tab.soloPropio) || viewingOwnProfile).map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-2 sm:px-4 py-2.5 text-[13px] sm:text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors ${
-              activeTab === tab.id
-                ? 'border-gold-400 text-gold-400'
-                : 'border-transparent text-gray-400 hover:text-gray-200'
-            }`}
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            className={`tab ${activeTab === tab.id ? 'activa' : ''}`}
           >
             {t(tab.key)}
           </button>
@@ -556,7 +559,7 @@ export default function PlayerProfile() {
         <div ref={matchesSectionRef} className="bg-dark-700 border border-dark-400 rounded-xl p-5">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <h2 className="text-lg font-semibold text-gray-200 m-0">{t('profile.recentMatches')}</h2>
+              <h2 className="titulo text-[15px] m-0">{t('profile.recentMatches')}</h2>
               {matchesData && (
                 <span className="text-xs text-gray-500">{matchesData.total} total</span>
               )}
@@ -572,7 +575,7 @@ export default function PlayerProfile() {
                   onClick={() => handleFilterChange(f.value)}
                   className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
                     matchFilter === f.value
-                      ? 'bg-gold-400/20 text-gold-400 border border-gold-400/30'
+                      ? 'sel-activo border border-dark-300'
                       : 'text-gray-500 hover:text-gray-300 border border-transparent'
                   }`}
                 >
@@ -629,7 +632,7 @@ export default function PlayerProfile() {
                       onClick={() => handlePageChange(page)}
                       className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors border ${
                         matchPage === page
-                          ? 'bg-gold-400/20 text-gold-400 border-gold-400/30'
+                          ? 'sel-activo border border-dark-300'
                           : 'text-gray-400 border-transparent hover:text-gray-200 hover:border-gray-500'
                       }`}
                     >
@@ -661,7 +664,7 @@ export default function PlayerProfile() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-200 m-0">{t('civStats.title')}</h2>
+              <h2 className="titulo text-[15px] m-0">{t('civStats.title')}</h2>
               {stats && (
                 <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.history_matches ?? stats.total_matches ?? 0 })}</span>
               )}
@@ -676,7 +679,7 @@ export default function PlayerProfile() {
           </div>
           <div className="bg-dark-700 border border-dark-400 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-200 m-0">{t('mapStats.title')}</h2>
+              <h2 className="titulo text-[15px] m-0">{t('mapStats.title')}</h2>
               {stats && (
                 <span className="text-xs text-gray-500">{t('stats.basedOn', { n: stats.history_matches ?? stats.total_matches ?? 0 })}</span>
               )}
