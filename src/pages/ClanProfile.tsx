@@ -19,7 +19,7 @@ async function getClanPlayers(clanName: string): Promise<ClanResponse> {
   const url = new URL(`${BASE_URL || window.location.origin}/api/players/clan/${encodeURIComponent(clanName)}`);
   url.searchParams.set('ladder', 'all');
   url.searchParams.set('limit', '200');
-  const res = await fetch(url.toString(), { headers: { 'X-API-Key': API_KEY } });
+  const res = await fetch(url.toString(), { headers: API_KEY ? { 'X-API-Key': API_KEY } : {} });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
 }

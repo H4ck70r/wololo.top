@@ -1,5 +1,9 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+// Sin clave: la API reconoce a wololo.top por su origen y la deja leer (una clave
+// dentro de este bundle la veria cualquiera). Solo se manda si alguien la configura,
+// p. ej. en desarrollo contra otra instancia.
 const API_KEY = import.meta.env.VITE_API_KEY || '';
+const AUTH_HEADERS: Record<string, string> = API_KEY ? { 'X-API-Key': API_KEY } : {};
 
 async function apiFetch<T>(path: string, params?: Record<string, string | number>): Promise<T> {
   const fullUrl = BASE_URL ? `${BASE_URL}${path}` : path;
@@ -13,9 +17,7 @@ async function apiFetch<T>(path: string, params?: Record<string, string | number
   }
 
   const res = await fetch(url.toString(), {
-    headers: {
-      'X-API-Key': API_KEY,
-    },
+    headers: AUTH_HEADERS,
   });
 
   if (!res.ok) {
@@ -248,7 +250,7 @@ export async function analyzeReplays(ficheros: File[]): Promise<ReplayUploadResp
   for (const f of ficheros) cuerpo.append('replay', f);
   const res = await fetch(`${BASE_URL}/api/replays/analyze`, {
     method: 'POST',
-    headers: { 'X-API-Key': API_KEY },
+    headers: AUTH_HEADERS,
     body: cuerpo,
   });
   if (!res.ok) {
@@ -290,7 +292,7 @@ export async function enrichPlayerMatches(profileId: number | string): Promise<{
   const fullUrl = BASE_URL ? `${BASE_URL}/api/players/${profileId}/enrich` : `/api/players/${profileId}/enrich`;
   const res = await fetch(fullUrl, {
     method: 'POST',
-    headers: { 'X-API-Key': API_KEY },
+    headers: AUTH_HEADERS,
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   return res.json();
