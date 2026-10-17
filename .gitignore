@@ -24,3 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 wololo.top.code-workspace
+# Binarios: los instaladores de terceros no van en un repo publico, y los de
+# wololo-live se publican desde CI, no desde aqui.
+*.exe
+*.msi
