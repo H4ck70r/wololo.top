@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getPlayerMilestones } from '../lib/api';
 import LadderBadge from './LadderBadge';
 import { useT } from '../lib/i18n';
-import { edadDe } from '../lib/paleta';
 import type { MilestonesResponse, Milestone, LadderKey } from '../lib/types';
 
 interface MilestonesTimelineProps {
@@ -37,10 +36,34 @@ function formatDate(dateStr: string | null | undefined, lang: string): string | 
   return d.toLocaleDateString(lang, { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+/*
+  El top% de un hito, rotulado. "Ese dia" sale de la foto diaria del ladder,
+  que existe desde marzo de 2026; para lo anterior se dice lo que vale ese
+  rating hoy entre los activos, en tono mas tenue y con la palabra "hoy",
+  para que nadie lea un 2021 como si fuera un dato de 2021.
+*/
+function TopDelHito({ then, now }: { then?: number | null; now?: number | null }) {
+  const { t } = useT();
+  if (then != null) {
+    return (
+      <span className="inline-flex items-baseline gap-1.5">
+        <span className="cifra text-base text-gray-100">{t('common.topPercent')} {then}%</span>
+        <span className="font-mono text-xs text-gray-500">{t('milestones.then')}</span>
+      </span>
+    );
+  }
+  if (now != null) {
+    return <span className="font-mono text-xs text-gray-500">{t('milestones.nowTop', { p: now })}</span>;
+  }
+  return null;
+}
+
 function LadderMilestones({
   label,
   peakRating,
   peakDate,
+  peakThen,
+  peakNow,
   highestRating,
   milestones,
   accentColor,
@@ -48,6 +71,8 @@ function LadderMilestones({
   label?: string | null;
   peakRating: number | null;
   peakDate: string | null;
+  peakThen?: number | null;
+  peakNow?: number | null;
   highestRating: number | null;
   milestones: Milestone[];
   accentColor: string;
@@ -79,6 +104,7 @@ function LadderMilestones({
           {peakIsFromLadder && (
             <span className="text-xs text-gray-500">{t('milestones.allTime')}</span>
           )}
+          {!peakIsFromLadder && <TopDelHito then={peakThen} now={peakNow} />}
         </div>
       )}
 
@@ -89,34 +115,35 @@ function LadderMilestones({
           <div className="absolute left-[9px] top-1 bottom-1 w-px bg-dark-400" />
 
           <div className="flex flex-col gap-3">
-            {milestones.map((m) => {
-              //  Los tramos son las edades del juego, en una sola escala de
-              //  bronce a oro: el arcoiris de rangos de MOBA no significa nada aqui.
-              const edad = edadDe(m.threshold);
+            {milestones.map((m, i) => {
+              //  Solo el numero, la fecha y el sitio que daba. Las edades del
+              //  juego como tramos se quitaron: no aportaban y confundian.
+              const ultimo = i === milestones.length - 1;
               return (
                 <div key={m.threshold} className="relative flex items-center gap-3">
                   <div
-                    className="absolute -left-6 w-[18px] h-[18px] rotate-45 border-2 bg-dark-700 flex items-center justify-center"
-                    style={{ borderColor: edad.color }}
+                    className={`absolute -left-6 w-[18px] h-[18px] rotate-45 border-2 bg-dark-700 flex items-center justify-center ${ultimo ? 'border-gold-400' : 'border-dark-300'}`}
                     aria-hidden="true"
                   >
-                    <div className="w-1.5 h-1.5" style={{ backgroundColor: edad.color }} />
+                    <div className={`w-1.5 h-1.5 ${ultimo ? 'bg-gold-400' : 'bg-gray-600'}`} />
                   </div>
 
-                  <div className="flex items-baseline gap-2.5 flex-wrap">
-                    <span className="cifra text-lg" style={{ color: edad.color }}>{m.threshold}</span>
-                    <span className="font-display text-xs font-semibold tracking-[0.12em] uppercase text-gray-400">
-                      {t(`age.${edad.clave}`)}
-                    </span>
+                  <div className="flex items-baseline gap-x-3 gap-y-0.5 flex-wrap">
+                    <span className="cifra text-lg text-gray-50 w-12">{m.threshold}</span>
                     {formatDate(m.reached_at, lang) && (
                       <span className="font-mono text-xs text-gray-500">{formatDate(m.reached_at, lang)}</span>
                     )}
+                    <TopDelHito then={m.top_percent_then} now={m.top_percent_now} />
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
+      )}
+
+      {milestones.some((m) => m.top_percent_then == null && m.top_percent_now != null) && (
+        <p className="text-xs text-gray-500 mt-4 mb-0 max-w-prose">{t('milestones.note')}</p>
       )}
 
       {milestones.length === 0 && displayPeak && (
@@ -213,6 +240,8 @@ export default function MilestonesTimeline({ profileId }: MilestonesTimelineProp
       <LadderMilestones
         peakRating={datos.peak_rating}
         peakDate={datos.peak_date}
+        peakThen={datos.peak_top_percent_then}
+        peakNow={datos.peak_top_percent_now}
         highestRating={datos.highest_rating}
         milestones={datos.milestones}
         accentColor={activa.color}

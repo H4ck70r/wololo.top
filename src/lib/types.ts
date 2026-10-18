@@ -505,11 +505,17 @@ export interface Milestone {
   threshold: number;
   reached_at: string;
   ladder_type: string;
+  /** top% que daba ese rating el dia en que se cruzo; null antes del 1-mar-2026 */
+  top_percent_then?: number | null;
+  /** lo que vale ese rating hoy entre los activos de 90 dias */
+  top_percent_now?: number | null;
 }
 
 export interface MilestoneLadder {
   peak_rating: number | null;
   peak_date: string | null;
+  peak_top_percent_then?: number | null;
+  peak_top_percent_now?: number | null;
   highest_rating: number | null;
   milestones: Milestone[];
 }
