@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useT } from '../lib/i18n';
 
 /*
@@ -80,6 +81,15 @@ export default function Manual() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
+      <Helmet>
+        <title>How to use wololo-live - wololo.top</title>
+        <meta
+          name="description"
+          content="Step by step guide to the wololo-live overlay for Age of Empires II: how to start it, what each number means, how to put it in OBS, and what to do when something does not work."
+        />
+        <link rel="canonical" href="https://wololo.top/manual" />
+      </Helmet>
+
       <h1 className="text-2xl font-semibold text-stone-100">{t('man.title')}</h1>
       <p className="mt-2 text-stone-400">{t('man.lead')}</p>
 

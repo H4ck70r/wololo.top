@@ -1,5 +1,12 @@
 User-agent: *
 Allow: /
 
+# Los paneles en vivo llevan el token de alguien en la URL. Un token indexado
+# es el panel de esa persona abierto para cualquiera que busque, y ademas no
+# hay nada que buscar ahi: son las cifras de una sola partida.
+Disallow: /live/
+# Vuelta de Steam y reclamo de perfil: no son paginas, son pasos de un flujo.
+Disallow: /auth/
+
 Sitemap: https://wololo.top/sitemap.xml
 Sitemap: https://wololo.top/sitemap-players.xml

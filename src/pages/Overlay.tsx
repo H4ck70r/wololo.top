@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useT } from '../lib/i18n';
 import { authFetch, useSession } from '../lib/session';
 import ConfiguradorOverlay from '../components/ConfiguradorOverlay';
@@ -124,6 +125,20 @@ export default function Overlay() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
+      {/*
+        Sin esto la pagina hereda el <head> de index.html, que declara como
+        canonica la portada: Google la lee como un duplicado de la portada y no
+        la indexa. Lo mismo pasaba con el titulo, igual en todas las rutas.
+      */}
+      <Helmet>
+        <title>Live overlay for Age of Empires II - wololo.top</title>
+        <meta
+          name="description"
+          content="Free AOE2 DE overlay that measures your game while you play it and compares your opening, age times and villagers against players at your rating. Windows and Linux."
+        />
+        <link rel="canonical" href="https://wololo.top/overlay" />
+      </Helmet>
+
       <h1 className="text-2xl font-semibold text-stone-100">{t('ovp.title')}</h1>
       <p className="mt-2 text-stone-400">{t('ovp.lead')}</p>
 

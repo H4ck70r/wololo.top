@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useT } from '../lib/i18n';
 import { COLORES_JUGADOR } from '../lib/jugadores';
 import CIVS from '../lib/civs-replay.json';
@@ -320,9 +321,22 @@ export default function LiveOverlay() {
 
   const fondo = transparente ? '' : 'bg-stone-950';
 
+  /*
+    Esta pagina NO se indexa. Cada una lleva el token de alguien en la URL, y
+    un token indexado es el panel de esa persona abierto para cualquiera que
+    busque. Ademas no tiene nada que buscar: son cifras de una sola partida.
+  */
+  const cabecera = (
+    <Helmet>
+      <meta name="robots" content="noindex, nofollow" />
+      <title>Live panel - wololo.top</title>
+    </Helmet>
+  );
+
   if (fallo && !res) {
     return (
       <div className={`${fondo} min-h-screen flex items-center justify-center p-6`}>
+        {cabecera}
         <p className="text-stone-400 text-sm">{fallo}</p>
       </div>
     );
@@ -330,6 +344,7 @@ export default function LiveOverlay() {
   if (!res) {
     return (
       <div className={`${fondo} min-h-screen flex items-center justify-center p-6`}>
+        {cabecera}
         <p className="text-stone-500 text-sm">{t('common.loading')}</p>
       </div>
     );
@@ -348,6 +363,7 @@ export default function LiveOverlay() {
 
   return (
     <div className={`${fondo} min-h-screen p-3`}>
+      {cabecera}
       <div className="w-72 overflow-hidden rounded-xl border border-stone-800 bg-stone-900/90 backdrop-blur">
         {/* Quien juega: los dos lados, con su color del juego y su civ. */}
         {/* El titulo y el marcador los pone el que monta el enlace: son su
