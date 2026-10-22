@@ -23,6 +23,14 @@ RewriteRule ^h2h/([0-9]+)/([0-9]+)/?$ https://aoe2api.pr070c01.com/og/h2h/$1/$2 
 RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|Twitterbot|WhatsApp|Discordbot|Slackbot|TelegramBot|LinkedInBot|Pinterest|redditbot|Embedly|SkypeUriPreview|vkShare|Iframely|Mastodon|Bluesky) [NC]
 RewriteRule ^clan/([^/]+)/?$ https://aoe2api.pr070c01.com/og/clan/$1 [R=302,L]
 
+# Las paginas fijas se compilan a un .html propio con su <head> ya puesto
+# (scripts/prerender-meta.mjs), para que Discord y compania, que no ejecutan
+# JavaScript, lean el titulo y la descripcion de verdad. Se sirven desde la
+# URL sin extension y SIN redirigir: con un directorio, Apache mandaba /manual
+# a /manual/ con un 301 y la canonica apuntaba a una URL que redirige.
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([a-z][a-z0-9-]*)/?$ /$1.html [L]
+
 # SPA routing: anything that is not a real file or directory is answered by
 # index.html, so /player/573964 survives a reload or a shared link. Real
 # subdirectories (smurfs/) still win, because of the !-d condition.

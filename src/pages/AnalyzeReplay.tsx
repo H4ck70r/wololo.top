@@ -47,7 +47,12 @@ export default function AnalyzeReplay() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
       <Helmet>
-        <title>{t('up.title')} · wololo.top</title>
+        <title>Analyze a replay - wololo.top</title>
+        <meta
+          name="description"
+          content="Upload an Age of Empires II DE replay and see your opening, age times, villagers and idle time measured against players at your rating."
+        />
+        <link rel="canonical" href="https://wololo.top/analyze" />
       </Helmet>
 
       <h1 className="titulo text-2xl m-0 mb-1">{t('up.title')}</h1>
