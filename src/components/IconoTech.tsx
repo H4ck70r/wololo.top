@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { iconoTecnologia, iconoTecnologiaComoUnidad } from '../lib/juego';
+import { iconoTecnologia, iconoTecnologiaComoUnidad } from '../lib/juego-tabla';
 
 /**
  * El icono de una tecnología, probando las dos carpetas.

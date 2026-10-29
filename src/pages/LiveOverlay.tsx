@@ -5,7 +5,7 @@ import { useT } from '../lib/i18n';
 import { COLORES_JUGADOR } from '../lib/jugadores';
 import CIVS from '../lib/civs-replay.json';
 import { avatarReal } from '../lib/avatar';
-import { nombreTecnologia } from '../lib/juego';
+import { nombreTecnologia } from '../lib/juego-tabla';
 import IconoTech from '../components/IconoTech';
 
 //  Mismo criterio que el resto del sitio: el replay guarda el CLIC y lo que
