@@ -57,6 +57,7 @@ import type {
   AssessmentResponse,
   PlayerBuildOrdersResponse,
   MatchTimelineResponse,
+  MatchReplaysResponse,
   ReplayUploadResponse,
 } from './types';
 
@@ -201,6 +202,19 @@ export async function getEnrichmentStatus(profileId: number | string): Promise<E
 
 export async function getMatchDetail(matchId: number | string): Promise<MatchDetailResponse> {
   return apiFetch<MatchDetailResponse>(`/api/matches/${matchId}`);
+}
+
+/**
+ * Qué grabaciones tienen los servidores oficiales de esta partida.
+ *
+ * Hace falta preguntar: que una partida exista no implica que su rec se pueda
+ * bajar. Comprobado contra el endpoint oficial, la disponibilidad va por
+ * pareja (partida, jugador) y no se deduce de la fecha, así que ningún enlace
+ * se pinta sin haber preguntado antes. Es una llamada por partida, por eso en
+ * los listados sólo se pide cuando alguien pulsa.
+ */
+export async function getMatchReplays(matchId: number | string): Promise<MatchReplaysResponse> {
+  return apiFetch<MatchReplaysResponse>(`/api/matches/${matchId}/replays`);
 }
 
 export async function getCivMeta(params: {

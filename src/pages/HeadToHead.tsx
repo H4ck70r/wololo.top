@@ -8,7 +8,8 @@ import { getCivName, cleanMapName, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_LABEL, OUTCOME_CHIP } from '../lib/matchResult';
 import SearchBar from '../components/SearchBar';
 import H2HStoryline from '../components/H2HStoryline';
-import SharedCopyBadge from '../components/SharedCopyBadge';
+import SmurfBadge, { MainAccountBadge } from '../components/SmurfBadge';
+import { mainAccountIds } from '../lib/senales';
 import { avatarReal } from '../lib/avatar';
 
 export default function HeadToHead() {
@@ -44,6 +45,10 @@ export default function HeadToHead() {
     enabled: !!profileId && !!opponentId,
     staleTime: 10 * 60 * 1000,
   });
+
+  //  Si uno de los dos es la cuenta principal del otro, se dice: aqui los dos
+  //  perfiles del vinculo estan a la vista, que es cuando se puede saber.
+  const principales = mainAccountIds(flagsData?.flags);
 
   if (isLoading) {
     return (
@@ -100,7 +105,8 @@ export default function HeadToHead() {
             <div>
               <p className="font-bold text-xl text-gold-400 m-0 flex items-center gap-2 flex-wrap">
                 {playerName}
-                <SharedCopyBadge flag={flagsData?.flags?.[String(profileId)]} />
+                <SmurfBadge flag={flagsData?.flags?.[String(profileId)]} />
+                {principales.has(Number(profileId)) && <MainAccountBadge />}
               </p>
               <p className="text-sm text-gray-500 m-0">{t('h2h.winRateOf', { pct: win_rate })}</p>
             </div>
@@ -122,7 +128,8 @@ export default function HeadToHead() {
             <div className="text-right">
               <p className="font-bold text-xl text-blue-accent m-0 flex items-center gap-2 flex-wrap justify-end">
                 {opponentName}
-                <SharedCopyBadge flag={flagsData?.flags?.[String(opponentId)]} />
+                <SmurfBadge flag={flagsData?.flags?.[String(opponentId)]} />
+                {principales.has(Number(opponentId)) && <MainAccountBadge />}
               </p>
               <p className="text-sm text-gray-500 m-0">{t('h2h.winRateOf', { pct: (100 - win_rate).toFixed(1) })}</p>
             </div>

@@ -6,7 +6,9 @@ import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
 import { outcomeOf } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
 import MatchReplayAnalysis from '../components/MatchReplayAnalysis';
-import SharedCopyBadge from '../components/SharedCopyBadge';
+import SmurfBadge, { MainAccountBadge } from '../components/SmurfBadge';
+import { mainAccountIds } from '../lib/senales';
+import ReplayDownload from '../components/ReplayDownload';
 import Bandera from '../components/Bandera';
 
 export default function MatchDetailPage() {
@@ -32,6 +34,9 @@ export default function MatchDetailPage() {
     staleTime: 10 * 60 * 1000,
   });
   const flags = flagsData?.flags ?? {};
+  //  Las dos mitades del vinculo: la secundaria sale marcada por su propia
+  //  deteccion, la principal sale marcada si tambien jugo esta partida.
+  const principales = mainAccountIds(flags);
 
   if (isLoading) {
     return (
@@ -99,17 +104,17 @@ export default function MatchDetailPage() {
         </div>
 
         <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch">
-          {ladoA && <Bando team={ladoA} lado="izq" flags={flags} />}
+          {ladoA && <Bando team={ladoA} lado="izq" flags={flags} principales={principales} />}
           <div className="flex flex-col items-center justify-center px-1.5 sm:px-6 border-x border-dark-400 bg-dark-800/60">
             <span className="font-display text-lg sm:text-4xl font-bold text-gray-600" aria-hidden="true">VS</span>
           </div>
-          {ladoB && <Bando team={ladoB} lado="der" flags={flags} />}
+          {ladoB && <Bando team={ladoB} lado="der" flags={flags} principales={principales} />}
         </div>
 
         {match.teams.length > 2 && (
           <div className="border-t border-dark-400">
             {match.teams.slice(2).map((tm) => (
-              <Bando key={tm.team_id} team={tm} lado="izq" flags={flags} />
+              <Bando key={tm.team_id} team={tm} lado="izq" flags={flags} principales={principales} />
             ))}
           </div>
         )}
@@ -120,6 +125,10 @@ export default function MatchDetailPage() {
           </p>
         )}
       </section>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <ReplayDownload matchId={match.match_id} eager />
+      </div>
 
       {/* La tabla de cifras del replay se quito de aqui: el analisis completo
           de mas abajo la trae igual, mejor etiquetada y con la comparacion
@@ -144,10 +153,12 @@ function Bando({
   team,
   lado,
   flags,
+  principales,
 }: {
   team: Equipo;
   lado: 'izq' | 'der';
-  flags: Record<string, Parameters<typeof SharedCopyBadge>[0]['flag']>;
+  flags: Record<string, Parameters<typeof SmurfBadge>[0]['flag']>;
+  principales: Set<number>;
 }) {
   const { t } = useT();
   const resultado = outcomeOf(team.result);
@@ -192,7 +203,8 @@ function Bando({
                   >
                     {player.alias || `#${player.profile_id}`}
                   </Link>
-                  <SharedCopyBadge flag={flags[String(player.profile_id)]} />
+                  <SmurfBadge flag={flags[String(player.profile_id)]} />
+                  {principales.has(Number(player.profile_id)) && <MainAccountBadge />}
                 </div>
                 <p className="m-0 mt-0.5 text-sm text-gray-400 truncate">
                   {player.country && <><Bandera code={player.country} className="mr-1.5" /><span className="text-gray-600">· </span></>}

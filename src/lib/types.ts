@@ -1061,6 +1061,35 @@ export interface ReplayUploadResponse {
   results: ReplayUploadResult[];
 }
 
+/**
+ * Un fichero de grabación que los servidores oficiales SÍ tienen para una
+ * partida. Hay uno por jugador que lo subió, y no están todos: la subida
+ * depende del cliente de cada jugador, así que de un 1v1 pueden venir dos
+ * ficheros, uno, o ninguno.
+ */
+export interface MatchReplayFile {
+  profile_id: number | null;
+  matchhistory_id: number | null;
+  /** URL firmada de Azure: CADUCA, no se guarda ni se pinta en un enlace */
+  url: string;
+  size_bytes: number;
+  datatype: number;
+}
+
+export interface MatchReplaysResponse {
+  status: string;
+  data: {
+    match_id: number;
+    expiry_unix: number | null;
+    replay_count: number;
+    replays_available: boolean;
+    /** 'not_found_upstream' | 'not_uploaded' | null */
+    unavailable_reason: string | null;
+    replays: MatchReplayFile[];
+  };
+  message?: string;
+}
+
 /** Qué se sabe del replay de una partida, para marcarla en la lista. */
 export interface MatchReplayState {
   analyzed: boolean;

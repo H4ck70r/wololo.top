@@ -4,7 +4,9 @@ import { getCivName, getCivIcon, formatDuration } from '../lib/constants';
 import { outcomeOf, OUTCOME_CHIP, OUTCOME_CARD } from '../lib/matchResult';
 import { useT } from '../lib/i18n';
 import type { MatchRecord, MatchPlayer, SignalFlag, MatchReplayState } from '../lib/types';
-import SharedCopyBadge from './SharedCopyBadge';
+import SmurfBadge, { MainAccountBadge } from './SmurfBadge';
+import { mainAccountIds } from '../lib/senales';
+import ReplayDownload from './ReplayDownload';
 
 interface MatchRowProps {
   match: MatchRecord;
@@ -87,10 +89,13 @@ function PlayerLine({
   player,
   isCurrentPlayer,
   flag,
+  esPrincipal = false,
 }: {
   player: MatchPlayer;
   isCurrentPlayer: boolean;
   flag?: SignalFlag;
+  /** figura como cuenta principal de otro jugador de esta misma partida */
+  esPrincipal?: boolean;
 }) {
   const ratingStr = player.new_rating != null ? `${player.new_rating}` : '';
   const diffStr =
@@ -111,7 +116,8 @@ function PlayerLine({
       >
         {player.alias || `Player ${player.profile_id}`}
       </Link>
-      <SharedCopyBadge flag={flag} compact />
+      <SmurfBadge flag={flag} compact />
+      {esPrincipal && <MainAccountBadge compact />}
       {ratingStr && (
         <span className="text-xs text-gray-500 ml-auto tabular-nums">{ratingStr}</span>
       )}
@@ -146,6 +152,11 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
   const hasTeams = match.teams && match.teams.length > 0;
   const totalPlayers = hasTeams ? match.teams.reduce((sum, t) => sum + t.players.length, 0) : 0;
   const isTeamGame = totalPlayers > 2;
+
+  //  Quien de los que salen aqui es la cuenta principal de otro de los que
+  //  salen aqui. Solo se puede saber dentro del mismo lote de detecciones;
+  //  ver el comentario de mainAccountIds.
+  const principales = mainAccountIds(signalFlags);
 
   const myTeamId = match.team_id;
   const myTeam = hasTeams ? match.teams.find((t) => t.team_id === myTeamId) : null;
@@ -191,7 +202,8 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
                   >
                     {enemyTeams[0].players[0].alias || 'Unknown'}
                   </Link>
-                  <SharedCopyBadge flag={signalFlags?.[String(enemyTeams[0].players[0].profile_id)]} />
+                  <SmurfBadge flag={signalFlags?.[String(enemyTeams[0].players[0].profile_id)]} />
+                  {principales.has(Number(enemyTeams[0].players[0].profile_id)) && <MainAccountBadge />}
                 </div>
               </>
             ) : isTeamGame ? (
@@ -207,6 +219,12 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
           <div className="flex items-center gap-x-2.5 gap-y-0.5 mt-1 text-xs text-gray-500 flex-wrap min-w-0">
             <span className="truncate max-w-[9rem]">{match.map || match.map_name || 'Unknown'}</span>
             <ReplayBadge replay={match.replay} />
+            <ReplayDownload
+              matchId={match.match_id}
+              preferProfileId={pid}
+              knownUnavailable={match.replay?.unavailable}
+              compact
+            />
             {match.duration_seconds != null && match.duration_seconds > 0 && (
               <span className="whitespace-nowrap">{formatDuration(match.duration_seconds)}</span>
             )}
@@ -267,7 +285,12 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
                   {outcome === 'pending' ? t('match.undecidedTeam') : isWin ? t('match.winners') : t('match.losers')} &middot; Team {myTeam.team_id}
                 </p>
                 {myTeam.players.map((p) => (
-                  <PlayerLine key={p.profile_id} player={p} isCurrentPlayer={p.profile_id === pid} />
+                  <PlayerLine
+                    key={p.profile_id}
+                    player={p}
+                    isCurrentPlayer={p.profile_id === pid}
+                    esPrincipal={principales.has(Number(p.profile_id))}
+                  />
                 ))}
               </div>
             )}
@@ -286,6 +309,7 @@ export default function MatchRow({ match, profileId, signalFlags }: MatchRowProp
                     player={p}
                     isCurrentPlayer={false}
                     flag={signalFlags?.[String(p.profile_id)]}
+                    esPrincipal={principales.has(Number(p.profile_id))}
                   />
                 ))}
               </div>
