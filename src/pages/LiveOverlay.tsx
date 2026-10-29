@@ -5,6 +5,8 @@ import { useT } from '../lib/i18n';
 import { COLORES_JUGADOR } from '../lib/jugadores';
 import CIVS from '../lib/civs-replay.json';
 import { avatarReal } from '../lib/avatar';
+import { nombreTecnologia } from '../lib/juego';
+import IconoTech from '../components/IconoTech';
 
 //  Mismo criterio que el resto del sitio: el replay guarda el CLIC y lo que
 //  la gente compara es cuando la edad CAE, asi que se le suma la investigacion,
@@ -31,6 +33,8 @@ type Cifras = {
   apm: number | null;
   first_stable_ms: number | null;
   units: Record<string, number> | null;
+  /** [ms, id de tecnología] en orden de aparición */
+  techs: [number, number][] | null;
 };
 
 type Jugador = {
@@ -175,6 +179,50 @@ function Fila({
   );
 }
 
+//  Las tres edades son tecnologías como cualquier otra, pero en la tira hacen
+//  de separador: lo que va detrás de Feudal se pagó en Feudal.
+const EDADES = new Set([101, 102, 103]);
+
+/**
+ * Lo que va investigando, en orden.
+ *
+ * Es la única parte del panel que no estima nada. Una investigación es un
+ * comando y el comando está en el fichero con su marca de tiempo, así que esto
+ * no envejece: un recuento de unidades miente en cuanto muere una, y esto no.
+ *
+ * Se pinta con iconos y no con nombres porque es lo que un caster reconoce de
+ * un vistazo, y porque treinta nombres no caben en un browser source. El
+ * nombre y el minuto van en el title, que es a donde va quien no lo reconoce.
+ */
+function Tecnologias({ techs }: { techs: [number, number][] | null | undefined }) {
+  const { t, lang } = useT();
+  if (!techs || techs.length === 0) return null;
+  return (
+    <div className="px-3 py-2">
+      <span className="block text-xs text-stone-500 mb-1.5">{t('tabs.techs')}</span>
+      <div className="flex flex-wrap items-center gap-1">
+        {techs.map(([ms, id], i) => {
+          const nombre = nombreTecnologia(id, lang);
+          const edad = EDADES.has(id);
+          return (
+            <span
+              key={`${id}-${i}`}
+              title={`${nombre} · ${reloj(ms)}`}
+              className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded border ${
+                edad
+                  ? 'w-7 h-7 border-gold-500/70 bg-gold-500/10'
+                  : 'w-6 h-6 border-stone-700 bg-stone-900'
+              }`}
+            >
+              <IconoTech id={id} nombre={nombre} />
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /**
  * El otro lado, en corto.
  *
@@ -223,6 +271,10 @@ function Rival({ c, j }: { c: Cifras; j?: Jugador }) {
           ))}
         </div>
       )}
+      {/* Sin el padding del bloque: la tira ya trae el suyo. */}
+      <div className="-mx-3">
+        <Tecnologias techs={c.techs} />
+      </div>
     </div>
   );
 }
@@ -243,7 +295,7 @@ export default function LiveOverlay() {
     pegando una URL: una casilla que marcar en otra pagina es un paso mas y
     otro sitio donde se queda la configuracion de la semana pasada.
 
-      ?hide=civ,elo,apm,units,reference,opponent
+      ?hide=civ,elo,apm,units,techs,reference,opponent
       ?title=NACHO%20vs%20RIVALES
       ?score=5-2
 
@@ -482,6 +534,12 @@ export default function LiveOverlay() {
                 </span>
               ))}
             </div>
+          </div>
+        )}
+
+        {ver('techs') && (
+          <div className="border-t border-stone-800">
+            <Tecnologias techs={me.techs} />
           </div>
         )}
 

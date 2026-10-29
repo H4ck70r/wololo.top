@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { useT } from '../lib/i18n';
 import Nota from './Nota';
+import IconoTech from './IconoTech';
 import { colorDeJugador, nombreDeJugador } from '../lib/jugadores';
 import { CLASE_COLOR } from '../lib/units';
 import { nombreUnidad, claseDeUnidad, raizDeLinea, nombreTecnologia, tecnologia,
-         iconoUnidad, iconoTecnologia, fichaUnidad } from '../lib/juego';
+         iconoUnidad, fichaUnidad } from '../lib/juego';
 import type { ReplayTimeline } from '../lib/types';
 
 interface Props {
@@ -304,10 +305,13 @@ export default function ReplayUnits({ timeline, soloUnidades, soloTecnologias }:
                       return (
                         <div key={x.id} className="flex items-baseline gap-2 text-xs">
                           <span className="tabular-nums text-gray-600 w-9">{reloj(x.t)}</span>
-                          {iconoTecnologia(x.id) && (
-                            <img src={iconoTecnologia(x.id)!} alt="" width={16} height={16}
-                                 className="w-4 h-4 shrink-0 rounded-sm" loading="lazy" />
-                          )}
+                          {/* Aquí también salían rotas las mejoras de unidad:
+                              el nombre iba al lado, pero el hueco de la
+                              Arbalesta y el de cada élite se veía igual. */}
+                          <span className="w-4 h-4 shrink-0 inline-flex items-center justify-center overflow-hidden rounded-sm">
+                            <IconoTech id={x.id} nombre={nombreTecnologia(x.id, lang)}
+                                       className="w-4 h-4 rounded-sm" />
+                          </span>
                           <span className={f?.unique ? 'text-gold-400/90' : 'text-gray-300'}>
                             {nombreTecnologia(x.id, lang)}
                           </span>

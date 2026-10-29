@@ -112,6 +112,22 @@ export const iconoUnidad = (id: number) => RUTA('units', unidad(id));
 export const iconoTecnologia = (id: number) => RUTA('techs', tecnologia(id));
 
 /**
+ * El icono de una tecnología buscado entre los de unidad, con su mismo índice.
+ *
+ * De las 372 tecnologías, 102 no tienen fichero en iconos/techs. No es que
+ * falten: son MEJORAS DE UNIDAD -Arbalestero, Onagro de asedio y todas las de
+ * élite- y su índice apunta al atlas de unidades, no al de tecnologías. Las
+ * 102 tienen fichero en iconos/units con ese mismo número, comprobado una a
+ * una, y en 101 coincide hasta el nombre exacto de la unidad.
+ *
+ * Se ofrece como alternativa y no se elige aquí porque desde el navegador no
+ * se puede mirar si un fichero existe. Quien pinta prueba el de tecnología,
+ * y si no carga, este. Eso tiene la ventaja de no envejecer: el día que se
+ * añadan ficheros a iconos/techs, empiezan a usarse sin tocar nada.
+ */
+export const iconoTecnologiaComoUnidad = (id: number) => RUTA('units', tecnologia(id));
+
+/**
  * Lo que dice un taunt, sacado de los ficheros del juego.
  *
  * El numero que se teclea es el indice: el 11 es la risa, el 30 es "Wololo".

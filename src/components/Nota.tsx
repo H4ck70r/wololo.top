@@ -78,11 +78,22 @@ export default function Nota({ children }: Props) {
         i
       </button>
       {sitio && (
+        /*
+         * La tipografía se vuelve a declarar entera, propiedad por propiedad.
+         * La caja va en posición fija, pero sigue colgando del DOM donde está
+         * el icono -un título en mayúsculas, una celda de tabla, un h4 en
+         * mono- y lo heredado no se queda fuera por flotar: salir del flujo
+         * no corta la herencia. El caso que lo delató fue `whitespace-nowrap`
+         * de la celda de jugadores, que con la anchura clavada en 320px
+         * mandaba los bonus de civilización de largo por el borde derecho.
+         * `break-words` es para lo que ni partiendo cabe: un alias sin
+         * espacios, que en estas notas viene interpolado.
+         */
         <span
           id={id}
           role="tooltip"
           style={{ left: sitio.x, top: sitio.y, width: Math.min(ANCHO, window.innerWidth - MARGEN * 2) }}
-          className="fixed z-50 p-3 rounded-lg bg-dark-800 border border-dark-400 shadow-xl text-xs text-gray-400 font-normal normal-case tracking-normal leading-relaxed text-left block"
+          className="fixed z-50 p-3 rounded-lg bg-dark-800 border border-dark-400 shadow-xl text-xs text-gray-400 font-normal normal-case normal-nums tracking-normal leading-relaxed text-left whitespace-normal break-words block"
         >
           {children}
         </span>

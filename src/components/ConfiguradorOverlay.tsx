@@ -16,6 +16,10 @@ const PIEZAS = [
   { id: 'elo', k: 'cfg.elo' },
   { id: 'apm', k: 'cfg.apm' },
   { id: 'units', k: 'cfg.units' },
+  //  Reaprovecha la etiqueta de la pestaña del analizador: es la misma palabra
+  //  y ya está en los dos idiomas, así que una clave nueva solo sería otra
+  //  cadena que mantener diciendo lo mismo.
+  { id: 'techs', k: 'tabs.techs' },
   { id: 'reference', k: 'cfg.ref' },
   { id: 'opponent', k: 'cfg.rival' },
 ] as const;
